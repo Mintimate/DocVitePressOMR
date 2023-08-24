@@ -1,0 +1,24 @@
+# robots.txt
+
+User-agent: *
+Crawl-delay: 10
+
+# Allow critical pages
+Allow: /
+Allow: /sitemap.xml
+
+# Disallow other pages
+
+# Specify sitemaps
+Sitemap: https://www.mintimate.cc/sitemap.xml
+
+# Specify host
+Host: https://www.mintimate.cc
+
+# Longer crawl delay for new crawlers
+User-agent: NewCrawler
+Crawl-delay: 20
+
+# Block bad bots
+User-agent: BadBot
+Disallow: /

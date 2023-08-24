@@ -9,6 +9,8 @@ This section will showcase the adaptation and usage effects of Oh-my-rime.
 
 ![效果简单展示](/image/demo/guide.webp)
 
+<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
+
 ## Platform Support
 Oh-my-rime currently supports the following desktop platforms:
 - Windows: Rime framework input method for Windows -- [Weasel](https://github.com/rime/weasel)

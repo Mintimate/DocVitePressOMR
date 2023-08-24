@@ -1,6 +1,13 @@
+## NodeJS ##
 /node_modules
+
+## VitePress ##
 /.vitepress/dist
 /.vitepress/cache
 
+## Yarn ##
 /yarn.lock
+yarn-error.log
+
+## IDEA ##
 /.idea

@@ -13,6 +13,8 @@ aside: true
 
 > 请务必备注『薄荷拼音』或者『oh-my-rime』，对于捐赠咖啡☕️的用户，将进入『鸣谢』内(●'◡'●)ﾉ♥
 
+<div class="wwads-cn wwads-horizontal" data-id="266"></div>
+
 ## 推荐教程
 这里推荐一些教程，用于辅助深度定制：
 - [Rime官方Wiki文档](https://github.com/rime/home/wiki)
