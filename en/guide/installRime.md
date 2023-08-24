@@ -6,6 +6,8 @@ aside: true
 # Installing Rime Input Keyboard
 Now let's introduce how to install the Rime input keyboard.
 
+<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
+
 It is highly recommended to follow along with the video（Chinese Only)：
 - [跨平台、无隐私追踪的开源输入法Rime定制指南: 聪明的输入法懂我心意!](https://www.bilibili.com/video/BV12M411T7gf)
 

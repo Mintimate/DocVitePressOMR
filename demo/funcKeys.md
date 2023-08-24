@@ -11,6 +11,8 @@ aside: true
 - 日期打印
 - 大写人民币打印
 
+<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
+
 ## 时间打印
 在输入法内，只要输入关键词`time`，输入法会使用`Lua`脚本，自动根据当前的时间进行造句：
 ![时间打印](/image/demo/timeKey.webp)

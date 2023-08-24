@@ -2,6 +2,8 @@
 
 In the previous steps, you have learned how to install the Rime input method.
 
+<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
+
 In fact, Rime can be configured as any input method, such as Minnan language input method, Wu language input method, Cantonese input method, and so on. You can also configure key mappings, such as inputting "ABC" but getting "CBA" or fuzzy pinyin.
 
 However, all of this might be a bit complex for a new user. When exploring Rime's configuration, it is recommended to use pre-configured templates created by others, such as "Wusong Pinyin" or the "Oh-My-Rime" introduced in this article.
