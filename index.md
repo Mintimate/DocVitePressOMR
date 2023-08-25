@@ -19,6 +19,9 @@ hero:
     - theme: brand
       text: 视频快速了解
       link: https://www.bilibili.com/video/BV12M411T7gf
+    - theme: brand
+      text: Github仓库
+      link: https://github.com/Mintimate/oh-my-rime
     - theme: alt
       text: 效果演示
       link: /demo/

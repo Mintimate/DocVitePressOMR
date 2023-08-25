@@ -15,12 +15,15 @@ hero:
     - theme: brand
       text: Video Quick Start
       link: https://www.bilibili.com/video/BV12M411T7gf
+    - theme: brand
+      text: Github Repository
+      link: https://github.com/Mintimate/oh-my-rime
     - theme: alt
       text: Demo
-      link: /demo/
+      link: /en/demo/
     - theme: alt
       text: Configuration Tutorial
-      link: /guide/
+      link: /en/guide/
 
 
 features:

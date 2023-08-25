@@ -31,9 +31,10 @@ export default defineConfig({
             lang: 'zh',
             themeConfig: {
                 nav: [
+                    {text: '关于', link: '/teamInfo'},
                     {text: '主页', link: '/'},
                     {text: '效果演示', link: '/demo/'},
-                    {text: '配置教程', link: '/guide/'}
+                    {text: '配置教程', link: '/guide/'},
                 ],
                 outlineTitle: '此页面',
                 outline: 'deep',
@@ -53,6 +54,7 @@ export default defineConfig({
                             {text: '引导', link: '/guide/'},
                             {text: '安装rime', link: '/guide/installRime'},
                             {text: '导入薄荷拼音', link: '/guide/importMint'},
+                            {text: 'Emoji配置(OpenCC)', link: '/guide/openccEmoji'},
                         ]
                     }
                     ]
@@ -73,6 +75,7 @@ export default defineConfig({
             link: '/en/', // default /en/ -- shows on navbar translations menu, can be external
             themeConfig: {
                 nav: [
+                    {text: 'About', link: '/en/teamInfo'},
                     {text: 'index', link: '/en/'},
                     {text: 'Demo', link: '/en/demo/'},
                     {text: 'Configuration', link: '/en/guide/'}
@@ -97,6 +100,7 @@ export default defineConfig({
                             {text: 'Guide', link: '/en/guide/'},
                             {text: 'Install Rime', link: '/en/guide/installRime'},
                             {text: 'Import Oh-my-rime', link: '/en/guide/importMint'},
+                            {text: 'Emoji Configuration (OpenCC) ', link: '/en/guide/openccEmoji'},
                         ]
                     }]
                 },
