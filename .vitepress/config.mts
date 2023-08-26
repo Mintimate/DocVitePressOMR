@@ -6,21 +6,40 @@ export default defineConfig({
     description: "一套快速初始化rime的模板，因为平时我使用oh-my-zsh，在使用rime时候，有种用omz的感觉；所以我给它取名叫oh-my-rime，你也可以叫它薄荷拼音，亦或者Mint。",
     head: [
         [
-            'link',{rel: 'apple-touch-icon',sizes:'76x76',href: '/favicon.png'}
+            'link', {rel: 'apple-touch-icon', sizes: '76x76', href: '/favicon.png'}
         ],
         [
             'link', {rel: 'icon', href: '/favicon.svg'},
         ],
         [
-            'meta',{name: 'keywords',content:'薄荷拼音,rime,小狼毫,鼠须管,Linux上配置rime,小狼毫初始化'}
+            'meta', {name: 'keywords', content: '薄荷拼音,rime,小狼毫,鼠须管,Linux上配置rime,小狼毫初始化'}
         ],
         // 万维AD
         [
-            'script',{type:'text/javascript',charset:'UTF-8',src:'https://cdn.wwads.cn/js/makemoney.js',async:''}
+            'script', {
+            type: 'text/javascript',
+            charset: 'UTF-8',
+            src: 'https://cdn.wwads.cn/js/makemoney.js',
+            async: ''
+        }
         ],
         // Google ADSense
         [
-            'script',{type:'text/javascript',src:'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8322854923336162',async:'',crossorigin: 'anonymous'}
+            'script', {
+            type: 'text/javascript',
+            src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8322854923336162',
+            async: '',
+            crossorigin: 'anonymous'
+        }
+        ],
+        // Umami
+        [
+            'script', {
+            type: 'text/javascript',
+            src: 'https://umami-console.mintimate.cn/script.js',
+            'data-website-id': 'a8627773-87e5-403f-8579-b3baf4d4e368',
+            async: ''
+        }
         ]
     ],
     locales: {
@@ -66,9 +85,9 @@ export default defineConfig({
             label: 'English',
             lang: 'en', // optional, will be added as `lang` attribute on `html` tag
             title: "oh-my-rime",
-            head:[
+            head: [
                 [
-                    'meta',{name: 'keywords',content:'oh-my-rime,rime,Mint Pinyin,Squirrel,Weasel,rime in Linux'}
+                    'meta', {name: 'keywords', content: 'oh-my-rime,rime,Mint Pinyin,Squirrel,Weasel,rime in Linux'}
                 ]
             ],
             description: "A template for fast initializing rime, because I usually use oh-my-zsh, when using rime, it feels like using omz; so I named it oh-my-rime, you can also call it Mintimate Pinyin, or Mint.",
