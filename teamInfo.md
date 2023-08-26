@@ -1,5 +1,7 @@
 ---
 layout: page
+title: 关于团队
+description: 关于薄荷拼音团队的介绍，以及薄荷拼音的讨论群和背景
 ---
 
 <script setup>
@@ -37,61 +39,45 @@ const members = [
 <VPTeamPage>
   <VPTeamPageTitle>
     <template #title>
-      关于本网站
+      关于本网站 
     </template>
     <template #lead>
-      目前主要是我一个人开发，期待和大家的协助
+      目前主要是我一个人开发,期待和大家的协助
     </template>
   </VPTeamPageTitle>
-  <VPTeamMembers
-    :members="members"
-  />
+
+<VPTeamMembers
+:members="members"
+/>
+
   <VPTeamPageSection>
     <template #title>联系我们</template>
   </VPTeamPageSection>
-<div class="container">
-<p>如果需要反馈，建议：</p>
-<ul>
-    <li>QQ群: 703260572</li>
-    <li>Email: mintimate215@gmail.com</li>
-</ul>
-</div>
+  <div class="vp-doc " :class="$style.VPTeamContent">
+    <div class="container">
+      <p>如果需要反馈,建议:</p>
+      <ul>
+        <li>QQ群: 703260572</li>
+        <li>Email: mintimate215@gmail.com</li>
+      </ul>
+    </div>
+  </div>
 </VPTeamPage>
 
-<style scope>
-ul{
-  list-style: disc
+<style module>
+.VPTeamContent{
+    padding: 20px 32px;
 }
 
-ul, ol {
-    padding-left: 1.25rem;
-    margin: 16px 0;
-    line-height: 28px;
+@media (min-width: 768px){
+.VPTeamContent{
+    padding: 20px 128px;
+}
 }
 
-p {
-    line-height: 28px;
+@media (min-width: 1200px){
+.VPTeamContent{
+    padding: 20px 256px;
 }
-
-.VPFeatures {
-  position: relative;
-  padding: 0 24px;
-}
-
-@media (min-width: 640px) {
-  .VPFeatures {
-    padding:0 48px;
-  }
-}
-
-@media (min-width: 960px) {
-  .VPFeatures {
-    padding:0 64px
-  }
-}
-
-.container {
-  margin: 0 auto;
-  max-width: 1152px
 }
 </style>

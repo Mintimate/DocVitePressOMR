@@ -1,5 +1,7 @@
 ---
 layout: page
+title: About Team
+description: Introduction about the Oh-my-rime's team, as well as the discussion group and background of Oh-my-rime.
 ---
 
 <script setup>
@@ -37,61 +39,47 @@ const members = [
 <VPTeamPage>
   <VPTeamPageTitle>
     <template #title>
-      About
+      About This Website
     </template>
     <template #lead>
-      Currently, I am primarily developing alone, and I look forward to collaborating with others.
+      Currently it's mainly developed by myself, looking forward to your help
     </template>
   </VPTeamPageTitle>
-  <VPTeamMembers
-    :members="members"
-  />
+
+<VPTeamMembers
+:members="members"
+/>
+
   <VPTeamPageSection>
-    <template #title>Contact us</template>
+    <template #title>Contact Us</template>
   </VPTeamPageSection>
-<div class="container">
-<p>If you have any feedback or suggestions, please let us know: </p>
-<ul>
-    <li>QQ Group: 703260572</li>
-    <li>Email: mintimate215@gmail.com</li>
-</ul>
-</div>
+  <div class="vp-doc " :class="$style.VPTeamContent">
+    <div class="container">
+      <p>If you need feedback, suggestions:</p>
+      <ul>
+        <li>QQ Group: 703260572</li>
+        <li>Email: mintimate215@gmail.com</li>
+      </ul>
+    </div>
+  </div>
 </VPTeamPage>
 
-<style scope>
-ul{
-  list-style: disc
+<style module>
+.VPTeamContent{
+    padding: 20px 32px;
 }
 
-ul, ol {
-    padding-left: 1.25rem;
-    margin: 16px 0;
-    line-height: 28px;
+@media (min-width: 768px){
+.VPTeamContent{
+    padding: 20px 128px;
+}
 }
 
-p {
-    line-height: 28px;
+@media (min-width: 1200px){
+.VPTeamContent{
+    padding: 20px 256px;
 }
-
-.VPFeatures {
-  position: relative;
-  padding: 0 24px;
-}
-
-@media (min-width: 640px) {
-  .VPFeatures {
-    padding:0 48px;
-  }
-}
-
-@media (min-width: 960px) {
-  .VPFeatures {
-    padding:0 64px
-  }
-}
-
-.container {
-  margin: 0 auto;
-  max-width: 1152px
 }
 </style>
+
+
