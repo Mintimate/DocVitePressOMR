@@ -91,6 +91,8 @@ sudo apt install fcitx5 fcitx5-chinese-addons
 sudo apt install fcitx5-rime
 ```
 
+![安装Fcitx5](/image/guide/installFcitx5.webp)
+
 最后，设置一下fcitx5的环境，将下列内容添加到环境变量内：
 ```bash
 # 基于 GTK 的程序使用 fcitx5 作为输入法引擎
@@ -101,4 +103,19 @@ export QT_IM_MODULE=fcitx5
 export XMODIFIERS=@im=fcitx5
 ```
 
-重启系统，打开fcitx5即可使用。
+重启系统或注销系统：
+![注销系统](/image/guide/logOutInKali.webp)
+
+打开fcitx5：
+
+![打开Fcitx5](/image/guide/openFcitx5.webp)
+
+在状态栏上找到Fcitx5的选项，进行打开：
+![打开Fcitx5的配置](/image/guide/FcitxConfig.webp)
+
+选择Rime输入法进行激活：
+![在Fcitx5内添加Rime](/image/guide/openFcitx5ConfigInBar.webp)
+
+
+
+

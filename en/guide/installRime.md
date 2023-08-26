@@ -95,6 +95,8 @@ Then install the fcitx5 Rime input keyboard:
 sudo apt install fcitx5-rime
 ```
 
+![Install Fcitx5](/image/guide/installFcitx5.webp)
+
 Finally, set the fcitx5 environment by adding:
 ```bash
 # GTK based programs use fcitx5 input method engine
@@ -105,4 +107,18 @@ export QT_IM_MODULE=fcitx5
 export XMODIFIERS=@im=fcitx5
 ```
 
-重启系统，打开fcitx5即可使用。
+Restart or log out of the system:
+
+![Log out of the system](/image/guide/logOutInKali.webp)
+
+Open fcitx5:
+
+![Open Fcitx5](/image/guide/openFcitx5.webp)
+
+Find the Fcitx5 options in the status bar and open them:
+
+![Open Fcitx5 configuration](/image/guide/FcitxConfig.webp)
+
+Select Rime input method to activate:
+
+![Add Rime in Fcitx5](/image/guide/openFcitx5ConfigInBar.webp)

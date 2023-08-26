@@ -17,10 +17,10 @@ Let's go to the project page of Oh-My-Rime:
 - [Oh-My-Rime GitHub Repository: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
 
 Download Oh-My-Rime to your local machine:
-![Download Oh-My-Rime](<>)
+![Download Oh-My-Rime](/image/guide/downloadMintPinyin.webp)
 
 After extracting the downloaded file, the internal files should look like this:
-![Internal files after extraction](<>)
+![Internal files after extraction](/image/guide/unzipMintPinyin.webp)
 
 ## Moving the Configuration Files
 
@@ -34,14 +34,14 @@ The default configuration file locations are:
 - For Linux with Fcitx5: `~/.local/share/fcitx5/rime`
 
 Additionally, on macOS with Squirrel and Windows with Weasel, you can open the configuration directory using software. For example, on macOS:
-![Open configuration directory using settings](<>)
+![Open configuration directory using settings](/image/guide/openConfigDirByApp.webp)
 
 After opening the configuration directory, move the Oh-My-Rime configuration files into it:
-![Move Oh-My-Rime to the configuration directory](<>)
+![Move Oh-My-Rime to the configuration directory](/image/guide/moveMintPinyinToConfigDir.webp)
 
 ## Deploying Oh-My-Rime
 
 After completing the above steps, we can deploy Rime, for example, on macOS with Squirrel:
-![Apply configuration](<>)
+![Apply configuration](/image/guide/applyConfig.webp)
 
 Once the deployment is complete, you can start using Oh-My-Rime.

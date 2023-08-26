@@ -1,32 +1,37 @@
 ---
 layout: doc
-title: 反查功能
+title: Reverse Lookup Function 
 aside: true
 ---
-# 反查功能
-所谓反查，简单地说就是使用其他输入模式，查找现有输入模式下的字符输入。
+
+# Reverse Lookup Function
+
+Reverse lookup, simply put, is the use of alternative input methods to search for character inputs within the current input method.
 
 <div class="wwads-cn wwads-horizontal" data-id="266" ></div>
 
-举个例子: 使用五笔查看当前拼音输入法下的词语。
+Here's an example: using the Wubi input method to view words under the current Pinyin input method.
 
-薄荷拼音内包含三个反查:
-- 拆字反查
-- 五笔反查
-- 笔画反查
+Oh-My-Rime includes three reverse lookup functions:
 
-## 拆字反查
-<u>个人觉得这应该是反查内最为实用的反查</u>；在薄荷拼音内，中文输入法模式下，使用`uw`进行激活拆字模式，后续输入的内容，将使用拆字字库进行解析。
+- Character decomposition reverse lookup
+- Wubi reverse lookup
+- Stroke count reverse lookup
 
-举个例子: 键盘上输入`uuniuniuniu`，会被解析为`niu niu niu`的组合，也就是三个`牛`：`犇`。当然，两个`牛`也是有字的:
-![两个牛](/image/demo/ChaiNiu2.webp)
-![三个牛](/image/demo/ChaiNiu3.webp)
+## Character Decomposition Reverse Lookup
 
+<u>Personally, I believe this is the most practical reverse lookup function</u>. In Oh-My-Rime, under the Chinese input method mode, activate the character decomposition mode by entering `uw`, and the subsequent input will be parsed using the character decomposition library.
 
-## 五笔反查
-在薄荷拼音内，中文输入法模式下，使用`uw`进行激活五笔模式，后续输入的内容，将使用五笔进行解析。
+For example, if you type `uuniuniuniu` on the keyboard, it will be parsed as a combination of `niu niu niu`, which means three `牛` characters: `犇`. Of course, two `牛` characters also form a word:
+![Two cows](/image/demo/ChaiNiu2.webp)
+![Three cows](/image/demo/ChaiNiu3.webp)
 
-举个例子: 键盘上输入`uuq`，那么可以自动查找到`我`这个字；方便组合查找字。
+## Wubi Reverse Lookup
 
-## 笔画反查
-在薄荷拼音内，中文输入法模式下，使用`ui`进行激活笔模式，后续输入的内容，将使用笔画进行解析。
+In Oh-My-Rime, under the Chinese input method mode, activate the Wubi mode by entering `uw`, and the subsequent input will be parsed using Wubi.
+
+For example, if you type `uuq` on the keyboard, it will automatically find the character `我` (meaning "I" or "me"); it facilitates searching for characters by combination.
+
+## Stroke Count Reverse Lookup
+
+In Oh-My-Rime, under the Chinese input method mode, activate the stroke mode by entering `ui`, and the subsequent input will be parsed using stroke count.

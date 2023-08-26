@@ -1,31 +1,35 @@
 ---
-layout: doc
-title: 特殊功能键
+layout: doc 
+title: Special Function Keys 
 aside: true
 ---
 
-# 特殊功能键
-借助lua脚本，薄荷拼音实现了一些特定的功能键：
-- 时间打印
-- 星期打印
-- 日期打印
-- 大写人民币打印
+# Special Function Keys
+
+With the help of `Lua` scripts, Oh-my-rime has implemented some specific function keys:
+- Time printing
+- Week printing
+- Date printing
+- Capitalized Chinese currency printing
 
 <div class="wwads-cn wwads-horizontal" data-id="266" ></div>
 
-## 时间打印
-在输入法内，只要输入关键词`time`，输入法会使用`Lua`脚本，自动根据当前的时间进行造句：
-![时间打印](/image/demo/timeKey.webp)
+## Time Printing
 
-## 星期打印
-和上面类似，只不过关键词变成`week`:
-![星期打印](/image/demo/weekKey.webp)
+Within the input method, simply input the keyword "`time`," and the input method will automatically generate a sentence based on the current time using a Lua script:
+![Time Printing](/image/demo/timeKey.webp)
 
-## 日期打印
-关键词`date`:
-![日期打印](/image/demo/dateKey.webp)
+## Week Printing
 
+Similar to the previous function, but the keyword is changed to "`week`":
+![Week Printing](/image/demo/weekKey.webp)
 
-## 大写人民币打印
-这个大写人民币打印就比较有意思了，使用大写字母`R`进行激活，后续输入键盘上的数字键（小键盘上的无效，要字母上方的数字）：
-![大写人民币](/image/demo/rmbKey.webp)
+## Date Printing
+
+Keyword: "date":
+![Date Printing](/image/demo/dateKey.webp)
+
+## Capitalized Chinese Currency Printing
+
+This feature of printing capitalized Chinese currency is quite interesting. It is activated by using the uppercase letter "`R`" and then inputting the numeric keys on the keyboard (the keys above the letters, not the ones on the numpad):
+![Capitalized Chinese Currency](/image/demo/rmbKey.webp)
