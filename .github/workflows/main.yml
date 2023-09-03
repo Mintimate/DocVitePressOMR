@@ -25,7 +25,7 @@ jobs:
                   node-version: v18.17.0
 
             #缓存依赖
-            - name: Cache nodemodules
+            - name: Cache node module
               uses: actions/cache@v1
               env:
                   cache-name: cache-node-modules
@@ -41,15 +41,15 @@ jobs:
                       ${{ runner.os }}-
 
             # 装依赖
-            - name: Install
+            - name: Install Module
               run: yarn
 
             # 打包
-            - name: Build
+            - name: Build Project
               run: yarn build
 
             # 上传打包资源
-            - name: Deploy
+            - name: Deploy To Host
               uses: easingthemes/ssh-deploy@v2.0.7
               env:
                   SSH_PRIVATE_KEY: ${{ env.SERVER_PRIVATE_KEY }}
@@ -57,5 +57,5 @@ jobs:
                   SOURCE: '.vitepress/dist/'
                   REMOTE_HOST: ${{ env.SERVER_HOST }}
                   REMOTE_USER: ${{ env.USER_NAME }}
-                  TARGET: ~/myApplication # 服务器目标路径
+                  TARGET: /www/webRoot/www.mintimate.cc # 服务器目标路径
 
