@@ -40,7 +40,14 @@ export default defineConfig({
             'data-website-id': 'a8627773-87e5-403f-8579-b3baf4d4e368',
             async: ''
         }
-        ]
+        ],
+        // 万维AD检测
+        [
+            'script', {
+            type: 'text/javascript',
+            src: '/verifyBlock.js',
+        }
+        ],
     ],
     locales: {
         root: {
@@ -74,6 +81,7 @@ export default defineConfig({
                             {text: '安装rime', link: '/guide/installRime'},
                             {text: '导入薄荷拼音', link: '/guide/importMint'},
                             {text: 'Emoji配置(OpenCC)', link: '/guide/openccEmoji'},
+                            {text: '模糊拼音设置', link: '/guide/fuzzyPinyin'},
                         ]
                     }
                     ]
@@ -120,6 +128,7 @@ export default defineConfig({
                             {text: 'Install Rime', link: '/en/guide/installRime'},
                             {text: 'Import Oh-my-rime', link: '/en/guide/importMint'},
                             {text: 'Emoji Configuration (OpenCC) ', link: '/en/guide/openccEmoji'},
+                            {text: 'FuzzyPinyin', link: '/en/guide/fuzzyPinyin'},
                         ]
                     }]
                 },
@@ -132,8 +141,9 @@ export default defineConfig({
         docFooter: {prev: '上一篇', next: '下一篇'},
         footer: {
             message: '<a href="https://www.mintimate.cn" target="_blank">Powered by creativity and powered by Mintimate</a>',
-            copyright: '<a href="https://beian.miit.gov.cn" target="_blank">闽ICP备2021000722号-3</a> <br/>' +
-                '          <a href="http://www.beian.gov.cn" target="_blank">闽公网安备 35021102001843号</a>'
+            copyright: '<a href="https://beian.miit.gov.cn" target="_blank">闽ICP备2021000722号-3</a> | ' +
+                '          <a href="http://www.beian.gov.cn" target="_blank">闽公网安备 35021102001843号</a> <br/>' +
+                '友情链接♥️: <a href="http://www.mintimate.cn" target="_blank">Mintimate\'s Blog</a> | <a href="https://www.cloudflare.com/" target="_blank">CloudFlare</a>'
         },
         // https://vitepress.dev/reference/default-theme-config
 
