@@ -63,4 +63,5 @@ Linux上的ibus，受限于不同的平台使用的ibus配置，无法进行更�
 正如前文所说，**Linux如果使用ibus，受限于系统样式，无法进行外观的自定义**；比如: GNOME上使用本输入法配置:
 ![Linux上外观(继承主系统)](/image/demo/Linux_Mint.webp)
 
+如果你使用Fcitx5，可以安装主题：[薄荷拼音外观风格主题_Fcitx](/resources/ohMyRimeThemeForFcitx5.zip)
 

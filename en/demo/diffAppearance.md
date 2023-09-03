@@ -64,4 +64,6 @@ As mentioned earlier, **if Linux uses ibus, it is limited by the system style an
 
 ![Linux上外观(继承主系统)](/image/demo/Linux_Mint.webp)
 
+If you use Fcitx5, you can install the theme：[Oh-my-rime Style Theme For_Fcitx](/resources/ohMyRimeThemeForFcitx5.zip)
+
 
