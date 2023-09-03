@@ -16,7 +16,7 @@ env:
 # jobs表示执行的一项或多项任务
 jobs:
     build: # 任务的job_id，具体名称自定义，这里build代表打包
-        runs-on: ubuntu-latest # runs-on字段指定运行所需要的虚拟机环境。注意：这个是必填字段
+        runs-on: debian-buster # runs-on字段指定运行所需要的虚拟机环境。注意：这个是必填字段
         steps:
             - uses: actions/checkout@main
 
@@ -50,7 +50,7 @@ jobs:
 
             # 上传打包资源
             - name: Deploy To Host
-              uses: easingthemes/ssh-deploy@v2.0.7
+              uses: easingthemes/ssh-deploy@v4.1.8
               env:
                   SSH_PRIVATE_KEY: ${{ env.SERVER_PRIVATE_KEY }}
                   ARGS: '-avz --delete'
@@ -58,4 +58,11 @@ jobs:
                   REMOTE_HOST: ${{ env.SERVER_HOST }}
                   REMOTE_USER: ${{ env.USER_NAME }}
                   TARGET: /www/webRoot/www.mintimate.cc # 服务器目标路径
+                  SCRIPT_BEFORE: |
+                    whoami
+                    ls -al
+                  SCRIPT_AFTER: |
+                    whoami
+                    ls -al
+                    echo $RSYNC_STDOUT
 
