@@ -1,0 +1,46 @@
+image: node:lts-buster
+
+cache:           # 设置缓存
+  paths:
+    - .vitepress/dist/   # 缓存生成出来的文件目录
+
+stages:          # 全部的步骤
+  - build
+  - deploy
+
+build-job:       # 打包阶段
+  stage: build
+  script:
+    - echo "设置国内更新源"
+    - npm config set registry http://mirrors.cloud.tencent.com/npm/ # 设置国内源
+    - echo "执行依赖的更新"
+    - npm install
+    - echo "执行打包操作"
+    - npm run build
+
+deploy-job:      # 部署阶段
+  stage: deploy
+  script:
+    - echo "开始部署……"
+    - cp /etc/apt/sources.list /etc/apt/sources.list.bak
+    - echo "设置更新源"
+    - bash -c 'echo "deb http://mirrors.cloud.tencent.com/debian/ buster main non-free contrib" > /etc/apt/sources.list'
+    - bash -c 'echo "deb-src http://mirrors.cloud.tencent.com/debian/ buster main non-free contrib" >> /etc/apt/sources.list' 
+    - bash -c 'echo "deb http://mirrors.cloud.tencent.com/debian/ buster-updates main non-free contrib" >> /etc/apt/sources.list'
+    - bash -c 'echo "deb-src http://mirrors.cloud.tencent.com/debian/ buster-updates main non-free contrib" >> /etc/apt/sources.list'
+    - bash -c 'echo "deb http://mirrors.cloud.tencent.com/debian/ buster-backports main non-free contrib" >> /etc/apt/sources.list'  
+    - bash -c 'echo "deb-src http://mirrors.cloud.tencent.com/debian/ buster-backports main non-free contrib" >> /etc/apt/sources.list'
+    - bash -c 'echo "deb http://security.debian.org/ buster/updates main contrib non-free" >> /etc/apt/sources.list'
+    - bash -c 'echo "deb-src http://security.debian.org/ buster/updates main contrib non-free" >> /etc/apt/sources.list'
+    - apt update
+    - echo "安装rsync"
+    - apt install rsync -y
+    - echo "设置SSH无感验证"
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - mkdir -p ~/.ssh
+    - eval $(ssh-agent -s)
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - echo "SCP传输"
+    - ssh-add <(echo "$MINE_SERVER_KEY")
+    - rsync -r --delete .vitepress/dist/ ${MINE_SERVER_USER}@${MINE_SERVER_IP}:${MINE_SERER_PATH}
+    - echo "应用部署完成"
