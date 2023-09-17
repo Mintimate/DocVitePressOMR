@@ -3,14 +3,15 @@ name: note build
 on:
     push:
         # 只有master分支发生push事件时，才会触发workflow
-        branches: [main]
+        branches: [github_action]
     pull_request:
-        branches: [main]
+        branches: [github_action]
 
 env:
     SERVER_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }} # 服务器私钥
     SERVER_HOST: ${{ secrets.SERVER_HOST }} # 服务器IP地址
     USER_NAME: ${{ secrets.SERVER_USER }} # 服务器用户名
+    TARGET_PATH: ${{ secrets.SERVER_TARGET }} # 服务器的部署地址
     cache-name: note
 
 # jobs表示执行的一项或多项任务
@@ -57,12 +58,10 @@ jobs:
                   SOURCE: '.vitepress/dist/'
                   REMOTE_HOST: ${{ env.SERVER_HOST }}
                   REMOTE_USER: ${{ env.USER_NAME }}
-                  TARGET: /www/webRoot/www.mintimate.cc # 服务器目标路径
+                  TARGET: ${{ env.TARGET_PATH}}  # 服务器目标路径
                   SCRIPT_BEFORE: |
                     whoami
-                    ls -al
                   SCRIPT_AFTER: |
                     whoami
-                    ls -al
                     echo $RSYNC_STDOUT
 

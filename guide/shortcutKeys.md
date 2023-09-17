@@ -50,7 +50,7 @@ key_binder:
 
 <div class="wwads-cn wwads-horizontal" data-id="266"></div>
 
-# 薄荷拼音的快捷键
+## 薄荷拼音的快捷键
 薄荷拼音的快捷键，默认的配置比较简单：
 - 最初是使用`[、]`进行上下页的翻页；
 - 在2023.09.15后，增加`-、=`进行翻页。
@@ -69,7 +69,7 @@ key_binder:
 
 你可以选择更改`rime_mint.custom.yaml`来覆盖`rime_mint.schema.yaml`，或者直接修改`rime_mint.schema.yaml`。
 
-# 快捷键映射
+## 快捷键映射
 支持映射的`accept`如下：
 `accept` 和 `send` 可用字段除A-Za-z0-9外，还可以包含键盘上实际的所有按键：
 ```yaml

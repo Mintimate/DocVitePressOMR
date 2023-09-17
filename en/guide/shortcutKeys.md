@@ -46,7 +46,7 @@ In the above configuration, the `when` field represents different modes of the i
 
 <div class="wwads-cn wwads-horizontal" data-id="266"></div>
 
-# Shortcut Keys for Oh-My-Rime
+## Shortcut Keys for Oh-My-Rime
 
 The default configuration for shortcut keys in Oh-My-Rime is relatively simple:
 - Initially, `[` and `]` were used for page up and page down.
@@ -65,7 +65,7 @@ key_binder:
  ```
 Yes, you have the option to either modify the `rime_mint.custom.yaml` file to override the settings in `rime_mint.schema.yaml`, or directly modify the rime_mint.schema.yaml file.
 
-# Key Mapping
+## Key Mapping
 The supported mappings for `accept` are as follows:
 The `accept` and `send` fields can contain all keys on the keyboard, in addition to A-Za-z0-9:
 ```yaml
