@@ -82,6 +82,7 @@ export default defineConfig({
                             {text: '导入薄荷拼音', link: '/guide/importMint'},
                             {text: 'Emoji配置(OpenCC)', link: '/guide/openccEmoji'},
                             {text: '模糊拼音设置', link: '/guide/fuzzyPinyin'},
+                            {text: '输入法快捷键', link: '/guide/shortcutKeys'},
                         ]
                     }
                     ]
@@ -129,6 +130,7 @@ export default defineConfig({
                             {text: 'Import Oh-my-rime', link: '/en/guide/importMint'},
                             {text: 'Emoji Configuration (OpenCC) ', link: '/en/guide/openccEmoji'},
                             {text: 'FuzzyPinyin', link: '/en/guide/fuzzyPinyin'},
+                            {text: 'shortcutKeys', link: '/en/guide/shortcutKeys'},
                         ]
                     }]
                 },
