@@ -1,6 +1,11 @@
 ---
 layout: doc
-title: Reverse Lookup Function 
+title: Reverse Lookup Function
+head:
+  - - meta
+    - name: keywords
+      content: oh-my-rime, function keys, reverse lookup, combination input, second translator
+description: The reverse lookup function provided by oh-my-rime helps users with character decomposition input, stroke input, and Wubi input during usage. For example, inputting three "牛" characters can automatically combine them into "犇".
 aside: true
 ---
 

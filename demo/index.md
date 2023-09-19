@@ -1,7 +1,11 @@
 ---
 layout: doc
 title: 效果演示
-description: hello
+head:
+  - - meta
+    - name: keywords
+      content: 薄荷拼音,薄荷拼音效果展示,使用展示,薄荷拼音外观,薄荷拼音预览
+description: 基于rime输入法框架，预览安装薄荷拼音后的效果、外观；以及在除了支持字典功能外，支持的特定功能和，如：Emoji、支持拆字反查输入、五笔反查输入、笔画反查输入等。
 aside: true
 ---
 # 效果演示

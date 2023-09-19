@@ -1,6 +1,11 @@
 ---
 layout: doc
 title: 反查功能
+head:
+  - - meta
+    - name: keywords
+      content: 薄荷拼音,功能键,反查,组合输入,第二翻译器
+description: 薄荷拼音自带的反查功能，帮助使用者在使用的过程中，可以拆字输入、笔画输入和五笔输入。比如： 输入三个“牛”，可以自动组合为“犇”
 aside: true
 ---
 # 反查功能

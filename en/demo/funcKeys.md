@@ -1,6 +1,11 @@
 ---
-layout: doc 
-title: Special Function Keys 
+layout: doc
+title: Special Function Keys
+head:
+  - - meta
+    - name: keywords
+      content: oh-my-rime, function keys, shortcuts, Lua effects
+description: With oh-my-rime, you can utilize various related shortcuts and function keys. Some of these function shortcuts are implemented using Lua, allowing for features like automatically inputting the current date, time, and Chinese currency in both numerals and words. These shortcuts can also be implemented within the rime input method.
 aside: true
 ---
 

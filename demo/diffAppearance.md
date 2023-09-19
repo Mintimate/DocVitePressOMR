@@ -1,6 +1,11 @@
 ---
 layout: doc
 title: 不同操作系统展示效果
+head:
+  - - meta
+    - name: keywords
+      content: 薄荷拼音,效果展示,使用效果,外观展示
+description: 薄荷拼音在不同操作系统平台上的效果。适配了暗色和亮色模式，但是操作系统不同、rime实现的框架不同，可能会有所差异。
 aside: true
 ---
 # 外观展示
@@ -58,6 +63,8 @@ Linux上的ibus，受限于不同的平台使用的ibus配置，无法进行更�
 ![Windows外观](/image/demo/Windows_Mint.webp)
 
 受限于我的Windows虚拟机(Arm64)，所以截屏内，文字存在一定的精度丢失，看起来比较模糊。
+
+<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
 
 ## Linux外观
 正如前文所说，**Linux如果使用ibus，受限于系统样式，无法进行外观的自定义**；比如: GNOME上使用本输入法配置:

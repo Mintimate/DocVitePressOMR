@@ -1,6 +1,11 @@
 ---
 layout: doc
 title: 特殊功能键
+head:
+  - - meta
+    - name: keywords
+      content: 薄荷拼音,功能键,快捷键,Lua效果
+description: 使用薄荷拼音，可以使用的相关快捷键。借助Lua实现的一些功能快捷键。比如： 自动输入当天日期、时间和人民币大小写等。在rime输入法上也可以实现快捷输入。
 aside: true
 ---
 

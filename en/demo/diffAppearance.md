@@ -1,6 +1,11 @@
 ---
 layout: doc
-title: 不同操作系统展示效果
+title: Different Display On Operating Systems
+head:
+  - - meta
+    - name: keywords
+      content: oh-my-rime, demonstration, usage, appearance
+description: The demonstration of oh-my-rime on different operating system platforms. It is adapted to dark and light modes, but there may be variations depending on the different operating systems and frameworks used for rime implementation.
 aside: true
 ---
 # Appearance
