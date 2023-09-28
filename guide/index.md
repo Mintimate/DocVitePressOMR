@@ -23,7 +23,7 @@ aside: true
 
 ## 鸣谢
 与此同时，薄荷拼音的配置，离不开网上的丰富教程；薄荷拼音大量借鉴了：
-- 薄荷拼音: https://github.com/iDvel/rime-ice
+- 雾凇拼音: https://github.com/iDvel/rime-ice
 
 感谢爱发电的支持用户：
 - 『暂无数据』
