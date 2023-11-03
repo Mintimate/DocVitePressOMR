@@ -43,4 +43,4 @@ deploy-job:      # 部署阶段
     - echo "SCP传输"
     - ssh-add <(echo "$MINE_SERVER_KEY")
     - rsync -r --delete .vitepress/dist/ ${MINE_SERVER_USER}@${MINE_SERVER_IP}:${MINE_SERER_PATH}
-    - echo "应用部署完成"
+    - echo "应用部署完成！"
