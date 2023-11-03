@@ -1,4 +1,4 @@
-image: node:lts-buster
+image: mirror.docker.mintimate.cc/my_center/my-node:latest
 
 cache:           # 设置缓存
   paths:
