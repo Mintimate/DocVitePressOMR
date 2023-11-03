@@ -8,7 +8,7 @@ aside: true
 强烈建议配合视频进行操作：
 - [跨平台、无隐私追踪的开源输入法Rime定制指南: 聪明的输入法懂我心意!](https://www.bilibili.com/video/BV12M411T7gf)
 
-<div class="wwads-cn wwads-horizontal" data-id="266"></div>
+
 
 ## macOS安装rime
 正如前文所说的，macOS上的rime框架输入法，可以使用鼠须管。

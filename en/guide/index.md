@@ -12,7 +12,7 @@ If you find this document or Oh-my-rime Pinyin useful, you can buy me a coffee:
 
 > Please be sure to leave a note "Mint Pinyin" or "oh-my-rime". Donors of coffee ☕️ will be credited in the "Acknowledgements" (●'◡'●)ノ♥
 
-<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
+
 
 ## Recommended Tutorials
 

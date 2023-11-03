@@ -11,8 +11,6 @@ aside: true
 # Appearance
 This primarily showcases the appearance on Windows and macOS.
 
-<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
-
 The main configuration for colors is as follows:
 ```yaml
   "preset_color_schemes/MyStyleMi":

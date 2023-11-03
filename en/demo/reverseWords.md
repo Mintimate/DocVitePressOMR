@@ -13,8 +13,6 @@ aside: true
 
 Reverse lookup, simply put, is the use of alternative input methods to search for character inputs within the current input method.
 
-<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
-
 Here's an example: using the Wubi input method to view words under the current Pinyin input method.
 
 Oh-My-Rime includes three reverse lookup functions:

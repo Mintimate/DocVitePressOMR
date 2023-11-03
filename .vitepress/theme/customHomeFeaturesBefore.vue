@@ -12,6 +12,11 @@ const { Layout } = DefaultTheme
         <div class="wwads-cn wwads-horizontal container" data-id="266" ></div>
       </div>
     </template>
+    <template #aside-ads-after>
+      <div class="VPCarbonAds" style="margin-top: 20px">
+        <div class="wwads-cn wwads-vertical container" style="max-width: 200px" data-id="266" ></div>
+      </div>
+    </template>
   </Layout>
 </template>
 

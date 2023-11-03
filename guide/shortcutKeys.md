@@ -48,7 +48,7 @@ key_binder:
 - `always`: 任意输入模式；
 - `composing`: 输入法为组合状态。
 
-<div class="wwads-cn wwads-horizontal" data-id="266"></div>
+
 
 ## 薄荷拼音的快捷键
 薄荷拼音的快捷键，默认的配置比较简单：

@@ -11,8 +11,6 @@ aside: true
 # 外观展示
 主要适配了Windows和macOS上的外观。
 
-<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
-
 主要配置的颜色，参考:
 ```yaml
   "preset_color_schemes/MyStyleMi":

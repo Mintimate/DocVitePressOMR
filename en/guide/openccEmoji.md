@@ -13,7 +13,6 @@ There are various ways to input emojis in an input method, such as:
 
 Currently, both of the above methods are good options. Here, we will focus on the OpenCC method.
 
-<div class="wwads-cn wwads-horizontal" data-id="266"></div>
 
 ## OpenCC
 

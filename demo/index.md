@@ -12,8 +12,6 @@ aside: true
 本章节将展示薄荷拼音的适配情况和使用的效果。
 ![效果简单展示](/image/demo/guide.webp)
 
-<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
-
 ## 平台支持的情况
 目前薄荷拼音支持的桌面平台有：
 - Windows: Windows上的Rime框架输出法--[小狼毫输入法](https://github.com/rime/weasel)

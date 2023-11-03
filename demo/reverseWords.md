@@ -11,8 +11,6 @@ aside: true
 # 反查功能
 所谓反查，简单地说就是使用其他输入模式，查找现有输入模式下的字符输入。
 
-<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
-
 举个例子: 使用五笔查看当前拼音输入法下的词语。
 
 薄荷拼音内包含三个反查:

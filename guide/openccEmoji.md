@@ -10,7 +10,7 @@ aside: true
 
 目前上述两种方法都是不错的方法，这里介绍OpenCC的方法。
 
-<div class="wwads-cn wwads-horizontal" data-id="266"></div>
+
 
 ## OpenCC
 opencc 的全名是`Open Chinese Convert`，最初用在简体中文和繁体中文之间进行转换。

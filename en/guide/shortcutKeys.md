@@ -44,7 +44,6 @@ In the above configuration, the `when` field represents different modes of the i
 - `always`: Any input mode.
 - `composing`: When the input method is in the composing state.
 
-<div class="wwads-cn wwads-horizontal" data-id="266"></div>
 
 ## Shortcut Keys for Oh-My-Rime
 

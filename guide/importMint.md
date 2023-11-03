@@ -5,8 +5,6 @@
 
 但是，这一切对于一个新用户来说，可能比较复杂；在探索Rime的配置时候，建议使用他人配置好的模板，比如： 雾凇拼音。当然，也可以用本文的薄荷拼音。
 
-<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
-
 ## 下载薄荷拼音
 薄荷拼音是使用[GPL 2.0](https://github.com/Mintimate/oh-my-rime/blob/main/LICENSE)的开源项目，这意味着你可以看到它的一切源代码，并且自己定制和更改，但是请遵守开源协议，不得用于商用。
 

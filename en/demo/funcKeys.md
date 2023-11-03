@@ -17,8 +17,6 @@ With the help of `Lua` scripts, Oh-my-rime has implemented some specific functio
 - Date printing
 - Capitalized Chinese currency printing
 
-<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
-
 ## Time Printing
 
 Within the input method, simply input the keyword "`time`," and the input method will automatically generate a sentence based on the current time using a Lua script:
