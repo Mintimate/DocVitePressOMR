@@ -17,7 +17,7 @@ const {Layout} = DefaultTheme
 
       <div class="supportMeCard">
         <span class="supportMeCardText">
-              Support Me A Milk Tea  <br/>(●'◡'●)ﾉ♥
+              Sponsor a scoop of matcha powder for better posts. <br/>(●'◡'●)ﾉ♥
           </span>
       </div>
       </a>
