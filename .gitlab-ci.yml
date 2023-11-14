@@ -22,19 +22,6 @@ deploy-job:      # 部署阶段
   stage: deploy
   script:
     - echo "开始部署……"
-    - cp /etc/apt/sources.list /etc/apt/sources.list.bak
-    - echo "设置更新源"
-    - bash -c 'echo "deb http://mirrors.cloud.tencent.com/debian/ buster main non-free contrib" > /etc/apt/sources.list'
-    - bash -c 'echo "deb-src http://mirrors.cloud.tencent.com/debian/ buster main non-free contrib" >> /etc/apt/sources.list' 
-    - bash -c 'echo "deb http://mirrors.cloud.tencent.com/debian/ buster-updates main non-free contrib" >> /etc/apt/sources.list'
-    - bash -c 'echo "deb-src http://mirrors.cloud.tencent.com/debian/ buster-updates main non-free contrib" >> /etc/apt/sources.list'
-    - bash -c 'echo "deb http://mirrors.cloud.tencent.com/debian/ buster-backports main non-free contrib" >> /etc/apt/sources.list'  
-    - bash -c 'echo "deb-src http://mirrors.cloud.tencent.com/debian/ buster-backports main non-free contrib" >> /etc/apt/sources.list'
-    - bash -c 'echo "deb http://security.debian.org/ buster/updates main contrib non-free" >> /etc/apt/sources.list'
-    - bash -c 'echo "deb-src http://security.debian.org/ buster/updates main contrib non-free" >> /etc/apt/sources.list'
-    - apt update
-    - echo "安装rsync"
-    - apt install rsync -y
     - echo "设置SSH无感验证"
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - mkdir -p ~/.ssh
