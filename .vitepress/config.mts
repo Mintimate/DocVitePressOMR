@@ -57,32 +57,32 @@ export default defineConfig({
             lang: 'zh',
             themeConfig: {
                 nav: [
-                    {text: '关于', link: '/teamInfo'},
+                    {text: '关于', link: '/zh/teamInfo'},
                     {text: '主页', link: '/'},
-                    {text: '效果演示', link: '/demo/'},
-                    {text: '配置教程', link: '/guide/'},
+                    {text: '效果演示', link: '/zh/demo/'},
+                    {text: '配置教程', link: '/zh/guide/'},
                 ],
                 outlineTitle: '此页面',
                 outline: 'deep',
                 sidebar: {
-                    '/demo/': [{
+                    '/zh/demo/': [{
                         text: '效果演示',
                         items: [
-                            {text: '梗概', link: '/demo/'},
-                            {text: '外观展示', link: '/demo/diffAppearance'},
-                            {text: '反查模块', link: '/demo/reverseWords'},
-                            {text: '特殊功能键', link: '/demo/funcKeys'},
+                            {text: '梗概', link: '/zh/demo/'},
+                            {text: '外观展示', link: '/zh/demo/diffAppearance'},
+                            {text: '反查模块', link: '/zh/demo/reverseWords'},
+                            {text: '特殊功能键', link: '/zh/demo/funcKeys'},
                         ]
                     }],
-                    '/guide/': [{
+                    '/zh/guide/': [{
                         text: '配置教程',
                         items: [
-                            {text: '引导', link: '/guide/'},
-                            {text: '安装rime', link: '/guide/installRime'},
-                            {text: '导入薄荷拼音', link: '/guide/importMint'},
-                            {text: 'Emoji配置(OpenCC)', link: '/guide/openccEmoji'},
-                            {text: '模糊拼音设置', link: '/guide/fuzzyPinyin'},
-                            {text: '输入法快捷键', link: '/guide/shortcutKeys'},
+                            {text: '引导', link: '/zh/guide/'},
+                            {text: '安装rime', link: '/zh/guide/installRime'},
+                            {text: '导入薄荷拼音', link: '/zh/guide/importMint'},
+                            {text: 'Emoji配置(OpenCC)', link: '/zh/guide/openccEmoji'},
+                            {text: '模糊拼音设置', link: '/zh/guide/fuzzyPinyin'},
+                            {text: '输入法快捷键', link: '/zh/guide/shortcutKeys'},
                         ]
                     }
                     ]

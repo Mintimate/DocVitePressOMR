@@ -24,3 +24,8 @@
 .wwads-text{
     color: var(--vp-c-text-1)!important;
 }
+
+/*去除底部的下划线*/
+.VPFooter a{
+    text-decoration-line: unset!important;
+}
