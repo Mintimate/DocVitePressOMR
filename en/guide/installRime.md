@@ -70,14 +70,14 @@ Before installing, it is recommended to update the `librime` dependencies. The `
 
 Since Linux environments differ, required configurations also differ. Here we demonstrate installation on Kali Linux (based on Debian 11, using Gnome desktop) as an example.
 
-## ibus Version
+### ibus Version
 The ibus version is easy:
 ```bash
 sudo apt install ibus-rime
 ```
 Then restart or logout/login the current user session and add ibus in the system.
 
-## fcitx5 Version
+### fcitx5 Version
 The fcitx5 version is slightly more complex (ibus is still more common):
 ```bash
 sudo apt install fcitx5 fcitx5-chinese-addons
@@ -122,3 +122,11 @@ Find the Fcitx5 options in the status bar and open them:
 Select Rime input method to activate:
 
 ![Add Rime in Fcitx5](/image/guide/openFcitx5ConfigInBar.webp)
+
+## iOS安装rime
+
+On iOS, we recommend using:
+
+- [Hamster Input Method: https://apps.apple.com/cn/app/仓输入法/id6446617683](https://apps.apple.com/cn/app/%E4%BB%93%E8%BE%93%E5%85%A5%E6%B3%95/id6446617683)
+
+It is very user-friendly ( ◔ ڼ ◔ )

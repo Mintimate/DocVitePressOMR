@@ -67,7 +67,7 @@ Linux上安装Rime的方法也很多，主要分为两个方法：
 
 每个人的Linux环境不一样，需要安装的配置也不一样。这里以Linux Kali发行版本（基于Debian 11，使用Gnome桌面环境）为例，分别进行演示。
 
-## ibus版本
+### ibus版本
 使用ibus版本很简单：
 ```bash
 sudo apt install ibus-rime
@@ -75,7 +75,7 @@ sudo apt install ibus-rime
 
 之后，重启或者注销当前用户对话；在系统内添加ibus即可。
 
-## fcitx5版本
+### fcitx5版本
 如果使用fcitx5版本，操作会相对复杂一点（目前还是ibus比较多点）：
 ```bash
 sudo apt install fcitx5 fcitx5-chinese-addons
@@ -116,6 +116,11 @@ export XMODIFIERS=@im=fcitx5
 选择Rime输入法进行激活：
 ![在Fcitx5内添加Rime](/image/guide/openFcitx5ConfigInBar.webp)
 
+## iOS安装rime
 
+在iOS上，推荐使用:
+- [仓输入法: https://apps.apple.com/cn/app/仓输入法/id6446617683](https://apps.apple.com/cn/app/%E4%BB%93%E8%BE%93%E5%85%A5%E6%B3%95/id6446617683)
+
+非常好用( ◔ ڼ ◔ )
 
 
