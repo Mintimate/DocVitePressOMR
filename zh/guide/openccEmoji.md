@@ -1,7 +1,11 @@
 ---
 layout: doc
 title: Emoji配置(OpenCC)
-aside: true
+head:
+  - - meta
+    - name: keywords
+      content: 薄荷输入法,OpenCC,rime emoji
+description: 薄荷输入法自带的OpenCC，帮助使用者在使用的过程中，输入Emoji表情
 ---
 # Emoji配置
 输入法内打出Emoji有很多种不同的方式，比如：
@@ -20,7 +24,7 @@ opencc 的全名是`Open Chinese Convert`，最初用在简体中文和繁体中
 opencc -i simplified.txt -o traditional.txt -c t2s
 ```
 
-但是原理实际上就是问题的替换和扩写，所以后续也用来作为Emoji的实现。
+但是原理实际上就是文本的替换和扩写，相当于Java的`replace`，所以后续也用来作为Emoji的实现。
 
 网上还有一些人用来古诗句、中英词典，其实也是一个不错的方法；但是OpenCC因为是文本的替换，不适合文本量众多的词句库。
 
@@ -34,13 +38,13 @@ opencc -i simplified.txt -o traditional.txt -c t2s
 ```
 这个时候，输入`露齿笑`，就会把词语变成`露齿笑`和`😃`，达到Emoji在输入法内混输的目的。
 
-## 薄荷拼音内Emoji
-现在，我们来看看薄荷拼音内的Emoji；实际上薄荷拼音的Emoji也改版多次，比如：之前有引入iOS16的Emoji，结果Emoji过多，输入`花`等文字，可能候选项的前15个，都是Emoji；
+## 薄荷输入法内Emoji
+现在，我们来看看薄荷输入法内的Emoji；实际上薄荷输入法的Emoji也改版多次，比如：之前有引入iOS16的Emoji，结果Emoji过多，输入`花`等文字，可能候选项的前15个，都是Emoji；
 
-最后使用的方法，也是回到了基础。
+最后使用的方法，也是回到了相对基础的版本，谋求一个平衡。
 
-### Emoji配置文件
-Emoji的配置文件，就是OpenCC文件夹内的三个文件：
+### 定制Emoji
+如果你想对Emoji进行定制，Emoji的配置文件，就是OpenCC文件夹内的三个文件：
 ```txt
 .
 ├── emoji.json
@@ -66,11 +70,11 @@ switches:
 ```yaml
 engine:
   filters:
-    - simplifier@emoji_suggestion         # Emoji
-    - simplifier@simplification           # 简体字、繁体字转换
+    - simplifier                          # rime自带的繁体字过滤
+    - simplifier@emoji_suggestion         # Emoji过滤
+    - simplifier@transcription_cc         # 简体繁体过滤
     - lua_filter@reduce_english_filter    # 降低部分英语单词在候选项的位置
-    - simplifier
-    - uniquifier
+    - uniquifier                          # 去重
 ```
 
 当然，还有具体的过滤细则：
@@ -82,4 +86,4 @@ emoji_suggestion:
   tips: all
   inherit_comment: false
 ```
-以上内容，构成薄荷拼音的Emoji OpenCC。如果需要更改，可以参考上述内容。
+以上内容，构成薄荷输入法的Emoji OpenCC。如果需要更改，可以参考上述内容。

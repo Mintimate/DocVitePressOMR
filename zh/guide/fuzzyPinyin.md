@@ -1,3 +1,13 @@
+---
+layout: doc
+title: 模糊拼音
+head:
+  - - meta
+    - name: keywords
+      content: Rime模糊拼音,Rime自动纠错,输入法定制
+description: 模糊拼音是指在拼写汉字时，发音与标准拼音相对模糊或不准确的一种拼音方式。它常见于一些非标准的拼音输入法或个别人使用拼音输入法输入时出现的情况。在薄荷输入法、Rime内，如何设置模糊拼音，可以查看本文教程。
+---
+
 # 模糊拼音
 
 模糊拼音是指在拼写汉字时，发音与标准拼音相对模糊或不准确的一种拼音方式。它常见于一些非标准的拼音输入法或个别人使用拼音输入法输入时出现的情况。
@@ -20,14 +30,16 @@ ang -> an
 ```
 
 相对的，如果像这样的绕口令：
-``txt
+```txt
 生身亲母亲，谨请您就寝，请您心宁静，身心很要紧。新星伴月明，银光澄清清。尽是清静境，警铃不要惊。您醒我进来，进来敬母亲。
-
+```
+对应的拼音: 
+```text
 shēng shēn qīn mǔ qīn, jǐn qǐng nín jiù qǐn, qǐng nín xīn níng jìng, shēn xīn hěn yào jǐn.
 xīn xīng bàn yuè míng, yín guāng chéng qīng qīng.
 jìn shì qīng jìng jìng, jǐng líng bú yào jīng.
 nín xǐng wǒ jìn lái, jìn lái jìng mǔ qīn.
-``
+```
 
 如果使用模糊拼音，忽略后鼻音：
 ```txt
@@ -54,7 +66,14 @@ shen shen qin mu qin, jin qin nin jiu qin, qin nin xin nin jin, shen xin hen yao
 ```
 这样的话，首选项是准确的拼音，其他选项是对模糊拼音的设置。
 
-当然，通过模糊拼音，还可以设置自动纠错：
+> 建议保留简拼内容，去除的话，输入就一定需要完整拼音，如： `你好(nihao)`，就无法输入`nh`或者输入`n`出现`你`。
+```yarl
+# 建议保留内容
+- abbrev/^([a-z]).+$/$1/ #简拼（首字母）
+- abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
+```
+
+通过模糊拼音，还可以设置自动纠错（按键盘太快，导致输入错误，可以一定程度容错）：
 ```yaml
  ### 自动纠错
  # 有些规则对全拼简拼混输有副作用：如「x'ai 喜爱」被纠错为「xia 下」
@@ -133,14 +152,13 @@ shen shen qin mu qin, jin qin nin jiu qin, qin nin xin nin jin, shen xin hen yao
  - derive/([tl])eng$/$1en/ # ten → teng
  - derive/([qwrtypsdfghjklzxcbnm])([aeio])ng$/$1ng/ # lng → lang、leng、ling、long
 ```
-
 使用自动纠错，可以让我们在输入的时候，一些情况下打错拼音也可以输入我们想要的。
+> 注意: 自动纠错参考自『雾凇拼音』，此处特别感谢。
 
+## 薄荷拼音的模糊拼音<Badge type="tip" text="^2023.11.30" />
+薄荷输入法内的薄荷拼音默认关闭了除了自动纠错外的模糊拼音。
 
-## 薄荷拼音的模糊拼音
-薄荷拼音默认启动了模糊拼音，其中，自动纠错参考自『雾凇拼音』。
-
-如果你不喜欢模糊拼音，可以删除`rime_mint.schema.yaml`文件中的模糊拼音部分：
+如果你喜欢模糊拼音，可以参考上文，并对`rime_mint.schema.yaml`文件中的模糊拼音部分的注释进行删除：
 ![模糊拼音部分](/image/guide/fuzzyPinyinMintSchema.webp)
 
 删除后，重新部署rime输入法以应用薄荷拼音的新配置。
@@ -151,6 +169,17 @@ shen shen qin mu qin, jin qin nin jiu qin, qin nin xin nin jin, shen xin hen yao
 ```yaml
   'speller/algebra':
     - erase/^xx$/ # 首选保留
+    - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
+    - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
+    - derive/([aei])n$/$1ng/ # en => eng, in => ing
+    - derive/([aei])ng$/$1n/ # eng => en, ing => in
+    - derive/([iu])an$/$lan/ # ian => iang, uan => uang
+    - derive/([iu])ang$/$lan/ # iang => ian, uang => uan
+    - derive/([aeiou])ng$/$1gn/        # dagn => dang
+    - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
+    - derive/ong$/on/                  # zhonguo => zhong guo
+    - abbrev/^([a-z]).+$/$1/ #简拼（首字母）
+    - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
 ```
 
 ![使用custom覆盖](/image/guide/fuzzyPinyinMintCustom.webp)

@@ -4,37 +4,36 @@ title: Reverse Lookup Function
 head:
   - - meta
     - name: keywords
-      content: oh-my-rime, function keys, reverse lookup, combination input, second translator
-description: The reverse lookup function provided by oh-my-rime helps users with character decomposition input, stroke input, and Wubi input during usage. For example, inputting three "牛" characters can automatically combine them into "犇".
+      content: Oh-my-rime, Mint Pinyin, function keys, reverse lookup, combination input, second translator
+description: Oh-my-rime's built-in reverse lookup function helps users to input characters using other input methods, such as radical-based input, stroke-based input, and Wubi input.
 aside: true
 ---
-
 # Reverse Lookup Function
+Reverse lookup, in simple terms, refers to using alternative input methods to find characters under the current input method.
 
-Reverse lookup, simply put, is the use of alternative input methods to search for character inputs within the current input method.
+For example, using Wubi to view words under the current Pinyin input method.
 
-Here's an example: using the Wubi input method to view words under the current Pinyin input method.
+Oh-my-rime includes three types of reverse lookup:
+- Radical-based reverse lookup (uu)
+- Wubi reverse lookup (uw)
+- Stroke-based reverse lookup (ui)
 
-Oh-My-Rime includes three reverse lookup functions:
+In the near future, Pinyin reverse lookup (up) is expected to be adapted, making it convenient for Wubi users to perform Pinyin reverse lookup within the Wubi input mode.
 
-- Character decomposition reverse lookup
-- Wubi reverse lookup
-- Stroke count reverse lookup
+## Radical-based Reverse Lookup
+**Personally, I think this is the most practical type of reverse lookup**. In Oh-my-rime, press `uu` to activate the radical-based input mode. Subsequent inputs will be interpreted using the radical library.
 
-## Character Decomposition Reverse Lookup
-
-<u>Personally, I believe this is the most practical reverse lookup function</u>. In Oh-My-Rime, under the Chinese input method mode, activate the character decomposition mode by entering `uw`, and the subsequent input will be parsed using the character decomposition library.
-
-For example, if you type `uuniuniuniu` on the keyboard, it will be parsed as a combination of `niu niu niu`, which means three `牛` characters: `犇`. Of course, two `牛` characters also form a word:
-![Two cows](/image/demo/ChaiNiu2.webp)
-![Three cows](/image/demo/ChaiNiu3.webp)
+For example, typing `uuniuniuniu` on the keyboard will be interpreted as the combination of "niu niu niu," which represents three "牛" (cows) and forms the character "犇":
+![Radical-based Reverse Lookup](/image/demo/reverseChaizi.webp)
 
 ## Wubi Reverse Lookup
 
-In Oh-My-Rime, under the Chinese input method mode, activate the Wubi mode by entering `uw`, and the subsequent input will be parsed using Wubi.
+In Oh-my-rime's Mint Pinyin mode, use `uw` to activate the Wubi mode. Subsequent inputs will be interpreted using Wubi.
 
-For example, if you type `uuq` on the keyboard, it will automatically find the character `我` (meaning "I" or "me"); it facilitates searching for characters by combination.
+For example, typing `uuq` on the keyboard will be interpreted as the combination for "q" and automatically retrieve the character "我" (me) for convenient combination lookup:
 
-## Stroke Count Reverse Lookup
+![Wubi Reverse Lookup](/image/demo/reverseWubi.webp)
 
-In Oh-My-Rime, under the Chinese input method mode, activate the stroke mode by entering `ui`, and the subsequent input will be parsed using stroke count.
+## Stroke-based Reverse Lookup
+
+In Oh-my-rime's Mint Pinyin mode, use `ui` to activate the stroke mode. Subsequent inputs will be interpreted using strokes.
