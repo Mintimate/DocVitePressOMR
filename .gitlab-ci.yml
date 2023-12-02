@@ -7,9 +7,12 @@ cache:           # 设置缓存
 stages:          # 全部的步骤
   - build
   - deploy
+  - message
 
 build-job:       # 打包阶段
   stage: build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "main"'
   script:
     - echo "设置国内更新源"
     - npm config set registry http://mirrors.cloud.tencent.com/npm/ # 设置国内源
@@ -20,6 +23,8 @@ build-job:       # 打包阶段
 
 deploy-job:      # 部署阶段
   stage: deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "main"'
   script:
     - echo "开始部署……"
     - echo "设置SSH无感验证"
@@ -31,3 +36,15 @@ deploy-job:      # 部署阶段
     - ssh-add <(echo "$MINE_SERVER_KEY")
     - rsync -r --delete .vitepress/dist/ ${MINE_SERVER_USER}@${MINE_SERVER_IP}:${MINE_SERER_PATH}
     - echo "应用部署完成！"
+
+message:    # 部署成功通知
+  stage: message
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "main"'
+  image: mirror.docker.mintimate.cc/my_center/my-wechat-com-push:latest
+  script:
+    - echo "发送部署成功的信息……"
+    - cd /app
+    - echo "构建SHA:\ ${CI_COMMIT_SHA}"
+    - python3 main.py -s $MINE_WECHAT_COM -m "时间:\ $(date +%Y-%m-%d)\n构建SHA:\ ${CI_COMMIT_SHA}\n\n薄荷输入法文档构建、推送部署成功\n＼(◎◎)／"
+    - echo "消息推送完成(●'◡'●)ﾉ♥！"
