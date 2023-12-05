@@ -3,14 +3,18 @@
 layout: home
 title: oh-my-rime Input Method
 titleTemplate: Mint Pinyin
+head:
+  - - meta
+    - name: keywords
+      content: Mint Input Method,Mint Pinyin,rime,init Weasel,init Squirrel,Linux rime
 
 hero:
   name: "oh-my-rime Input Method"
   text: "Fast initialize rime⚡, support multiple platforms at the same time💻"
-  tagline: It can also be called "Mint Pinyin", or "Mint".
+  tagline: It can also be called "Mint Input Method", or "Mint".
   image:
     src: /banner.png
-    alt: Mint Pinyin
+    alt: Mint Input Method
   actions:
     - theme: brand
       text: Video Quick Start
