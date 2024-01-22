@@ -10,7 +10,7 @@ If you find this document or Oh-my-rime Pinyin useful, you can buy me a coffee:
 
 - [Afdian: @Mintimate](https://afdian.net/a/mintimate)
 
-> Please be sure to leave a note "Mint Pinyin" or "oh-my-rime". Donors of coffee ☕️ will be credited in the "Acknowledgements" (●'◡'●)ノ♥
+> Please be sure to leave a note "Mint Pinyin" or "oh-my-rime". Donors of coffee ☕️ will be credited in the "[Acknowledgements](#Acknowledgements)" (●'◡'●)ノ♥
 
 
 
@@ -30,7 +30,10 @@ At the same time, Oh-my-rime configuration is inseparable from the abundant tuto
 
 Thank you to Afdian supporters:
 
-- 『No data yet』
+| Date       | Platform | User                                                                 | Donate💵 | Comment            |
+|------------|----------|----------------------------------------------------------------------|----------|--------------------|
+| 2024/01/22 | 爱发电      | [爱发电用户_8b769](https://afdian.net/u/8b769b02b8c111ee928952540025c377) | 50¥（KFC） | Hi, 感谢维护oh-my-rime |
+
 
 ## Discussion Group
 
