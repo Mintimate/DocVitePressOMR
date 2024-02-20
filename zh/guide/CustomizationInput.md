@@ -20,8 +20,9 @@ description: 在Rime输入法内，如何同步多端的配置呢？ 并且如�
 - [Rime官方定制指南: https://github.com/rime/home/wiki/CustomizationGuide](https://github.com/rime/home/wiki/CustomizationGuide)
 
 ## 编写词库
-由于 Rime 的设计，拼音词库中并不适用英文单词和超级简拼：
+由于 Rime 的设计，拼音词库中并不适用`英文单词`和`超级简拼`：
 ```yaml
+# 错误（不建议）示例
 hello	hello
 世界	s j
 蒙奇·D·路飞	meng qi d lu fei

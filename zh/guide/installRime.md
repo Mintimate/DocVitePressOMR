@@ -124,3 +124,9 @@ export XMODIFIERS=@im=fcitx5
 非常好用( ◔ ڼ ◔ )
 
 
+## Android安装rime
+
+在Android上，推荐使用：
+- [Fcitx For Android: https://fcitx5-android.github.io/installation/](https://fcitx5-android.github.io/installation/)
+
+不过默认情况下，无法使用Rime，需要安装插件。后续有机会教教大家。
