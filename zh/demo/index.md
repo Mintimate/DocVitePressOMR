@@ -13,39 +13,40 @@ aside: true
 
 本章节将展示薄荷输入法的适配情况和使用的效果。
 
-> Tips: 之前本来叫『薄荷拼音』，后来适配了『98五笔』，感觉叫『薄荷输入法』比较合适✪ω✪
+> Tips: 之前本来叫『薄荷拼音』，后来适配了『98五笔』、『9地球拼音』和『小鹤双拼』，感觉叫『薄荷输入法』比较合适✪ω✪
 
 Github仓库地址: [oh-my-rime: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
 
-镜像仓库地址: [oh-my-rime: https://gitlab.mintimate.cn/Mintimate/oh-my-rime](https://gitlab.mintimate.cn/Mintimate/oh-my-rime)
+镜像仓库地址（如果你无法访问GitHub）: [oh-my-rime: https://gitlab.mintimate.cn/Mintimate/oh-my-rime](https://gitlab.mintimate.cn/Mintimate/oh-my-rime)
 
 ## 平台支持的情况
 支持Rime输入法框架的平台有很多，我们已经进行测试，可以良好使用的：
 - Windows: [小狼毫输入法: https://github.com/rime/weasel](https://github.com/rime/weasel)
 - macOS: [鼠须管: https://github.com/rime/weasel](https://github.com/rime/squirrel)
-- Linux: Linux上可以使用ibus框架和fcitx
+- Linux: Linux上可以使用ibus框架或者fcitx框架
 - iOS: [仓输入法(App Store)](https://apps.apple.com/cn/app/%E4%BB%93%E8%BE%93%E5%85%A5%E6%B3%95/id6446617683)
-
-理论上适配，但是我们未实际测试:
-- Android: [同文输入法: https://github.com/osfans/trime](https://github.com/osfans/trime)
+- Android: 
+  - [小企鹅输入法(Fcitx5 Android): https://fcitx-im.org/wiki/Fcitx_5/zh-cn](https://fcitx-im.org/wiki/Fcitx_5/zh-cn)
+  - [同文输入法: https://github.com/osfans/trime](https://github.com/osfans/trime)
 
 ## 支持的输入方式
 目前支持两大类型的输入方式内，三种输入类型：
 - 全拼类
-  - 薄荷拼音: 招牌主打输入类型，支持各种反查、中英混合输入等，丰富多彩的全拼；
-  - 地球拼音薄荷定制: 基于地球拼音，追加一些定制，属于有薄荷拼音特点的地球拼音；
+  - 薄荷拼音: 招牌主打输入类型，支持各种反查、中英混合输入等，丰富多彩的全拼；词库基于[雾凇拼音词库](https://github.com/iDvel/rime-ice)。
+  - 地球拼音薄荷定制: 基于地球拼音，追加一些定制，进行定制的输入方式；词库自动同步雾凇拼音并使用[Python pypinyin库](https://pypinyin.readthedocs.io/)进行转换。
+  - 小鹤双拼薄荷定制: 基于[小鹤双拼](https://flypy.com/)（声形），进行定制的输入方式。词库使用雾凇拼音。
 - 笔画类
-  - 98五笔薄荷定制: 基于98五笔基础版本进行定制，满足五笔输入的需要；轻量版本的98五笔。
+  - 98五笔薄荷定制: 基于[98五笔基础版本](https://github.com/yanhuacuo/98wubi-tables)进行定制，满足五笔输入的需要；**轻量版本的98五笔**。
 
 ## 支持的功能
 目前支持的功能，主要是:
 - 功能方面
-  - 支持亮色/暗色皮肤样式，在Win11和macOS上，可以根据系统进行切换；
-  - 中文输入法，支持繁体、简体；
-  - 支持中英混合输入；
+  - 支持亮色/暗色皮肤样式，在Windows（Windows 10 1809+ ）和macOS上，可以根据系统进行切换；
+  - 中文输入法，支持繁体（台湾地区风格）、简体；
+  - 支持中英混合输入，如：输入: "哆啦A梦"；
   - 支持Emoji表情和颜文字；
-  - 支持拆字(uu)反查输入、五笔(uw)反查输入、笔画(ui)反查输入；
-  - 支持输入日期、星期、时间和人民币大写
+  - 支持[多种反查输入](reverseWords.html): 支持拆字(uu)反查输入、五笔(uw)反查输入、笔画(ui)反查输入；
+  - 支持[输入日期、星期、时间、农历日期和人民币大写快捷输入](funcKeys.html)。
 - 词库得益于使用[雾凇拼音](https://github.com/iDvel/rime-ice)
   - 《通用规范汉字表》
   - 华宇野风系统词库
@@ -55,3 +56,10 @@ Github仓库地址: [oh-my-rime: https://github.com/Mintimate/oh-my-rime](https:
   - 《同义词词林》
   - 《新华成语大词典》
   - 腾讯词向量
+
+## 特别鸣谢
+薄荷输入法的构造，离不开以下项目的支持：
+- [雾凇拼音: https://github.com/iDvel/rime-ice](https://github.com/iDvel/rime-ice)
+- [98五笔: https://github.com/yanhuacuo/98wubi-tables](https://github.com/yanhuacuo/98wubi-tables)
+
+也感谢 98五笔的维护者[yanhuacuo](https://github.com/yanhuacuo)和雾凇拼音的维护者[iDvel](https://github.com/iDvel)、[mirtlecn](https://github.com/mirtlecn)提供的帮助。
