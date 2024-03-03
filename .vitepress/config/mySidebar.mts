@@ -1,7 +1,7 @@
 export const locales_cn = {
     label: '简体中文',
     title: "oh-my-rime输入法",
-    description: "一套快速初始化rime的模板，因为平时我使用oh-my-zsh，在使用rime时候，有种用omz的感觉；所以我给它取名叫oh-my-rime，你也可以叫它薄荷拼音，亦或者Mint。",
+    description: "一套快速初始化rime的模板，因为平时我使用oh-my-zsh，在使用rime时候，有种用omz的感觉；所以我给它取名叫oh-my-rime，你也可以叫它薄荷拼音，亦或者Mint Input。",
     lang: 'zh',
     link: '/zh/',
     nav: [
@@ -28,10 +28,12 @@ export const locales_cn = {
                 {text: '引导', link: '/zh/guide/'},
                 {text: '安装rime', link: '/zh/guide/installRime'},
                 {text: '导入薄荷输入法', link: '/zh/guide/importMint'},
+                {text: '配置覆写和定制', link: '/zh/guide/configurationOverride'},
                 {text: 'Emoji配置(OpenCC)', link: '/zh/guide/openccEmoji'},
                 {text: '模糊拼音设置', link: '/zh/guide/fuzzyPinyin'},
                 {text: '输入法快捷键', link: '/zh/guide/shortcutKeys'},
-                {text: '输入个性定制', link: '/zh/guide/CustomizationInput'},
+                {text: '输入个性定制', link: '/zh/guide/customizationInput'},
+                {text: '多设备同步', link: '/zh/guide/deviceSync'},
             ]
         }
         ]
