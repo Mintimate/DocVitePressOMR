@@ -5,6 +5,9 @@ head:
   - - meta
     - name: keywords
       content: oh-my-rime, function keys, shortcuts, Lua effects
+  - - meta
+    - property: "og:image"
+      content: "https://www.mintimate.cc/image/demo/guide.webp"
 description: Based on the rime input method framework, preview the effects and appearance after installing oh-my-rime. It showcases specific features supported by oh-my-rime, such as Emoji input, character decomposition reverse lookup input, Wubi reverse lookup input, stroke reverse lookup input, in addition to dictionary functionality.
 aside: true
 ---

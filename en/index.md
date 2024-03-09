@@ -7,7 +7,10 @@ head:
   - - meta
     - name: keywords
       content: Mint Input Method,Mint Pinyin,rime,init Weasel,init Squirrel,Linux rime
-
+  - - meta
+    - property: "og:image"
+      content: "https://www.mintimate.cc/image/demo/guide.webp"
+      
 hero:
   name: "oh-my-rime Input Method"
   text: "Fast initialize rime⚡, support multiple platforms at the same time💻"

@@ -7,7 +7,9 @@ head:
   - - meta
     - name: keywords
       content: 薄荷输入法,薄荷拼音,rime,小狼毫初始化,鼠须管初始化,Linux rime
-
+  - - meta
+    - property: "og:image"
+      content: "https://www.mintimate.cc/image/demo/guide.webp"
 hero:
   name: "oh-my-rime 输入法"
   text: "快速初始化rime⚡，同时适配多个平台💻"
