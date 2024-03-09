@@ -58,7 +58,7 @@ aside: true
     hilited_text_color: 0xc6c01a            # 选中拼音颜色 （inline_preedit: false）
 ```
 
-> ! 破坏性变更: 2024.03.02 薄荷输入法的鼠须管和小狼毫个性化配置，由默认使用`custom`文件，替换为默认使用主体配置。
+> **! 破坏性变更:** 2024.03.02 薄荷输入法的鼠须管和小狼毫个性化配置，由默认使用`custom`文件，替换为默认使用主体配置。
 >> 也就是，本来使用的是`squirrel.custom.yaml`和`weasel.custom.yaml`，转而使用`squirrel.yaml`和`weasel.yaml`。**方便用户自己自定义内容时候，可以使用`custom`文件**。
 
 Linux上，如果使用的是的iBus，受限于不同的平台使用的iBus配置，无法进行更改，但是，可以使用系统的样式进行更改。比如： GNOME。而如果使用的是Fcitx，那么rime是继承于Fcitx的外观配置的。

@@ -3,7 +3,7 @@ import {locales_cn} from './config/mySidebar.mjs'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
     title: "oh-my-rime输入法",
-    description: "一套快速初始化rime的模板，因为平时我使用oh-my-zsh，在使用rime时候，有种用omz的感觉；所以我给它取名叫oh-my-rime，你也可以叫它薄荷拼音，亦或者Mint。",
+    description: "一套快速初始化rime的模板，因为平时我使用oh-my-zsh，在使用rime时候，有种用omz的感觉；所以我给它取名叫oh-my-rime，你也可以叫它薄荷拼音，亦或者Mint Input。",
     head: [
         [
             'link', {rel: 'apple-touch-icon', sizes: '76x76', href: '/favicon.png'}
@@ -75,7 +75,7 @@ export default defineConfig({
                     'meta', {name: 'keywords', content: 'oh-my-rime,rime,Mint Pinyin,Squirrel,Weasel,rime in Linux'}
                 ]
             ],
-            description: "A template for fast initializing rime, because I usually use oh-my-zsh, when using rime, it feels like using omz; so I named it oh-my-rime, you can also call it Mintimate Pinyin, or Mint.",
+            description: "A template for fast initializing rime, because I usually use oh-my-zsh, when using rime, it feels like using omz; so I named it oh-my-rime, you can also call it Mintimate Pinyin, or Mint Input.",
             link: '/en/', // default /en/ -- shows on navbar translations menu, can be external
             themeConfig: {
                 nav: [
@@ -104,11 +104,12 @@ export default defineConfig({
                             {text: 'Guide', link: '/en/guide/'},
                             {text: 'Install Rime', link: '/en/guide/installRime'},
                             {text: 'Import Oh-my-rime', link: '/en/guide/importMint'},
+                            {text: 'Configuration and Overrides', link: '/en/guide/configurationOverride'},
                             {text: 'Emoji Configuration (OpenCC) ', link: '/en/guide/openccEmoji'},
                             {text: 'FuzzyPinyin', link: '/en/guide/fuzzyPinyin'},
                             {text: 'shortcutKeys', link: '/en/guide/shortcutKeys'},
-                            {text: 'Customization Input', link: '/en/guide/CustomizationInput'},
-                        ]
+                            {text: 'Customization Input', link: '/en/guide/customizationInput'},
+                            {text: 'Device Sync', link: '/en/guide/deviceSync'},                        ]
                     }]
                 },
 

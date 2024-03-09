@@ -11,26 +11,62 @@ head:
 description: Based on the rime input method framework, preview the effects and appearance after installing oh-my-rime. It showcases specific features supported by oh-my-rime, such as Emoji input, character decomposition reverse lookup input, Wubi reverse lookup input, stroke reverse lookup input, in addition to dictionary functionality.
 aside: true
 ---
-# Demo
-This section will showcase the adaptation and usage effects of Oh-my-rime.
 
-![效果简单展示](/image/demo/guide.webp)
+# Demonstration Effect
+![Simple demonstration effect][/image/demo/guide.webp]
+
+This section will showcase the adaptation and usage effects of the Mint Input Method.
+
+> Tip: It was originally called "Mint Pinyin", but after adapting to "98 Wubi", "Terra Pinyin" and "Double Fly Pinyin", it feels more appropriate to call it "Mint Input Method" ✪ω✪
+
+Github repository address: [oh-my-rime: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
+
+Mirror repository address (if you cannot access GitHub): [oh-my-rime: https://gitlab.mintimate.cn/Mintimate/oh-my-rime](https://gitlab.mintimate.cn/Mintimate/oh-my-rime)
 
 ## Platform Support
 Oh-my-rime currently supports the following desktop platforms:
 - Windows: Rime framework input method for Windows -- [Weasel](https://github.com/rime/weasel)
 - macOS: Rime framework input method for macOS -- [Squirrel](https://github.com/rime/squirrel)
 - Linux: ibus framework and fcitx can be used on Linux
+- iOS: [Hamster input method (App Store)](https://apps.apple.com/cn/app/%E4%BB%93%E8%BE%93%E5%85%A5%E6%B3%95/id6446617683)
+- Android:
+  - [Fcitx5 Android: https://fcitx-im.org/wiki/Fcitx_5/zh-cn](https://fcitx-im.org/wiki/Fcitx_5/zh-cn)
+  - [Trime: https://github.com/osfans/trime](https://github.com/osfans/trime)
 
-On mobile platforms, it is theoretically adaptable, but the actual experience may not be as good as on desktop platforms:
-- iOS: Cangjie input method (App Store)
-- Android: Sogou input method
+## Supported Input Methods
+Currently, three input types are supported within two major categories:
+- Full Pinyin Input
+    - Mint Pinyin: The flagship input method, supporting various look-ups, mixed Chinese-English input, and a rich full-spelling input experience. The dictionary is based on the [Rime-ice Pinyin dictionary](https://github.com/iDvel/rime-ice).
+    - Terra Pinyin Mint Customization: Based on Earth Pinyin with additional customizations; the dictionary automatically synchronizes with Rime-ice Pinyin and uses the [Python pypinyin library](https://pypinyin.readthedocs.io/) for conversion.
+    - Double Flypy Mint Customization: Customized based on the [Flypy](https://flypy.com/) (phonetic-graphic) double Pinyin input method. The dictionary uses Rime-ice Pinyin.
+- Double Pinyin Input
+    - Flypy Mint Customization: Based on Double Fly Input, with additional customizations; supports phonetic-graphic (auxiliary code) input, with the `;` key activating graphic input by default. If you are not used to `;`, you can reconfigure the activation key.
+- Stroke Input
+    - 98 Wubi Mint Customization: Customized based on the [98 Wubi base version](https://github.com/yanhuacuo/98wubi-tables) to meet the needs of Wubi input; a **lightweight version of 98 Wubi**.
 
 ## Supported Features
-The current supported features include:
-- Support for light/dark skin styles
-- Chinese input method, supporting both traditional and simplified Chinese
-- Support for Chinese and English input
-- Support for Emoji and kaomoji (Japanese emoticons)
-- Support for character decomposition lookup, Wubi reverse lookup, and stroke count reverse lookup
-- Support for inputting dates, weekdays, time, and RMB amount in words
+Currently supported features include:
+- Functionality
+    - Supports light and dark theme styles, automatically switching based on the system theme on Windows (Windows 10 1809+) and macOS.
+    - Chinese input supporting Traditional Chinese (Taiwan style) and Simplified Chinese.
+    - Mixed Chinese-English input, e.g., inputting "DoraA Dream".
+    - Supports Emoji and emoticons.
+    - Supports various [reverse lookup input methods](reverseWords.html): character decomposition (uu), Wubi (uw), and stroke (ui) reverse lookup.
+    - Supports quick input of [dates, days of the week, times, lunar dates, and Chinese numerals](funcKeys.html).
+
+- The dictionary benefits from using [Rime-ice Pinyin](https://github.com/iDvel/rime-ice)
+    - The Table of General Standard Chinese Characters
+    - Huayu Cloud Wind system dictionary
+    - Tsinghua University open-source dictionary
+    - The Modern Chinese Frequency Dictionary
+    - The Contemporary Chinese Dictionary
+    - The Synonymous Dictionary
+    - The Xinhua Dictionary of Chinese Idioms
+    - Tencent Word Vectors
+
+## Special Thanks
+The construction of Mint Input Method is inseparable from the support of the following projects:
+- [Rime-ice: https://github.com/iDvel/rime-ice](https://github.com/iDvel/rime-ice)
+- [98 Wubi: https://github.com/yanhuacuo/98wubi-tables](https://github.com/yanhuacuo/98wubi-tables)
+
+We would also like to thank the maintainers of 98 Wubi [yanhuacuo](https://github.com/yanhuacuo) and Rime-ice Pinyin [iDvel](https://github.com/iDvel), [mirtlecn](https://github.com/mirtlecn) for their help.

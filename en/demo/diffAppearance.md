@@ -11,41 +11,62 @@ aside: true
 # Appearance
 This primarily showcases the appearance on Windows and macOS.
 
-The main configuration for colors is as follows:
+
+Colors of the main configuration (in `squirrel.yaml` and `weasel.yaml` in the repository), reference:
 ```yaml
-  "preset_color_schemes/MyStyleMi":
-    name: 蓝水鸭／MyStyleMi
-    author: Mintimate <"Mintimate's Blog">
-    text_color: 0x6495ed # Pinyin string
-    candidate_text_color: 0x424242 # Non-first candidate
-    back_color: 0xefefef # Background
-    border_color: 0xefefef # Border
-    hilited_text_color: 0xed9564 # Pinyin string highlight
-    hilited_back_color: 0xefefef # Pinyin string highlight background
-    hilited_candidate_back_color: 0xed9564 # First candidate background
-    hilited_candidate_text_color: 0xefefef # First candidate
-    hilited_comment_text_color: 0xefefef # Comment text highlight
-    comment_text_color: 0xcac9c8 # Comment text
-    label_color: 0xcac9c8 # Candidate list number color
-  "preset_color_schemes/MyStyleMiDark":
-    name: 黑水鸭／MyStyleMiDark
-    author: Mintimate <"Mintimate's Blog">
-    text_color: 0x6495ed # Pinyin string
-    candidate_text_color: 0xefefef # Non-first candidate
-    back_color: 0x424242 # Background
-    border_color: 0x424242 # Border
-    hilited_text_color: 0xc6c01a # Pinyin string highlight
-    hilited_back_color: 0x424242 # Pinyin string highlight background
-    hilited_candidate_back_color: 0xc6c01a # First candidate background
-    hilited_candidate_text_color: 0xefefef # First candidate
-    hilited_comment_text_color: 0xffffff # Comment text highlight
-    comment_text_color: 0xefefef # Comment text
-    label_color: 0xefefef # Candidate list number color
+# 亮色模式
+mint_light_blue:
+  name: "蓝水鸭／Mint Light Blue"
+  author: Mintimate <"Mintimate's Blog">
+  translucency: false                     # 磨砂： false | true
+  mutual_exclusive: false                 # 色不叠加： false | true
+  shadow_size: 0                       `  # 阴影大小
+  line_spacing: 5                         # 行间距
+  base_offset: 0                          # 字基高
+  alpha: 1                                # 透明度，0~1
+  spacing: 10                             # 拼音与候选项之间的距离 （inline_preedit: false）
+  back_color: 0xefefef                    # 底色
+  hilited_candidate_back_color: 0xed9564  # 选中底色
+  label_color: 0xcac9c8                   # 序号颜色
+  hilited_candidate_label_color: 0xefefef # 选中序号颜色
+  candidate_text_color: 0x424242          # 文字颜色
+  hilited_candidate_text_color: 0xefefef  # 选中文字颜色
+  comment_text_color: 0xcac9c8            # 注颜色
+  hilited_comment_text_color: 0xefefef    # 选中注颜色
+  text_color: 0x6495ed                    # 拼音颜色 （inline_preedit: false）
+  hilited_text_color: 0xed9564            # 选中拼音颜色 （inline_preedit: false）
+
+# 暗色模式
+mint_dark_blue:
+  name: "黑水鸭／Mint Dark Blue"
+  author: Mintimate <"Mintimate's Blog">
+  translucency: false                     # 磨砂： false | true
+  mutual_exclusive: false                 # 色不叠加： false | true
+  shadow_size: 0                       `  # 阴影大小
+  line_spacing: 5                         # 行间距
+  base_offset: 0                          # 字基高
+  alpha: 1                                # 透明度，0~1
+  spacing: 10                             # 拼音与候选项之间的距离 （inline_preedit: false）
+  back_color: 0x424242                    # 底色
+  hilited_candidate_back_color: 0xc6c01a  # 选中底色
+  label_color: 0xefefef                   # 序号颜色
+  hilited_candidate_label_color: 0xefefef # 选中序号颜色
+  candidate_text_color: 0xefefef          # 文字颜色
+  hilited_candidate_text_color: 0xefefef  # 选中文字颜色
+  comment_text_color: 0xefefef            # 注颜色
+  hilited_comment_text_color: 0xffffff    # 选中注颜色
+  text_color: 0x6495ed                    # 拼音颜色 （inline_preedit: false）
+  hilited_text_color: 0xc6c01a            # 选中拼音颜色 （inline_preedit: false）
 ```
 
-For ibus on Linux, it is limited by the ibus configuration used on different platforms and cannot be modified. However, you can use the system's styles. For example, GNOME.
+> **!Breaking change:** On 2024.03.02, the personalized configuration of Squirrel and Weasel in Sogou Pinyin Input Method will be changed from using the `custom` file by default to using the main configuration.
+>> That is, instead of using `squirrel.custom.yaml` and `weasel.custom.yaml`, `squirrel.yaml` and `weasel.yaml` will be used. **When users want to customize their own content, they can use the `custom` file.**
 
-Next, let's take a look at the appearance on Windows and macOS.
+On Linux, if iBus is used, it is not possible to make changes due to the different iBus configurations used by different platforms. However, you can use the system's style to make changes. For example: GNOME. If Fcitx is used, Rime inherits the appearance configuration of Fcitx.
+
+Currently, Sogou Pinyin Input Method **does not modify the personalized configuration of the iOS version.**
+
+Next, let's take a look at the display effects on Windows and macOS.
 
 ## Appearance in macOS
 First, let's talk about macOS. Squirrel adapts to the light and dark APIs provided by the system. Therefore, Squirrel can respond to different appearances based on the current system appearance.
@@ -61,6 +82,8 @@ However, please note:
 ![Windows外观](/image/demo/Windows_Mint.webp)
 
 Due to the limitations of my Windows virtual machine (Arm64), the text in the screenshots may have some loss of precision and appear blurry.
+
+<div class="wwads-cn wwads-horizontal" data-id="266" ></div>
 
 ## Appearance in Linux
 As mentioned earlier, **if Linux uses ibus, it is limited by the system style and cannot be customized.** For example, using this input method configuration on GNOME:

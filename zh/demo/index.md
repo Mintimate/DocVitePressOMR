@@ -38,6 +38,8 @@ Github仓库地址: [oh-my-rime: https://github.com/Mintimate/oh-my-rime](https:
   - 薄荷拼音: 招牌主打输入类型，支持各种反查、中英混合输入等，丰富多彩的全拼；词库基于[雾凇拼音词库](https://github.com/iDvel/rime-ice)。
   - 地球拼音薄荷定制: 基于地球拼音，追加一些定制，进行定制的输入方式；词库自动同步雾凇拼音并使用[Python pypinyin库](https://pypinyin.readthedocs.io/)进行转换。
   - 小鹤双拼薄荷定制: 基于[小鹤双拼](https://flypy.com/)（声形），进行定制的输入方式。词库使用雾凇拼音。
+- 双拼类
+  - 小鹤双拼薄荷定制: 基于小鹤双拼，追加一些定制；支持音形(辅码)的输入，默认使用`;`激活形的输入。如果不习惯`;`激活，可以自行再配置内改键。
 - 笔画类
   - 98五笔薄荷定制: 基于[98五笔基础版本](https://github.com/yanhuacuo/98wubi-tables)进行定制，满足五笔输入的需要；**轻量版本的98五笔**。
 
