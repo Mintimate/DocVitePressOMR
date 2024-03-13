@@ -67,7 +67,7 @@ shen shen qin mu qin, jin qin nin jiu qin, qin nin xin nin jin, shen xin hen yao
 这样的话，首选项是准确的拼音，其他选项是对模糊拼音的设置。
 
 > 建议保留简拼内容，去除的话，输入就一定需要完整拼音，如： `你好(nihao)`，就无法输入`nh`或者输入`n`出现`你`。
-```yarl
+```yaml
 # 建议保留内容
 - abbrev/^([a-z]).+$/$1/ #简拼（首字母）
 - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）

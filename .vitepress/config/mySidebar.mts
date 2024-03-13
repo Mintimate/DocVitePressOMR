@@ -34,6 +34,7 @@ export const locales_cn = {
                 {text: '输入法快捷键', link: '/zh/guide/shortcutKeys'},
                 {text: '输入个性定制', link: '/zh/guide/customizationInput'},
                 {text: '多设备同步', link: '/zh/guide/deviceSync'},
+                {text: '[可选]问题答疑', link: '/zh/guide/faQ'},
             ]
         }
         ]
