@@ -63,3 +63,19 @@ It should be noted that according to one of the upgrade descriptions of [librime
 
 > Starting from the librime 1.9.0 version released on 2023.09.16, Windows XP is no longer supported.
 > > So, if you want to manually update Weasel's dependent libraries through this method, you can only use [librime 1.8.5](https://github.com/rime/librime/releases/tag/1.8.5) ;The good news is that 1.8.5 can currently use all the functions of the Mint input method normally.
+
+## How to remove the built-in ABC in macOS
+
+Some friends want to use Whisker only as the input method to remove the interference of the ABC input method that comes with macOS. It's actually very simple, just modify the `com.apple.HIToolbox.plist` file:
+```text
+# Open the com.apple.HIToolbox.plist file
+sudo open ~/Library/Preferences/com.apple.HIToolbox.plist
+```
+
+Click on `Root -> AppleEnabledInputSources` in order, you will see a column of `item`, find the column where `KeyboardLayout Name` is ABC, delete the entire `item` column, and then `command + S` to save.
+
+![Delete the built-in ABC input](/image/guide/removeABC.webp)
+
+Then restart the computer, open the keyboard settings, and you can see that the ABC input method that comes with the system has been deleted.
+
+> If you want to add it back, just add it in the system settings.

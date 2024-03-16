@@ -60,8 +60,8 @@ export default defineConfig({
             themeConfig: {
                 nav: locales_cn.nav,
                 outline:{
-                    level: 'deep',
-                    label: locales_cn.outline.label,
+                    level: locales_cn["outline"]["level"],
+                    label: locales_cn["outline"]["label"],
                 },
                 sidebar: locales_cn.sidebar
             }

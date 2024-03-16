@@ -61,3 +61,19 @@ Windows XP和Windows 7只支持小狼毫的`0.14.3`版本：
 
 > 2023.09.16 发布的librime 1.9.0版本开始，不再支持Windows XP。
 > > 所以，如果你想通过本方法手动更新小狼毫的依赖库，那么只能用[librime 1.8.5](https://github.com/rime/librime/releases/tag/1.8.5)了；好消息是，1.8.5目前可以正常使用薄荷输入法的全部功能。
+
+## macOS如何移除自带的ABC
+
+有些小伙伴，想只使用鼠须管作为输入法，移除macOS自带的ABC输入法的干扰。其实很简单，修改`com.apple.HIToolbox.plist`文件即可：
+```text
+# 打开com.apple.HIToolbox.plist文件
+sudo open ~/Library/Preferences/com.apple.HIToolbox.plist
+```
+
+依次点开`Root -> AppleEnabledInputSources`，会看到一列`item`，找到其中`KeyboardLayout Name`为 ABC 的那一列，将整列`item`删掉，然后`command + S`保存。
+
+![删除自带的ABC输入](/image/guide/removeABC.webp)
+
+接着重启电脑，打开键盘设置，就可以看到系统自带的 ABC 输入法已经被删掉了。
+
+> 如果想添加回来，那么在系统设置内添加即可。
