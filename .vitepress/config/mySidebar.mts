@@ -10,8 +10,10 @@ export const locales_cn = {
         {text: '效果演示', link: '/zh/demo/'},
         {text: '配置教程', link: '/zh/guide/'},
     ],
-    outlineTitle: '此页面',
-    outline: 'deep',
+    outline:{
+        level: 'deep',
+        label: '此页面'
+    },
     sidebar: {
         '/zh/demo/': [{
             text: '效果演示',

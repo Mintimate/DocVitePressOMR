@@ -61,7 +61,7 @@ export default defineConfig({
                 nav: locales_cn.nav,
                 outline:{
                     level: 'deep',
-                    label: locales_cn.outlineTitle,
+                    label: locales_cn.outline.label,
                 },
                 sidebar: locales_cn.sidebar
             }
@@ -84,9 +84,9 @@ export default defineConfig({
                     {text: 'Demo', link: '/en/demo/'},
                     {text: 'Configuration', link: '/en/guide/'}
                 ],
-
                 outline: {
-                    label: 'This Page'
+                    level: 'deep',
+                    label: 'On this page'
                 },
                 sidebar: {
                     '/en/demo/': [{
@@ -109,7 +109,9 @@ export default defineConfig({
                             {text: 'FuzzyPinyin', link: '/en/guide/fuzzyPinyin'},
                             {text: 'shortcutKeys', link: '/en/guide/shortcutKeys'},
                             {text: 'Customization Input', link: '/en/guide/customizationInput'},
-                            {text: 'Device Sync', link: '/en/guide/deviceSync'},                        ]
+                            {text: 'Device Sync', link: '/en/guide/deviceSync'},
+                            {text: '[Optional] Q&A', link: '/en/guide/faQ'},
+                        ]
                     }]
                 },
 
