@@ -123,10 +123,34 @@ Select Rime input method to activate:
 
 ![Add Rime in Fcitx5](/image/guide/openFcitx5ConfigInBar.webp)
 
-## iOS安装rime
+## iOS installation rime
 
 On iOS, we recommend using:
 
 - [Hamster Input Method: https://apps.apple.com/cn/app/仓输入法/id6446617683](https://apps.apple.com/cn/app/%E4%BB%93%E8%BE%93%E5%85%A5%E6%B3%95/id6446617683)
 
 It is very user-friendly ( ◔ ڼ ◔ )
+
+## Android installation rime
+
+On Android, it is recommended to use:
+- [Fcitx For Android: https://fcitx5-android.github.io/installation/](https://fcitx5-android.github.io/installation/)
+
+### Fcitx Android
+
+Fcitx For Android, It is distributed on multiple commercial platforms. Here, we'll take the official version on GitHub Release as an example
+
+Download the application (app) and the Rime plugin (plugin.rime) for the corresponding architecture from [GitHub releases](https://github.com/fcitx5-android/fcitx5-android/releases), and install them.
+
+![Select the ontology and plug-ins](/image/guide/fcitxAndroidApk.webp)
+
+::: tip
+In principle, current smartphones should choose the arm64-v8a architecture version. For virtual machines, choose the x86_64 or x86 architectures. For some older smartphones, choose the armeabi-v7a architecture.
+
+:::
+
+Taking version 0.0.8 as an example, there is only one "Little Penguin Input Method 5" icon on the desktop, which comes with Pinyin input method, which is good to use; however, you need to install a plug-in before you can choose Rime's input method:
+
+![Android installation Fcitx little penguin](/image/guide/fcitxAndroidInstallRime.webp)
+
+The configuration of the Little Penguin input method is also a bit special. In the next chapter, we will explain it.

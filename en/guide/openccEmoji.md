@@ -45,7 +45,7 @@ In the end, the method used was reverted to a relatively basic version in order 
 
 ### Customizing Emojis
 If you want to customize emojis, the emoji configuration files are located in the OpenCC folder and consist of three files:
-```txt
+```text
 .
 ├── emoji.json
 ├── emoji.txt

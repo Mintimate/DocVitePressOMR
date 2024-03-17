@@ -129,4 +129,21 @@ export XMODIFIERS=@im=fcitx5
 在Android上，推荐使用：
 - [Fcitx For Android: https://fcitx5-android.github.io/installation/](https://fcitx5-android.github.io/installation/)
 
-不过默认情况下，无法使用Rime，需要安装插件。后续有机会教教大家。
+### Fcitx Android
+
+Fcitx For Android，也就是小企鹅输入法，在多个商店平台都有分发。这里以GitHub Release上面的正式版本为例。 
+
+在[GitHub releases](https://github.com/fcitx5-android/fcitx5-android/releases)下载对应架构的应用本体(app)和插件(plugin.rime)，并安装：
+
+![选择本体和插件](/image/guide/fcitxAndroidApk.webp)
+
+::: tip
+原则上，现在的手机选择`arm64-v8a`版本架构；虚拟机选择`x86_64`或`x86`架构；一些比较旧的手机，选择`armeabi-v7a`。
+
+:::
+
+以0.0.8版本为例，在桌面仅有一个“小企鹅输入法5”图标，自带拼音输入法，用起来也不错；但是，要安装插件后，才可以选择Rime的输入法：
+
+![Android安装Fcitx小企鹅](/image/guide/fcitxAndroidInstallRime.webp)
+
+小企鹅输入法的配置也有点特殊，在接下来的章节，我们进行解释。

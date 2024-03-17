@@ -32,9 +32,17 @@ The default configuration file locations are:
 - For Windows with Weasel: `%APPDATA%/Rime`
 - For Linux with ibus: `~/.config/ibus/rime`
 - For Linux with Fcitx5: `~/.local/share/fcitx5/rime`
+- Android Fcitx(Fcitx5 For Android): `/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/rime/`
 
 Additionally, on macOS with Squirrel and Windows with Weasel, you can open the configuration directory using software. For example, on macOS:
 ![Open configuration directory using settings](/image/guide/openConfigDirByApp.webp)
+
+For Fcitx Little Penguin on Android, you can use the MT file manager to open the address of the configuration file (you can try searching for `fcitx.fcitx5` in the file manager):
+![Finds the configuration directory through MT file manager](/image/guide/fcitxAndroidSearchFile.webp)
+
+::: info
+The picture shows that the Mint Input Method has been installed. Otherwise, the configuration file address on the left should be an empty folder.
+:::
 
 After opening the configuration directory, move the Oh-My-Rime configuration files into it:
 ![Move Oh-My-Rime to the configuration directory](/image/guide/moveMintPinyinToConfigDir.webp)
@@ -43,5 +51,8 @@ After opening the configuration directory, move the Oh-My-Rime configuration fil
 
 After completing the above steps, we can deploy Rime, for example, on macOS with Squirrel:
 ![Apply configuration](/image/guide/applyConfig.webp)
+
+Similarly,Fcitx5 For Android, there are some special features that need to be operated in any interface that can be entered:
+![Fcitx5 For Android With Deploy](/image/guide/fcitxAndroidDeploy.webp)
 
 Once the deployment is complete, you can start using Oh-My-Rime.

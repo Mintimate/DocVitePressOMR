@@ -26,9 +26,17 @@
 - Windows小狼毫: `%APPDATA%/Rime`
 - Linux ibus: `~/.config/ibus/rime`
 - Linux Fcitx5: `~/.local/share/fcitx5/rime`
+- Android Fcitx(小企鹅): `/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/rime/`
 
-另外，macOS鼠须管和Windows的小狼毫可以通过软件打开配置文件的地址，比如macOS：
+macOS鼠须管和Windows的小狼毫可以通过软件打开配置文件的地址，比如macOS：
 ![macOS通过设置打开配置文件](/image/guide/openConfigDirByApp.webp)
+
+而对于Android的Fcitx小企鹅，你可以使用MT文件管理器打开配置文件的地址（你可以试试文件管理器搜索`fcitx.fcitx5`）：
+![小企鹅通过MT文件管理器找到配置目录](/image/guide/fcitxAndroidSearchFile.webp)
+
+::: info
+图里是已经安装好薄荷输入法了，否则左侧的配置文件地址，应该是空文件夹。
+:::
 
 在打开配置文件地址后，我们将薄荷拼音的配置文件移动进入：
 ![薄荷拼音移动到配置目录内](/image/guide/moveMintPinyinToConfigDir.webp)
@@ -36,5 +44,8 @@
 ## 部署薄荷拼音
 在上述完成后，我们进行rime的部署即可，比如：macOS上的鼠须管
 ![应用配置](/image/guide/applyConfig.webp)
+
+同样，对于Android的Fcitx5小企鹅也有一些特殊，需要在任意一个可以输入的界面操作：
+![小企鹅通的应用配置部署](/image/guide/fcitxAndroidDeploy.webp)
 
 在部署完成后，即可使用薄荷拼音。
