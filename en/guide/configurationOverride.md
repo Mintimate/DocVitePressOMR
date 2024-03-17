@@ -91,12 +91,12 @@ patch:
 
 ## Input method scheme configuration
 
-Next, let's take a look at the "Input Method Scheme Configuration". The global configuration of the scheme is `default.yaml` and `defalut.custom.yaml`; for local, taking the Mint input method as an example, `rime_mint.scheme.yaml` is A local configuration. The configuration of `default.yaml` can be overridden in `rime_mint.scheme.yaml`.
+Next, let's take a look at the "Input Method Scheme Configuration". The global configuration of the scheme is `default.yaml` and `defalut.custom.yaml`; for local, taking the Mint input method as an example, `rime_mint.schema.yaml` is A local configuration. The configuration of `default.yaml` can be overridden in `rime_mint.schema.yaml`.
 
-Relative to the scheme, you can also override the configuration of `rime_mint.scheme.yaml` based on `rime_mint.custom.yaml`.
+Relative to the scheme, you can also override the configuration of `rime_mint.schema.yaml` based on `rime_mint.custom.yaml`.
 
 So, the priority is:
-`rime_mint.custom.yaml > rime_mint.scheme.yaml > default.custom.yaml > default.yaml`
+`rime_mint.custom.yaml > rime_mint.schema.yaml > default.custom.yaml > default.yaml`
 
 Currently, the Mint input method does not specify `default.yaml`; it directly inherits the configuration that comes with Rime; on the contrary, it uses `default.custom.yaml` to override the global configuration. In the scheme input method, in the corresponding It's customizable.
 
