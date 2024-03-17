@@ -197,7 +197,7 @@ engine:
   processors:
     - lua_processor@*select_character # Determine the character by word
 ```
-So, if you want to use `[` and `]` for translation, taking Mint Pinyin (rime_mint.scheme.yaml file) as an example, you can modify the `key_binder` in it to the following configuration:
+So, if you want to use `[` and `]` for translation, taking Mint Pinyin (rime_mint.schema.yaml file) as an example, you can modify the `key_binder` in it to the following configuration:
 ```yarm
 key_binder:
   import_preset: default

@@ -91,12 +91,12 @@ patch:
 
 ## 输入法方案配置
 
-接下来，我们看看「输入法方案配置」，方案的全局配置是`default.yaml`和`defalut.custom.yaml`；对于局部，以薄荷输入法为例，`rime_mint.scheme.yaml`就是一个局部配置。在`rime_mint.scheme.yaml`内可以覆写`default.yaml`的配置。
+接下来，我们看看「输入法方案配置」，方案的全局配置是`default.yaml`和`defalut.custom.yaml`；对于局部，以薄荷输入法为例，`rime_mint.schema.yaml`就是一个局部配置。在`rime_mint.schema.yaml`内可以覆写`default.yaml`的配置。
 
-相对于方案，你也可以基于`rime_mint.custom.yaml`去覆写`rime_mint.scheme.yaml`的配置。
+相对于方案，你也可以基于`rime_mint.custom.yaml`去覆写`rime_mint.schema.yaml`的配置。
 
 所以，优先级是:
-`rime_mint.custom.yaml > rime_mint.scheme.yaml > default.custom.yaml > default.yaml`
+`rime_mint.custom.yaml > rime_mint.schema.yaml > default.custom.yaml > default.yaml`
 
 目前，薄荷输入法并并没有指定`default.yaml`；是直接继承Rime自带的配置；相反，是使用`default.custom.yaml`覆写了全局的配置，在方案输入法内，在对其进行定制。
 
