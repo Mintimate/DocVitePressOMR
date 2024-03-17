@@ -16,11 +16,20 @@ aside: true
 
 本章节将展示薄荷输入法的适配情况和使用的效果。
 
-> Tips: 之前本来叫『薄荷拼音』，后来适配了『98五笔』、『9地球拼音』和『小鹤双拼』，感觉叫『薄荷输入法』比较合适✪ω✪
+> Tips: 之前本来叫『薄荷拼音』，后来适配了『98五笔』、『地球拼音』和『小鹤双拼』，感觉叫『薄荷输入法』比较合适✪ω✪
 
-Github仓库地址: [oh-my-rime: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
+Github仓库地址: 
+- [oh-my-rime: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
 
-镜像仓库地址（如果你无法访问GitHub）: [oh-my-rime: https://gitlab.mintimate.cn/Mintimate/oh-my-rime](https://gitlab.mintimate.cn/Mintimate/oh-my-rime)
+镜像仓库地址（如果你无法访问GitHub）: 
+- [oh-my-rime: https://gitlab.mintimate.cn/Mintimate/oh-my-rime](https://gitlab.mintimate.cn/Mintimate/oh-my-rime)
+
+::: tip
+本质上，薄荷输入法就是Rime的一套输入配置。所以，**本网站，同时也是一份非官方的Rime配置文档**。
+
+> 如果认为本文档或者薄荷拼音对你很有帮助，可以[请我喝咖啡](https://afdian.net/a/mintimate);对于捐赠咖啡☕️的用户，将进入『鸣谢』内(●'◡'●)ﾉ♥
+
+:::
 
 ## 平台支持的情况
 支持Rime输入法框架的平台有很多，我们已经进行测试，可以良好使用的：

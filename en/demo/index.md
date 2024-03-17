@@ -23,6 +23,13 @@ Github repository address: [oh-my-rime: https://github.com/Mintimate/oh-my-rime]
 
 Mirror repository address (if you cannot access GitHub): [oh-my-rime: https://gitlab.mintimate.cn/Mintimate/oh-my-rime](https://gitlab.mintimate.cn/Mintimate/oh-my-rime)
 
+::: tip
+In essence, the Mint input method is a set of input configurations for Rime. Therefore, **this website is also an unofficial Rime configuration document**.
+
+> If you think this document or Mint Pinyin is helpful to you, you can [invite me a cup of coffee](https://afdian.net/a/minitimate); users who donate coffee ☕️ will be entered into the "Acknowledgements" (● '◡'●)ﾉ♥
+
+:::
+
 ## Platform Support
 Oh-my-rime currently supports the following desktop platforms:
 - Windows: Rime framework input method for Windows -- [Weasel](https://github.com/rime/weasel)
