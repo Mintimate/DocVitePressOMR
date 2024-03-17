@@ -188,3 +188,28 @@ This way, when the candidate word appears in the second position, you can direct
 Reference from: 
 - [Rime 输入法中的快捷键](https://einverne.github.io/post/2021/10/rime-shortcut.html)
 - [Schema.yaml 詳解](https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md)
+
+## Mint Input left and right brackets
+
+It should be noted that in the Mint input method, `[` and `]` are used by default to determine characters by words:
+```yarn
+engine:
+  processors:
+    - lua_processor@*select_character # Determine the character by word
+```
+So, if you want to use `[` and `]` for translation, taking Mint Pinyin (rime_mint.scheme.yaml file) as an example, you can modify the `key_binder` in it to the following configuration:
+```yarn
+key_binder:
+  import_preset: default
+  # Define words with words
+  select_first_character: "minus" # Use -
+  select_last_character: "equal"  # use =
+  bindings:
+    - {accept: "Control+Shift+E", toggle: emoji_suggestion, when: always}
+    - {accept: "Control+Shift+exclam", toggle: transcription, when: has_menu}
+    - {accept: "Control+Shift+1", toggle: transcription, when: has_menu}
+    - {accept: bracketleft, send: Page_Up, when: paging} # Use `[` to page up (invalid on the first page)
+    - {accept: bracketright, send: Page_Down, when: has_menu} # Use `]` to page down
+```
+
+Reference issue: [https://github.com/Mintimate/oh-my-rime/issues/42](https://github.com/Mintimate/oh-my-rime/issues/42)

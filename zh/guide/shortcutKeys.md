@@ -192,3 +192,28 @@ KP_9	小鍵板9
 参考自：
 - [Rime 输入法中的快捷键](https://einverne.github.io/post/2021/10/rime-shortcut.html)
 - [Schema.yaml 詳解](https://github.com/LEOYoon-Tsaw/Rime_collections/blob/master/Rime_description.md)
+
+## 薄荷内左右括号
+
+需要注意，薄荷输入法内，默认使用`[`和`]`进行以词定字：
+```yarn
+engine:
+  processors:
+    - lua_processor@*select_character              # 以词定字
+```
+所以，如果你想使用`[`和`]`来翻译，以薄荷拼音(rime_mint.scheme.yaml文件)为例，可以修改其中的`key_binder`为这样的配置：
+```yarn
+key_binder:
+  import_preset: default
+  # 以词定字
+  select_first_character: "minus" # 使用 - 
+  select_last_character: "equal"  # 使用 =
+  bindings:
+    - {accept: "Control+Shift+E", toggle: emoji_suggestion, when: always}
+    - {accept: "Control+Shift+exclam", toggle: transcription, when: has_menu}
+    - {accept: "Control+Shift+1", toggle: transcription, when: has_menu}
+    - {accept: bracketleft, send: Page_Up, when: paging}      # 使用`[`进行向上翻页（第一页时候无效）
+    - {accept: bracketright, send: Page_Down, when: has_menu} # 使用`]`进行向下翻页
+```
+
+参考issue: [https://github.com/Mintimate/oh-my-rime/issues/42](https://github.com/Mintimate/oh-my-rime/issues/42)
