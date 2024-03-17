@@ -59,12 +59,16 @@ export default defineConfig({
             link: '/zh/',
             themeConfig: {
                 nav: locales_cn.nav,
-                outline:{
+                outline: {
                     level: locales_cn["outline"]["level"],
                     label: locales_cn["outline"]["label"],
                 },
-                sidebar: locales_cn.sidebar
-            }
+                sidebar: locales_cn.sidebar,
+                search:{
+                    provider:'local',
+                    options: locales_cn.search
+                }
+            },
         },
         en: {
             label: 'English',
@@ -114,7 +118,6 @@ export default defineConfig({
                         ]
                     }]
                 },
-
             }
         },
     },
@@ -126,6 +129,9 @@ export default defineConfig({
             copyright: '<a href="https://beian.miit.gov.cn" target="_blank">闽ICP备2021000722号-3</a> | ' +
                 '          <a href="http://www.beian.gov.cn" target="_blank">闽公网安备 35021102001843号</a> <br/>' +
                 '友情链接♥️: <a href="http://www.mintimate.cn" target="_blank">Mintimate\'s Blog</a> | <a href="https://www.cloudflare.com/" target="_blank">CloudFlare</a>'
+        },
+        search: {
+            provider: 'local'
         },
         // https://vitepress.dev/reference/default-theme-config
 
