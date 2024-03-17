@@ -201,7 +201,7 @@ engine:
   processors:
     - lua_processor@*select_character              # 以词定字
 ```
-所以，如果你想使用`[`和`]`来翻译，以薄荷拼音(rime_mint.scheme.yaml文件)为例，可以修改其中的`key_binder`为这样的配置：
+所以，如果你想使用`[`和`]`来翻页，以薄荷拼音(rime_mint.scheme.yaml文件)为例，可以修改其中的`key_binder`为这样的配置：
 ```yarm
 key_binder:
   import_preset: default
