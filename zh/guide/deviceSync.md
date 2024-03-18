@@ -43,11 +43,11 @@ rime_version: 1.8.5
 之后进行同步，生成词库和用户配置：
 ![生成同步文件](/image/guide/rimeSync.webp)
 
-Completing the synchronization operation, the `*.userdb.txt` generated in the synchronization directory contains the entered content.
+完成同步的操作后，在同步目录下生成的`*.userdb.txt`，里面都是输入过的内容。
 
-There are some other useless files in the synchronization directory. Rime additionally backs up the `YAML` and `TXT` files in the configuration directory, but only the ones in the root directory, such as the words in the `dicts` folder in the Mint input method. Libraries and lua scripts are not synchronized.
+同步目录里还有其他一些没用的文件，Rime 额外单向备份了配置目录下的`YAML`和`TXT`文件，但只有根目录的，像薄荷输入法内`dicts`文件夹里的词库、以及lua脚本就没有被同步过来。
 
-> ⚠️ Windows users note YAML syntax, backslashes are escaped in double quotes and not escaped in single quotes:
+> ⚠️ Windows 用户注意 YAML 语法，反斜杠在双引号中转义，在单引号中不转义：
 
 ```yaml
 sync_dir: "c:\\file\\path\\sync"

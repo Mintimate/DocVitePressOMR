@@ -55,7 +55,7 @@ There are some other useless files in the synchronization directory. Rime additi
 ```yaml
 sync_dir: "c:\\file\\path\\sync"
 ```
-或者:
+Or:
 ```yaml 
 sync_dir: 'c:\file\path\sync'
 ```
