@@ -7,6 +7,7 @@ export default {
     ...DefaultTheme,
     Layout: customHomeFeaturesBefore,
     enhanceApp({ app, router, siteData }) {
+        DefaultTheme.enhanceApp({ app, router, siteData })
         watch(router.route, () => {
             if (router.route.path.endsWith('ex.html')) {
                 // 解决中文首页切换语言，跳转到dex.html问题
