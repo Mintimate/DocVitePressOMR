@@ -5,6 +5,7 @@ export const locales_cn = {
     lang: 'zh',
     link: '/zh/',
     nav: [
+        {text: '更新日志', link: '/zh/changeLog/'},
         {text: '关于', link: '/zh/teamInfo'},
         {text: '主页', link: '/'},
         {text: '效果演示', link: '/zh/demo/'},

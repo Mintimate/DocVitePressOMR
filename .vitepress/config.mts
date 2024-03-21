@@ -83,6 +83,7 @@ export default defineConfig({
             link: '/en/', // default /en/ -- shows on navbar translations menu, can be external
             themeConfig: {
                 nav: [
+                    {text: 'ChangeLog', link: '/en/changeLog/'},
                     {text: 'About', link: '/en/teamInfo'},
                     {text: 'index', link: '/en/'},
                     {text: 'Demo', link: '/en/demo/'},
