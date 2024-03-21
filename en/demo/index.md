@@ -13,7 +13,7 @@ aside: true
 ---
 
 # Demonstration Effect
-![Simple demonstration effect][/image/demo/guide.webp]
+![Simple demonstration effect](/image/demo/guide.webp)
 
 This section will showcase the adaptation and usage effects of the Mint Input Method.
 
