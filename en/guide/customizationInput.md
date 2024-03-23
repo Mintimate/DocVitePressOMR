@@ -157,10 +157,19 @@ Also, the input method configuration needs to include:
 ```yaml
 translators:
     - table_translator@custom_phrase      # Custom Phrase custom_phrase.txt
+
+# Custom Phrase
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase # Need to manually create custom_phrase.txt file
+  db_class: stabledb
+  enable_completion: false # Completion prompt
+  enable_sentence: false # Disable sentence making
+  initial_quality: 99    # The weight of custom_phrase should be larger than other lexicon
 ```
 
 Custom Text does not interact with other translators in word-building. If you use a complete code, the character or word cannot participate in word-building. That is, self-built words cannot be remembered.
 
-Therefore, it is recommended to fix non-complete code characters or words. For example, `'的de'` should be `'的d'`, `'是shi'` should be `'是s'`, and `'仙剑xianjian'` should be `'仙剑xj'`.
+Therefore, it is recommended to fix non-complete code characters or words. For example, `'的'`(de) should be `'d'`, `'是'`(shi) should be `'s'`, and `'仙剑'`(xian jian) should be `'xj'`.
 
 Note that the full Pinyin `'a o e'` is also a complete spelling, so single characters of `'a o e'` should not be included in the Custom Text. Otherwise, words like `'啊 哦 呃'` cannot be used for word-building.

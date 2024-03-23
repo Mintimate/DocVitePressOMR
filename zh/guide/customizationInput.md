@@ -159,11 +159,23 @@ import_tables:
 ```yaml
 translators:
     - table_translator@custom_phrase      # 自定义短语 custom_phrase.txt
+
+# 自定义短语
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase   # 需要手动创建 custom_phrase.txt 文件
+  db_class: stabledb
+  enable_completion: false   # 补全提示
+  enable_sentence: false     # 禁止造句
+  initial_quality: 99        # custom_phrase 的权重应该比其他词库大
 ```
 
-自定义文本不与其他翻译器互相造词，如果使用了完整编码，那么这个字或词将无法参与造词，即自造词无法被记住。
+自定义文本不与其他翻译器互相造词，**如果使用了完整编码，那么这个字或词将无法参与造词，即自造词无法被记住。**
 
-所以建议只固定非完整编码的字词，`「的de」`应为`「的d」`，`「是shi」`应为`「是s」`，`「仙剑xianjian」`应为`「仙剑xj」`。
+所以建议只固定非完整编码的字词，`「的」`(de)应为`「d」`，`「是」`(shi)应为`「是s」`，`「仙剑」`(xian jian)应为`「xj」`。
 
-注意全拼的`a o e`也是完整拼写，不宜将`a o e`的单字写进自定义文本，否则`「啊 哦 呃」`无法进行造词。
+注意全拼的`a o e`也是完整拼写，不宜将`a o e`的单字写进自定义文本，否则`「啊 哦 呃」`无法进行造词。也就是这些不宜加入：
+```yaml
+啊 a
+哦 o
 ```
