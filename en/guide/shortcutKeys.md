@@ -192,13 +192,13 @@ Reference from:
 ## Mint Input left and right brackets
 
 It should be noted that in the Mint input method, `[` and `]` are used by default to determine characters by words:
-```yarm
+```yaml
 engine:
   processors:
     - lua_processor@*select_character # Determine the character by word
 ```
 So, if you want to use `[` and `]` for translation, taking Mint Pinyin (rime_mint.schema.yaml file) as an example, you can modify the `key_binder` in it to the following configuration:
-```yarm
+```yaml
 key_binder:
   import_preset: default
   # Define words with words
