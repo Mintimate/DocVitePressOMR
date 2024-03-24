@@ -8,7 +8,7 @@ sidebar: false
 
 与此同时，捐赠用户的鸣谢，也会记录在时间轴内。
 
-::: info
+::: info 提示
 如果你想加入薄荷输入法配置模板的开发，欢迎提交PR：
 - [oh-my-rime 配置仓库](https://github.com/Mintimate/oh-my-rime)
 - [oh-my-rime 配置文档](https://github.com/Mintimate/DocVitePressOMR)
