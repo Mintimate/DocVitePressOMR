@@ -93,3 +93,35 @@ Linux上，如果使用的是的iBus，受限于不同的平台使用的iBus配�
 
 如果你使用Fcitx5，可以安装主题：[薄荷拼音外观风格主题_Fcitx](/resources/ohMyRimeThemeForFcitx5.zip)
 
+## Android外观
+如果你选择的小企鹅输入法，默认的颜色就是挺不错的。而且目前小企鹅输入法暂时不支持更换外观。
+
+如果是同文输入法，那么是挺依靠第三方输入方案和布局的，你可以在薄荷输入法的主题仓库内下载到我们制作的同文输入法主题：
+
+![同文输入法上外观](/image/demo/Trime_Mint.webp)
+
+方案不在薄荷输入法的主仓库内，另外开了一个仓库：
+- [https://github.com/Mintimate/RimeTheme](https://github.com/Mintimate/RimeTheme)
+
+:::info 提示
+
+主题方案基于: [https://github.com/nopdan/danjing](https://github.com/nopdan/danjing) 
+
+:::
+
+## iOS外观
+
+如果是仓输入法，那么是自带的布局和外观其实就很不错。但是如果你想追求一些不一样的，我们也是用制作：
+
+![仓输入法上外观](/image/demo/Hamster_Mint.webp)
+
+同样，方案不在薄荷输入法的主仓库内，在主题仓库内：
+- [https://github.com/Mintimate/RimeTheme](https://github.com/Mintimate/RimeTheme)
+
+
+:::info 提示
+
+本方案基于QQ群内作者☕的`渐变`主题配合线上制作工具：
+- [https://lost-melody.github.io/hamster-tools/](https://lost-melody.github.io/hamster-tools/)
+
+:::

@@ -92,4 +92,35 @@ As mentioned earlier, **if Linux uses ibus, it is limited by the system style an
 
 If you use Fcitx5, you can install the theme：[Oh-my-rime Style Theme For_Fcitx](/resources/ohMyRimeThemeForFcitx5.zip)
 
+## Appearance in Android
+If you choose the `Fcitx5 For Android`, the default color is quite good. Moreover, `Fcitx5 For Android` is currently does not support changing the appearance.
 
+If it is Trime input method, it relies on third-party input solutions and layouts. You can download the Trime input method theme we made in the theme repository of Mint input method:
+
+![Appearance of Trime input method](/image/demo/Trime_Mint.webp)
+
+The solution is not in the main repository of Mint Input Method, but another repository has been opened:
+- [https://github.com/Mintimate/RimeTheme](https://github.com/Mintimate/RimeTheme)
+
+::: info
+
+The theme is based on: [https://github.com/nopdan/danjing](https://github.com/nopdan/danjing)
+
+:::
+
+## Appearance in iOS
+
+If you choose the Hamster, then the built-in layout and appearance are actually very good. But if you want to pursue something different, we also use production:
+
+![Hamster input method appearance](/image/demo/Hamster_Mint.webp)
+
+Likewise, the scheme is not in the main repository of Mint Input Method, but in the theme repository:
+- [https://github.com/Mintimate/RimeTheme](https://github.com/Mintimate/RimeTheme)
+
+
+::: info
+
+This solution is based on the `gradient` theme of the author ☕ in the QQ group and combined with online production tools:
+- [https://lost-melody.github.io/hamster-tools/](https://lost-melody.github.io/hamster-tools/)
+
+:::
