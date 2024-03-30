@@ -19,8 +19,6 @@ sidebar: false
 
 好的,按季度的格式生成更新文档:
 
-根据log.txt的内容,生成以下更新日志:
-
 ## 2024-S01
 Features:
 - 破坏性变更: 全面使用新的Lua引入方式，以备添加到仓更新源内
@@ -28,6 +26,11 @@ Features:
 - 默认配置文件迁移: 将 `default.custom.yaml` 迁移到 `default.yaml`，方便用户自定义覆写
 - 小鹤双拼辅码滤镜提示: 添加小鹤双拼的辅码滤镜，方便小鹤用户看到形码提示，默认关闭，可以在存在候选词情况下，使用「Control + Shift + C」进行激活，使用`;`进行辅码输入
 - 适配农历日期输出的Lua <Badge type="tip">[7febf49d7](https://github.com/Mintimate/oh-my-rime/commit/7febf49d7c577e908492f1ed3b4bbfe13c08d08d)</Badge>
+
+Performance:
+- 优化拼写速度 <Badge type="tip">[43757469d1](https://github.com/Mintimate/oh-my-rime/commit/43757469d1d314deea83ee5f22e169d29c28690e)</Badge> :
+  - 移除小鹤拼音内的简拼正则，可以大幅度提升拼写速度；双拼也不需要简拼。
+  - 优化其他拼音输入法内的简拼，理论上比通配效率高一些
 
 Style:
 - 破坏性变更: 移除小狼毫和鼠须管的custom个性化补丁配置，使用个性化配置代替

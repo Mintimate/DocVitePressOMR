@@ -19,8 +19,6 @@ You are also welcome to invite me to [drink coffee](https://afdian.net/a/minimis
 
 Okay, generate update documents in quarterly format:
 
-Based on the contents of log.txt, the following update log is generated:
-
 ## 2024-S01
 Features:
 - Breaking changes: Fully use the new Lua introduction method to prepare for adding to the repository update source
@@ -28,6 +26,11 @@ Features:
 - Default configuration file migration: Migrate `default.custom.yaml` to `default.yaml` to facilitate user-defined overrides
 - Xiaohe Shuangpin auxiliary code filter prompt: Add Xiaohe Shuangpin's auxiliary code filter to facilitate Xiaohe users to see the font code prompt. It is turned off by default. You can use "Control + Shift + C" when there are candidate words. "To activate, use `;` to enter the auxiliary code
 - Lua adapted to lunar date output <Badge type="tip">[7febf49d7](https://github.com/Mintimate/oh-my-rime/commit/7febf49d7c577e908492f1ed3b4bbfe13c08d08d)</Badge>
+
+Performance:
+- Optimizing input method spelling speed <Badge type="tip">[43757469d1](https://github.com/Mintimate/oh-my-rime/commit/43757469d1d314deea83ee5f22e169d29c28690e)</Badge> :
+  - Removing the regular expressions for abbreviated spellings in the Double fly Pinyin input method can significantly improve spelling speed. Double pinyin also does not require abbreviated spellings.
+  - Optimizing the abbreviated spellings in other Pinyin input methods can theoretically achieve higher efficiency than wildcard matching.
 
 Style:
 - Destructive changes: Remove the custom personalized patch configuration of Xiaolanghao and Ratwhisker, and use personalized configuration instead
