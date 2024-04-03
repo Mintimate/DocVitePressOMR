@@ -8,19 +8,23 @@ head:
 description: Oh-my-rime's built-in reverse lookup function helps users to input characters using other input methods, such as radical-based input, stroke-based input, and Wubi input.
 aside: true
 ---
-# Reverse Lookup Function
+# Reverse Lookup Function <Badge type="tip" text="^2024.04" />
 Reverse lookup, in simple terms, refers to using alternative input methods to find characters under the current input method.
+
+Translation to English:
+
+> 2024.04: The reverse lookup function, originally `uu/~u`, `uw/~w`, `ui/~i`, etc., has been uniformly changed to `Uu`, `Uw`, `Ui`, etc., for easy memory.
+> More: <Badge type="tip">[51779acb8](https://github.com/Mintimate/oh-my-rime/commit/51779acb88a447926af451426439573d504638f7)</Badge>
 
 For example, using Wubi to view words under the current Pinyin input method.
 
 Oh-my-rime includes three types of reverse lookup:
-- Radical-based reverse lookup (uu/~u)
-- Wubi reverse lookup (uw/~w)
-- Stroke-based reverse lookup (ui/~u)
+- Radical-based reverse lookup (Uu)
+- Wubi reverse lookup (Uw)
+- Stroke-based reverse lookup (Ui)
 
-In the near future, Pinyin reverse lookup (up) is expected to be adapted, making it convenient for Wubi users to perform Pinyin reverse lookup within the Wubi input mode.
+In the near future, Pinyin reverse lookup (Up) is expected to be adapted, making it convenient for Wubi users to perform Pinyin reverse lookup within the Wubi input mode.
 
-> For full spelling and Wubi input, use `uu`, `uw`, etc.; for double Pinyin input, use `~u`, `~w`, etc. This avoids conflicts with double Pinyin input.
 
 ## Configuration Method
 If you don't need certain reverse lookup features, you can perform reverse configuration according to this method.
@@ -54,7 +58,7 @@ radical_reverse_lookup:
   dictionary: radical_pinyin
   enable_completion: false
   enable_sentence: false
-  prefix: "~~"
+  prefix: "Uu"
   suffix: " '"
   comment_format:
     - erase/^.*$//
@@ -74,25 +78,27 @@ recognizer:
   import_preset: default
   patterns:
     punct: "^/([0-9]0?|[a-z]+)$"
-    radical_lookup: "~~[a-z]*'?$"
+    radical_lookup: "Uu[a-z]*'?$"
 ```
 
 With that, the reverse lookup is configured.
 
 ## Radical-based Reverse Lookup
-**Personally, I think this is the most practical type of reverse lookup**. In Oh-my-rime, press `uu` to activate the radical-based input mode. Subsequent inputs will be interpreted using the radical library.
 
-For example, typing `uuniuniuniu` on the keyboard will be interpreted as the combination of "niu niu niu," which represents three "牛" (cows) and forms the character "犇":
+**Personally, I think this is the most practical type of reverse lookup**; In Oh-my-rime, press `Uu` to activate the radical-based input mode. Subsequent inputs will be interpreted using the radical library.
+
+For example: When you type `Uuniuniuniu` on the keyboard, it will be interpreted as the combination of "niu niu niu," which represents three "牛" (cows) and forms the character "犇".
+
 ![Radical-based Reverse Lookup](/image/demo/reverseChaizi.webp)
 
 ## Wubi Reverse Lookup
 
-In Oh-my-rime's Mint Pinyin mode, use `uw` to activate the Wubi mode. Subsequent inputs will be interpreted using Wubi.
+In Oh-my-rime's Mint Pinyin mode, use `Uw` to activate the Wubi mode. Subsequent inputs will be interpreted using Wubi.
 
-For example, typing `uuq` on the keyboard will be interpreted as the combination for "q" and automatically retrieve the character "我" (me) for convenient combination lookup:
+For example: When you type `Uwq` on the keyboard, it will be interpreted as `q`. In the Wubi dictionary, it automatically retrieves the character `我` (me), which is convenient for combined character lookup.
 
 ![Wubi Reverse Lookup](/image/demo/reverseWubi.webp)
 
 ## Stroke-based Reverse Lookup
 
-In Oh-my-rime's Mint Pinyin mode, use `ui` to activate the stroke mode. Subsequent inputs will be interpreted using strokes.
+In Oh-my-rime's Mint Pinyin mode, use `Ui` to activate the stroke mode. Subsequent inputs will be interpreted using strokes.

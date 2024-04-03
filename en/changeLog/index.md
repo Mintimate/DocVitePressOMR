@@ -17,7 +17,12 @@ You are also welcome to invite me to [drink coffee](https://afdian.net/a/minimis
 
 :::
 
-Okay, generate update documents in quarterly format:
+## 2024-S02
+Features:
+- Breaking changes: Modification of the activation key for reverse lookup. It is uniformly used in all input method schemes <Badge type="tip">[51779acb8](https://github.com/Mintimate/oh-my-rime/commit/51779acb88a447926af451426439573d504638f7)</Badge> :
+  - Uu: Character decomposition reverse lookup
+  - Uw: Wubi reverse lookup
+  - Ui: Stroke reverse lookup
 
 ## 2024-S01
 Features:

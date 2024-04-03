@@ -17,7 +17,12 @@ sidebar: false
 
 :::
 
-好的,按季度的格式生成更新文档:
+## 2024-S02
+Features:
+- 破坏性变更: 反查激活键修改。各个输入法方案内统一使用 <Badge type="tip">[51779acb8](https://github.com/Mintimate/oh-my-rime/commit/51779acb88a447926af451426439573d504638f7)</Badge> ：
+  - Uu: 拆字反查
+  - Uw: 五笔反查
+  - Ui: 笔画反查
 
 ## 2024-S01
 Features:
