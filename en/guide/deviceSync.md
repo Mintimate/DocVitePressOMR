@@ -131,3 +131,36 @@ If `MacbookPro-M2Max` is counted as **B**, `temp` is counted as **A**; synchroni
 |`sync\A\A.userdb.txt`|`sync\A\B.userdb.txt`|❎|
 
 Reference from: [https://github.com/Mintimate/DocVitePressOMR/issues/5#issuecomment-1999136683](https://github.com/Mintimate/DocVitePressOMR/issues/5#issuecomment-1999136683)
+
+## Soft Link Library Sync
+
+As we know, Rime's user data synchronization only syncs some personalized configurations and user dictionaries, but not the libraries.
+
+Some users use both the Hamster and Squirrel input methods, and the Hamster input method uses iCloud for synchronization, which is the `RIME/Rime` folder in the Hamster app data on iCloud:
+
+![iCloud sync folder](/image/guide/syncWithCloudHamster.webp)
+
+In theory, if there are files in this folder, they will replace the local files during deployment.
+
+> That is: You use Wi-Fi to upload the scheme configuration to the iPhone's built-in storage, and perform **redeployment** in the Rime of the Hamster input method. The Hamster input method will replace the local files with the same name files in iCloud, and use the local files if there are no files.
+
+So, if you want the Hamster input method and Squirrel library, you can use the soft link method to link the Hamster input method's configuration to the Rime configuration folder of Squirrel. In this way, you can use iCloud to upload the dictionary of the Hamster input method, and participate in the compilation during the deployment of Squirrel.
+
+::: info Why use the Hamster soft link to Squirrel?
+When iCloud syncs, it does not sync the alias file of the ln soft link; so you need to link the iCloud folder of the Hamster input method to the configuration folder of Squirrel.
+:::
+
+![Soft link needs to sync](/image/guide/HamsterSyncConfigPathAndSquirrelRimePath.webp)
+
+For example, if we want to sync the library, we only need to:
+
+```shell
+# Rename the original library folder (ln-s will automatically create a soft link)
+## The current Terminal is in the configuration folder of Squirrel
+mv dicts dictsBackup
+# Create a soft link
+ln -s "/Users/mintimate/Library/Mobile Documents/iCloud~dev~fuxiao~app~hamsterapp/Documents/RIME/Rime/dicts" "/Users/mintimate/Library/Rime/dicts"
+```
+
+![Soft link sync library](/image/guide/lnSyncDict.webp)
+

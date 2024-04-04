@@ -131,3 +131,38 @@ sync
 |`sync\A\A.userdb.txt`|`sync\A\B.userdb.txt`|❎|
 
 参考自: [https://github.com/Mintimate/DocVitePressOMR/issues/5#issuecomment-1999136683](https://github.com/Mintimate/DocVitePressOMR/issues/5#issuecomment-1999136683)
+
+## 软链接词库同步
+
+我们已经知道，Rime的同步用户数据，只是同步一些个性化配置和用户词典，词库并没有同步。
+
+一些用户，同时使用仓输入法(Hamster)和鼠须管(Squirrel)，并且仓输入法是使用 iCloud 同步，也就是 iCloud 内 Hamster 应用数据内上`RIME/Rime`文件夹：
+
+![iCloud同步文件夹](/image/guide/syncWithCloudHamster.webp)
+
+理论上，如果这文件夹里有的文件，会在部署的时候，替换掉本地的文件。
+
+> 即: 你使用Wi-Fi上传方案配置到 iPhone 内置存储内，仓输入法内进行Rime的**重新部署**，仓输入法会把 iCloud 内同名文件替换掉本地的文件，没有的文件则使用本地。
+
+那么，如果想仓输入法和鼠须管词库，可以使用软链接的方式，把仓输入法的配置，软链接到鼠须管Rime的配置文件夹内，这样就可以使用 iCloud 上传 仓输入法的词典，并且在鼠须管部署时候，同步参与编译。
+
+::: info 为什么使用仓输入法软链接鼠须管?
+iCloud 同步的时候，对于 ln 软链接的替身文件，是不会进行同步的；所以需要把仓输入法iCloud的文件夹，软链接到鼠须管的配置文件夹内。
+:::
+
+![软链接需要同步](/image/guide/HamsterSyncConfigPathAndSquirrelRimePath.webp)
+
+举个例子，我们想把词库同步了，那么只需要：
+
+```shell
+# 重命名原有的词库文件夹（ln-s 会自动创建软链接）
+## 当前Terminal在鼠须管的配置文件夹内
+mv dicts dictsBackup
+# 创建软链接
+ln -s "/Users/mintimate/Library/Mobile Documents/iCloud~dev~fuxiao~app~hamsterapp/Documents/RIME/Rime/dicts" "/Users/mintimate/Library/Rime/dicts"
+```
+
+![软链接同步词库](/image/guide/lnSyncDict.webp)
+
+
+
