@@ -79,3 +79,13 @@ Click on `Root -> AppleEnabledInputSources` in order, you will see a column of `
 Then restart the computer, open the keyboard settings, and you can see that the ABC input method that comes with the system has been deleted.
 
 > If you want to add it back, just add it in the system settings.
+
+## How to Delete Custom Words
+You can delete custom words, or reduce the weight of existing words in the dictionary (return to the original weight, not the lowest).
+- Squirrel uses Fn + ⇧ + ⌫
+- Weasel uses Ctrl/Shift + Del
+
+Effect:
+![Delete custom words](/image/guide/deleteSelfWord.webp)
+
+If you want to permanently delete a word that exists in the **dictionary**, you can only edit the dictionary and redeploy.

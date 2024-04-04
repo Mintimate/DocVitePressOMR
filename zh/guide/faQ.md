@@ -77,3 +77,13 @@ sudo open ~/Library/Preferences/com.apple.HIToolbox.plist
 接着重启电脑，打开键盘设置，就可以看到系统自带的 ABC 输入法已经被删掉了。
 
 > 如果想添加回来，那么在系统设置内添加即可。
+
+## 如何删除自造字
+可以删除自造词，或降低词库中已有词语的权重（回到原始权重，不是降到最低）。
+- 鼠须管使用 Fn + ⇧ + ⌫
+- 小狼毫使用 Ctrl/Shift + Del
+
+效果:
+![删除自造字](/image/guide/deleteSelfWord.webp)
+
+想永久删除一个**词库**中存在的词汇，只能编辑词库，重新部署。
