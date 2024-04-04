@@ -84,6 +84,6 @@ sudo open ~/Library/Preferences/com.apple.HIToolbox.plist
 - 小狼毫使用 Ctrl/Shift + Del
 
 效果:
-![删除自造字](/image/guide/deleteSelfWord.webp)
+![删除自造字](/image/guide/deleteSelfWord.gif)
 
 想永久删除一个**词库**中存在的词汇，只能编辑词库，重新部署。

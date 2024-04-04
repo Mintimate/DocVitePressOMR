@@ -86,6 +86,6 @@ You can delete custom words, or reduce the weight of existing words in the dicti
 - Weasel uses Ctrl/Shift + Del
 
 Effect:
-![Delete custom words](/image/guide/deleteSelfWord.webp)
+![Delete custom words](/image/guide/deleteSelfWord.gif)
 
 If you want to permanently delete a word that exists in the **dictionary**, you can only edit the dictionary and redeploy.
