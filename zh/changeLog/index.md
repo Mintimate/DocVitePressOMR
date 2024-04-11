@@ -23,6 +23,7 @@ Features:
   - Uu: 拆字反查
   - Uw: 五笔反查
   - Ui: 笔画反查
+- 破坏性变更: 颜文字由`vv`激活替换为`VV`激活，并且解决了双拼情况下，在组词时候，英文`vv`被占用而无法联想。 <Badge type="tip">[46a070dd0d](https://github.com/Mintimate/oh-my-rime/commit/46a070dd0dedf72725631b1c16b2d0a23ecc3112)</Badge>
 
 ## 2024-S01
 Features:

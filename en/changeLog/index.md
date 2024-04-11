@@ -23,6 +23,7 @@ Features:
   - Uu: Character decomposition reverse lookup
   - Uw: Wubi reverse lookup
   - Ui: Stroke reverse lookup
+- Breaking changes: The activation of emoticons has been changed from `vv` to `VV`, and the issue of English `vv` being occupied and unable to associate during word formation in the case of double spelling has been resolved. <Badge type="tip">[46a070dd0d](https://github.com/Mintimate/oh-my-rime/commit/46a070dd0dedf72725631b1c16b2d0a23ecc3112)</Badge>
 
 ## 2024-S01
 Features:
