@@ -129,7 +129,7 @@ export default defineConfig({
             message: '<a href="https://www.mintimate.cn" target="_blank">Powered by creativity and powered by Mintimate</a>',
             copyright: '<a href="https://beian.miit.gov.cn" target="_blank">闽ICP备2021000722号-3</a> | ' +
                 '          <a href="http://www.beian.gov.cn" target="_blank">闽公网安备 35021102001843号</a> <br/>' +
-                '友情链接♥️: <a href="http://www.mintimate.cn" target="_blank">Mintimate\'s Blog</a> | <a href="https://www.cloudflare.com/" target="_blank">CloudFlare</a>'
+                '友情链接♥️: <a href="http://www.mintimate.cn" target="_blank">Mintimate\'s Blog</a>'
         },
         search: {
             provider: 'local'
