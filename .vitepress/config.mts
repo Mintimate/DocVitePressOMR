@@ -101,6 +101,7 @@ export default defineConfig({
                             {text: 'Appearance', link: '/en/demo/diffAppearance'},
                             {text: 'Reverse Lookup', link: '/en/demo/reverseWords'},
                             {text: 'Special Function Keys', link: '/en/demo/funcKeys'},
+                            {text: 'Kaomoji', link: '/en/demo/kaomoji'},
                         ]
                     }],
                     '/en/guide/': [{

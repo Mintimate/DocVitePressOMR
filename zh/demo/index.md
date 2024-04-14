@@ -58,7 +58,7 @@ Github仓库地址:
   - 支持亮色/暗色皮肤样式，在Windows（Windows 10 1809+ ）和macOS上，可以根据系统进行切换；
   - 中文输入法，支持繁体（台湾地区风格）、简体；
   - 支持中英混合输入，如：输入: "哆啦A梦"；
-  - 支持Emoji表情和颜文字；
+  - 支持Emoji表情和[颜文字](kaomoji.html)；
   - 支持[多种反查输入](reverseWords.html): 支持拆字(uu)反查输入、五笔(uw)反查输入、笔画(ui)反查输入；
   - 支持[输入日期、星期、时间、农历日期和人民币大写快捷输入](funcKeys.html)。
 - 词库得益于使用[雾凇拼音](https://github.com/iDvel/rime-ice)

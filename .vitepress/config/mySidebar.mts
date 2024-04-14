@@ -23,6 +23,7 @@ export const locales_cn = {
                 {text: '外观展示', link: '/zh/demo/diffAppearance'},
                 {text: '反查模块', link: '/zh/demo/reverseWords'},
                 {text: '特殊功能键', link: '/zh/demo/funcKeys'},
+                {text: '颜文字', link: '/zh/demo/kaomoji'},
             ]
         }],
         '/zh/guide/': [{

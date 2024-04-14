@@ -57,7 +57,7 @@ Currently supported features include:
     - Supports light and dark theme styles, automatically switching based on the system theme on Windows (Windows 10 1809+) and macOS.
     - Chinese input supporting Traditional Chinese (Taiwan style) and Simplified Chinese.
     - Mixed Chinese-English input, e.g., inputting "DoraA Dream".
-    - Supports Emoji and emoticons.
+    - Supports Emoji and [Kaomoji](kaomoji.html).
     - Supports various [reverse lookup input methods](reverseWords.html): character decomposition (uu), Wubi (uw), and stroke (ui) reverse lookup.
     - Supports quick input of [dates, days of the week, times, lunar dates, and Chinese numerals](funcKeys.html).
 
