@@ -1,7 +1,13 @@
-import {defineConfig} from 'vitepress'
+// Vitepress 默认配置文件（使用新的Mermaid插件版本代替）
+// import {defineConfig} from 'vitepress'
+import { withMermaid } from "vitepress-plugin-mermaid";
 import {locales_cn} from './config/mySidebar.mjs'
+
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default withMermaid({
+    mermaid:{
+        theme:'forest'
+    },
     title: "oh-my-rime输入法",
     description: "一套快速初始化rime的模板，因为平时我使用oh-my-zsh，在使用rime时候，有种用omz的感觉；所以我给它取名叫oh-my-rime，你也可以叫它薄荷拼音，亦或者Mint Input。",
     head: [
