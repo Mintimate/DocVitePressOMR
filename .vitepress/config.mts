@@ -106,6 +106,7 @@ export default withMermaid({
                             {text: 'Overview', link: '/en/demo/'},
                             {text: 'Appearance', link: '/en/demo/diffAppearance'},
                             {text: 'Reverse Lookup', link: '/en/demo/reverseWords'},
+                            {text: 'XiaoHe Double Pinyin', link: '/en/demo/doublePinyinFly'},
                             {text: 'Special Function Keys', link: '/en/demo/funcKeys'},
                             {text: 'Kaomoji', link: '/en/demo/kaomoji'},
                         ]

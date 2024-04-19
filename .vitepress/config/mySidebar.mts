@@ -22,6 +22,7 @@ export const locales_cn = {
                 {text: '梗概', link: '/zh/demo/'},
                 {text: '外观展示', link: '/zh/demo/diffAppearance'},
                 {text: '反查模块', link: '/zh/demo/reverseWords'},
+                {text: '小鹤双拼', link: '/zh/demo/doublePinyinFly'},
                 {text: '特殊功能键', link: '/zh/demo/funcKeys'},
                 {text: '颜文字', link: '/zh/demo/kaomoji'},
             ]
