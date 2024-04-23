@@ -7,7 +7,9 @@ aside: true
 现在，我们来介绍如何安装rime输入法。
 强烈建议配合视频进行操作：
 - [跨平台、无隐私追踪的开源输入法Rime定制指南: 聪明的输入法懂我心意!](https://www.bilibili.com/video/BV12M411T7gf)
+<iframe class="bilibili" src="//player.bilibili.com/player.html?aid=527165106&bvid=BV12M411T7gf&cid=1086974146&p=1&high_quality=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"  sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"> </iframe>
 
+- [Android和iOS如何使用开源输入法中州韵(RIME)? 使用薄荷输入法配置模板快速初始化RIME！](https://www.bilibili.com/video/BV1Mr42137Ns)
 
 
 ## macOS安装rime

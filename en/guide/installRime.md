@@ -6,10 +6,11 @@ aside: true
 # Installing Rime Input Keyboard
 Now let's introduce how to install the Rime input keyboard.
 
-
-
 It is highly recommended to follow along with the video（Chinese Only)：
 - [跨平台、无隐私追踪的开源输入法Rime定制指南: 聪明的输入法懂我心意!](https://www.bilibili.com/video/BV12M411T7gf)
+<iframe class="bilibili" src="//player.bilibili.com/player.html?aid=527165106&bvid=BV12M411T7gf&cid=1086974146&p=1&high_quality=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"  sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"> </iframe>
+
+- [Android和iOS如何使用开源输入法中州韵(RIME)? 使用薄荷输入法配置模板快速初始化RIME！](https://www.bilibili.com/video/BV1Mr42137Ns)
 
 ## Installing Rime on macOS
 As mentioned before, the Rime framework input keyboard on macOS can use Squirrel.
