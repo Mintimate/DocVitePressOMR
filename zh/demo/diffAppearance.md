@@ -9,7 +9,19 @@ description: 薄荷拼音在不同操作系统平台上的效果。适配了暗�
 aside: true
 ---
 # 外观展示
-主要适配了Windows和macOS上的外观。
+主要适配了Windows和macOS上的外观。自带两套皮肤： 水鸭系列、青涩系列：
+- 蓝水鸭: 蓝色色调的亮色主题；
+- 黑水鸭: 蓝色色调的暗色主题；
+- 碧皓青: 绿色色调的亮色主题；
+- 碧月青: 绿色色调的暗色主题；
+
+![外观展示](/image/demo/themeOfOhMyRime.webp)
+
+:::info 提示信息
+
+默认激活的是 “水鸭”系列哦。如果需要 切换到 “青涩”系列，可以使用[配置覆写](/zh/guide/configurationOverride.html)的方式，用 custom 去覆写 `squirrel.yaml`或`weasel.yaml`的`style/color_scheme`和`style/color_scheme_dark`配置项。 
+
+:::
 
 主要配置的颜色（仓库内的`squirrel.yaml`和`weasel.yaml`），参考:
 ```yaml
@@ -119,9 +131,16 @@ Linux上，如果使用的是的iBus，受限于不同的平台使用的iBus配�
 - [https://github.com/Mintimate/RimeTheme](https://github.com/Mintimate/RimeTheme)
 
 
-:::info 提示
+:::info 版权©说明
 
-本方案基于QQ群内作者☕的`渐变`主题配合线上制作工具：
+本方案基于 仓输入法QQ群 内作者「咖啡☕」大佬的`渐变`主题魔改制作，魔改内容：
+- 注记码替换为小鹤双拼；
+- 按键气泡更改；
+- 部分颜色修改。
+
+并且使用了在线可视化工具进行编辑：
 - [https://lost-melody.github.io/hamster-tools/](https://lost-melody.github.io/hamster-tools/)
+
+版权信息，依旧归于「咖啡☕」大佬。 已经经大佬授权。
 
 :::

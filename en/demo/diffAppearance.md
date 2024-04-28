@@ -8,8 +8,20 @@ head:
 description: The demonstration of oh-my-rime on different operating system platforms. It is adapted to dark and light modes, but there may be variations depending on the different operating systems and frameworks used for rime implementation.
 aside: true
 ---
-# Appearance
-This primarily showcases the appearance on Windows and macOS.
+# Appearance Display
+The appearance is mainly designed for Windows and macOS. It comes with two sets of skins: the "Blue Duck" series and the "Fresh" series:
+- Light Blue: A light theme with blue tones.
+- Dark Blue: A dark theme with blue tones.
+- Light Green: A light theme with green tones.
+- Dark Green: A dark theme with green tones.
+
+![Appearance Display][/image/demo/themeOfOhMyRime.webp]
+
+:::info Information
+
+The "Blue" series is activated by default. If you want to switch to the "Green" series, you can use the [configuration override](/zh/guide/configurationOverride.html) method and override the `style/color_scheme` and `style/color_scheme_dark` configurations in the `squirrel.yaml` or `weasel.yaml` files with the "custom" option.
+
+:::
 
 
 Colors of the main configuration (in `squirrel.yaml` and `weasel.yaml` in the repository), reference:
@@ -118,9 +130,16 @@ Likewise, the scheme is not in the main repository of Mint Input Method, but in 
 - [https://github.com/Mintimate/RimeTheme](https://github.com/Mintimate/RimeTheme)
 
 
-::: info
+:::info Copyright Notice
 
-This solution is based on the `gradient` theme of the author ☕ in the QQ group and combined with online production tools:
+This solution is based on the "渐变" theme modified by the author "咖啡☕" in the QQ group of the Hamster. The modifications include:
+- Replacing the annotation code with Double Fly Input;
+- Changing the key bubbles;
+- Modifying some colors.
+
+The solution was edited using an online visualization tool:
 - [https://lost-melody.github.io/hamster-tools/](https://lost-melody.github.io/hamster-tools/)
+
+The copyright information still belongs to the author "咖啡☕" and has been authorized by the author.
 
 :::
