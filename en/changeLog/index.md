@@ -24,6 +24,18 @@ Features:
   - Uw: Wubi reverse lookup
   - Ui: Stroke reverse lookup
 - Breaking changes: The activation of emoticons has been changed from `vv` to `VV`, and the issue of English `vv` being occupied and unable to associate during word formation in the case of double spelling has been resolved. <Badge type="tip">[46a070dd0d](https://github.com/Mintimate/oh-my-rime/commit/46a070dd0dedf72725631b1c16b2d0a23ecc3112)</Badge>
+- Introduce 9-grid layout: Introduce the 9-grid layout for Hamster, where the default 9-grid layout uses the full spelling scheme. You can override the configuration to use other schemes. <Badge type="tip">[88ede4c8c](https://github.com/Mintimate/oh-my-rime/commit/88ede4c8cd27b0fc57ab5d12860c348c3e26c777)</Badge>
+
+Style:
+- The Squirrel and Weasel input methods have added a new skin set. <Badge type="tip">[e263a21743](https://github.com/Mintimate/oh-my-rime/commit/e263a217437d87ef12c25c0372e08c7b99f8c2b1)</Badge>
+
+Fix:
+- Fixed the issue where the vertical layout in Squirrel could not be overwritten. <Badge type="tip">[5a9a29b7f8](https://github.com/Mintimate/oh-my-rime/commit/5a9a29b7f8bc3e8aca4982956f276a542a9d891b)</Badge>
+
+Thanks:
+| Time | Platform | User | Support💵 | Message |
+|------------|-----|-----------------------------------------------------------|----------|--------------------|
+| 2024/04/28 | 爱发电 | [爱发电用户_UkCK](https://afdian.net/u/8717bcc8054511efbfc052540025c377) | 20¥（一杯奶茶） | oh-my-rime |
 
 ## 2024-S01
 Features:
