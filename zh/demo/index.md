@@ -16,9 +16,9 @@ aside: true
 
 本章节将展示薄荷输入法的适配情况和使用的效果。
 
-> Tips: 之前本来叫『薄荷拼音』，后来适配了『98五笔』、『地球拼音』和『小鹤双拼』，感觉叫『薄荷输入法』比较合适✪ω✪
+> Tips: 之前本来叫『薄荷拼音』，后来适配了『五笔98』、『五笔86』、『地球拼音』和『小鹤双拼』，感觉叫『薄荷输入法』比较合适✪ω✪；当然，实际应该叫「薄荷输入配置」，只是「薄荷输入法」比较好听。
 
-Github仓库地址: 
+GitHub仓库地址: 
 - [oh-my-rime: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
 
 镜像仓库地址（如果你无法访问GitHub）: 
@@ -48,20 +48,21 @@ Github仓库地址:
   - 地球拼音薄荷定制: 基于地球拼音，追加一些定制，进行定制的输入方式；词库自动同步雾凇拼音并使用[Python pypinyin库](https://pypinyin.readthedocs.io/)进行转换。
   - 小鹤双拼薄荷定制: 基于[小鹤双拼](https://flypy.com/)（声形），进行定制的输入方式。词库使用雾凇拼音。
 - 双拼类
-  - 小鹤双拼薄荷定制: 基于小鹤双拼，追加一些定制；支持音形(辅码)的输入，默认使用`;`激活形的输入。如果不习惯`;`激活，可以自行再配置内改键。
+  - 小鹤双拼薄荷定制: 基于小鹤双拼，追加一些定制；词库同样使用雾凇拼音。支持音形(辅码)的输入，默认使用`;`激活形的输入。如果不习惯`;`激活，可以自行再配置内改键。如果需要完整的音形和拼音混输，可以自行引入小鹤音形后，扩展方案的`abc_segmentor`。
 - 笔画类
-  - 98五笔薄荷定制: 基于[98五笔基础版本](https://github.com/yanhuacuo/98wubi-tables)进行定制，满足五笔输入的需要；**轻量版本的98五笔**。
+  - 98五笔薄荷定制: 基于[98五笔基础版本](https://github.com/yanhuacuo/98wubi-tables)进行定制，满足五笔输入的需要；**轻量版本的98五笔**。如果需要完整的86五笔体验，可以试试看原仓库。
+  - 86五笔薄荷定制: 基于[86五笔极点码表](https://github.com/KyleBing/rime-wubi86-jidian)进行定制，满足五笔输入的需要；**轻量版本的98五笔**。同样，如果需要完整的86五笔体验，可以试试看原仓库。 
 
-## 支持的功能
+## 支持的功能 <Badge type="tip" text="^2024.05" />
 目前支持的功能，主要是:
 - 功能方面
   - 支持亮色/暗色皮肤样式，在Windows（Windows 10 1809+ ）和macOS上，可以根据系统进行切换；
   - 中文输入法，支持繁体（台湾地区风格）、简体；
   - 支持中英混合输入，如：输入: "哆啦A梦"；
   - 支持Emoji表情和[颜文字](kaomoji.html)；
-  - 支持[多种反查输入](reverseWords.html): 支持拆字(uu)反查输入、五笔(uw)反查输入、笔画(ui)反查输入；
+  - 支持[多种反查输入](reverseWords.html): 拼音内支持拆字(Uu)反查输入、五笔(Uw)反查输入、笔画(Ui)反查输入；五笔内支持拼音(Up)反查输入；
   - 支持[输入日期、星期、时间、农历日期和人民币大写快捷输入](funcKeys.html)。
-- 词库得益于使用[雾凇拼音](https://github.com/iDvel/rime-ice)
+- 拼音词库得益于使用[雾凇拼音](https://github.com/iDvel/rime-ice)
   - 《通用规范汉字表》
   - 华宇野风系统词库
   - 清华大学开源词库
@@ -74,6 +75,10 @@ Github仓库地址:
 ## 特别鸣谢
 薄荷输入法的构造，离不开以下项目的支持：
 - [雾凇拼音: https://github.com/iDvel/rime-ice](https://github.com/iDvel/rime-ice)
-- [98五笔: https://github.com/yanhuacuo/98wubi-tables](https://github.com/yanhuacuo/98wubi-tables)
+- [98五笔小筑: https://github.com/yanhuacuo/98wubi-tables](https://github.com/yanhuacuo/98wubi-tables)
+- [86五笔极点: https://github.com/KyleBing/rime-wubi86-jidian](https://github.com/KyleBing/rime-wubi86-jidian)
 
-也感谢 98五笔的维护者[yanhuacuo](https://github.com/yanhuacuo)和雾凇拼音的维护者[iDvel](https://github.com/iDvel)、[mirtlecn](https://github.com/mirtlecn)提供的帮助。
+也感谢以下个人提供的帮助和授权: 
+- 98五笔的维护者[yanhuacuo](https://github.com/yanhuacuo)
+- 雾凇拼音的维护者[iDvel](https://github.com/iDvel)、[mirtlecn](https://github.com/mirtlecn)
+- 86五的维护者[KyleBing](https://github.com/KyleBing)

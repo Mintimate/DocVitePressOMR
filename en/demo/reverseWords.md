@@ -18,13 +18,13 @@ Translation to English:
 
 For example, using Wubi to view words under the current Pinyin input method.
 
-Oh-my-rime includes three types of reverse lookup:
-- Radical-based reverse lookup (Uu)
+The Oh-my-rime (Mint Input Method's Pinyin scheme) includes three types of reverse lookup:
+- Character decomposition reverse lookup (Uu)
 - Wubi reverse lookup (Uw)
 - Stroke-based reverse lookup (Ui)
 
-In the near future, Pinyin reverse lookup (Up) is expected to be adapted, making it convenient for Wubi users to perform Pinyin reverse lookup within the Wubi input mode.
-
+The Wubi input supports:
+- Pinyin reverse lookup (Up)
 
 ## Configuration Method
 If you don't need certain reverse lookup features, you can perform reverse configuration according to this method.
@@ -99,6 +99,16 @@ For example: When you type `Uwq` on the keyboard, it will be interpreted as `q`.
 
 ![Wubi Reverse Lookup](/image/demo/reverseWubi.webp)
 
-## Stroke-based Reverse Lookup
+The selected text translates to:
 
-In Oh-my-rime's Mint Pinyin mode, use `Ui` to activate the stroke mode. Subsequent inputs will be interpreted using strokes.
+## Stroke Reverse Lookup
+In Oh-my-rime's Mint Pinyin mode, use `Ui` to activate the stroke mode, and the subsequent input content will be parsed using strokes.
+
+::: danger Countdown to Removal
+
+Considering that the stroke input method is used by too few people. We are considering removing the stroke reverse lookup and related stroke configurations. If you are still using stroke input or reverse lookup, please be sure to contact us, otherwise we may remove the stroke category in the future.
+
+:::
+
+## Pinyin Reverse Lookup
+In Oh-my-rime's Wubi mode, use `Up` to activate the stroke mode, and the subsequent input content will be parsed using Pinyin.

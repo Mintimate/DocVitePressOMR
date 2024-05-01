@@ -8,7 +8,7 @@ head:
 description: The demonstration of oh-my-rime on different operating system platforms. It is adapted to dark and light modes, but there may be variations depending on the different operating systems and frameworks used for rime implementation.
 aside: true
 ---
-# Appearance Display
+# Appearance Display <Badge type="tip" text="^2024.04" />
 The appearance is mainly designed for Windows and macOS. It comes with two sets of skins: the "Blue Duck" series and the "Fresh" series:
 - Light Blue: A light theme with blue tones.
 - Dark Blue: A dark theme with blue tones.
@@ -104,17 +104,19 @@ As mentioned earlier, **if Linux uses ibus, it is limited by the system style an
 
 If you use Fcitx5, you can install the theme：[Oh-my-rime Style Theme For_Fcitx](/resources/ohMyRimeThemeForFcitx5.zip)
 
-## Appearance in Android
-If you choose the `Fcitx5 For Android`, the default color is quite good. Moreover, `Fcitx5 For Android` is currently does not support changing the appearance.
+## Appearance in Android <Badge type="tip" text="^2024.05" />
+If you choose the `Fcitx5 For Android`, the default color is quite good. Moreover, `Fcitx5 For Android` currently does not support changing the appearance.
 
-If it is Trime input method, it relies on third-party input solutions and layouts. You can download the Trime input method theme we made in the theme repository of Mint input method:
+If it is Trime input method, it relies on third-party input solutions and layouts. ~~You can download the Trime input method theme we made in the theme repository of Mint input method~~:
 
 ![Appearance of Trime input method](/image/demo/Trime_Mint.webp)
 
 The solution is not in the main repository of Mint Input Method, but another repository has been opened:
 - [https://github.com/Mintimate/RimeTheme](https://github.com/Mintimate/RimeTheme)
 
-::: info
+:::danger Update in May 2024
+
+The theme adaptation of the Trime input method is quite difficult, we have been having problems based on the skin adapted by danjing; the team currently does not have the energy to maintain it. We gave up adapting the Trime theme, if you need to use it, you can use the original library theme.
 
 The theme is based on: [https://github.com/nopdan/danjing](https://github.com/nopdan/danjing)
 

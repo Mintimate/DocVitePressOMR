@@ -17,9 +17,9 @@ aside: true
 
 This section will showcase the adaptation and usage effects of the Mint Input Method.
 
-> Tip: It was originally called "Mint Pinyin", but after adapting to "98 Wubi", "Terra Pinyin" and "Double Fly Pinyin", it feels more appropriate to call it "Mint Input Method" ✪ω✪
+> Tip: It was originally called "Mint Pinyin", but after adapting to "98 Wubi", "86 Wubi", "Terra Pinyin" and "Double Fly Pinyin", it feels more appropriate to call it "Mint Input Method" ✪ω✪. Of course, it should actually be called 'Mint Input Configuration', but 'Mint Input Method' sounds better.
 
-Github repository address: [oh-my-rime: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
+GitHub repository address: [oh-my-rime: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
 
 Mirror repository address (if you cannot access GitHub): [oh-my-rime: https://gitlab.mintimate.cn/Mintimate/oh-my-rime](https://gitlab.mintimate.cn/Mintimate/oh-my-rime)
 
@@ -42,14 +42,15 @@ Oh-my-rime currently supports the following desktop platforms:
 
 ## Supported Input Methods
 Currently, three input types are supported within two major categories:
-- Full Pinyin Input
-    - Mint Pinyin: The flagship input method, supporting various look-ups, mixed Chinese-English input, and a rich full-spelling input experience. The dictionary is based on the [Rime-ice Pinyin dictionary](https://github.com/iDvel/rime-ice).
-    - Terra Pinyin Mint Customization: Based on Earth Pinyin with additional customizations; the dictionary automatically synchronizes with Rime-ice Pinyin and uses the [Python pypinyin library](https://pypinyin.readthedocs.io/) for conversion.
-    - Double Flypy Mint Customization: Customized based on the [Flypy](https://flypy.com/) (phonetic-graphic) double Pinyin input method. The dictionary uses Rime-ice Pinyin.
-- Double Pinyin Input
-    - Flypy Mint Customization: Based on Double Fly Input, with additional customizations; supports phonetic-graphic (auxiliary code) input, with the `;` key activating graphic input by default. If you are not used to `;`, you can reconfigure the activation key.
-- Stroke Input
-    - 98 Wubi Mint Customization: Customized based on the [98 Wubi base version](https://github.com/yanhuacuo/98wubi-tables) to meet the needs of Wubi input; a **lightweight version of 98 Wubi**.
+- Full Pinyin Category
+  - Mint Pinyin: The flagship input type, supporting various reverse lookups, mixed Chinese-English input, and a rich full-spelling input experience. The dictionary is based on the [Rime-ice Pinyin dictionary](https://github.com/iDvel/rime-ice).
+  - Terra Pinyin Mint Customization: Based on Earth Pinyin with additional customizations; the dictionary automatically synchronizes with Rime-ice Pinyin and uses the [Python pypinyin library](https://pypinyin.readthedocs.io/) for conversion.
+  - Flypy Mint Customization: Customized based on [Flypy Double Pinyin](https://flypy.com/) (phonetic-graphic), with additional customizations. The dictionary uses Rime-ice Pinyin.
+- Double Pinyin Category
+  - Flypy Mint Customization: Based on Flypy Double Pinyin, with additional customizations; the dictionary also uses Rime-ice Pinyin. Supports phonetic-graphic (auxiliary code) input, with the `;` key activating graphic input by default. If you are not used to `;`, you can reconfigure the activation key. If you need a complete phonetic and graphic mixed input, you can introduce Flypy phonetic-graphic and extend the `abc_segmentor` scheme.
+- Stroke Category
+  - 98 Wubi Mint Customization: Customized based on the [98 Wubi](https://github.com/yanhuacuo/98wubi-tables) to meet the needs of Wubi input; a **lightweight version of 98 Wubi**. If you need a complete experience of 86 Wubi, you can try the original repository.
+  - 86 Wubi Mint Customization: Customized based on the [86 Wubi](https://github.com/KyleBing/rime-wubi86-jidian) to meet the needs of Wubi input; a **lightweight version of 98 Wubi**. Similarly, if you need a complete experience of 86 Wubi, you can try the original repository.
 
 ## Supported Features
 Currently supported features include:
@@ -58,10 +59,9 @@ Currently supported features include:
     - Chinese input supporting Traditional Chinese (Taiwan style) and Simplified Chinese.
     - Mixed Chinese-English input, e.g., inputting "DoraA Dream".
     - Supports Emoji and [Kaomoji](kaomoji.html).
-    - Supports various [reverse lookup input methods](reverseWords.html): character decomposition (uu), Wubi (uw), and stroke (ui) reverse lookup.
+    - Supports [multiple reverse lookup inputs](reverseWords.html): Pinyin supports character decomposition (Uu) reverse lookup input, Wubi (Uw) reverse lookup input, stroke (Ui) reverse lookup input; Wubi supports Pinyin (Up) reverse lookup input.   
     - Supports quick input of [dates, days of the week, times, lunar dates, and Chinese numerals](funcKeys.html).
-
-- The dictionary benefits from using [Rime-ice Pinyin](https://github.com/iDvel/rime-ice)
+- The dictionary of Pinyin benefits from using [Rime-ice Pinyin](https://github.com/iDvel/rime-ice)
     - The Table of General Standard Chinese Characters
     - Huayu Cloud Wind system dictionary
     - Tsinghua University open-source dictionary
@@ -75,5 +75,9 @@ Currently supported features include:
 The construction of Mint Input Method is inseparable from the support of the following projects:
 - [Rime-ice: https://github.com/iDvel/rime-ice](https://github.com/iDvel/rime-ice)
 - [98 Wubi: https://github.com/yanhuacuo/98wubi-tables](https://github.com/yanhuacuo/98wubi-tables)
+- [86 Wubi: https://github.com/KyleBing/rime-wubi86-jidian](https://github.com/KyleBing/rime-wubi86-jidian)
 
-We would also like to thank the maintainers of 98 Wubi [yanhuacuo](https://github.com/yanhuacuo) and Rime-ice Pinyin [iDvel](https://github.com/iDvel), [mirtlecn](https://github.com/mirtlecn) for their help.
+Special thanks to the following individuals for their help and authorization:
+- [yanhuacuo](https://github.com/yanhuacuo), the maintainer of 98 Wubi
+- [iDvel](https://github.com/iDvel) and [mirtlecn](https://github.com/mirtlecn), the maintainers of Rime-ice Pinyin
+- [KyleBing](https://github.com/KyleBing), the maintainer of 86 Wubi

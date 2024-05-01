@@ -8,7 +8,7 @@ head:
 description: 薄荷拼音在不同操作系统平台上的效果。适配了暗色和亮色模式，但是操作系统不同、rime实现的框架不同，可能会有所差异。
 aside: true
 ---
-# 外观展示
+# 外观展示 <Badge type="tip" text="^2024.04" />
 主要适配了Windows和macOS上的外观。自带两套皮肤： 水鸭系列、青涩系列：
 - 蓝水鸭: 蓝色色调的亮色主题；
 - 黑水鸭: 蓝色色调的暗色主题；
@@ -105,19 +105,21 @@ Linux上，如果使用的是的iBus，受限于不同的平台使用的iBus配�
 
 如果你使用Fcitx5，可以安装主题：[薄荷拼音外观风格主题_Fcitx](/resources/ohMyRimeThemeForFcitx5.zip)
 
-## Android外观
+## Android外观 <Badge type="tip" text="^2024.05" />
 如果你选择的小企鹅输入法，默认的颜色就是挺不错的。而且目前小企鹅输入法暂时不支持更换外观。
 
-如果是同文输入法，那么是挺依靠第三方输入方案和布局的，你可以在薄荷输入法的主题仓库内下载到我们制作的同文输入法主题：
+如果是同文输入法，那么是挺依靠第三方输入方案和布局的，~~你可以在薄荷输入法的主题仓库内下载到我们制作的同文输入法主题~~：
 
 ![同文输入法上外观](/image/demo/Trime_Mint.webp)
 
-方案不在薄荷输入法的主仓库内，另外开了一个仓库：
+方案不在薄荷输入法的主仓库内，另外开了一个仓库（不建议使用）：
 - [https://github.com/Mintimate/RimeTheme](https://github.com/Mintimate/RimeTheme)
 
-:::info 提示
+:::danger 2024.05更新
 
-主题方案基于: [https://github.com/nopdan/danjing](https://github.com/nopdan/danjing) 
+同文输入法的主题适配难度较高，我们基于 danjing 大佬适配的皮肤，一直有问题； 团队目前没有精力维护。放弃适配同文主题，如果需要使用，可以使用原库的主题。
+
+主题方案基于（原库）: [https://github.com/nopdan/danjing](https://github.com/nopdan/danjing) 
 
 :::
 
