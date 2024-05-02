@@ -89,3 +89,61 @@ Effect:
 ![Delete custom words](/image/guide/deleteSelfWord.gif)
 
 If you want to permanently delete a word that exists in the **dictionary**, you can only edit the dictionary and redeploy.
+
+## Oh-my-rime Not Working on Linux?
+
+Using Rime input method on Linux requires reliance on an input method framework, such as: iBus and Fcitx. At this time, in conjunction with the Rime plugin and Oh-my-rime input method configuration, sometimes it is found to be unusable.
+
+Possible situations:
+- You can input English, but you cannot input Chinese, or the English of the input method is always in the follow-up, no candidate words appear, and there is no upper screen.
+- Unable to switch input methods, or after switching input methods, unable to input Chinese.
+- Chinese candidate words appear, but each candidate word will appear a combination character prompt, similar to the "Earth Pinyin" prompt.
+
+The above problems are all caused by the outdated librime of Linux. Especially, the version of librime in the apt source of Ubuntu is too low to support the new Lua script introduction method in the Oh-my-rime input method. And some Lua acts on `filter`, causing input failure.
+
+At present, there are several solutions:
+- Wait for the system source to update the librime version.
+- Use third-party sources, or compile librime yourself. Reference: [ibus-rime.AppImage](https://github.com/hchunhui/ibus-rime.AppImage)
+- Modify the Oh-my-rime configuration to use the old version of Lua.
+
+Here is how to roll back the Oh-my-rime input method configuration to use the old version of Lua, refer to this commit: [18e0ae7aa5](https://github.com/Mintimate/oh-my-rime/commit/18e0ae7aa52773d8dd7e15a4ad15a8c91bc9e6d9)
+
+For example, we observe the `Oh-my-rime full spelling input file (rime_mint.schema.yaml)`, and find the Lua fragment in it:
+```yaml
+engine:
+  processors:
+    - lua_processor@*select_character              # Select character by word
+    - lua_processor@*codeLengthLimit_processor     # Use Lua to limit the maximum length of input (to prevent it from being too long and stuck)
+  translators:
+    - lua_translator@*mint_date_time_translator          # Time, date, week, month
+    - lua_translator@*number_translator                  # Amount in words
+    - lua_translator@*chineseLunarCalendar_translator    # Lunar calendar
+  filters:
+    - lua_filter@*corrector_filter            # Mispronunciation and misspelling prompts
+    - lua_filter@*autocap_filter              # Automatic capitalization of English
+```
+
+![The Lua import style in high version of librime](/image/guide/newStyleOfRime.webp)
+
+Each `lua` script filename is preceded by a `*`; this is the optional writing method of the high version librime. We need to change it to the low version writing method.
+
+First modify the `rime.lua` file:
+```lua
+-- Register lua script
+-- Format: require("script file name"), no suffix needed
+select_character = require("select_character")
+number_translator = require("number_translator")
+reduce_english_filter = require("reduce_english_filter")
+mint_date_time_translator = require("mint_date_time_translator")
+corrector_filter = require("corrector_filter")
+codeLengthLimit_processor = require("codeLengthLimit_processor")
+chineseLunarCalendar_translator = require("chineseLunarCalendar_translator")
+auxCode_filter = require("auxCode_filter")
+autocap_filter = require("autocap_filter")
+```
+
+Then, remove the `*` in the `processors`, `filters` and `translators` in `rime_mint.schema.yaml`. 
+
+The same is true for other input schemes.
+
+It is recommended to use the `custom` file to override the `schema`, rather than directly modifying `*.schema.yaml`.

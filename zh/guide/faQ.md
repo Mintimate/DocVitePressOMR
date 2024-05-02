@@ -87,3 +87,59 @@ sudo open ~/Library/Preferences/com.apple.HIToolbox.plist
 ![删除自造字](/image/guide/deleteSelfWord.gif)
 
 想永久删除一个**词库**中存在的词汇，只能编辑词库，重新部署。
+
+## Linux薄荷配置无法使用？
+
+Linux 使用 Rime 输入法，需要依靠输入法框架，比如： iBus 和 Fcitx。这个时候，配合 Rime 插件和薄荷输入法配置，有时候发现无法使用。
+
+可能出现的情况：
+- 可以输入英文，但是无法输入中文，或者输入法的英文一直在后续内，没有候选词出现，也没有上屏。
+- 无法切换输入法，或者切换输入法后，无法输入中文。
+- 中文候选词出现，但是每个候选词都会出现组合字符提示，类似于「地球拼音」的提示。
+
+上述问题，都是 Linux 的 librime 过旧问题导致。尤其是，Ubuntu 的 apt 源中的 librime 版本过低，无法支持薄荷输入法中新的 Lua 脚本引入写法。而 部分 Lua 作用于 `filter`，导致输入失败。
+
+目前的解决方法，有以下多种方法：
+- 等待系统源更新 librime 版本。
+- 使用第三方源，或者自行编译 librime。参考: [ibus-rime.AppImage](https://github.com/hchunhui/ibus-rime.AppImage)
+- 修改薄荷配置，使其使用旧版本的 Lua 写法。
+
+这里介绍如何回退 薄荷输入法配置，使其使用旧版本的 Lua 写法，参考这一次的 commit： [18e0ae7aa5](https://github.com/Mintimate/oh-my-rime/commit/18e0ae7aa52773d8dd7e15a4ad15a8c91bc9e6d9)
+
+举个例子，我们观察`薄荷全拼输入文件(rime_mint.schema.yaml)`，发现其中 lua 片段：
+```yaml
+engine:
+  processors:
+    - lua_processor@*select_character              # 以词定字
+    - lua_processor@*codeLengthLimit_processor     # 使用Lua限制输入内容的最大长度(防止过长而卡顿)
+  translators:
+    - lua_translator@*mint_date_time_translator          # 时间、日期、星期、月份
+    - lua_translator@*number_translator                  # 金额大小写
+    - lua_translator@*chineseLunarCalendar_translator    # 农历
+  filters:
+    - lua_filter@*corrector_filter            # 错音错字提示
+    - lua_filter@*autocap_filter              # 英文自动大写
+```
+
+![薄荷内使用新的lua样式](/image/guide/newStyleOfRime.webp)
+
+其中每个`lua`脚本的文件名，都是前面加上了`*`；这个就是高版本 librime 的可选写法。我们需要将其改为低版本的写法。
+
+首先修改`rime.lua`文件：
+```lua
+-- 注册lua脚本
+-- 格式： require("脚本文件名")，不需要后缀
+select_character = require("select_character")
+number_translator = require("number_translator")
+reduce_english_filter = require("reduce_english_filter")
+mint_date_time_translator = require("mint_date_time_translator")
+corrector_filter = require("corrector_filter")
+codeLengthLimit_processor = require("codeLengthLimit_processor")
+chineseLunarCalendar_translator = require("chineseLunarCalendar_translator")
+auxCode_filter = require("auxCode_filter")
+autocap_filter = require("autocap_filter")
+```
+
+之后，把`rime_mint.schema.yaml`中的`processors`、`filters`和`translators`中的`*`去掉即可。同理，其他输入方案也是一样的。
+
+建议使用`custom`文件去覆写`schema`，而不是直接修改`*.schema.yaml`。

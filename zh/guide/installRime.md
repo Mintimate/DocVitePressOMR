@@ -90,7 +90,7 @@ sudo apt install fcitx5 fcitx5-chinese-addons
 
 之后，安装fcitx5的rime输入法：
 ```bash
-sudo apt install fcitx5-rime
+sudo apt install fcitx5-rime librime-plugin-lua
 ```
 
 ![安装Fcitx5](/image/guide/installFcitx5.webp)

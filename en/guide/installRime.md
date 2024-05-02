@@ -81,7 +81,7 @@ Then restart or logout/login the current user session and add ibus in the system
 ### fcitx5 Version
 The fcitx5 version is slightly more complex (ibus is still more common):
 ```bash
-sudo apt install fcitx5 fcitx5-chinese-addons
+sudo apt install fcitx5 fcitx5-chinese-addons librime-plugin-lua
 ```
 Where:
 - fcitx5: Input method framework core package
