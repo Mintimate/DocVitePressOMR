@@ -25,12 +25,16 @@ Features:
   - Ui: 笔画反查
 - 破坏性变更: 颜文字由`vv`激活替换为`VV`激活，并且解决了双拼情况下，在组词时候，英文`vv`被占用而无法联想。 <Badge type="tip">[46a070dd0d](https://github.com/Mintimate/oh-my-rime/commit/46a070dd0dedf72725631b1c16b2d0a23ecc3112)</Badge>
 - 引入 仓九宫格布局: 引入仓九宫格布局，默认的九宫格使用的是全拼方案，可以自己覆写配置为其他方案 <Badge type="tip">[88ede4c8c](https://github.com/Mintimate/oh-my-rime/commit/88ede4c8cd27b0fc57ab5d12860c348c3e26c777)</Badge>
+- 引入 86五笔-极点 方案: [https://github.com/KyleBing/rime-wubi86-jidian](https://github.com/KyleBing/rime-wubi86-jidian)
 
 Style:
 - 主题: 小狼毫和鼠须管新增一套皮肤 <Badge type="tip">[e263a21743](https://github.com/Mintimate/oh-my-rime/commit/e263a217437d87ef12c25c0372e08c7b99f8c2b1)</Badge>
 
 Fix:
 - 修复鼠须管纵向无法被覆写问题 <Badge type="tip">[5a9a29b7f8](https://github.com/Mintimate/oh-my-rime/commit/5a9a29b7f8bc3e8aca4982956f276a542a9d891b)</Badge>
+
+Refactor:
+- 重构98五笔，方案名称更名为: 五笔98-五笔小筑。引入其他方案都在使用的 Lua <Badge type="tip">[4f10fbbce8](https://github.com/Mintimate/oh-my-rime/commit/4f10fbbce8c6f4e1455faf7bbf60e5dfacb89a0e)</Badge>
 
 Thanks:
 | 时间         | 平台  | 用户                                                        | 支持💵     | 留言                 |
