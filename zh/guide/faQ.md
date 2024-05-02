@@ -97,6 +97,10 @@ Linux 使用 Rime 输入法，需要依靠输入法框架，比如： iBus 和 F
 - 无法切换输入法，或者切换输入法后，无法输入中文。
 - 中文候选词出现，但是每个候选词都会出现组合字符提示，类似于「地球拼音」的提示。
 
+![中文输入没有候选项情况](/image/guide/cantInputWithoutEnglish1.webp)
+
+![每个候选词都会出现组合字符提示](/image/guide/cantInputWithoutEnglish2.webp)
+
 上述问题，都是 Linux 的 librime 过旧问题导致。尤其是，Ubuntu 的 apt 源中的 librime 版本过低，无法支持薄荷输入法中新的 Lua 脚本引入写法。而 部分 Lua 作用于 `filter`，导致输入失败。
 
 目前的解决方法，有以下多种方法：

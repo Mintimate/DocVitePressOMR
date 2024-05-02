@@ -99,6 +99,10 @@ Possible situations:
 - Unable to switch input methods, or after switching input methods, unable to input Chinese.
 - Chinese candidate words appear, but each candidate word will appear a combination character prompt, similar to the "Earth Pinyin" prompt.
 
+![cannot input Chinese](/image/guide/cantInputWithoutEnglish1.webp)
+
+![Appear combination character prompt](/image/guide/cantInputWithoutEnglish2.webp)
+
 The above problems are all caused by the outdated librime of Linux. Especially, the version of librime in the apt source of Ubuntu is too low to support the new Lua script introduction method in the Oh-my-rime input method. And some Lua acts on `filter`, causing input failure.
 
 At present, there are several solutions:
