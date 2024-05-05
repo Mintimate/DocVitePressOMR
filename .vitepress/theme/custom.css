@@ -16,15 +16,6 @@
     animation: floatAnimation 3s infinite;
 }
 
-.wwads-cn{
-    color: var(--vp-c-text-1);
-    background-color: var(--vp-carbon-ads-bg-color)!important;
-}
-
-.wwads-text{
-    color: var(--vp-c-text-1)!important;
-}
-
 /*去除底部的下划线*/
 .VPFooter a{
     text-decoration-line: unset!important;

@@ -1,6 +1,7 @@
 <!--.vitepress/theme/MyLayout.vue-->
 <script setup>
 import DefaultTheme from 'vitepress/theme'
+import Wwads from "./components/wwads.vue";
 
 const {Layout} = DefaultTheme
 </script>
@@ -9,13 +10,13 @@ const {Layout} = DefaultTheme
   <Layout>
     <template #home-features-before>
       <div class="VPFeatures" style="margin-bottom: 20px">
-        <div class="wwads-cn wwads-horizontal container" data-id="266"></div>
+        <wwads/>
       </div>
     </template>
 
     <template #aside-ads-before>
       <div class="supportMeCard" style="margin-bottom: 10px">
-        <div class="wwads-cn wwads-vertical container" style="max-width: 200px" data-id="266"></div>
+        <wwads :horizontal="false"/>
       </div>
       <a href="https://afdian.net/a/mintimate" target="_blank" rel="noopener sponsored">
       <div class="supportMeCard">
@@ -28,7 +29,7 @@ const {Layout} = DefaultTheme
 
     <template #sidebar-nav-after>
       <div class="VPCarbonAds" style="margin-top: 20px">
-        <div class="wwads-cn wwads-vertical container" style="max-width: 200px" data-id="266"></div>
+        <wwads :horizontal="false"/>
       </div>
     </template>
     <template #aside-outline-after>

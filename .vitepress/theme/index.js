@@ -1,6 +1,7 @@
 // .vitepress/theme/index.js
 import DefaultTheme from 'vitepress/theme'
 import './custom.css'
+import wwads from './components/wwads.vue'
 import customHomeFeaturesBefore from './customHomeFeaturesBefore.vue'
 import {watch} from "vue";
 export default {
@@ -8,6 +9,7 @@ export default {
     Layout: customHomeFeaturesBefore,
     enhanceApp({ app, router, siteData }) {
         DefaultTheme.enhanceApp({ app, router, siteData })
+        app.component('wwads', wwads)
         watch(router.route, () => {
             if (router.route.path.endsWith('ex.html')) {
                 // 解决中文首页切换语言，跳转到dex.html问题
