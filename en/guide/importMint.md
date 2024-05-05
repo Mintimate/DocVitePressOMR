@@ -32,6 +32,7 @@ The default configuration file locations are:
 - For Windows with Weasel: `%APPDATA%/Rime`
 - For Linux with ibus: `~/.config/ibus/rime`
 - For Linux with Fcitx5: `~/.local/share/fcitx5/rime`
+- For Linux with Fcitx5(Flatpak): `~/.var/app/org.fcitx.Fcitx5/data/fcitx5`
 - Android Fcitx(Fcitx5 For Android): `/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/rime/`
 
 Additionally, on macOS with Squirrel and Windows with Weasel, you can open the configuration directory using software. For example, on macOS:

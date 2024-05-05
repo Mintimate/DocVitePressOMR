@@ -26,6 +26,7 @@
 - Windows小狼毫: `%APPDATA%/Rime`
 - Linux ibus: `~/.config/ibus/rime`
 - Linux Fcitx5: `~/.local/share/fcitx5/rime`
+- Linux Fcitx5(Flatpak): `~/.var/app/org.fcitx.Fcitx5/data/fcitx5`
 - Android Fcitx(小企鹅): `/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/rime/`
 
 macOS鼠须管和Windows的小狼毫可以通过软件打开配置文件的地址，比如macOS：

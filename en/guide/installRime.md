@@ -78,6 +78,8 @@ sudo apt install ibus-rime
 ```
 Then restart or logout/login the current user session and add ibus in the system.
 
+If you encounter issues with using the Oh-my-rime's configuration, you can reinstall ibus using the [Appimage](https://github.com/hchunhui/ibus-rime.AppImage) method.
+
 ### fcitx5 Version
 The fcitx5 version is slightly more complex (ibus is still more common):
 ```bash
@@ -89,12 +91,14 @@ Where:
 
 Installing only fcitx5 can work, but doesn't allow Chinese input. To use fcitx5 for Chinese, also need the fcitx5-chinese-addons extension. These two packages need to be installed together for full Chinese input support in Debian.
 
-
 Then install the fcitx5 Rime input keyboard:
-
 ```bash
 sudo apt install fcitx5-rime
 ```
+
+"`librime-plugin-lua` might also be `librime-lua`. However, if your `librime` version is relatively low, you may not be able to use all the features of the Mint configuration, or you may not be able to use the Oh-my-rime's configuration at all. Refer to: [Linux Mint configuration not working?](faQ.html#linux%E8%96%84%E8%8D%B7%E9%85%8D%E7%BD%AE%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8)
+
+At this point, you need to compile and install `librime` and `Fcitx5`; or you can use a third-party software store, such as: [Flatpak](https://flatpak.org/)"
 
 ![Install Fcitx5](/image/guide/installFcitx5.webp)
 
@@ -123,6 +127,34 @@ Find the Fcitx5 options in the status bar and open them:
 Select Rime input method to activate:
 
 ![Add Rime in Fcitx5](/image/guide/openFcitx5ConfigInBar.webp)
+
+The selected text translates to:
+
+### fcitx5 Version (Flatpak)
+If your Linux distribution supports [Flatpak](https://flatpak.org/setup/), you can use Flatpak to install Fcitx5. In fact, almost all Linux distributions support Flatpak, but some distributions do not have Flatpak installed by default. You can check the [official documentation](https://flatpak.org/setup/) to install Flatpak.
+
+For example: on Debian 11, install Flatpak:
+```bash
+# Install Flatpak
+sudo apt install flatpak
+# The system uses the Gnome desktop environment, install the Gnome-Software Flatpak plugin
+sudo apt install gnome-software-plugin-flatpak
+```
+
+![Installing flatpak on Debian](/image/guide/installFlatpakManage.webp)
+
+The Flatpak version of fcitx5-rime is personally maintained by the author of Fcitx5, and fcitx5-rime includes the librime-lua dependency, which can avoid some dependency issues.
+
+```bash
+# If flatpak is slow, you can use the source: https://mirror.sjtu.edu.cn/docs/flathub
+# Install Fcitx5
+flatpak install flathub org.fcitx.Fcitx5
+# Install Fcitx5 Rime plugin
+flatpak install flathub org.fcitx.Fcitx5.Addon.Rime
+```
+![Installing Fcitx5 with flatpak](/image/guide/installFcitx5ByFlatpak.webp)
+
+At the same time, the configuration file for Fcitx5 installed with flathub is located at `~/.var/app/org.fcitx.Fcitx5/data/fcitx5`.
 
 ## iOS installation rime
 

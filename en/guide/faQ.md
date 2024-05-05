@@ -107,7 +107,7 @@ The above problems are all caused by the outdated librime of Linux. Especially, 
 
 At present, there are several solutions:
 - Wait for the system source to update the librime version.
-- Use third-party sources, or compile librime yourself. Reference: [ibus-rime.AppImage](https://github.com/hchunhui/ibus-rime.AppImage)
+- Use third-party sources, or compile librime yourself. Reference: [ibus-rime.AppImage](https://github.com/hchunhui/ibus-rime.AppImage)、[Fcitx5 With Flatpak](installRime.html#fcitx5-version-flatpak).
 - Modify the Oh-my-rime configuration to use the old version of Lua.
 
 Here is how to roll back the Oh-my-rime input method configuration to use the old version of Lua, refer to this commit: [18e0ae7aa5](https://github.com/Mintimate/oh-my-rime/commit/18e0ae7aa52773d8dd7e15a4ad15a8c91bc9e6d9)

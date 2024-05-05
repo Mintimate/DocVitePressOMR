@@ -70,15 +70,17 @@ Linux上安装Rime的方法也很多，主要分为两个方法：
 每个人的Linux环境不一样，需要安装的配置也不一样。这里以Linux Kali发行版本（基于Debian 11，使用Gnome桌面环境）为例，分别进行演示。
 
 ### ibus版本
-使用ibus版本很简单：
+使用 ibus 版本很简单：
 ```bash
 sudo apt install ibus-rime
 ```
 
-之后，重启或者注销当前用户对话；在系统内添加ibus即可。
+之后，重启或者注销当前用户对话；在系统内添加 ibus 即可。
+
+如果出现无法使用薄荷配置的情况，可以使用[Appimage](https://github.com/hchunhui/ibus-rime.AppImage)方式进行 ibus 的重新安装。
 
 ### fcitx5版本
-如果使用fcitx5版本，操作会相对复杂一点（目前还是ibus比较多点）：
+如果使用fcitx5版本，操作会相对复杂一点（目前Linux发行版本还是默认使用 ibus 多点）：
 ```bash
 sudo apt install fcitx5 fcitx5-chinese-addons
 ```
@@ -86,12 +88,16 @@ sudo apt install fcitx5 fcitx5-chinese-addons
 - fcitx5: 输入法框架核心包
 - fcitx5-chinese-addons: 汉语言扩展包,提供中文输入法引擎
 
-- 只安装fcitx5是可以用,但不能输入中文。想要用fcitx5来输入中文,还需再安装fcitx5-chinese-addons扩展包。这两个包需要一起安装,才能完整地在Debian中使用fcitx5中文输入法。
+只安装fcitx5是可以用，但可能不能输入中文。想要用fcitx5来输入中文,还需再安装fcitx5-chinese-addons扩展包。这两个包需要一起安装,才能完整地在Debian中使用fcitx5中文输入法。
 
 之后，安装fcitx5的rime输入法：
 ```bash
 sudo apt install fcitx5-rime librime-plugin-lua
 ```
+
+其中`librime-plugin-lua`也可能是`librime-lua`。不过如果你的`librime`版本比较低，是无法使用薄荷配置的全部功能，或者无法使用薄荷配置。参考：[Linux薄荷配置无法使用？](faQ.html#linux%E8%96%84%E8%8D%B7%E9%85%8D%E7%BD%AE%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8)
+
+这个时候，就需要编译安装`librime`、`Fcitx5`了；或者使用第三方软件商店，比如：[Flatpak](https://flatpak.org/)
 
 ![安装Fcitx5](/image/guide/installFcitx5.webp)
 
@@ -117,6 +123,32 @@ export XMODIFIERS=@im=fcitx5
 
 选择Rime输入法进行激活：
 ![在Fcitx5内添加Rime](/image/guide/openFcitx5ConfigInBar.webp)
+
+### fcitx5版本(Flatpak)
+如果你的Linux发行版本支持[Flatpak](https://flatpak.org/setup/)，可以使用Flatpak安装Fcitx5。其实基本所有的Linux发行版本都支持Flatpak，只是有些发行版本默认没有安装Flatpak。你可以查看[官方文档](https://flatpak.org/setup/)，安装Flatpak。
+
+比如：在Debian 11上，安装Flatpak：
+```bash
+# 安装 Flatpak
+sudo apt install flatpak
+# 系统使用 Gnome 桌面环境，安装 Gnome-Software 的 Flatpak 插件
+sudo apt install gnome-software-plugin-flatpak
+```
+
+![Debian上安装flatpak](/image/guide/installFlatpakManage.webp)
+
+Flatpak 版本 fcitx5-rime 是由 Fcitx5 的作者亲自维护，fcitx5-rime 有包含 librime-lua 依赖，可以避免一些依赖问题。
+
+```bash
+# flatpak 慢的话，可以使用源：https://mirror.sjtu.edu.cn/docs/flathub
+# 安装 Fcitx5
+flatpak install flathub org.fcitx.Fcitx5
+# 安装 Fcitx5 Rime 插件
+flatpak install flathub org.fcitx.Fcitx5.Addon.Rime
+```
+![flatpak安装Fcitx5](/image/guide/installFcitx5ByFlatpak.webp)
+
+同时，使用 flathub 安装的 Fcitx5 ，配置文件在`~/.var/app/org.fcitx.Fcitx5/data/fcitx5`内。
 
 ## iOS安装rime
 
