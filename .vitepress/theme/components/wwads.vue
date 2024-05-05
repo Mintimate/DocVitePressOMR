@@ -20,6 +20,11 @@ defineProps({
   background-color: var(--vp-carbon-ads-bg-color)!important;
 }
 
+:deep(.container){
+  margin: 0 auto;
+  max-width: 1152px
+}
+
 :deep(.wwads-text){
   color: var(--vp-c-text-1)!important;
 }

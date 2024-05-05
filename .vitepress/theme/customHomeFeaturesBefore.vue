@@ -57,11 +57,6 @@ const {Layout} = DefaultTheme
   }
 }
 
-.container {
-  margin: 0 auto;
-  max-width: 1152px
-}
-
 .supportMeCard {
   display: flex;
   justify-content: center;
