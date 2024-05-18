@@ -118,6 +118,7 @@ export default withMermaid({
                             {text: 'Install Rime', link: '/en/guide/installRime'},
                             {text: 'Import Oh-my-rime', link: '/en/guide/importMint'},
                             {text: 'Configuration and Overrides', link: '/en/guide/configurationOverride'},
+                            {text: 'Custom Default Activation Scheme', link: '/en/guide/defaultActivationScheme'},
                             {text: 'Emoji Configuration (OpenCC) ', link: '/en/guide/openccEmoji'},
                             {text: 'FuzzyPinyin', link: '/en/guide/fuzzyPinyin'},
                             {text: 'shortcutKeys', link: '/en/guide/shortcutKeys'},

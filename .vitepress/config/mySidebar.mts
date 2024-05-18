@@ -34,6 +34,7 @@ export const locales_cn = {
                 {text: '安装rime', link: '/zh/guide/installRime'},
                 {text: '导入薄荷输入法', link: '/zh/guide/importMint'},
                 {text: '配置覆写和定制', link: '/zh/guide/configurationOverride'},
+                {text: '自定义默认激活方案', link: '/zh/guide/defaultActivationScheme'},
                 {text: 'Emoji配置(OpenCC)', link: '/zh/guide/openccEmoji'},
                 {text: '模糊拼音设置', link: '/zh/guide/fuzzyPinyin'},
                 {text: '输入法快捷键', link: '/zh/guide/shortcutKeys'},

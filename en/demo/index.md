@@ -42,15 +42,25 @@ Oh-my-rime currently supports the following desktop platforms:
 
 ## Supported Input Methods
 Currently, three input types are supported within two major categories:
-- Full Pinyin Category
+- Full Pinyin class
   - Mint Pinyin: The flagship input type, supporting various reverse lookups, mixed Chinese-English input, and a rich full-spelling input experience. The dictionary is based on the [Rime-ice Pinyin dictionary](https://github.com/iDvel/rime-ice).
   - Terra Pinyin Mint Customization: Based on Earth Pinyin with additional customizations; the dictionary automatically synchronizes with Rime-ice Pinyin and uses the [Python pypinyin library](https://pypinyin.readthedocs.io/) for conversion.
+- Double Pinyin class
   - Flypy Mint Customization: Customized based on [Flypy Double Pinyin](https://flypy.com/) (phonetic-graphic), with additional customizations. The dictionary uses Rime-ice Pinyin.
-- Double Pinyin Category
   - Flypy Mint Customization: Based on Flypy Double Pinyin, with additional customizations; the dictionary also uses Rime-ice Pinyin. Supports phonetic-graphic (auxiliary code) input, with the `;` key activating graphic input by default. If you are not used to `;`, you can reconfigure the activation key. If you need a complete phonetic and graphic mixed input, you can introduce Flypy phonetic-graphic and extend the `abc_segmentor` scheme.
-- Stroke Category
+- Stroke class
   - 98 Wubi Mint Customization: Customized based on the [98 Wubi](https://github.com/yanhuacuo/98wubi-tables) to meet the needs of Wubi input; a **lightweight version of 98 Wubi**. If you need a complete experience of 86 Wubi, you can try the original repository.
   - 86 Wubi Mint Customization: Customized based on the [86 Wubi](https://github.com/KyleBing/rime-wubi86-jidian) to meet the needs of Wubi input; a **lightweight version of 98 Wubi**. Similarly, if you need a complete experience of 86 Wubi, you can try the original repository.
+
+Oh-my-rime has already adapted and integrated, but by default, the following input types are not activated:
+- Double Pinyin class
+  - Natural code: Customized input method based on [Natural code(wiki)](https://zh.wikipedia.org/zh/%E8%87%AA%E7%84%B6%E7%A0%81).
+  - Intelligent ABC: Customized input method based on [Intelligent ABC(wiki)](https://zh.wikipedia.org/wiki/%E6%99%BA%E8%83%BDABC%E8%BE%93%E5%85%A5%E6%B3%95).
+  - Microsoft double spelling: Customized input method based on Microsoft double spelling key map.
+  - Sogou double spelling: Customized input method based on Sogou double spelling key map.
+  - Zhiguang double spelling: Customized input method based on Zhiguang double spelling key map.
+
+If you need to activate them, you can refer to: [Customize the default activation scheme](/en/guide/defaultActivationScheme.html)
 
 ## Supported Features
 Currently supported features include:
