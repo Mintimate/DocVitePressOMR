@@ -53,7 +53,7 @@ aside: true
     author: Mintimate <"Mintimate's Blog">
     translucency: false                     # 磨砂： false | true
     mutual_exclusive: false                 # 色不叠加： false | true
-    shadow_size: 0                       `  # 阴影大小
+    shadow_size: 0                          # 阴影大小
     line_spacing: 5                         # 行间距
     base_offset: 0                          # 字基高
     alpha: 1                                # 透明度，0~1
