@@ -10,7 +10,7 @@ However, all of this might be a bit complex for a new user. When exploring Rime'
 
 ## Downloading Oh-My-Rime
 
-Oh-My-Rime is an open-source project that uses the [GPL 2.0](https://github.com/Mintimate/oh-my-rime/blob/main/LICENSE) license. This means you can access its source code and customize it according to your needs. However, please comply with the open-source license and do not use it for commercial purposes.
+Oh-My-Rime is an open-source project that uses the [GPL 3.0](https://github.com/Mintimate/oh-my-rime/blob/main/LICENSE) license. This means you can access its source code and customize it according to your needs. However, please comply with the open-source license and do not use it for commercial purposes.
 
 Let's go to the project page of Oh-My-Rime:
 
