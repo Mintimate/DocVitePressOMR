@@ -25,6 +25,8 @@ Rime-ice is a very good Rime input scheme, supporting multiple input methods suc
   - Complete pronunciation of the entire vocabulary
   - Pronunciation of synonymous polyphones
 
+![Demo Of rime-ice](/image/demo/demoOfRimeIce.webp)
+
 And based on the above vocabulary, build the main maintenance vocabulary:
 - `8105` character table.
 - `base` basic vocabulary.

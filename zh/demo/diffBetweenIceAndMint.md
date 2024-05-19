@@ -25,6 +25,8 @@ aside: true
     - 全词库完成注音
     - 同义多音字注音
 
+![雾凇拼音](/image/demo/demoOfRimeIce.webp)
+
 并且基于上述词库，构建主要维护的词库：
 - `8105` 字表。
 - `base` 基础词库。
