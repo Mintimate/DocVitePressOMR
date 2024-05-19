@@ -9,7 +9,7 @@ description: 雾凇拼音是非常好的Rime输入方案，薄荷输入法配置
 aside: true
 ---
 # 雾凇拼音
-雾凇拼音，是一个非常好的Rime输入方案，支持全拼、双拼等多种输入方式，词库全面。同时，仓库贡献度活跃。词库有着：
+[雾凇拼音: https://github.com/iDvel/rime-ice](https://github.com/iDvel/rime-ice)，是一个非常好的Rime输入方案，支持全拼、双拼等多种输入方式，词库全面。同时，仓库贡献度活跃。词库有着：
 - 简体字表、词库
     -   [《通用规范汉字表》](https://github.com/iDvel/The-Table-of-General-Standard-Chinese-Characters)
     -   [华宇野风系统词库](http://bbs.pinyin.thunisoft.com/forum.php?mod=viewthread&tid=30049)（@野风）
@@ -78,3 +78,12 @@ aside: true
 举个实际的场景，如果你使用的是拼音，那么实际上使用薄荷和雾凇都是可以的，也可以基于雾凇和薄荷进行更改（毕竟: 薄荷有大量借鉴雾凇的地方，开源协议也从最初的GPL2.0，同步使用了GPL3.0协议）。但是，如果你还有五笔的需求，比如家里的其他人是使用五笔的，或者使用你电脑的其他人是使用五笔的，那么薄荷或许是一个更好的选择。
 
 当然，这只是一个建议，具体还是看个人的需求。并且，英文雾凇的开源社区环境更加繁荣，有更多的开源贡献者，雾凇的更新也会比薄荷更有质量（甚至我也给雾凇提过一些PR……）。
+
+::: info 提示信息
+另外，不要认为方案就是只有[雾凇](https://github.com/iDvel/rime-ice)和薄荷，还有很多其他的方案，可以根据自己的需求进行选择。而且，方案作者也是有交流的，比如: 雾凇主要维护者[@iDvel](https://github.com/iDvel)的博客，也是我博客的友链；[五笔86极点](https://github.com/KyleBing/rime-wubi86-jidian)的方案作者[@KyleBing](https://github.com/KyleBing)授权薄荷使用了他的方案等等。
+
+**大家都在努力为社区贡献，希望大家都能找到适合自己的输入方案。**
+
+> 哈哈，也打一个广告，如果你觉得本文档或者薄荷对你很有帮助，可以[请我喝咖啡](https://afdian.net/a/mintimate)；对于捐赠咖啡☕️的用户，将进入「鸣谢」和「日志更新」内(●'◡'●)ﾉ♥
+
+:::

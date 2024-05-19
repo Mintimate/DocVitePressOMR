@@ -9,7 +9,7 @@ description: rime-ice is a very good Rime input scheme, and the configuration of
 aside: true
 ---
 ## Differences between rime-ice and oh-my-rime
-Rime-ice is a very good Rime input scheme, supporting multiple input methods such as full spelling and double spelling, and has a comprehensive vocabulary. At the same time, the repository is actively contributed. The vocabulary includes:
+[Rime-ice: https://github.com/iDvel/rime-ice](https://github.com/iDvel/rime-ice) is a very good Rime input scheme, supporting multiple input methods such as full spelling and double spelling, and has a comprehensive vocabulary. At the same time, the repository is actively contributed. The vocabulary includes:
 - Simplified character table, vocabulary
   - [General Standard Chinese Character Table](https://github.com/iDvel/The-Table-of-General-Standard-Chinese-Characters)
   - [Huayu Wild Wind System Vocabulary](http://bbs.pinyin.thunisoft.com/forum.php?mod=viewthread&tid=30049) (@Wild Wind)
@@ -77,3 +77,14 @@ If you are a pinyin input user, then rime-ice is a very good choice; if you are 
 To give a practical scenario, if you use pinyin, then in fact both oh-my-rime and rime-ice can be used, and you can also make changes based on rime-ice and oh-my-rime (after all: oh-my-rime has a lot of references to rime-ice, and the open source protocol has also been synchronized from the initial GPL2.0, using the GPL3.0 protocol). However, if you also have a need for Wubi, such as other people in your family using Wubi, or other people using your computer using Wubi, then oh-my-rime may be a better choice.
 
 Of course, this is just a suggestion, and it depends on individual needs. Moreover, the open source community environment of rime-ice in English is more prosperous, with more open source contributors, and the updates of rime-ice will be of higher quality than oh-my-rime (even I have submitted some PRs to rime-ice...).
+
+The translation of the selected content is as follows:
+
+::: info Tips
+In addition, don't think that the scheme is only [rime-ice](https://github.com/iDvel/rime-ice) and oh-my-rime, there are many other schemes, you can choose according to your own needs. And, the authors of the scheme also communicate, for example: the main maintainer of rime-ice [@iDvel](https://github.com/iDvel)'s blog, is also a friend chain of my blog; the author of the [rime-wubi86-jidian](https://github.com/KyleBing/rime-wubi86-jidian) scheme [@KyleBing](https://github.com/KyleBing) authorized Mint to use his scheme and so on.
+
+**Everyone is working hard to contribute to the community, and I hope everyone can find a suitable input scheme.**
+
+> Haha, also an advertisement, if you think this document or Mint is very helpful to you, you can [buy me a coffee](https://afdian.net/a/mintimate); for users who donate coffee☕️, they will enter the "Thanks" and "Log Update" (●'◡'●)ﾉ♥
+
+:::
