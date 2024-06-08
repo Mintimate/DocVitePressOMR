@@ -26,6 +26,7 @@ Features:
 - Breaking changes: The activation of emoticons has been changed from `vv` to `VV`, and the issue of English `vv` being occupied and unable to associate during word formation in the case of double spelling has been resolved. <Badge type="tip">[46a070dd0d](https://github.com/Mintimate/oh-my-rime/commit/46a070dd0dedf72725631b1c16b2d0a23ecc3112)</Badge>
 - Introduce 9-grid layout: Introduce the 9-grid layout for Hamster, where the default 9-grid layout uses the full spelling scheme. You can override the configuration to use other schemes. <Badge type="tip">[88ede4c8c](https://github.com/Mintimate/oh-my-rime/commit/88ede4c8cd27b0fc57ab5d12860c348c3e26c777)</Badge>
 - Introduced the 86 Wubi scheme: [https://github.com/KyleBing/rime-wubi86-jidian](https://github.com/KyleBing/rime-wubi86-jidian)
+- Breaking changes: Adapt to rime-tool: Adapt to rime-tool, you can use rime-tool for graphical customization <Badge>[52daba2f74](https://github.com/Mintimate/oh-my-rime/commit/52daba2f74418c08c170ad54879d256b13a9401d)</Badge>, <Badge>[31895cec7f](https://github.com/Mintimate/oh-my-rime/commit/31895cec7f8b145468b8482cc090640adc3c5517)</Badge>
 
 Style:
 - The Squirrel and Weasel input methods have added a new skin set. <Badge type="tip">[e263a21743](https://github.com/Mintimate/oh-my-rime/commit/e263a217437d87ef12c25c0372e08c7b99f8c2b1)</Badge>
@@ -35,10 +36,12 @@ Fix:
 
 Refactor:
 - Refactored 98 Wubi, the scheme name has been renamed to: Wubi98-Wubi Xiaozhu. Introduced Lua that other schemes are using. <Badge type="tip">[4f10fbbce8](https://github.com/Mintimate/oh-my-rime/commit/4f10fbbce8c6f4e1455faf7bbf60e5dfacb89a0e)</Badge>
+- The Emoji dictionary is no longer imported, Emoji is fully implemented using OpenCC. <Badge>[80dcec1878](https://github.com/Mintimate/oh-my-rime/commit/80dcec187865ef1ad20a2c31268cc95c435be385)</Badge>
 
 Thanks:
 | Time | Platform | User | Support💵 | Message |
 |------------|-----|-----------------------------------------------------------|----------|--------------------|
+| 2024/05/31 | 爱发电 | [爱发电用户_sYNg](https://afdian.net/u/c428e6701f1a11efab4a5254001e7c00) | 20¥       | 一个月前就准备请up来杯奶茶了~今天是时候兑现一下了！感谢up的薄荷拼音真的非常好用~我已经全平台跟进啦~ |
 | 2024/05/28 | 微信       | 公众号用户: 晶码战士                                                          | 50¥       | 薄荷输入法👍👍👍        |
 | 2024/04/28 | 爱发电 | [爱发电用户_UkCK](https://afdian.net/u/8717bcc8054511efbfc052540025c377) | 20¥（一杯奶茶） | oh-my-rime |
 

@@ -26,6 +26,7 @@ Features:
 - 破坏性变更: 颜文字由`vv`激活替换为`VV`激活，并且解决了双拼情况下，在组词时候，英文`vv`被占用而无法联想。 <Badge type="tip">[46a070dd0d](https://github.com/Mintimate/oh-my-rime/commit/46a070dd0dedf72725631b1c16b2d0a23ecc3112)</Badge>
 - 引入 仓九宫格布局: 引入仓九宫格布局，默认的九宫格使用的是全拼方案，可以自己覆写配置为其他方案 <Badge type="tip">[88ede4c8c](https://github.com/Mintimate/oh-my-rime/commit/88ede4c8cd27b0fc57ab5d12860c348c3e26c777)</Badge>
 - 引入 86五笔-极点 方案: [https://github.com/KyleBing/rime-wubi86-jidian](https://github.com/KyleBing/rime-wubi86-jidian)
+- 破坏性变更: 适配 rime-tool: 适配 rime-tool，可以使用 rime-tool 进行图形化定制 <Badge type="tip">[52daba2f74](https://github.com/Mintimate/oh-my-rime/commit/52daba2f74418c08c170ad54879d256b13a9401d)</Badge>、<Badge type="tip">[31895cec7f](https://github.com/Mintimate/oh-my-rime/commit/31895cec7f8b145468b8482cc090640adc3c5517)</Badge>
 
 Style:
 - 主题: 小狼毫和鼠须管新增一套皮肤 <Badge type="tip">[e263a21743](https://github.com/Mintimate/oh-my-rime/commit/e263a217437d87ef12c25c0372e08c7b99f8c2b1)</Badge>
@@ -35,10 +36,12 @@ Fix:
 
 Refactor:
 - 重构98五笔，方案名称更名为: 五笔98-五笔小筑。引入其他方案都在使用的 Lua <Badge type="tip">[4f10fbbce8](https://github.com/Mintimate/oh-my-rime/commit/4f10fbbce8c6f4e1455faf7bbf60e5dfacb89a0e)</Badge>
+- Emoji词典不再引入，Emoji完全使用OpenCC实现 <Badge type="tip">[80dcec1878](https://github.com/Mintimate/oh-my-rime/commit/80dcec187865ef1ad20a2c31268cc95c435be385)</Badge>
 
 Thanks:
 | 时间         | 平台  | 用户                                                        | 支持💵     | 留言                 |
 |------------|-----|-----------------------------------------------------------|----------|--------------------|
+| 2024/05/31 | 爱发电       | [爱发电用户_sYNg](https://afdian.net/u/c428e6701f1a11efab4a5254001e7c00)  | 20¥       | 一个月前就准备请up来杯奶茶了~今天是时候兑现一下了！感谢up的薄荷拼音真的非常好用~我已经全平台跟进啦~        |
 | 2024/05/28 | 微信       | 公众号用户: 晶码战士                                                          | 50¥       | 薄荷输入法👍👍👍        |
 | 2024/04/28 | 爱发电 | [爱发电用户_UkCK](https://afdian.net/u/8717bcc8054511efbfc052540025c377) | 20¥（一杯奶茶） | oh-my-rime |
 
