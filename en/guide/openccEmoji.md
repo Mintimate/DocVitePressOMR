@@ -8,12 +8,12 @@ head:
       content: Mint Pinyin,oh-my-rime, OpenCC, Rime emoji
 description: Oh-my-rime, the built-in OpenCC in the Rime input method, helps users input emoji expressions during their usage.
 ---
-# Emoji Configuration
+# Emoji Configuration <Badge type="tip" text="^2024.06" />
 There are many different ways to output Emoji in the input method, such as:
 - Using a dictionary to match Emoji: Similar to text, we can input "bo he" to get "mint"; similarly, we can define that when we input "xiao", in addition to outputting "laugh", we can also output Emoji like `😄`;
 - Using OpenCC to replace words with a filter: For example, if we input "xiao" and only "laugh" appears, we can replace "laugh" with "laugh" and `😄`;
 
-Currently, both of the above methods are good methods, and both are used in Mint. This chapter introduces how to remove the Emoji in Mint and how to configure OpenCC in Rime.
+At present, both of the above methods are good methods. Initially, Mint used both methods, but after the commit <Badge>[80dcec1878](https://github.com/Mintimate/oh-my-rime/commit/80dcec187865ef1ad20a2c31268cc95c435be385)</Badge>, the dictionary method was removed, and only OpenCC was used to implement Emoji. This chapter introduces how to remove Emoji in Mint and how to configure OpenCC in Rime.
 
 ## Emoji in Mint Input Method
 Now, let's take a look at the Emoji in the Mint input method. In fact, the Emoji in the Mint input method has been revised many times. For example, previously it introduced Emoji from iOS 16, but the result was too many Emojis. When you enter the word "flower", the first 15 candidates were all Emojis, which greatly affected the input.
@@ -24,7 +24,8 @@ In the future, we may consider removing the dictionary part.
 
 If you don't want to see Emoji, you need to do two steps to close:
 1. Close the Emoji OpenCC filter;
-2. Remove the small Emoji dictionary.
+2. ~~Remove the small Emoji dictionary.~~ After 2024-S02 <Badge>[80dcec1878](https://github.com/Mintimate/oh-my-rime/commit/80dcec187865ef1ad20a2c31268cc95c435be385)</Badge>, the Emoji dictionary has been removed by default, no need to remove it again.
+
 
 ### Close Emoji's OpenCC
 
@@ -55,7 +56,12 @@ emoji_suggestion:
 ```
 It's just that by default, the Emoji filter is turned off. You can still temporarily turn it on for use.
 
-### Removing the Small Emoji Dictionary
+### Removing the Small Emoji Dictionary <Badge type="tip" text="^2024.06" />
+
+::: tips 提示
+2024-S02后，After 2024-S02, this chapter has been executed by default, so there is no need to operate it again. Now, the Emoji in Mint is implemented by OpenCC.
+:::
+
 Similarly, taking Mint's full spelling (`rime_mint`) as an example. The Emoji dictionary is in `rime_mint.dict.yaml`:
 ```yaml
 ---

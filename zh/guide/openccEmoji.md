@@ -7,12 +7,12 @@ head:
       content: 薄荷输入法,OpenCC,rime emoji
 description: 薄荷输入法自带的OpenCC，帮助使用者在使用的过程中，输入Emoji表情; 那么如何在Rime内定制OpenCC实现输入文本的替换呢？
 ---
-# Emoji配置
+# Emoji配置  <Badge type="tip" text="^2024.06" />
 输入法内打出Emoji有很多种不同的方式，比如：
 - 使用词典，匹配Emoji: 和文本类似，我们输入「bo he」可以出现「薄荷」；同样，我们可以定义输入「xiao」时候，输出`笑`的同时，也出现`😄`等Emoji；
 - 使用OpenCC，进行词语的滤镜替换: 比如，输入「xiao」如果只出现，「笑」，我们可是做替换，把「笑」替换输出为「笑」和「😄」；
 
-目前上述两种方法都是不错的方法，薄荷内两种方法都有使用。本章节，就介绍如何移除薄荷内的Emoji，以及如何配置Rime内的OpenCC。
+目前上述两种方法都是不错的方法，薄荷内最初是两种方法都有使用，但是在<Badge>[80dcec1878](https://github.com/Mintimate/oh-my-rime/commit/80dcec187865ef1ad20a2c31268cc95c435be385)</Badge>后，移除了词典方法，只使用OpenCC实现Emoji。本章节，就介绍如何移除薄荷内的Emoji，以及如何配置Rime内的OpenCC。
 
 ## 薄荷输入法内Emoji
 现在，我们来看看薄荷输入法内的Emoji；实际上薄荷输入法的Emoji也改版多次，比如：之前有引入 iOS16 的Emoji，结果Emoji过多，输入`花`等文字，可能候选项的前15个，都是Emoji，过于影响输入了；
@@ -23,7 +23,7 @@ description: 薄荷输入法自带的OpenCC，帮助使用者在使用的过程�
 
 如果你不希望出现Emoji，需要做两步操作关闭：
 1. 关闭Emoji的OpenCC过滤器；
-2. 移除小型Emoji词典。
+2. ~~移除小型Emoji词典。~~ 2024-S02 <Badge>[80dcec1878](https://github.com/Mintimate/oh-my-rime/commit/80dcec187865ef1ad20a2c31268cc95c435be385)</Badge> 后，默认已经移除了Emoji词典，无须再次移除。
 
 ### 关闭Emoji的OpenCC
 
@@ -54,7 +54,12 @@ emoji_suggestion:
 ```
 只是默认情况，Emoji过滤被关闭。你依旧可以临时打开使用。
 
-### 移除小型Emoji词典
+### 移除小型Emoji词典 <Badge type="tip" text="^2024.06" />
+
+::: tips 提示
+2024-S02后，本章节默认已经执行，也就是不需要在操作。现在薄荷的Emoji有OpenCC实现。
+:::
+
 同样以薄荷全拼（`rime_mint`)为例。Emoji的词典在`rime_mint.dict.yaml`内：
 ```yaml
 ---
