@@ -104,7 +104,7 @@ export default withMermaid({
                         text: 'Demo',
                         items: [
                             {text: 'Overview', link: '/en/demo/'},
-                            {text: 'Rime-Ice and Oh-my-rime', link: '/zh/demo/diffBetweenIceAndMint'},
+                            {text: 'Rime-Ice and Oh-my-rime', link: '/en/demo/diffBetweenIceAndMint'},
                             {text: 'Appearance', link: '/en/demo/diffAppearance'},
                             {text: 'Reverse Lookup', link: '/en/demo/reverseWords'},
                             {text: 'XiaoHe Double Pinyin', link: '/en/demo/doublePinyinFly'},
