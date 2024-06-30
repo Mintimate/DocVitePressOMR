@@ -179,3 +179,99 @@ custom_phrase:
 啊 a
 哦 o
 ```
+
+## 双拼编码转义
+
+薄荷的默认配置，双拼的候选区编码是有做转换的，比如：小鹤双拼需要拼写`你好`，会出现`nihao`，而不是`nihc`：
+
+![双拼编码转义为正常](/image/guide/doublePinyinPreedit_format.webp)
+
+其实是因为方案内部的`translator/preedit_format`配置，这个配置是用来转义编码的，依旧以小鹤双拼为例：
+```yaml
+translator:
+  preedit_format:
+    - xform/([bpmfdtnljqx])n/$1iao/
+    - xform/(\w)g/$1eng/
+    - xform/(\w)q/$1iu/
+    - xform/(\w)w/$1ei/
+    - xform/([dtnlgkhjqxyvuirzcs])r/$1uan/
+    - xform/(\w)t/$1ve/
+    - xform/(\w)y/$1un/
+    - xform/([dtnlgkhvuirzcs])o/$1uo/
+    - xform/(\w)p/$1ie/
+    - xform/([jqx])s/$1iong/
+    - xform/(\w)s/$1ong/
+    - xform/(\w)d/$1ai/
+    - xform/(\w)f/$1en/
+    - xform/(\w)h/$1ang/
+    - xform/(\w)j/$1an/
+    - xform/([gkhvuirzcs])k/$1uai/
+    - xform/(\w)k/$1ing/
+    - xform/([jqxnl])l/$1iang/
+    - xform/(\w)l/$1uang/
+    - xform/(\w)z/$1ou/
+    - xform/([gkhvuirzcs])x/$1ua/
+    - xform/(\w)x/$1ia/
+    - xform/(\w)c/$1ao/
+    - xform/([dtgkhvuirzcs])v/$1ui/
+    - xform/(\w)b/$1in/
+    - xform/(\w)m/$1ian/
+    - xform/([aoe])\1(\w)/$1$2/
+    - "xform/(^|[ '])v/$1zh/"
+    - "xform/(^|[ '])i/$1ch/"
+    - "xform/(^|[ '])u/$1sh/"
+    - xform/([jqxy])v/$1u/
+    - xform/([nl])v/$1ü/
+    - xform/ü/v/  # ü 显示为 v
+```
+
+如果你不需要，可以覆写方案配置内的`translator/preedit_format`为空。以小鹤双拼为例，我们可以创建`double_pinyin_flypy.custom.yaml`文件：
+```yaml
+# Rime Custom
+# encoding: utf-8
+
+patch:
+  translator/preedit_format: []
+```
+
+之后，重新部署输入法，就可以看到双拼的编码了。
+
+::: warning 注意
+一个custom内，只能有一个`patch`入口，比如我还覆写了其他配置，那么`custom`文件可能是这样的：
+```yaml
+# Rime Custom
+# encoding: utf-8
+
+patch:
+  "switches/@last":
+      name: emoji_suggestion
+      reset: 1
+      states: [ "😣️","😁️"]
+  "engine/translators/+":
+    - table_translator@wubi86_jidian
+  wubi86_jidian:
+    dictionary: wubi86_jidian           # 英文词典
+    enable_sentence: false         # 关闭自动造句
+    enable_completion: false       # 关闭自动提示
+    initial_quality: 0.8
+  "engine/filters/+":
+    - lua_filter@*tag_user_dict               # 标记用户的短语和词典
+  # 词库提示
+  tag_user_dict:
+    # 用户词典表示
+    user_table: '☁'
+    # 自动不全
+    completion: '☁'
+    # 自动造句
+    sentence: '~'
+    # 默认短语
+    phrase: ''
+    # 用户短语
+    user_phrase: '*'
+  # 编码转义
+  translator/preedit_format: []
+```
+
+![只能有一个patch](/image/guide/onlyOnePatchInCustom.webp)
+
+:::

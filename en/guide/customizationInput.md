@@ -124,7 +124,7 @@ After modifying the lexicon, remember to redeploy the input method.
 
 The above information can help you customize the lexicons.
 
-### Custom Text
+## Custom Text
 "Custom Text" refers to the `custom_phrase.txt` file within the input method. You may not see it in the Mint input method...
 
 In my understanding, "Custom Text" refers to lexicons with particularly high weights (this is the default behavior, but the weights of each translator can be adjusted using `initial_quality`). Therefore, I have removed the configuration for "Custom Text." If needed, you can configure it yourself.
@@ -173,3 +173,99 @@ Custom Text does not interact with other translators in word-building. If you us
 Therefore, it is recommended to fix non-complete code characters or words. For example, `'的'`(de) should be `'d'`, `'是'`(shi) should be `'s'`, and `'仙剑'`(xian jian) should be `'xj'`.
 
 Note that the full Pinyin `'a o e'` is also a complete spelling, so single characters of `'a o e'` should not be included in the Custom Text. Otherwise, words like `'啊 哦 呃'` cannot be used for word-building.
+
+## Double Pinyin Convert
+
+By default, the Mint input method performs a conversion for the candidate area code in double pinyin. For example, when you need to spell "你好" (Hello) in DoubleFly pinyin, it will appear as "nihao" instead of "nihc".
+
+![Double Pinyin Code Conversion to Normal](/image/guide/doublePinyinPreedit_format.webp)
+
+Actually, this is due to the `translator/preedit_format` configuration in the scheme. This configuration is used to escape the code. Let's take DoubleFly pinyin as an example:
+```yaml
+translator:
+  preedit_format:
+    - xform/([bpmfdtnljqx])n/$1iao/
+    - xform/(\w)g/$1eng/
+    - xform/(\w)q/$1iu/
+    - xform/(\w)w/$1ei/
+    - xform/([dtnlgkhjqxyvuirzcs])r/$1uan/
+    - xform/(\w)t/$1ve/
+    - xform/(\w)y/$1un/
+    - xform/([dtnlgkhvuirzcs])o/$1uo/
+    - xform/(\w)p/$1ie/
+    - xform/([jqx])s/$1iong/
+    - xform/(\w)s/$1ong/
+    - xform/(\w)d/$1ai/
+    - xform/(\w)f/$1en/
+    - xform/(\w)h/$1ang/
+    - xform/(\w)j/$1an/
+    - xform/([gkhvuirzcs])k/$1uai/
+    - xform/(\w)k/$1ing/
+    - xform/([jqxnl])l/$1iang/
+    - xform/(\w)l/$1uang/
+    - xform/(\w)z/$1ou/
+    - xform/([gkhvuirzcs])x/$1ua/
+    - xform/(\w)x/$1ia/
+    - xform/(\w)c/$1ao/
+    - xform/([dtgkhvuirzcs])v/$1ui/
+    - xform/(\w)b/$1in/
+    - xform/(\w)m/$1ian/
+    - xform/([aoe])\1(\w)/$1$2/
+    - "xform/(^|[ '])v/$1zh/"
+    - "xform/(^|[ '])i/$1ch/"
+    - "xform/(^|[ '])u/$1sh/"
+    - xform/([jqxy])v/$1u/
+    - xform/([nl])v/$1ü/
+    - xform/ü/v/  # ü 显示为 v
+```
+
+If you don't need it, you can overwrite the `translator/preedit_format` configuration in the scheme to be empty. For example, in the case of DoubleFly pinyin, we can create a `double_pinyin_flypy.custom.yaml` file:
+```yaml
+# Rime Custom
+# encoding: utf-8
+
+patch:
+  translator/preedit_format: []
+```
+
+After that, redeploy the input method, and you can see the double pinyin code.
+
+::: warning Note
+In a custom file, there can only be one `patch` entry. For example, if I have overwritten other configurations, then the `custom` file might look like this:
+```yaml
+# Rime Custom
+# encoding: utf-8
+
+patch:
+  "switches/@last":
+      name: emoji_suggestion
+      reset: 1
+      states: [ "😣️","😁️"]
+  "engine/translators/+":
+    - table_translator@wubi86_jidian
+  wubi86_jidian:
+    dictionary: wubi86_jidian           # English dictionary
+    enable_sentence: false         # Turn off automatic sentence making
+    enable_completion: false       # Turn off automatic prompts
+    initial_quality: 0.8
+  "engine/filters/+":
+    - lua_filter@*tag_user_dict               # Mark user's phrases and dictionaries
+  # Dictionary prompts
+  tag_user_dict:
+    # User dictionary representation
+    user_table: '☁'
+    # Auto full
+    completion: '☁'
+    # Auto sentence making
+    sentence: '~'
+    # Default phrase
+    phrase: ''
+    # User phrase
+    user_phrase: '*'
+  # Code escape
+  translator/preedit_format: []
+```
+
+![only one patch in custom](/image/guide/onlyOnePatchInCustom.webp)
+
+:::
