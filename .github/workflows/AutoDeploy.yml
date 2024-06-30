@@ -2,8 +2,8 @@ name: Auto Deploy
 # 触发workflow的条件
 on:
   push:
-    # 只有main提交才会触发workflow
-    branches: main
+    # 只有deploy提交才会触发workflow
+    branches: deploy
 
 env:
   SERVER_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }} # 服务器私钥
