@@ -19,7 +19,7 @@ sidebar: false
 
 ## 2024-S03
 Features:
-- 适配[东风破/plum](https://github.com/rime/plum) <Badge type="tip">[b606836082](https://github.com/Mintimate/oh-my-rime/commit/b606836082994fc4f0c3222338ec3a67611e4816)</Badge>
+- 适配[东风破/plum](https://github.com/rime/plum) <Badge type="warning">[更多](/zh/guide/importMint.html#⭐东风破导入薄荷)</Badge> <Badge type="tip">[b606836082](https://github.com/Mintimate/oh-my-rime/commit/b606836082994fc4f0c3222338ec3a67611e4816)</Badge>
 
 Fix:
 - 移除重复配置 <Badge type="tip">[cc85266b05](https://github.com/Mintimate/oh-my-rime/commit/cc85266b05219a87866ee8adb64fc5eecdc6c2f5)</Badge>
@@ -32,7 +32,7 @@ Features:
   - Uu: 拆字反查
   - Uw: 五笔反查
   - Ui: 笔画反查
-- 破坏性变更: 颜文字由`vv`激活替换为`VV`激活，并且解决了双拼情况下，在组词时候，英文`vv`被占用而无法联想。 <Badge type="tip">[46a070dd0d](https://github.com/Mintimate/oh-my-rime/commit/46a070dd0dedf72725631b1c16b2d0a23ecc3112)</Badge>
+- 破坏性变更: 颜文字由`vv`激活替换为`VV`激活，并且解决了双拼情况下，在组词时候，英文`vv`被占用而无法联想 <Badge type="tip">[46a070dd0d](https://github.com/Mintimate/oh-my-rime/commit/46a070dd0dedf72725631b1c16b2d0a23ecc3112)</Badge>
 - 引入 仓九宫格布局: 引入仓九宫格布局，默认的九宫格使用的是全拼方案，可以自己覆写配置为其他方案 <Badge type="tip">[88ede4c8c](https://github.com/Mintimate/oh-my-rime/commit/88ede4c8cd27b0fc57ab5d12860c348c3e26c777)</Badge>
 - 引入 86五笔-极点 方案: [https://github.com/KyleBing/rime-wubi86-jidian](https://github.com/KyleBing/rime-wubi86-jidian)
 - 破坏性变更: 适配 rime-tool: 适配 rime-tool，可以使用 rime-tool 进行图形化定制 <Badge type="tip">[52daba2f74](https://github.com/Mintimate/oh-my-rime/commit/52daba2f74418c08c170ad54879d256b13a9401d)</Badge>、<Badge type="tip">[31895cec7f](https://github.com/Mintimate/oh-my-rime/commit/31895cec7f8b145468b8482cc090640adc3c5517)</Badge>

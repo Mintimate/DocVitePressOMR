@@ -19,7 +19,7 @@ You are also welcome to invite me to [drink coffee](https://afdian.net/a/minimis
 
 ## 2024-S03
 Features:
-- Adapted [rime plum](https://github.com/rime/plum) <Badge type="tip">[b606836082](https://github.com/Mintimate/oh-my-rime/commit/b606836082994fc4f0c3222338ec3a67611e4816)</Badge>
+- Adapted [rime plum](https://github.com/rime/plum) <Badge type="warning">[More](/en/guide/importMint.html#⭐东风破导入薄荷)</Badge> <Badge type="tip">[b606836082](https://github.com/Mintimate/oh-my-rime/commit/b606836082994fc4f0c3222338ec3a67611e4816)</Badge>
 
 Fix:
 - Removed duplicate configurations <Badge type="tip">[cc85266b05](https://github.com/Mintimate/oh-my-rime/commit/cc85266b05219a87866ee8adb64fc5eecdc6c2f5)</Badge>
