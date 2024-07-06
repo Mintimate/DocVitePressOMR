@@ -2,11 +2,15 @@
 
 In the previous steps, you have learned how to install the Rime input method.
 
-
-
 In fact, Rime can be configured as any input method, such as Minnan language input method, Wu language input method, Cantonese input method, and so on. You can also configure key mappings, such as inputting "ABC" but getting "CBA" or fuzzy pinyin.
 
 However, all of this might be a bit complex for a new user. When exploring Rime's configuration, it is recommended to use pre-configured templates created by others, such as "Wusong Pinyin" or the "Oh-My-Rime" introduced in this article.
+
+There are two methods for installing:
+- **Manual override installation of configuration files**: After downloading and installing the Rime client, manually download the Oh-my-rime configuration files, move them to the configuration directory, and then redeploy.
+- Installation of Oh-my-rime configuration via Dongfeng Po: Suitable for most desktop Rime clients, with Dongfeng Po configured, you can directly import the Oh-my-rime configuration scheme with one click.
+
+This section mainly introduces the method of manually overriding and installing configuration files. The method using Dongfeng Po will be introduced at the end of the document.
 
 ## Downloading Oh-My-Rime
 
@@ -42,7 +46,7 @@ For Fcitx Little Penguin on Android, you can use the MT file manager to open the
 ![Finds the configuration directory through MT file manager](/image/guide/fcitxAndroidSearchFile.webp)
 
 ::: info
-The picture shows that the Mint Input Method has been installed. Otherwise, the configuration file address on the left should be an empty folder.
+The picture shows that the Oh-my-rime Input Method has been installed. Otherwise, the configuration file address on the left should be an empty folder.
 :::
 
 After opening the configuration directory, move the Oh-My-Rime configuration files into it:
@@ -57,3 +61,50 @@ Similarly,Fcitx5 For Android, there are some special features that need to be op
 ![Fcitx5 For Android With Deploy](/image/guide/fcitxAndroidDeploy.webp)
 
 Once the deployment is complete, you can start using Oh-My-Rime.
+
+## ⭐Oh-my-rime with Plum
+If you are familiar with Plum, you can directly import the Oh-my-rime input configuration through it. The prerequisites for using Plum are:
+- Git is already installed and configured in the environment variables.
+
+For Windows users, Weasel actually comes with a semi-finished version of Plum. You can activate Plum in Weasel's `Scheme Menu Settings` under `Get More Input Schemes`:
+![Plum in Weasel](/image/guide/WeaselEmitPlum.webp)
+
+After that, enter the Oh-my-rime recipe in this interface:
+```text
+Mintimate/oh-my-rime:plum/full
+```
+
+![Installing Oh-my-rime scheme with Plum in Weasel](/image/guide/WindowsUsingPlum.webp)
+
+If you are using macOS or Linux, you can enter the Plum command in the terminal:
+```bash
+# Install Plum, this will clone a plum project in the current directory
+curl -fsSL https://raw.githubusercontent.com/rime/plum/master/rime-install | bash
+# Enter the Plum directory
+cd plum
+```
+
+![Linux install plum](/image/guide/plumDir.webp)
+
+In this directory, enter the Oh-my-rime recipe:
+```bash
+# Install the Oh-my-rime input method (scheme configuration)
+./rime-install Mintimate/oh-my-rime:plum/full
+```
+
+![Linu install oh-my-rime by plum](/image/guide/LinuxUsingPlum.webp)
+
+By default:
+- macOS is automatically recognized as Squirrel, which means installing the configuration scheme to `~/Library/Rime/`.
+- Linux is automatically recognized as ibus, which means installing the configuration scheme to `~/.config/ibus/rime`.
+
+If your Linux uses Fcitx5, you can specify the installation directory for the configuration files with the `rime_frontend` parameter or `rime_dir`:
+```bash
+# Specify installation to the Fcitx5 configuration directory
+rime_frontend=fcitx-rime bash rime-install Mintimate/oh-my-rime:plum/full
+# Or specify the installation configuration directory
+rime_dir="$HOME/.config/fcitx/rime" bash rime-install Mintimate/oh-my-rime:plum/full
+```
+
+Reference:
+- [rime-plum](https://github.com/rime/plum)
