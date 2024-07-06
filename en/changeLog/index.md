@@ -17,6 +17,14 @@ You are also welcome to invite me to [drink coffee](https://afdian.net/a/minimis
 
 :::
 
+## 2024-S03
+Features:
+- Adapted [rime plum](https://github.com/rime/plum) <Badge type="tip">[b606836082](https://github.com/Mintimate/oh-my-rime/commit/b606836082994fc4f0c3222338ec3a67611e4816)</Badge>
+
+Fix:
+- Removed duplicate configurations <Badge type="tip">[cc85266b05](https://github.com/Mintimate/oh-my-rime/commit/cc85266b05219a87866ee8adb64fc5eecdc6c2f5)</Badge>
+- Fixed potential lag caused by the "auxiliary code lua" still loading when not activated <Badge type="tip">[6008d00af1](https://github.com/Mintimate/oh-my-rime/commit/6008d00af1a051f9a892e0fdb750a75fe4c80a14)</Badge>; Special thanks to QQ group user `浪漫满屋` (QQ: 2416418***) for their feedback and continuous testing
+
 ## 2024-S02
 Features:
 - Breaking changes: Modification of the activation key for reverse lookup. It is uniformly used in all input method schemes <Badge type="tip">[51779acb8](https://github.com/Mintimate/oh-my-rime/commit/51779acb88a447926af451426439573d504638f7)</Badge> :
