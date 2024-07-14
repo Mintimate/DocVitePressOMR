@@ -73,7 +73,8 @@ export default withMermaid({
                 search:{
                     provider:'local',
                     options: locales_cn.search
-                }
+                },
+                notFound: locales_cn.notFound
             },
         },
         en: {

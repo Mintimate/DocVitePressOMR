@@ -15,6 +15,11 @@ export const locales_cn = {
         level: [2, 6] as [number, number],
         label: '此页面'
     },
+    notFound: {
+        title: "内容未找到ヽ(???)メ",
+        quote: "然而，若你不调整航向，只管前行，终将抵达你正望眼欲穿的彼岸。",
+        linkText: "带我回家(o′ω`o)ノ"
+    },
     sidebar: {
         '/zh/demo/': [{
             text: '效果演示',
