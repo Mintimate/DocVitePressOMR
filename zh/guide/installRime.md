@@ -15,7 +15,9 @@ aside: true
 ## macOS安装rime
 正如前文所说的，macOS上的rime框架输入法，可以使用鼠须管。
 
-### 安装鼠须管
+### 鼠须管版本
+
+#### 安装鼠须管
 在macOS上安装鼠须管以便后续使用薄荷拼音或者其他输入法配置。进入[鼠须管的仓库地址](https://github.com/rime/squirrel)，我们下载鼠须管：
 
 ![下载鼠须管](/image/guide/downloadSquirrel.webp)
@@ -31,11 +33,53 @@ aside: true
 
 需要注意，安装后，需要重启macOS或者注销当前的登录状态重新登录系统。
 
-### 激活鼠须管
+#### 激活鼠须管
 现在，我们重新进入系统；其实就已经可以使用鼠须管了，打开系统设置 -> 文字输入 -> 编辑并添加鼠须管;
 ![激活鼠须管](/image/guide/enableSquirrel.webp)
 
 之后，状态栏就可以看到Squirrel的图标了，代表Rime已经安装成功，可以进入下一个章节，进行薄荷拼音的导入与激活。
+
+### Fcitx5版本
+
+没错，原本只能在Linux上使用的Fcitx5，现在也可以在macOS上使用了：
+- [Fcitx5 macOS 小企鹅输入法](https://fcitx-contrib.github.io/)
+
+
+## 安装Fcitx5
+安装方法也很简单，在官网下载[中州韵版 Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/releases/download/latest/Fcitx5-Rime.zip)，解压后，得到安装包：
+
+![下载并解压，得到安装包](/image/guide/unzipFcitxMacOS.webp)
+
+这个时候，和鼠须管一样，双击是无法打开的：
+![双击无法打开](/image/guide/warningFcitx5MacOS.webp)
+
+和鼠须管一样，Fcitx5的签名，并没有在Apple官方进行认证（这是一个开源项目，而Apple的认证是需要美金的哦），所以我们需要打开系统设置，选择打开即可：
+
+![仍要打开Fcitx5](/image/guide/makeSureToOpenFcitx5.webp)
+
+再然后，我们就可以看到Fcitx5的安装界面，按照提示进行安装即可：
+
+![Fcitx5的安装界面](/image/guide/enterPasswordToInstallFcitx5.webp)
+
+最后，安装成功，自动添加输入法在系统内：
+
+![Fcitx5的安装完成](/image/guide/enableFcitx5MacOS.webp)
+
+## 激活Fcitx5
+
+安装好后，我们需要激活Fcitx5，打开系统设置 -> 文字输入 -> 编辑并添加Fcitx5:
+
+![添加Fcitx5输入方式](/image/guide/enableFcitx5MacOS1.webp)
+
+添加后的效果：
+
+![添加Fcitx5输入方式完成](/image/guide/enableFcitx5MacOS2.webp)
+
+这个时候，状态栏就可以切换为小企鹅了：
+
+![状态栏添加为小企鹅Fcitx5](/image/guide/enterPasswordToInstallFcitx5.webp)
+
+Rime已经安装成功，可以进入下一个章节，进行薄荷拼音的导入与激活。
 
 ## Windows安装rime
 Windows上安装rime，可以使用小狼毫输入法。

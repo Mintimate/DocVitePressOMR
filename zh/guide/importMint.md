@@ -28,11 +28,12 @@
 当我们解压获得薄荷输入配置后，需要将配置文件移动到Rime的配置目录内。
 
 默认的配置文件地址：
-- macOS鼠须管: `~/Library/Rime/`
+- macOS鼠须管: `$HOME/Library/Rime/`
+- macOS Fcitx5: `$HOME/.local/share/fcitx5/rime`
 - Windows小狼毫: `%APPDATA%/Rime`
-- Linux ibus: `~/.config/ibus/rime`
-- Linux Fcitx5: `~/.local/share/fcitx5/rime`
-- Linux Fcitx5(Flatpak): `~/.var/app/org.fcitx.Fcitx5/data/fcitx5`
+- Linux ibus: `$HOME/.config/ibus/rime`
+- Linux Fcitx5: `$HOME/.local/share/fcitx5/rime`
+- Linux Fcitx5(Flatpak): `$HOME/.var/app/org.fcitx.Fcitx5/data/fcitx5`
 - Android Fcitx(小企鹅): `/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/rime/`
 
 macOS鼠须管和Windows的小狼毫可以通过软件打开配置文件的地址，比如macOS：
@@ -90,8 +91,8 @@ cd plum
 ![Linu使用东风破安装薄荷输入法](/image/guide/LinuxUsingPlum.webp)
 
 默认情况：
-- macOS自动识别为鼠须管，也就是安装配置方案到`~/Library/Rime/`。
-- Linux自动识别为ibus，也就是安装配置方案到`~/.config/ibus/rime`。
+- macOS自动识别为鼠须管，也就是安装配置方案到`$HOME/Library/Rime/`。
+- Linux自动识别为ibus，也就是安装配置方案到`$HOME/.config/ibus/rime`。
 
 如果你的Linux使用Fcitx5，你可以通过`rime_frontend`参数或`rime_dir`指定安装配置文件的目录：
 ```bash
@@ -99,6 +100,8 @@ cd plum
 rime_frontend=fcitx-rime bash rime-install Mintimate/oh-my-rime:plum/full
 # 或者指定安装配置目录
 rime_dir="$HOME/.config/fcitx/rime" bash rime-install Mintimate/oh-my-rime:plum/full
+# 指定安装到Fcitx5
+rime_dir="$HOME/.local/share/fcitx5/rime" bash rime-install Mintimate/oh-my-rime:plum/full
 ```
 
 参考：

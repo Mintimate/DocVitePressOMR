@@ -15,7 +15,9 @@ It is highly recommended to follow along with the video（Chinese Only)：
 ## Installing Rime on macOS
 As mentioned before, the Rime framework input keyboard on macOS can use Squirrel.
 
-### Installing Squirrel
+### Squirrel Version
+
+#### Installing Squirrel
 On macOS, install Squirrel to use Bopomofo or other input method configurations later. Go to the [Squirrel repository](https://github.com/rime/squirrel) and download Squirrel:
 
 ![Download Squirrel](/image/guide/downloadSquirrel.webp)
@@ -32,11 +34,52 @@ Finally the install screen will appear. Follow the prompts to install.
 
 Note that after installing, you need to restart macOS or relogin to take effect.
 
-### Activating Squirrel
+#### Activating Squirrel
 Now reenter the system. Squirrel can already be used. Go to System Preferences -> Keyboard -> Text and add Squirrel.
 ![Activate Squirrel](/image/guide/enableSquirrel.webp)
 
 The Squirrel icon in the menu bar means Rime is installed successfully. You can now move on to importing and activating Bopomofo in the next section.
+
+### Fcitx5 Version
+
+Indeed, Fcitx5, originally only available on Linux, can now be used on macOS as well:
+- [Fcitx5 macOS Little Penguin Input Method](https://fcitx-contrib.github.io/)
+
+#### Installing Fcitx5
+The installation process is straightforward. Download the [Rime version of Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/releases/download/latest/Fcitx5-Rime.zip) from the official website, unzip it, and you will get the installer package:
+
+![Download and unzip to get the installer package](/image/guide/unzipFcitxMacOS.webp)
+
+At this point, similar to Squirrel, double-clicking may not open it:
+![Double-clicking does not open](/image/guide/warningFcitx5MacOS.webp)
+
+Like Squirrel, the signature of Fcitx5 is not certified by Apple (this is an open-source project, and Apple's certification requires a fee), so we need to open the system settings and choose to open it anyway:
+
+![Choose to open Fcitx5 anyway](/image/guide/makeSureToOpenFcitx5.webp)
+
+Then, we can see the Fcitx5 installation interface, follow the prompts to install:
+
+![Fcitx5 installation interface](/image/guide/enterPasswordToInstallFcitx5.webp)
+
+Finally, after successful installation, the input method is automatically added to the system:
+
+![Fcitx5 installation complete](/image/guide/enableFcitx5MacOS.webp)
+
+#### Activating Fcitx5
+
+After installation, we need to activate Fcitx5. Open system settings -> Text input -> Edit and add Fcitx5:
+
+![Add Fcitx5 input method](/image/guide/enableFcitx5MacOS1.webp)
+
+The effect after adding:
+
+![Adding Fcitx5 input method complete](/image/guide/enableFcitx5MacOS2.webp)
+
+At this point, the status bar can be switched to the little penguin:
+
+![Status bar switched to little penguin Fcitx5](/image/guide/enterPasswordToInstallFcitx5.webp)
+
+Rime has been successfully installed, and you can proceed to the next section to import and activate Mint Pinyin.
 
 ## Installing Rime on Windows
 To install Rime on Windows, use the Weasel input keyboard.
