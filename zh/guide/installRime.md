@@ -45,7 +45,7 @@ aside: true
 - [Fcitx5 macOS 小企鹅输入法](https://fcitx-contrib.github.io/)
 
 
-## 安装Fcitx5
+#### 安装Fcitx5
 安装方法也很简单，在官网下载[中州韵版 Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/releases/download/latest/Fcitx5-Rime.zip)，解压后，得到安装包：
 
 ![下载并解压，得到安装包](/image/guide/unzipFcitxMacOS.webp)
@@ -65,7 +65,7 @@ aside: true
 
 ![Fcitx5的安装完成](/image/guide/enableFcitx5MacOS.webp)
 
-## 激活Fcitx5
+#### 激活Fcitx5
 
 安装好后，我们需要激活Fcitx5，打开系统设置 -> 文字输入 -> 编辑并添加Fcitx5:
 
