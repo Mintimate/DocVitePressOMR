@@ -33,6 +33,7 @@ Once we have extracted Oh-My-Rime, we need to move the configuration files to Ri
 The default configuration file locations are:
 
 - For macOS with Squirrel: `~/Library/Rime/`
+- For macOS Fcitx5: `~/.local/share/fcitx5/rime`
 - For Windows with Weasel: `%APPDATA%/Rime`
 - For Linux with ibus: `~/.config/ibus/rime`
 - For Linux with Fcitx5: `~/.local/share/fcitx5/rime`
@@ -100,10 +101,12 @@ By default:
 
 If your Linux uses Fcitx5, you can specify the installation directory for the configuration files with the `rime_frontend` parameter or `rime_dir`:
 ```bash
-# Specify installation to the Fcitx5 configuration directory
+# Specify installation to the Fcitx configuration directory
 rime_frontend=fcitx-rime bash rime-install Mintimate/oh-my-rime:plum/full
 # Or specify the installation configuration directory
 rime_dir="$HOME/.config/fcitx/rime" bash rime-install Mintimate/oh-my-rime:plum/full
+# Specify installation to the Fcitx5 configuration directory(macOS)
+rime_dir="$HOME/.local/share/fcitx5/rime" bash rime-install Mintimate/oh-my-rime:plum/full
 ```
 
 Reference:
