@@ -8,7 +8,7 @@ Of course, if you want to customize based on your preferences first, it may be a
 
 If you find this document or Oh-my-rime Pinyin useful, you can buy me a coffee:
 
-- [Afdian: @Mintimate](https://afdian.net/a/mintimate)
+<donate lang="en" />
 
 > Please be sure to leave a note "Mint Pinyin" or "oh-my-rime". Donors of coffee ☕️ will be credited in the "[Acknowledgements](#Acknowledgements)" (●'◡'●)ノ♥
 

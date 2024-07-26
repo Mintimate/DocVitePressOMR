@@ -13,7 +13,9 @@ sidebar: false
 - [oh-my-rime 配置仓库](https://github.com/Mintimate/oh-my-rime)
 - [oh-my-rime 配置文档](https://github.com/Mintimate/DocVitePressOMR)
 
-也欢迎请我[喝咖啡](https://afdian.net/a/mintimate)，请务必备注『薄荷拼音』或者『oh-my-rime』(●'◡'●)ﾉ♥
+<donate/>
+
+请务必备注『薄荷拼音』或者『oh-my-rime』(●'◡'●)ﾉ♥
 
 :::
 

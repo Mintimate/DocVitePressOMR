@@ -2,6 +2,7 @@
 <script setup>
 import DefaultTheme from 'vitepress/theme'
 import Wwads from "./components/wwads.vue";
+import donate from "./components/donate.vue";
 
 const {Layout} = DefaultTheme
 </script>

@@ -13,7 +13,9 @@ If you want to join the development of Mint input method configuration template,
 - [oh-my-rime configuration warehouse](https://github.com/Mintimate/oh-my-rime)
 - [oh-my-rime configuration document](https://github.com/Mintimate/DocVitePressOMR)
 
-You are also welcome to invite me to [drink coffee](https://afdian.net/a/minimise), please be sure to note "Mint Pinyin" or "oh-my-rime" (●'◡'●)ﾉ♥
+<donate lang="en"/>
+
+please be sure to note "Mint Pinyin" or "oh-my-rime" (●'◡'●)ﾉ♥
 
 :::
 
