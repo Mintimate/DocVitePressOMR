@@ -91,8 +91,8 @@ patch:
 
 ## 输入法方案配置
 
-接下来，我们看看「输入法方案配置」，方案的全局配置是`default.yaml`和`defalut.custom.yaml`；对于局部，以薄荷输入法为例：
-- `rime_mint.schema.yaml`就是一个局部配置。`rime_mint.schema.yaml`内可以覆写`default.yaml`的配置。
+接下来，我们看看「输入法方案配置」，方案的全局配置是`default.yaml`和`defalut.custom.yaml`；对于局部，以薄荷输入法内全拼为例：
+- `rime_mint.schema.yaml`就是一个局部配置（全拼）。`rime_mint.schema.yaml`内可以覆写`default.yaml`的配置。
 - 创建`rime_mint.custom.yaml`文件，优先级高于`rime_mint.schema.yaml`。可以覆写`rime_mint.schema.yaml`的配置。
 
 所以，优先级是:
@@ -108,7 +108,7 @@ graph LR
 
 所以：
 - 如果你想自定义全局样式，推荐使用`default.custom.yaml`文件覆写`default.yaml`；
-- 如果你想修改薄荷输入法的配置，推荐使用`rime_mint.custom.yaml`文件进行覆写。
+- 如果你想修改薄荷输入法内的全屏配置，推荐使用`rime_mint.custom.yaml`文件进行覆写（注意：是薄荷输入法内全拼配置；如果你是用薄荷输入法内的小鹤双拼，那么就是`double_pinyin_flypy.custom.yaml`文件，其他薄荷输入法内配置方案，以此类推）。
 
 举例: 覆写全局的输入方案配置，设置候选为6个:
 ```yaml
