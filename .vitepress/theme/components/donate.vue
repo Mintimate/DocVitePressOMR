@@ -1,26 +1,37 @@
 <script setup>
+import {ref} from 'vue'
+
 const props = defineProps({
   lang: {
     type: String,
     default: 'zh'
   }
 })
+let isCollapsed = ref(false)
+
+let toggleCollapse = () => {
+  isCollapsed.value = !isCollapsed.value
+}
 </script>
 
 <template>
-  <details class="details custom-block">
-    <summary>
-      <span class="title" v-text="
-        lang === 'zh' ? '如果认为本文档或者薄荷拼音对你很有帮助，可以请我喝咖啡 ☕' :
+  <div>
+    <button @click="toggleCollapse"
+            class="title vp-doc"
+            v-text="lang === 'zh' ? '👉 如果认为本文档或者薄荷拼音对你很有帮助，可以请我喝咖啡 ☕' :
             'If you find this document or Oh-my-rime Pinyin useful, you can buy me a coffee ☕'
       "/>
-    </summary>
-    <p>
-      <img style="max-width: 300px;margin: auto;" alt="WebChart Recognise"
-           src="../../../public/image/global/recognise.webp">
-    </p>
-
-  </details>
+    <transition name="bounce">
+      <div v-show="isCollapsed" style="text-align: center; padding: 5px">
+        <slot>
+          <p>
+            <img style="max-width: 300px;margin: auto;" alt="WebChart Recognise"
+                 src="../../../public/image/global/recognise.webp">
+          </p>
+        </slot>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <style scoped>
@@ -31,8 +42,6 @@ const props = defineProps({
 }
 
 img {
-  -webkit-filter: brightness(0.95);
-  filter: brightness(0.95);
   border-radius: 24px;
 }
 
@@ -44,19 +53,29 @@ img {
   margin-left: 5px; /* 添加一些间距 */
 }
 
-
-details {
-  transition: max-height 0.8s ease-in-out;
-  overflow-y: hidden;
+.vp-doc button{
+  font-weight: 500;
+  color: var(--vp-c-brand-1);
+  transition: color 0.25s, opacity 0.25s;
 }
 
-
-details[open] {
-  max-height: 380px;
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
 }
 
-details:not([open]) {
-  max-height: 100px;
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
 }
 
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>

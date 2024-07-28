@@ -26,7 +26,7 @@ Mirror repository address (if you cannot access GitHub): [oh-my-rime: https://gi
 ::: tip
 In essence, the Mint input method is a set of input configurations for Rime. Therefore, **this website is also an unofficial Rime configuration document**.
 
-> If you think this document or Mint Pinyin is helpful to you, you can [invite me a cup of coffee](https://afdian.net/a/minitimate); users who donate coffee ☕️ will be entered into the "Acknowledgements" (● '◡'●)ﾉ♥
+<donate lang="en"/>
 
 :::
 
