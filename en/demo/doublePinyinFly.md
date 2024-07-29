@@ -34,8 +34,15 @@ Currently, Mint can use the content of Double Pinyin Flypy. You can use the hotk
 
 Usage guide:
 - Switch to `小鹤双拼-薄荷定制`, you can use Xiaohe's double spelling keys for double spelling input. The dictionary used is the same as `薄荷拼音-全拼输入`. You can refer to the `translator`'s `dictionary` and `prism` in the repository [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml).
-- By default, you can activate the auxiliary code with `;` after input, and then use Xiaohe's shape code to locate words.
-  - If you want to switch the key to activate the auxiliary code, you can use `custom` to overwrite `axu_code` in [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml), and append new auxiliary activation codes to `alphabet` in `speller`.
+
+## Auxiliary Code
+Although there is no phonetic shape, we have introduced auxiliary codes. By default, after inputting, use `;` to activate the auxiliary code, and then use the Double Pinyin shape code to locate words.
+
+![Auxiliary Code](/image/demo/AxuCodeDemo.webp)
+
+In fact, **other Double Pinyin schemes are also supported.** However, the Double Pinyin Fly's shape code is more well-known, and in Mint, the Natural Code can also use the Natural Code shape code for auxiliary positioning. Other Double Pinyin schemes use [Moqi's shape code](https://github.com/gaboolic/rime-shuangpin-fuzhuma) for auxiliary positioning.
+
+If you want to change the key to activate the auxiliary code, you can use `custom` to override the `axu_code` in the [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml) file, and add new auxiliary activation codes to the `alphabet` in `speller`.
 
 More settings for `axu_code`:
 ```YAML
@@ -49,6 +56,25 @@ axu_code:
   # none:     Never display auxiliary code
   show_aux_notice: "trigger"
 ```
+
+Example of Overriding: On Android phones, the default `?123` symbol keyboard in the Little Penguin Input Method does not process symbols through Rime, so we use a comma to replace the trigger key:
+
+```yaml
+# double_pinyin_flypy.custom.yaml
+# Rime schema
+# encoding: utf-8
+
+patch:
+  # Set the trigger key
+  "axu_code/trigger_word": ","
+  # Release the semicolon and let the comma participate in input
+  "speller/alphabet": zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA~,
+```
+
+> Although I think using a comma as an auxiliary code is a bit "awkward", it might be a matter of habit?
+
+![Effect after customizing the trigger key](/image/demo/customAxuCodeForDoubleFly.webp)
+
 Core code:
 - [https://github.com/Mintimate/oh-my-rime/blob/main/lua/auxCode_filter.lua](https://github.com/Mintimate/oh-my-rime/blob/main/lua/auxCode_filter.lua)
 

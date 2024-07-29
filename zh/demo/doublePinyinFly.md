@@ -8,7 +8,7 @@ head:
 description: 薄荷输入法内，基于小鹤双拼实现的定制方案演示。 基于 rime 实现的小鹤双拼和音形辅码使用演示。
 aside: true
 ---
-# 小鹤双拼
+# 小鹤双拼 <Badge type="tip" text="^2024.07" />
 [小鹤音形](https://flypy.com/)其实包含两个部分：
 - 双拼：声母、韵母各用一个字母表示，一个汉字的音用两个字母表达;
 - 双形：根据拆分规则把一个汉字按字根拆分出两个部分，以区分同音字;
@@ -28,13 +28,20 @@ aside: true
 答案是： 双拼为主，形作为定位辅助码。
 
 ## 薄荷内使用
-目前，薄荷内可以使用小鹤双拼内容。你可以使用热键（`Ctrl/Control + ~`或`F4`）切换到`小鹤双拼-薄荷定制`：
+目前，薄荷内可以使用小鹤双拼内容。你可以使用热键（`Ctrl/Control + ~`）切换到`小鹤双拼-薄荷定制`：
 ![切换和使用小鹤双拼](/image/demo/switchDoublePinyinFly.webp)
 
 使用指南：
-- 切换到`小鹤双拼-薄荷定制`，即可使用小鹤的双拼键位进行双拼输入。使用的词库和`薄荷拼音-全拼输入`一样。可以参考仓库内 [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml) 的`translator`内`dictionary`和 `prism`。
-- 默认情况，可以在输入后，使用`;`激活辅助码，之后用小鹤的形码来定位字词。
-  - 如果想切换激活辅助码的按键，可以使用`custom`覆写 [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml) 的`axu_code`，并且`speller`内的`alphabet`追加新的辅助激活码。
+- 切换到`小鹤双拼-薄荷定制`，即可使用小鹤的双拼键位进行双拼输入。使用的词库和`薄荷拼音-全拼输入`一样。可以参考仓库内 [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml) 的`translator`内`dictionary`和 `prism`。 
+
+## 小鹤辅码
+虽然没有音形，但是我们引入了辅码。默认情况，可以在输入后，使用`;`激活辅助码，之后用小鹤的形码来定位字词。 
+
+![薄荷辅码](/image/demo/AxuCodeDemo.webp)
+
+实际上，**其他双拼方案也是支持的。只不过小鹤双拼的形码比较有名，在薄荷内自然码也可以使用自然码的形码作为辅助定位。其他双拼，使用[墨奇的形码](https://github.com/gaboolic/rime-shuangpin-fuzhuma)作为辅助定位。**
+
+如果想切换激活辅助码的按键，可以使用`custom`覆写 [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml) 的`axu_code`，并且`speller`内的`alphabet`追加新的辅助激活码。
 
 `axu_code`的更多设置：
 ```YAML
@@ -48,6 +55,26 @@ axu_code:
   # none:     始终不展示辅码
   show_aux_notice: "trigger"
 ```
+
+覆写举例，Android手机上，小企鹅输入法默认`?123`符号键盘内的符号，不经过Rime处理，所以我们使用逗号来替换激活码：
+```yaml
+# double_pinyin_flypy.custom.yaml
+# Rime schema
+# encoding: utf-8
+
+patch:
+  # 设置激发键
+  "axu_code/trigger_word": ","
+  # 释放分号，并让逗号参与输入
+  "speller/alphabet": zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA~,
+
+```
+
+> 虽然我觉得用逗号作为辅码有点“蹩脚”，可能是我习惯的问题？
+
+![自定义激活键后的效果](/image/demo/customAxuCodeForDoubleFly.webp)
+
+
 核心代码：
 - [https://github.com/Mintimate/oh-my-rime/blob/main/lua/auxCode_filter.lua](https://github.com/Mintimate/oh-my-rime/blob/main/lua/auxCode_filter.lua)
 
