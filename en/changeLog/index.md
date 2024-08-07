@@ -22,10 +22,12 @@ please be sure to note "Mint Pinyin" or "oh-my-rime" (●'◡'●)ﾉ♥
 ## 2024-S03
 Features:
 - Adapted [rime plum](https://github.com/rime/plum) <Badge type="warning">[More](/en/guide/importMint.html#⭐东风破导入薄荷)</Badge> <Badge type="tip">[b606836082](https://github.com/Mintimate/oh-my-rime/commit/b606836082994fc4f0c3222338ec3a67611e4816)</Badge>
+- The vocabulary database has been switched from the rime-ice to the  rime-frost <Badge type="tip">[ad684cade2](https://github.com/Mintimate/oh-my-rime/commit/ad684cade2ef043be32e2677028c421dc36d05f7)</Badge>
 
 Fix:
 - Removed duplicate configurations <Badge type="tip">[cc85266b05](https://github.com/Mintimate/oh-my-rime/commit/cc85266b05219a87866ee8adb64fc5eecdc6c2f5)</Badge>
 - Fixed potential lag caused by the "auxiliary code lua" still loading when not activated <Badge type="tip">[6008d00af1](https://github.com/Mintimate/oh-my-rime/commit/6008d00af1a051f9a892e0fdb750a75fe4c80a14)</Badge>; Special thanks to QQ group user `浪漫满屋` (QQ: 2416418***) for their feedback and continuous testing
+- Fixed import incorrect radical_pinyin in the rime_mint schema  <Badge type="tip">[e93ea21df7](https://github.com/Mintimate/oh-my-rime/commit/e93ea21df70cc6ae80aacaeb5ecc809025a462a7)</Badge>
 
 ## 2024-S02
 Features:
