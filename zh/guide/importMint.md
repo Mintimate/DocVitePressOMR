@@ -72,6 +72,12 @@ Mintimate/oh-my-rime:plum/full
 
 ![小狼毫使用东风破安装薄荷方案](/image/guide/WindowsUsingPlum.webp)
 
+需要注意，如果你的电脑没有配置Git，那么可能需要先输入`plum`，使其自动配置和下载Git后，激活完整版东风破：
+
+![激活完整版东风破后安装薄荷方案](/image/guide/WindowsInstallFullPlum.webp)
+
+> 参考: [Windows下使用东风破安装异常](https://github.com/Mintimate/oh-my-rime/issues/123)、[Plum Wiki: 安装与更新输入方案](https://github.com/rime/weasel/wiki/%E5%AE%89%E8%A3%85%E4%B8%8E%E6%9B%B4%E6%96%B0%E8%BE%93%E5%85%A5%E6%96%B9%E6%A1%88)
+
 如果你使用的是macOS或者Linux，你可以通过终端输入东风破的命令：
 ```bash
 # 安装东风破，这将在当前目录下生成(clone)一个plum项目

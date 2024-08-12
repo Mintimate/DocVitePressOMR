@@ -77,6 +77,12 @@ Mintimate/oh-my-rime:plum/full
 
 ![Installing Oh-my-rime scheme with Plum in Weasel](/image/guide/WindowsUsingPlum.webp)
 
+Note that if Git is not configured on your computer, you may need to enter plum first, which will automatically configure and download Git before activating the full version of Plum.
+
+![Activate the full version of Plum and then install the Oh-my-rime scheme](/image/guide/WindowsInstallFullPlum.webp)
+
+> References: [Windows下使用东风破安装异常](https://github.com/Mintimate/oh-my-rime/issues/123)、[Plum Wiki: 安装与更新输入方案](https://github.com/rime/weasel/wiki/%E5%AE%89%E8%A3%85%E4%B8%8E%E6%9B%B4%E6%96%B0%E8%BE%93%E5%85%A5%E6%96%B9%E6%A1%88)
+
 If you are using macOS or Linux, you can enter the Plum command in the terminal:
 ```bash
 # Install Plum, this will clone a plum project in the current directory
