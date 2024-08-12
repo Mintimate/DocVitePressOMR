@@ -83,6 +83,10 @@ Note that if Git is not configured on your computer, you may need to enter plum 
 
 > References: [Windows下使用东风破安装异常](https://github.com/Mintimate/oh-my-rime/issues/123)、[Plum Wiki: 安装与更新输入方案](https://github.com/rime/weasel/wiki/%E5%AE%89%E8%A3%85%E4%B8%8E%E6%9B%B4%E6%96%B0%E8%BE%93%E5%85%A5%E6%96%B9%E6%A1%88)
 
+::: info Guide🥳
+What is the tool that displays system configuration in the Terminal? Here：[摸不透系统当前状态和配置？一条命令快速查看! NeoFetch和FastFetch使用详解](https://www.bilibili.com/video/BV1fHYLeSEr4/)
+:::
+
 If you are using macOS or Linux, you can enter the Plum command in the terminal:
 ```bash
 # Install Plum, this will clone a plum project in the current directory
