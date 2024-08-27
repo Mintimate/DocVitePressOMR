@@ -18,7 +18,7 @@ let toggleCollapse = () => {
   <div>
     <button @click="toggleCollapse"
             class="title vp-doc"
-            v-text="lang === 'zh' ? '👉 如果认为本文档或者薄荷拼音对你很有帮助，可以请我喝咖啡 ☕' :
+            v-text="lang === 'zh' ? '👉 如果认为本文档或者薄荷输入法(方案)对你很有帮助，可以请我喝咖啡 ☕' :
             'If you find this document or Oh-my-rime Pinyin useful, you can buy me a coffee ☕'
       "/>
     <transition name="bounce">
