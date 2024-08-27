@@ -29,6 +29,12 @@ Fix:
 - Fixed potential lag caused by the "auxiliary code lua" still loading when not activated <Badge type="tip">[6008d00af1](https://github.com/Mintimate/oh-my-rime/commit/6008d00af1a051f9a892e0fdb750a75fe4c80a14)</Badge>; Special thanks to QQ group user `浪漫满屋` (QQ: 2416418***) for their feedback and continuous testing
 - Fixed import incorrect radical_pinyin in the rime_mint schema  <Badge type="tip">[e93ea21df7](https://github.com/Mintimate/oh-my-rime/commit/e93ea21df70cc6ae80aacaeb5ecc809025a462a7)</Badge>
 
+Thanks:
+
+| Time       | Platform | User                                                                 | Support💵 | Message                                               |
+|------------|------|----------|-----------|-----------|
+| 2024/08/21 | 微信赞赏 | 微信用户: ZY | 20¥       | 谢谢你维护这套方案 |
+
 ## 2024-S02
 Features:
 - Breaking changes: Modification of the activation key for reverse lookup. It is uniformly used in all input method schemes <Badge type="tip">[51779acb8](https://github.com/Mintimate/oh-my-rime/commit/51779acb88a447926af451426439573d504638f7)</Badge> :
