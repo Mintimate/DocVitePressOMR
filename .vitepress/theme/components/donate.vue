@@ -23,10 +23,18 @@ let toggleCollapse = () => {
       "/>
     <transition name="bounce">
       <div v-show="isCollapsed" style="text-align: center; padding: 5px">
-        <slot>
+        <slot name="default">
           <p>
             <img style="max-width: 300px;margin: auto;" alt="WebChart Recognise"
                  src="../../../public/image/global/recognise.webp">
+          </p>
+        </slot>
+        <slot name="link">
+          <p style="font-size: smaller" v-if="lang === 'zh'">
+            Tips:如果你有爱发电账号，那么也可以访问<a href="https://afdian.com/a/mintimate" target="_blank">爱发电平台</a>
+          </p>
+          <p style="font-size: smaller" v-else>
+            Tips:If you have an Afdian account, you can also visit <a href="https://afdian.com/a/mintimate" target="_blank">Afdian</a>.
           </p>
         </slot>
       </div>
