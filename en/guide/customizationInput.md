@@ -168,11 +168,49 @@ custom_phrase:
   initial_quality: 99    # The weight of custom_phrase should be larger than other lexicon
 ```
 
-Custom Text does not interact with other translators in word-building. If you use a complete code, the character or word cannot participate in word-building. That is, self-built words cannot be remembered.
+Custom Text does not interact with other translators in word-building. **If you use a complete code, the character or word cannot participate in word-building. That is, self-built words cannot be remembered**.
 
 Therefore, it is recommended to fix non-complete code characters or words. For example, `'的'`(de) should be `'d'`, `'是'`(shi) should be `'s'`, and `'仙剑'`(xian jian) should be `'xj'`.
 
 Note that the full Pinyin `'a o e'` is also a complete spelling, so single characters of `'a o e'` should not be included in the Custom Text. Otherwise, words like `'啊 哦 呃'` cannot be used for word-building.
+
+Using the full Pinyin input method within Oh-my-rime as an example, according to the [Configuration and Overrides](configurationOverride.html) method, we can create the `rime_mint.custom.yaml` file:
+
+```yaml
+# Rime Custom
+# encoding: utf-8
+
+patch:
+  "engine/translators/+":
+    - table_translator@mint_simple            # Mint custom phrases
+
+# Mint custom phrases
+mint_simple:
+  dictionary: ""
+  user_dict: dicts/rime_mint.simple
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 0.5
+  comment_format:
+    - xform/^.+$//
+```
+
+At the same time, we need to create the `dicts/rime_mint.simple.txt` file:
+```yaml
+# Rime table
+# coding: utf-8
+#@/db_name rime_mint.simple.txt
+#@/db_type tabledb
+#
+#
+# No comments can be written after this line
+我们 wm
+```
+
+Note that the content within the `rime_mint.simple.txt` file follows the format of `「phrase」<Tab>「Pinyin abbreviation」`.
+
+Finally, after redeploying the input method, you will be able to see the effect of the custom text.
 
 ## Double Pinyin Convert
 

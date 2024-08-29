@@ -129,7 +129,7 @@ import_tables:
 ## 自定义文本
 `自定义文本`，就是输入法内`custom_phrase.txt`，你在薄荷输入法内应该看不到…… 
 
-我自己理解，`自定义文本`，就是权重特别高的字典（默认是这样的，但可以通过`initial_quality`调整各个翻译器的权重）；所以，我就去除了`自定义文本`的配置。如果需要，可以自行配置。
+我自己理解，`自定义文本`，就是权重特别高的字典（默认是这样的，但可以通过`initial_quality`调整各个翻译器的权重）；所以，我就去除了`自定义文本`的配置。**如果需要，可以自行配置**。
 格式和字典一样：
 ```yaml
 # Rime table
@@ -155,6 +155,7 @@ import_tables:
 知道	zd
 不知道	bzd
 ```
+
 同时，输入法的配置内需要加上：
 ```yaml
 translators:
@@ -179,6 +180,43 @@ custom_phrase:
 啊 a
 哦 o
 ```
+
+以薄荷输入法内的薄荷全拼为例，根据[配置覆写和定制](configurationOverride.html)的方法，我们可以创建`rime_mint.custom.yaml`文件：
+
+```yaml
+# Rime Custom
+# encoding: utf-8
+
+patch:
+  "engine/translators/+":
+    - table_translator@mint_simple            # 薄荷自定义短语
+
+# 薄荷自定义短语
+mint_simple:
+  dictionary: ""
+  user_dict: dicts/rime_mint.simple
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 0.5
+  comment_format:
+    - xform/^.+$//
+```
+
+与此同时，我们需要创建`dicts/rime_mint.simple.txt`文件：
+```yaml
+# Rime table
+# coding: utf-8
+#@/db_name	rime_mint.simple.txt
+#@/db_type	tabledb
+#
+#
+# 此行之后不能写注释
+我们	wm
+```
+注意，`rime_mint.simple.txt`文件内的内容，是`「词」<Tab>「拼音简写」`的格式。
+
+最后，重新部署输入法，就可以看到自定义文本的效果了。
 
 ## 双拼编码转义
 
