@@ -36,7 +36,7 @@ And based on the above vocabulary, build the main maintenance vocabulary:
 
 Next, let's talk about the differences between rime-ice and oh-my-rime.
 ## Similarities
-In terms of the basics, both are adapted to the Rime input method framework, support multiple input methods such as full spelling and double spelling, and have a comprehensive pinyin vocabulary (after all, oh-my-rime uses the rime-ice vocabulary, and the pinyin experience is basically similar).
+In terms of the basics, both are adapted to the Rime input method framework, support multiple input methods such as full spelling and double spelling, and have a comprehensive pinyin vocabulary (~~After all, oh-my-rime uses the rime-ice vocabulary~~ <Badge type="tip" text="^2024.07" /> Oh-my-rime uses the [Bailu Pinyin Vocabulary] (https://github.com/gaboolic/rime-frost), which is based on rime-ice and re-trained for word segmentation using methods such as jieba in Python; thus, the experience with Pinyin input is similar).
 
 rime-ice and oh-my-rime both use some tools and schemes from other repositories:
 - [melt_eng](https://github.com/tumuyan/rime-melt) English input (@tumuyan | [Apache 2.0](https://github.com/tumuyan/rime-melt/blob/master/LICENSE))
@@ -85,6 +85,10 @@ In addition, don't think that the scheme is only [rime-ice](https://github.com/i
 
 **Everyone is working hard to contribute to the community, and I hope everyone can find a suitable input scheme.**
 
-> Haha, also an advertisement, if you think this document or Mint is very helpful to you, you can [buy me a coffee](https://afdian.net/a/mintimate); for users who donate coffee☕️, they will enter the "Thanks" and "Log Update" (●'◡'●)ﾉ♥
+> Haha, also an advertisement, if you think this document or Oh-my-rime is very helpful to you...
+
+<donate lang="en"/>
+
+For users who donate coffee☕️, they will enter the "Thanks" and "Log Update" (●'◡'●)ﾉ♥
 
 :::
