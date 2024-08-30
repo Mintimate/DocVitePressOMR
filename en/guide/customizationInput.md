@@ -184,16 +184,16 @@ patch:
   "engine/translators/+":
     - table_translator@mint_simple            # Mint custom phrases
 
-# Mint custom phrases
-mint_simple:
-  dictionary: ""
-  user_dict: dicts/rime_mint.simple
-  db_class: stabledb
-  enable_completion: false
-  enable_sentence: false
-  initial_quality: 0.5
-  comment_format:
-    - xform/^.+$//
+  # Mint custom phrases
+  mint_simple:
+    dictionary: ""
+    user_dict: dicts/rime_mint.simple
+    db_class: stabledb
+    enable_completion: false
+    enable_sentence: false
+    initial_quality: 0.5
+    comment_format:
+      - xform/^.+$//
 ```
 
 At the same time, we need to create the `dicts/rime_mint.simple.txt` file:

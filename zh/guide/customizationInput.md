@@ -191,16 +191,16 @@ patch:
   "engine/translators/+":
     - table_translator@mint_simple            # 薄荷自定义短语
 
-# 薄荷自定义短语
-mint_simple:
-  dictionary: ""
-  user_dict: dicts/rime_mint.simple
-  db_class: stabledb
-  enable_completion: false
-  enable_sentence: false
-  initial_quality: 0.5
-  comment_format:
-    - xform/^.+$//
+  # 薄荷自定义短语
+  mint_simple:
+    dictionary: ""
+    user_dict: dicts/rime_mint.simple
+    db_class: stabledb
+    enable_completion: false
+    enable_sentence: false
+    initial_quality: 0.5
+    comment_format:
+      - xform/^.+$//
 ```
 
 与此同时，我们需要创建`dicts/rime_mint.simple.txt`文件：
