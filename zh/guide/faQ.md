@@ -105,7 +105,8 @@ Linux 使用 Rime 输入法，需要依靠输入法框架，比如： iBus 和 F
 
 目前的解决方法，有以下多种方法：
 - 等待系统源更新 librime 版本。
-- 使用第三方源，或者自行编译 librime。参考: [ibus-rime.AppImage](https://github.com/hchunhui/ibus-rime.AppImage)、[Fcitx5 With Flatpak](installRime.html#fcitx5-version-flatpak)。
+- 使用第三方源，如: [ibus-rime.AppImage](https://github.com/hchunhui/ibus-rime.AppImage)、[Fcitx5 With Flatpak](installRime.html#fcitx5-version-flatpak)。
+- 自行编译 librime、librme-lua 和 ibus-rime。参考: [Linux上手动编译安装librime、librime-lua以及ibus-rime](https://www.mintimate.cn/2024/07/13/rimeLinuxMakeIbus/)
 - 修改薄荷配置，使其使用旧版本的 Lua 写法。
 
 这里介绍如何回退 薄荷输入法配置，使其使用旧版本的 Lua 写法，参考这一次的 commit： [18e0ae7aa5](https://github.com/Mintimate/oh-my-rime/commit/18e0ae7aa52773d8dd7e15a4ad15a8c91bc9e6d9)
