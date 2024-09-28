@@ -19,6 +19,18 @@ please be sure to note "Mint Pinyin" or "oh-my-rime" (●'◡'●)ﾉ♥
 
 :::
 
+## 2024-S04
+
+Performance:
+- Optimize symbols for multi-character matching <Badge type="tip">[970bc76ef1](https://github.com/Mintimate/oh-my-rime/commit/52489419e1537e5bde5206b9facb8d970bc76ef1)</Badge>
+
+Thanks:
+
+| Time       | Platform | User             | Support💵 | Message       |
+|------------|----------|------------------|-----------|---------------|
+| 2024/09/27 | 微信赞赏     | RIME输入法交流小群群友    | 10¥       | 叮，你要的奶茶       |
+| 2024/09/06 | 微信赞赏     | 微信用户: YANGZhitao | 20¥       | 很好用! 感谢维护这套方案 |
+
 ## 2024-S03
 Features:
 - Adapted [rime plum](https://github.com/rime/plum) <Badge type="warning">[More](/en/guide/importMint.html#⭐东风破导入薄荷)</Badge> <Badge type="tip">[b606836082](https://github.com/Mintimate/oh-my-rime/commit/b606836082994fc4f0c3222338ec3a67611e4816)</Badge>
@@ -33,8 +45,6 @@ Thanks:
 
 | Time       | Platform | User             | Support💵 | Message       |
 |------------|----------|------------------|-----------|---------------|
-| 2024/09/27 | 微信赞赏     | RIME输入法交流小群群友    | 10¥       | 叮，你要的奶茶       |
-| 2024/09/06 | 微信赞赏     | 微信用户: YANGZhitao | 20¥       | 很好用! 感谢维护这套方案 |
 | 2024/08/21 | 微信赞赏     | 微信用户: ZY         | 20¥       | 谢谢你维护这套方案     |
 
 ## 2024-S02
