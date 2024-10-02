@@ -187,3 +187,16 @@ shen shen qin mu qin, jin qin nin jiu qin, qin nin xin nin jin, shen xin hen yao
 
 保存并重新部署rime，这个时候，在编译阶段`rime_mint.custom.yaml`内`speller/algebra`会覆盖`rime_mint.schema.yaml`内的`speller/algebra`部分。
 
+## u/ü与v映射 <Badge type="tip" text="^2024.10.02" />
+我们学习拼音的过程中，会学习到`un`和`ün`这样的复韵母，以及`u`和`ü`这样的单韵母。
+
+虽然键盘内，有`u`按键，但是没有`ü`按键；但是，各个输入法和用户的共有认同就是将`v`映射为`ü`上。不过，部分输入法会将`ü`同时模糊为`u`，这也是很多用户使用薄荷方案后，会反馈打不出`女(nv)`、`攻略(gong lve)`等字词的原因: **薄荷方案内，默认没有模糊拼音，所以如果需要模糊拼音，需要自行配置`ü`和`u`的混淆。**
+
+配置其实也很简单，以薄荷全拼为例(`rime_mint.schema.yaml`)，我们创建一个`mint_mint.custom.yaml`文件，在其中追加内容：
+```yaml 
+patch:
+  # 对 speller/algebra 进行追加
+  "speller/algebra/+":
+    - derive/v/u/ # u => ü
+```
+重新部署后，我们就可以模糊化`u`和`ü`了。

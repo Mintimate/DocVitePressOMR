@@ -178,3 +178,20 @@ To add content in `rime_mint.custom.yaml`:
 ![using Custom](/image/guide/fuzzyPinyinMintCustom.webp)
 
 After saving and redeploying Rime, during the compilation phase, the `speller/algebra` section in `rime_mint.custom.yaml` will override the corresponding section in `rime_mint.schema.yaml`.
+
+
+## Mapping of u/ü and v <Badge type="tip" text="^2024.10.02" />
+
+In the process of learning Pinyin, we learn about complex vowels such as `un` and `ün`, as well as single vowels like `u` and `ü`.
+
+Although there is a `u` key on the keyboard, there is no `ü` key; however, the common agreement among various input methods and users is to map `v` to `ü`. However, some input methods will also blur `ü` into `u`, which is why many users who use the Mint scheme report that they cannot type words like `女(nv)` and `攻略(gong lve)`: By default, the Mint scheme does not blur Pinyin, so if you need blurred Pinyin, you need to configure the confusion between `ü` and `u` yourself.
+
+The configuration is actually very simple. Taking Mint Full Pinyin as an example (`rime_mint.schema.yaml`), we create a `mint_mint.custom.yaml` file and append the following content to it:
+```yaml
+patch:
+  # Append to speller/algebra
+  "speller/algebra/+":
+    - derive/v/u/ # u => ü
+```
+
+After redeploying, we can blur `u` and `ü`.
