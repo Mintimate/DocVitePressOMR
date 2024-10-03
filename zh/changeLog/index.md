@@ -23,6 +23,8 @@ sidebar: false
 Performance:
 - 优化 symbols 多字符匹配 <Badge type="tip">[970bc76ef1](https://github.com/Mintimate/oh-my-rime/commit/52489419e1537e5bde5206b9facb8d970bc76ef1)</Badge>
 
+Features:
+- 错字错音纠错功能添加原有注释选项 <Badge type="tip">[d3a3273030](https://github.com/Mintimate/oh-my-rime/commit/03fdc656896811b0593223893f613dd3a3273030)</Badge>
 
 Thanks:
 

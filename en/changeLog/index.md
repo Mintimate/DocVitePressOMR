@@ -24,6 +24,9 @@ please be sure to note "Mint Pinyin" or "oh-my-rime" (●'◡'●)ﾉ♥
 Performance:
 - Optimize symbols for multi-character matching <Badge type="tip">[970bc76ef1](https://github.com/Mintimate/oh-my-rime/commit/52489419e1537e5bde5206b9facb8d970bc76ef1)</Badge>
 
+Features:
+- Added original comment option for typo and pronunciation correction feature <Badge type="tip">[d3a3273030](https://github.com/Mintimate/oh-my-rime/commit/03fdc656896811b0593223893f613dd3a3273030)</Badge>
+
 Thanks:
 
 | Time       | Platform | User             | Support💵 | Message       |
