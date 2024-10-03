@@ -31,15 +31,16 @@ ang -> an
 
 The pinyin for the tongue twister is:
 ```txt 
-shēng shēn qīn mǔ qīn, jǐn qǐng nín jiù qǐn, qǐng nín xīn níng jìng, shēn xīn hěn yào jǐn.
-xīn xīng bàn yuè míng, yín guāng chéng qīng qīng. 
-jìn shì qīng jìng jìng, jǐng líng bú yào jīng.
-nín xǐng wǒ jìn lái, jìn lái jìng mǔ qīn.
+shēng shēn qīn mǔ qīn, jǐn qǐng nín jiù qǐn, qǐng nín xīn níng jìng, shēn xīn hěn yào jǐn。
+xīn xīng bàn yuè míng, yín guāng chéng qīng qīng. jìn shì qīng jìng jìng, jǐng líng bú yào jīng。
+nín xǐng wǒ jìn lái, jìn lái jìng mǔ qīn。
 ```
 
 If using fuzzy pinyin and ignoring the retroflex endings:
 ```txt
-shen shen qin mu qin, jin qin nin jiu qin, qin nin xin nin jin, shen xin hen yao jin。xin xing ban yue ming, yin guan chen qin qin。jin shi qin jin jin, jin lin bu yao jin。nin xing wo jin lai, jin lai jin mu qin。
+shen shen qin mu qin, jin qin nin jiu qin, qin nin xin nin jin, shen xin hen yao jin。
+xin xing ban yue ming, yin guan chen qin qin。jin shi qin jin jin, jin lin bu yao jin。
+nin xing wo jin lai, jin lai jin mu qin。
 ```
 
 ## Fuzzy pinyin settings in Rime

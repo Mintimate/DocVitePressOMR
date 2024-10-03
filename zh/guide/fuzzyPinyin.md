@@ -31,19 +31,22 @@ ang -> an
 
 相对的，如果像这样的绕口令：
 ```txt
-生身亲母亲，谨请您就寝，请您心宁静，身心很要紧。新星伴月明，银光澄清清。尽是清静境，警铃不要惊。您醒我进来，进来敬母亲。
+生身亲母亲，谨请您就寝，请您心宁静，身心很要紧。
+新星伴月明，银光澄清清。尽是清静境，警铃不要惊。
+您醒我进来，进来敬母亲。
 ```
 对应的拼音: 
 ```text
-shēng shēn qīn mǔ qīn, jǐn qǐng nín jiù qǐn, qǐng nín xīn níng jìng, shēn xīn hěn yào jǐn.
-xīn xīng bàn yuè míng, yín guāng chéng qīng qīng.
-jìn shì qīng jìng jìng, jǐng líng bú yào jīng.
-nín xǐng wǒ jìn lái, jìn lái jìng mǔ qīn.
+shēng shēn qīn mǔ qīn, jǐn qǐng nín jiù qǐn, qǐng nín xīn níng jìng, shēn xīn hěn yào jǐn。
+xīn xīng bàn yuè míng, yín guāng chéng qīng qīng. jìn shì qīng jìng jìng, jǐng líng bú yào jīng。
+nín xǐng wǒ jìn lái, jìn lái jìng mǔ qīn。
 ```
 
 如果使用模糊拼音，忽略后鼻音：
 ```txt
-shen shen qin mu qin, jin qin nin jiu qin, qin nin xin nin jin, shen xin hen yao jin。xin xing ban yue ming, yin guan chen qin qin。jin shi qin jin jin, jin lin bu yao jin。nin xing wo jin lai, jin lai jin mu qin。
+shen shen qin mu qin, jin qin nin jiu qin, qin nin xin nin jin, shen xin hen yao jin。
+xin xing ban yue ming, yin guan chen qin qin。jin shi qin jin jin, jin lin bu yao jin。
+nin xing wo jin lai, jin lai jin mu qin。
 ```
 
 ## Rime的模糊拼音设置
