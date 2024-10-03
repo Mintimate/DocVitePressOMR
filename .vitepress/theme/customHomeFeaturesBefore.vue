@@ -19,7 +19,7 @@ const {Layout} = DefaultTheme
       <div class="supportMeCard" style="margin-bottom: 10px">
         <wwads :horizontal="false"/>
       </div>
-      <a href="https://afdian.net/a/mintimate" target="_blank" rel="noopener sponsored">
+      <a href="https://afdian.com/a/mintimate" target="_blank" rel="noopener sponsored">
       <div class="supportMeCard">
         <span class="supportMeCardText">
               Sponsor a scoop of matcha powder for better posts. <br/>(●'◡'●)ﾉ♥

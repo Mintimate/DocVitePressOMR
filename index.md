@@ -45,5 +45,5 @@ features:
     details: 高自定义，你可以按照自己的喜好，基于本配置，自行更改；但是需要遵守开源协议
   - title: 完全开源
     icon: ☕
-    details: 代码已经在<a target="_blank" href="https://github.com/Mintimate/oh-my-rime">Github开源</a>，喜欢的话，可以点个Star嗷；你也可以慷慨请我们<a target="_blank" href="https://afdian.net/a/mintimate"><span style="text-decoration-color:#38bdf8;text-decoration-style:double;text-decoration-line:underline;text-underline-offset:4px;">喝咖啡( ◔ ڼ ◔ )</span></a>
+    details: 代码已经在<a target="_blank" href="https://github.com/Mintimate/oh-my-rime">Github开源</a>，喜欢的话，可以点个Star嗷；你也可以慷慨请我们<a target="_blank" href="https://afdian.com/a/mintimate"><span style="text-decoration-color:#38bdf8;text-decoration-style:double;text-decoration-line:underline;text-underline-offset:4px;">喝咖啡( ◔ ڼ ◔ )</span></a>
 ---
