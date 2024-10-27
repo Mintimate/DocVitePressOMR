@@ -47,9 +47,8 @@ const members = [
     </template>
   </VPTeamPageTitle>
 
-<VPTeamMembers
-:members="members"
-/>
+  <VPTeamMembers 
+  :members="members"/>
 
   <VPTeamPageSection>
     <template #title>联系我们</template>
@@ -63,7 +62,27 @@ const members = [
       </ul>
     </div>
   </div>
+
+  <VPTeamPageSection>
+    <template #title>外部评价</template>
+  </VPTeamPageSection>
+  <div class="vp-doc " :class="$style.VPTeamContent">
+    <div class="container">
+      <p>感谢小伙伴们在其他社区上宣传了薄荷方案，甚至让更多开发者投入 rime 输入优化。收集了一些第三方平台有关薄荷的文章:</p>
+      <ul>
+        <li>Telegram 开源社区: <a href="https://t.me/opencfdchannel/4727" target="_blank">oh-my-rime 输入法 正在使用小企鹅输入法或者仓输入法的朋友可以试试这个拼音方案，个人感觉很不错，而且部署也很简单。</a></li>
+        <li>果核剥壳: <a href="https://www.ghxi.com/wx20240422.html" target="_blank">输入法方案，薄荷输入法软件体验</a> </li>
+        <li>小众软件: <a href="https://www.appinn.com/oh-my-rime/" target="_blank">薄荷输入法（oh-my-rime）- 跨平台 Rime 输入法配置套件：无隐私追踪、完全开源、高自定义</a> </li>
+        <li>Deepin 论坛: <a href="https://bbs.deepin.org/zh/post/268859" target="_blank">[应用分享] 薄荷输入法不错，大家可以试用下</a> </li>
+        <li>V2EX 论坛: <a href="https://www.v2ex.com/t/1027047" target="_blank">一个基于 rime 的输入法方案： oh-my-rime</a> </li>
+        <li>博客园: <a href="https://www.cnblogs.com/Undefined443/p/-/rime" target="_blank">Ubuntu 安裝 RIME 輸入法</a> </li>
+        <li>X: <a href="https://x.com/iamcheyan/status/1767761177004961926" target="_blank">oh-my-rime，不喜欢输入法联网的朋友可以试试。</a> </li>
+        <li>思否-Kenis空间站: <a href="https://segmentfault.com/a/1190000045386216" target="_blank">分享我在Windows下使用的中文输入方案</a> </li>
+      </ul>
+    </div>
+  </div>
 </VPTeamPage>
+
 
 <style module>
 .VPTeamContent{
