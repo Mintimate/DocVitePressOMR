@@ -20,11 +20,17 @@ sidebar: false
 :::
 
 ## 2024-S04
-Performance:
-- 优化 symbols 多字符匹配 <Badge type="tip">[970bc76ef1](https://github.com/Mintimate/oh-my-rime/commit/52489419e1537e5bde5206b9facb8d970bc76ef1)</Badge>
-
 Features:
 - 错字错音纠错功能添加原有注释选项 <Badge type="tip">[d3a3273030](https://github.com/Mintimate/oh-my-rime/commit/03fdc656896811b0593223893f613dd3a3273030)</Badge>
+- 添加输入 timestamp 打印当前秒级时间戳功能 <Badge type="tip">[f90421138d](https://github.com/Mintimate/oh-my-rime/commit/2aaeec7143560e23a6b3381919ebebf90421138d)</Badge>
+
+Performance:
+- 优化 symbols 多字符匹配 <Badge type="tip">[970bc76ef1](https://github.com/Mintimate/oh-my-rime/commit/52489419e1537e5bde5206b9facb8d970bc76ef1)</Badge>
+- 辅助码保留原有注释选项 <Badge type="tip">[864fe1d7cb](https://github.com/Mintimate/oh-my-rime/commit/d718661c4508f469a6867f787101fb864fe1d7cb)</Badge>
+
+Fix:
+- 修复繁体和简体的快捷键映射错误(Ctrl + Shift + 4) <Badge type="tip">[5fd1177739](https://github.com/Mintimate/oh-my-rime/commit/2fbe2370de8544b7891f390ad14e005fd1177739)</Badge>
+- 修复黑水鸭和蓝水鸭拼音词条错误 <Badge type="tip">[2db700224d](https://github.com/Mintimate/oh-my-rime/commit/f3fe67b2dd2be0b7679039886976172db700224d)</Badge>
 
 Thanks:
 

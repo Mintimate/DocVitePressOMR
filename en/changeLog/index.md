@@ -20,12 +20,17 @@ please be sure to note "Mint Pinyin" or "oh-my-rime" (●'◡'●)ﾉ♥
 :::
 
 ## 2024-S04
+Features:
+- Added original comment option for typo and pronunciation correction feature <Badge type="tip">[d3a3273030](https://github.com/Mintimate/oh-my-rime/commit/03fdc656896811b0593223893f613dd3a3273030)</Badge>
+- Added the function to print the current second-level timestamp by inputting `timestamp` <Badge type="tip">[f90421138d](https://github.com/Mintimate/oh-my-rime/commit/2aaeec7143560e23a6b3381919ebebf90421138d)</Badge>
 
 Performance:
 - Optimize symbols for multi-character matching <Badge type="tip">[970bc76ef1](https://github.com/Mintimate/oh-my-rime/commit/52489419e1537e5bde5206b9facb8d970bc76ef1)</Badge>
+- Auxiliary codes retain original comment options <Badge type="tip">[864fe1d7cb](https://github.com/Mintimate/oh-my-rime/commit/d718661c4508f469a6867f787101fb864fe1d7cb)</Badge>
 
-Features:
-- Added original comment option for typo and pronunciation correction feature <Badge type="tip">[d3a3273030](https://github.com/Mintimate/oh-my-rime/commit/03fdc656896811b0593223893f613dd3a3273030)</Badge>
+Fix:
+- Fix the shortcut key mapping error between Traditional and Simplified Chinese (Ctrl + Shift + 4) <Badge type="tip">[5fd1177739](https://github.com/Mintimate/oh-my-rime/commit/2fbe2370de8544b7891f390ad14e005fd1177739)</Badge>
+- Fix the Pinyin entry errors for Heishuiya and Lanshuiya <Badge type="tip">[2db700224d](https://github.com/Mintimate/oh-my-rime/commit/f3fe67b2dd2be0b7679039886976172db700224d)</Badge>
 
 Thanks:
 
