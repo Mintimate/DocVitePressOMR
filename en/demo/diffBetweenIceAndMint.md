@@ -74,6 +74,8 @@ So, the difference between rime-ice and oh-my-rime is mainly in the adapted inpu
 ## Suggestions for Choice
 If you are a pinyin input user, then rime-ice is a very good choice; if you are a user who needs multiple input schemes, then oh-my-rime is a good choice.
 
+**It is only recommended to choose one scheme, do not use both rime-ice and oh-my-rime at the same time**: because the configuration files of the two schemes will conflict, and the shortcuts of the two schemes are also different, which may cause input conflicts.
+
 To give a practical scenario, if you use pinyin, then in fact both oh-my-rime and rime-ice can be used, and you can also make changes based on rime-ice and oh-my-rime (after all: oh-my-rime has a lot of references to rime-ice, and the open source protocol has also been synchronized from the initial GPL2.0, using the GPL3.0 protocol). However, if you also have a need for Wubi, such as other people in your family using Wubi, or other people using your computer using Wubi, then oh-my-rime may be a better choice.
 
 Of course, this is just a suggestion, and it depends on individual needs. Moreover, the open source community environment of rime-ice in English is more prosperous, with more open source contributors, and the updates of rime-ice will be of higher quality than oh-my-rime (even I have submitted some PRs to rime-ice...).
