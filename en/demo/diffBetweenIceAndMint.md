@@ -94,3 +94,10 @@ In addition, don't think that the scheme is only [rime-ice](https://github.com/i
 For users who donate coffee☕️, they will enter the "Thanks" and "Log Update" (●'◡'●)ﾉ♥
 
 :::
+
+## END
+Actually, I initially wanted to configure my own scheme, which led to the oh-my-rime configuration, borrowing a lot from the rime-ice configuration and inheriting the rime-ice configuration using the GPL 3 open-source license. Subsequently, practical and useful features have been continuously added to oh-my-rime.
+
+However, the RIME community is a little small, and most of the features that can be thought of or discovered are already present in rime-ice (which is also one of the reasons why rime-shuangpin-fuzhuma is similar to rime-ice). Even though the Pinyin dictionary was later migrated from rime-ice to rime-frost, and to adapt to the Wubi98 team’s RimeTool, the experience is still similar to rime-ice.
+
+Personally, I do not like reinventing the wheel repeatedly, but the current situation is that oh-my-rime, rime-ice, ime-frost, and rime-shuangpin-fuzhuma schemes have a lot of overlap and use the same dependencies. I am not sure if this is a good phenomenon, but if you want a scheme that suits you, for now, you can choose any one of them.
