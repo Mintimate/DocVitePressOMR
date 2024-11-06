@@ -11,7 +11,7 @@ description: In the Mint input scheme, how to customize the default activation s
 # Default Activation Scheme
 What does the default activation scheme mean? In fact, it is the default scheme of our Mint input method.
 
-In the Mint input method, we default to activate Mint Quanpin, Xiaohe Double Spelling, Quanpin Xiaohe Mixed Input and Wubi 98, Wubi 86, and the nine-key layout T9 suitable for iOS warehouse input method.
+In the Mint input method, we default to activate Mint Quanpin, Double fly Spelling, Quanpin Double flyMixed Input and Wubi 98, Wubi 86, and the nine-key layout T9 suitable for iOS warehouse input method.
 
 As you can see, there are already many activated schemes. But in this case, there are two situations:
 - One is that we don't need so many schemes, we only need to activate one or two schemes;
