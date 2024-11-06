@@ -242,6 +242,28 @@ Comparing `rime_mint.custom.yaml` and `rime_mint.schema.yaml`：
 
 ![Compare](/image/guide/compareRimeMintSchemaAndCustom.webp)
 
+## Example: Customizing Skins
+If you want to customize the skin, you first need to identify your current Rime client. Different clients use different skins, so you need to modify according to your client.
+
+The Oh-my-rime (input scheme) integrates two sets of skins that can be used within Squirrel and Weasel: the Duck Series and the Green Series.
+
+For the Squirrel client, if you want to change the Duck Series skin to the Green Series, patch as follows in the `squirrel.custom.yaml` file:
+```yaml
+# Only one patch node can be in a file
+patch:
+  # Override the light mode skin to mint_light_green (Jade Green)
+  "style/color_scheme": mint_light_green
+  # Override the dark mode skin to mint_dark_green (Emerald Green)
+  "style/color_scheme_dark": mint_dark_green
+```
+Afterward, redeploy.
+
+For the Weasel client, if you want to change the Green Series skin to the Duck Series, it is also done in the same way, except the file name is `weasel.custom.yaml`.
+
+In fact, the properties that can be patched depend on the file without `custom`.
+
+So, don't assume that Squirrel and Weasel can modify the same configurations. To see which appearance configurations can be modified, it is recommended to check the `squirrel.yaml` and `weasel.yaml` files, and then modify according to your needs.
+
 ## Example: Horizontal Input Method
 If you want to change the layout of the input method to horizontal on macOS, you can do the following:
 1. Open or create the `squirrel.custom.yaml` file;

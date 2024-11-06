@@ -260,6 +260,29 @@ patch:
 同时，目前`candidate_list_layout`的配置优先级大于`horizontal: true`的优先级，不过如果`candidate_list_layout`设置无效，也可以尝试`horizontal: true`。
 :::
 
+## 举例: 自定义皮肤
+如果你想自定义皮肤，那么首先就要明确你当前的 rime 客户端。不同的客户端，使用的皮肤也不同，所以你需要根据自己的客户端，来进行修改。
+
+薄荷输入法(输入方案)，内部集成了两套可以在小狼毫和鼠须管内使用的皮肤: 水鸭系列、青涩系列。
+
+客户端鼠须管，如果想把水鸭系列的皮肤改为青涩系列，在`squirrel.custom.yaml`文件内 `patch` 如下:
+```yaml
+# 一个文件内只能有一个 patch 节点
+patch:
+  # 覆写亮色模式皮肤为 mint_light_green(碧皓青)
+  "style/color_scheme": mint_light_green
+  # 覆写亮色模式皮肤为 mint_light_green(碧月青)
+  "style/color_scheme_dark": mint_dark_green
+```
+
+之后，重新部署即可。
+
+客户端小狼毫，如果想把青涩系列的皮肤改为水鸭系列，也是上述方法，只不过文件名为 `weasel.custom.yaml`。
+
+实际上，能 `patch` 的属性，取决于不带`custom`的文件。
+
+所以，不要以为鼠须管和小狼毫能修改的配置都是一样的。具体可以修改那些外观配置，建议查看`squirrel.yaml`和`weasel.yaml`文件，然后根据自己的需求进行修改。
+
 ## 举例: 自定义输词库
 如果你想自定义词库，那么可以这样操作，以薄荷输入法内的「薄荷拼音-全拼输入」为例：
 1. 打开或创建`rime_mint.custom.yaml`文件；
