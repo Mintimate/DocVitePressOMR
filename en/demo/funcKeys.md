@@ -37,6 +37,8 @@ Keyword: "date":
 This feature of printing capitalized Chinese currency is quite interesting. It is activated by using the uppercase letter "`R`" and then inputting the numeric keys on the keyboard (the keys above the letters, not the ones on the numpad):
 ![Capitalized Chinese Currency](/image/demo/rmbKey.webp)
 
+Afterward, to select a candidate, you can use the arrow keys for selection and the spacebar to select; you can also use `Ctrl` + `number key` to select.
+
 ## Lunar Date Printing/Conversion
 If you want to print the lunar date, you need to know that the `"Chinese lunar calendar"` in English is: Chinese lunar calendar.
 
