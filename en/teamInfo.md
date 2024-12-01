@@ -32,6 +32,14 @@ const members = [
       { icon: 'github', link: 'https://github.com/YummyCocoa' },
     ],
   },
+  {
+    avatar: '/image/avatar/Jian787.webp',
+    name: 'Jian787',
+    title: 'One of the maintainers of the Terra Pinyin lexicon configuration for Oh-my-rime, providing a manually verified polyphonic word database.',
+    links: [
+      { icon: 'github', link: 'https://github.com/Jian787' },
+    ],
+  },
 
 ]
 </script>
