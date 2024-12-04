@@ -23,6 +23,8 @@ please be sure to note "Mint Pinyin" or "oh-my-rime" (●'◡'●)ﾉ♥
 Features:
 - Added original comment option for typo and pronunciation correction feature <Badge type="tip">[d3a3273030](https://github.com/Mintimate/oh-my-rime/commit/03fdc656896811b0593223893f613dd3a3273030)</Badge>
 - Added the function to print the current second-level timestamp by inputting `timestamp` <Badge type="tip">[f90421138d](https://github.com/Mintimate/oh-my-rime/commit/2aaeec7143560e23a6b3381919ebebf90421138d)</Badge>
+- Breaking changes: Remove the auxiliary code for the full spelling category and free up the semicolon key. <Badge type="tip">[0b72181e90](https://github.com/Mintimate/oh-my-rime/commit/ec9ede2e05a36c9214fd5adfc1645e0b72181e90)</Badge>
+- Breaking changes: Modify the basic word library of Terra Pinyin to a manually verified word library. <Badge type="tip">[8a5c613f9b](https://github.com/Mintimate/oh-my-rime/commit/af66637a7ae4871145229aa65e75048a5c613f9b)</Badge>
 
 Performance:
 - Optimize symbols for multi-character matching <Badge type="tip">[970bc76ef1](https://github.com/Mintimate/oh-my-rime/commit/52489419e1537e5bde5206b9facb8d970bc76ef1)</Badge>

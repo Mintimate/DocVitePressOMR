@@ -23,6 +23,8 @@ sidebar: false
 Features:
 - 错字错音纠错功能添加原有注释选项 <Badge type="tip">[d3a3273030](https://github.com/Mintimate/oh-my-rime/commit/03fdc656896811b0593223893f613dd3a3273030)</Badge>
 - 添加输入 timestamp 打印当前秒级时间戳功能 <Badge type="tip">[f90421138d](https://github.com/Mintimate/oh-my-rime/commit/2aaeec7143560e23a6b3381919ebebf90421138d)</Badge>
+- 破坏性变更: 移除全拼类别的的辅码，释放分号键 <Badge type="tip">[0b72181e90](https://github.com/Mintimate/oh-my-rime/commit/ec9ede2e05a36c9214fd5adfc1645e0b72181e90)</Badge>
+- 破坏性变更: 修改地球拼音的基础词库为人工校验词库 <Badge type="tip">[8a5c613f9b](https://github.com/Mintimate/oh-my-rime/commit/af66637a7ae4871145229aa65e75048a5c613f9b)</Badge>
 
 Performance:
 - 优化 symbols 多字符匹配 <Badge type="tip">[970bc76ef1](https://github.com/Mintimate/oh-my-rime/commit/52489419e1537e5bde5206b9facb8d970bc76ef1)</Badge>
