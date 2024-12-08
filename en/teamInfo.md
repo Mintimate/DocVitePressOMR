@@ -50,7 +50,7 @@ const members = [
       About This Website
     </template>
     <template #lead>
-      Currently it's mainly developed by myself, looking forward to your help
+      The main maintainers at present are as follows, and we would like to thank all the contributors for their PRs to the project.
     </template>
   </VPTeamPageTitle>
 

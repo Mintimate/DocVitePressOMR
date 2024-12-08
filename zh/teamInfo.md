@@ -50,7 +50,7 @@ const members = [
       关于本网站 
     </template>
     <template #lead>
-      目前主要是我一个人开发,期待和大家的协助
+      目前主要的维护者如下，同时感谢为项目 PR 的所有小伙伴。
     </template>
   </VPTeamPageTitle>
 
