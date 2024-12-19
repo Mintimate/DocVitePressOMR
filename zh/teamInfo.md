@@ -34,7 +34,7 @@ const members = [
     ],
   },
   {
-    avatar: '/image/avatar/Jian787.webp',
+    avatar: 'https://avatars.githubusercontent.com/u/41545962',
     name: 'Jian787',
     title: '薄荷配置内地球拼音词库的维护者之一，提供人工校验的多音字词库',
     links: [
