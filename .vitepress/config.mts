@@ -124,6 +124,7 @@ export default withMermaid({
                             {text: 'Custom Default Activation Scheme', link: '/en/guide/defaultActivationScheme'},
                             {text: 'Emoji Configuration (OpenCC) ', link: '/en/guide/openccEmoji'},
                             {text: 'FuzzyPinyin', link: '/en/guide/fuzzyPinyin'},
+                            {text: 'Language Model', link: '/en/guide/languageModel'},
                             {text: 'shortcutKeys', link: '/en/guide/shortcutKeys'},
                             {text: 'Customization Input', link: '/en/guide/customizationInput'},
                             {text: 'Device Sync', link: '/en/guide/deviceSync'},
