@@ -48,7 +48,7 @@ import_tables:
 
 ## 安装万象模型
 
-安装万象拼音模型，需要下载对应的文件，然后将其放入 Rime 的配置目录内。首先打开[万象拼音模型的 Github 仓库发不地址](https://github.com/amzxyz/RIME-LMDG/releases)，下载最新的版本：
+安装万象拼音模型，需要下载对应的文件，然后将其放入 Rime 的配置目录内。首先打开[万象拼音模型的 Github 仓库发布地址](https://github.com/amzxyz/RIME-LMDG/releases)，下载最新的版本：
 
 ![下载万象拼音模型](/image/guide/downloadLMDG.webp)
 
