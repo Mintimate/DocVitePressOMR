@@ -49,6 +49,7 @@ refresh:    # 刷新 EO 缓存
       - export SECRET_KEY=$TENCENT_SECRET_KEY
       - export ZONE_ID=$EO_ZONE_ID
       - export DOMAIN=$EO_DOMAIN
+      - export RUN_MODE="cache"
       - export SLEEP_TIME=20
       - python3 /app/scanSiteMap.py -s .vitepress/dist/sitemap.xml
       - echo "EO 缓存刷新完成(●'◡'●)ﾉ♥！"
