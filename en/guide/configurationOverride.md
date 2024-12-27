@@ -41,7 +41,7 @@ style:
   
   # 预设选项。如果皮肤没写，则使用这些属性；如果皮肤写了，使用皮肤的。
   text_orientation: horizontal  # horizontal | vertical
-  andidate_list_layout: stacked # stacked | linear  候选项排列方向（如果你想调整为横屏，可以调整这个）
+  candidate_list_layout: stacked # stacked | linear  候选项排列方向（如果你想调整为横屏，可以调整这个）
   
   # 内嵌预编辑
   inline_preedit: true
