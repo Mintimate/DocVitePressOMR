@@ -19,6 +19,17 @@ please be sure to note "Mint Pinyin" or "oh-my-rime" (●'◡'●)ﾉ♥
 
 :::
 
+## 2025-S01
+Performance:
+- Use cache to improve auxiliary code input performance <Badge type=\\"tip\\">[4ecb9033f8](https://github.com/Mintimate/oh-my-rime/commit/d2498957a7a16200ce04819bb58b1a4ecb9033f8)</Badge>
+
+
+Thanks:
+| Time       | Platform | User             | Support💵 | Message         |
+|------------|----------|------------------|-----------|-----------------|
+| 2025/01/03 | 微信赞赏 | QQ用户:凌(873**534)                                                    | 5¥   | 感谢在QQ群无私的帮助 |
+| 2025/01/04 | 爱发电  | [爱发电用户_NVKP](https://afdian.com/u/b5636c3aca4d11ef8f5a5254001e7c00) | 15¥  | oh-my-rime  |
+
 ## 2024-S04
 Features:
 - Added original comment option for typo and pronunciation correction feature <Badge type="tip">[d3a3273030](https://github.com/Mintimate/oh-my-rime/commit/03fdc656896811b0593223893f613dd3a3273030)</Badge>
