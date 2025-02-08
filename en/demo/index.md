@@ -49,8 +49,8 @@ Currently, three input types are supported within two major categories:
   - Flypy Mint Customization: Customized based on [Flypy Double Pinyin](https://flypy.com/) (phonetic-graphic), with additional customizations. The dictionary uses Rime-ice Pinyin.
   - Flypy Mint Customization: Based on Flypy Double Pinyin, with additional customizations; the dictionary also uses Rime-ice Pinyin. Supports phonetic-graphic (auxiliary code) input, with the `;` key activating graphic input by default. If you are not used to `;`, you can reconfigure the activation key. If you need a complete phonetic and graphic mixed input, you can introduce Flypy phonetic-graphic and extend the `abc_segmentor` scheme.
 - Stroke class
-  - 98 Wubi Mint Customization: Customized based on the [98 Wubi](https://github.com/yanhuacuo/98wubi-tables) to meet the needs of Wubi input; a **lightweight version of 98 Wubi**. If you need a complete experience of 86 Wubi, you can try the original repository.
-  - 86 Wubi Mint Customization: Customized based on the [86 Wubi](https://github.com/KyleBing/rime-wubi86-jidian) to meet the needs of Wubi input; a **lightweight version of 98 Wubi**. Similarly, if you need a complete experience of 86 Wubi, you can try the original repository.
+  - 98 Wubi Mint Customization: Customized based on the [98 Wubi](https://github.com/yanhuacuo/98wubi-tables) to meet the needs of Wubi input; a **lightweight version of 98 Wubi**. If you need a complete experience of 98 Wubi, you can try the original repository.
+  - 86 Wubi Mint Customization: Customized based on the [86 Wubi](https://github.com/KyleBing/rime-wubi86-jidian) to meet the needs of Wubi input; a **lightweight version of 86 Wubi**. Similarly, if you need a complete experience of 86 Wubi, you can try the original repository.
 
 Oh-my-rime has already adapted and integrated, but by default, the following input types are not activated:
 - Double Pinyin class
