@@ -1,0 +1,113 @@
+# .cnb.yml
+$:
+  # vscode 事件：专供页面中启动远程开发用
+  vscode:
+    - docker:
+        # 自定义开发环境
+        build:
+          # 指定构建镜像的 Dockerfile 文件
+          dockerfile: .ide/Dockerfile
+          # 用来声明缓存构建过程中依赖的文件列表。
+        volumes:
+          # 缓存文件
+          - node_modules:copy-on-write
+      services:
+        # 声明使用 vscode 服务
+        - vscode
+        # 声明在容器中支持 docker 命令
+        - docker
+      stages:
+        # 环境启动后需要执行的命令
+        - name: 安装依赖
+          script: yarn
+main:
+  push:
+    - name: "部署流水线"
+      docker:        
+        image: node:18
+        volumes:
+          - /root/.npm:copy-on-write
+          - node_modules:copy-on-write
+      services:
+        - docker
+      imports: 
+        - https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml
+      stages:
+        - name: docker login
+          script:
+            - docker login -u ${CNB_TOKEN_USER_NAME} -p "${CNB_TOKEN}" ${CNB_DOCKER_REGISTRY}
+        - name: docker build
+          script:
+            - docker build -t ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:${CNB_COMMIT} -t ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest .
+        - name: docker push
+          script:
+            - docker push ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:${CNB_COMMIT}
+            - docker push ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest
+        - name: 通过 SSH 命令远程更新
+          image: tencentcom/ssh
+          settings:
+            host:
+              - ${REMOTE_HOST}
+            username: ${SERVER_USERNAME}
+            key: |
+              -----BEGIN OPENSSH PRIVATE KEY-----
+              ${SERVER_KEY}
+              -----END OPENSSH PRIVATE KEY-----
+            port: ${SERVER_PORT}
+            command_timeout: 2m
+            script: |
+              cd ${REMOTE_PATH}
+              docker compose pull
+              docker compose up -d
+              echo done
+        - name: resolve
+          type: cnb:resolve
+          options:
+            key: build-ci
+    - name: "刷新腾讯云EO缓存"
+      docker:        
+        image: node:18
+        volumes:
+          - /root/.npm:copy-on-write
+          - node_modules:copy-on-write
+      imports: 
+        - https://cnb.cool/Mintimate/secret/-/blob/main/TencentEOFresh.yaml
+      stages:
+        - name: 等待部署完成
+          type: cnb:await
+          options:
+            key: build-ci
+        - name: 打包获取 Sitemap
+          script: |
+            yarn
+            yarn run build
+        - name: 刷新 EO 缓存
+          image: docker.cnb.cool/mintimate/tool-forge/ask-eo
+          settings:
+            secret_id: ${SECRET_ID}
+            secret_key: ${SECRET_KEY}
+            zone_id: ${ZONE_ID_NO1}
+            domain: ${DOMAIN_NO1}
+            run_mode: "sitemap"
+            fresh_mode: "cache"
+            sleep_time: 0.8
+            once_batch: 5
+            sitemap_path: ".vitepress/dist/sitemap.xml"
+        - name: resolve
+          type: cnb:resolve
+          options:
+              key: build-eo
+    - name: 提醒部署成功
+      imports: 
+        - https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml
+      stages:
+        - name: 等待缓存刷新完成
+          type: cnb:await
+          options:
+            key: build-eo
+        - name: 调用企业微信
+          image: docker.cnb.cool/mintimate/tool-forge/wecom-bot-push
+          script: |
+            echo "COMMIT 事件:\ ${CNB_COMMIT}"
+            python3 /app/main.py -s ${WECHAT_COM} -m "时间:\ $(date +%Y-%m-%d)\n构建SHA:\ ${CNB_COMMIT}\n\n博客构建、推送部署成功\n(●'◡'●)ﾉ♥"
+            echo "消息推送完成(●'◡'●)ﾉ♥！"
