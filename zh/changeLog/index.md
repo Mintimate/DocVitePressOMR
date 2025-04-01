@@ -19,6 +19,10 @@ sidebar: false
 
 :::
 
+## 2025-S02
+Features:
+- 薄荷文档内添加社区主题: [#191](https://github.com/Mintimate/oh-my-rime/issues/191)
+
 ## 2025-S01
 Performance:
 - 辅码输入使用 cache 提升辅码性能  <Badge type="tip">[4ecb9033f8](https://github.com/Mintimate/oh-my-rime/commit/d2498957a7a16200ce04819bb58b1a4ecb9033f8)</Badge>

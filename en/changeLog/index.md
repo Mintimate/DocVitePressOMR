@@ -19,6 +19,10 @@ please be sure to note "Mint Pinyin" or "oh-my-rime" (●'◡'●)ﾉ♥
 
 :::
 
+## 2025-S02
+Features:
+- Added community theme in Oh-my-rime's documentation: [#191](https://github.com/Mintimate/oh-my-rime/issues/191)
+
 ## 2025-S01
 Performance:
 - Use cache to improve auxiliary code input performance <Badge type="tip">[4ecb9033f8](https://github.com/Mintimate/oh-my-rime/commit/d2498957a7a16200ce04819bb58b1a4ecb9033f8)</Badge>

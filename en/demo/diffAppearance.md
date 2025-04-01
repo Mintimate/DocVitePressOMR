@@ -102,7 +102,11 @@ As mentioned earlier, **if Linux uses ibus, it is limited by the system style an
 
 ![Linux上外观(继承主系统)](/image/demo/Linux_Mint.webp)
 
-If you use Fcitx5, you can install the theme：[Oh-my-rime Style Theme For_Fcitx](/resources/ohMyRimeThemeForFcitx5.zip)
+If you use Fcitx5, you can install themes:
+- [Transplanted Version - Mint Appearance Style Theme for Fcitx](/resources/ohMyRimeThemeForFcitx5.zip)
+- [Community Version - Mint Appearance Style Theme by witt-bit/fcitx5-theme-mint [Recommended]](https://github.com/witt-bit/fcitx5-theme-mint)
+
+![Linux Appearance (Custom)](/image/demo/Linux_MintGreenLight.gif)
 
 ## Appearance in Android <Badge type="tip" text="^2024.05" />
 If you choose the `Fcitx5 For Android`, the default color is quite good. Moreover, `Fcitx5 For Android` currently does not support changing the appearance.

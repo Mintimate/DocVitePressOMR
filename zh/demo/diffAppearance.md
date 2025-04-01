@@ -103,7 +103,11 @@ Linux上，如果使用的是的iBus，受限于不同的平台使用的iBus配�
 
 ![Linux上外观(继承主系统)](/image/demo/Linux_Mint.webp)
 
-如果你使用Fcitx5，可以安装主题：[薄荷外观风格主题_Fcitx](/resources/ohMyRimeThemeForFcitx5.zip)
+如果你使用Fcitx5，可以安装主题：
+- [移植版本-薄荷外观风格主题_Fcitx](/resources/ohMyRimeThemeForFcitx5.zip)
+- [社区版本-薄荷外观风格主题_witt-bit/fcitx5-theme-mint「推荐」](https://github.com/witt-bit/fcitx5-theme-mint)
+
+![Linux上外观(自定义)](/image/demo/Linux_MintGreenLight.gif)
 
 ## Android外观 <Badge type="tip" text="^2024.05" />
 如果你选择的小企鹅输入法，默认的颜色就是挺不错的。而且目前小企鹅输入法暂时不支持更换外观。
