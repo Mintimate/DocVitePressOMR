@@ -8,6 +8,7 @@ export default withMermaid({
     mermaid:{
         theme:'forest'
     },
+    ignoreDeadLinks: true,
     lastUpdated: true,
     title: "oh-my-rime输入法",
     description: "一套快速初始化rime的模板，因为平时我使用oh-my-zsh，在使用rime时候，有种用omz的感觉；所以我给它取名叫oh-my-rime，你也可以叫它薄荷输入法，亦或者Mint Input。",
