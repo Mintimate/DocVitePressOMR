@@ -35,6 +35,10 @@ main:
       env:
         IMAGE_TAG: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest-linux-amd64
         IMAGE_TAG_CURRENT: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:${CNB_COMMIT_SHORT}-linux-amd64
+      ifModify:
+        - "**"
+        - "!(.ide/**)"
+        - "!(.*)"
       stages:
         - name: docker login
           script:
@@ -63,6 +67,10 @@ main:
       env:
         IMAGE_TAG: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest-linux-arm64
         IMAGE_TAG_CURRENT: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:${CNB_COMMIT_SHORT}-linux-arm64
+      ifModify:
+        - "**"
+        - "!(.ide/**)"
+        - "!(.*)"
       stages:
         - name: docker login
           script:
