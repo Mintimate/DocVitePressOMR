@@ -116,8 +116,8 @@ main:
           options:
             name: ${CNB_REPO_NAME}
             tags:
-              - ${IMAGE_TAG_CURRENT}-linux-amd64
-              - ${IMAGE_TAG_CURRENT}-linux-arm64
+              - ${CNB_COMMIT_SHORT}-linux-amd64
+              - ${CNB_COMMIT_SHORT}-linux-arm64
               - latest-linux-amd64
               - latest-linux-arm64
             type: docker
