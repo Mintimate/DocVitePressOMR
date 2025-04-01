@@ -20,6 +20,13 @@ $:
         # 环境启动后需要执行的命令
         - name: 安装依赖
           script: yarn
+
+# WebIDE 修改不出发流水线
+.skip_project: &skip_project
+  ifModify:
+    - "**"
+    - "!(.ide/**)"
+    - "!(.*)"
 main:
   push:
     - name: "构建 AMD64 架构镜像"
@@ -35,10 +42,7 @@ main:
       env:
         IMAGE_TAG: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest-linux-amd64
         IMAGE_TAG_CURRENT: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:${CNB_COMMIT_SHORT}-linux-amd64
-      ifModify:
-        - "**"
-        - "!(.ide/**)"
-        - "!(.*)"
+      <<: *skip_project
       stages:
         - name: docker login
           script:
@@ -67,10 +71,7 @@ main:
       env:
         IMAGE_TAG: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest-linux-arm64
         IMAGE_TAG_CURRENT: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:${CNB_COMMIT_SHORT}-linux-arm64
-      ifModify:
-        - "**"
-        - "!(.ide/**)"
-        - "!(.*)"
+      <<: *skip_project
       stages:
         - name: docker login
           script:
@@ -94,6 +95,7 @@ main:
       env:
         IMAGE_TAG: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest
         IMAGE_TAG_CURRENT: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:${CNB_COMMIT_SHORT}
+      <<: *skip_project
       stages:
         - name: 等待 AMD64 镜像打包完成
           type: cnb:await
@@ -154,6 +156,7 @@ main:
       imports: 
         - https://cnb.cool/Mintimate/secret/-/blob/main/TencentEOFresh.yaml
         - https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml
+      <<: *skip_project
       stages:
         - name: 等待 AMD64 镜像打包完成
           type: cnb:await
