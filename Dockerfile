@@ -1,13 +1,17 @@
 # 打包镜像
 FROM node:18 as builder
+
+# 安装系统依赖
+RUN apt update && \
+    apt install libxml2-utils -y
+
 # 安装项目依赖
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN apt update && \
-    apt install libxml2-utils -y && \
-    yarn install
+# 安装前端项目依赖
+RUN yarn install
 
 # 复制应用代码
 COPY . .
