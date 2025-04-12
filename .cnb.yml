@@ -26,7 +26,6 @@ $:
   ifModify:
     - "**"
     - "!(.ide/**)"
-    - "!(.*)"
 main:
   push:
     - name: "构建 AMD64 架构镜像"
