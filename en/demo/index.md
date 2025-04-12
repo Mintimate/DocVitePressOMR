@@ -62,7 +62,7 @@ Oh-my-rime has already adapted and integrated, but by default, the following inp
 
 If you need to activate them, you can refer to: [Customize the default activation scheme](/en/guide/defaultActivationScheme.html)
 
-## Supported Features
+## Supported Features <Badge type="tip" text="^2025.04" />
 Currently supported features include:
 - Functionality
     - Supports light and dark theme styles, automatically switching based on the system theme on Windows (Windows 10 1809+) and macOS.
@@ -70,7 +70,7 @@ Currently supported features include:
     - Mixed Chinese-English input, e.g., inputting "DoraA Dream".
     - Supports Emoji and [Kaomoji](kaomoji.html).
     - Supports [multiple reverse lookup inputs](reverseWords.html): Pinyin supports character decomposition (Uu) reverse lookup input, Wubi (Uw) reverse lookup input, stroke (Ui) reverse lookup input; Wubi supports Pinyin (Up) reverse lookup input.   
-    - Supports quick input of [dates, days of the week, times, lunar dates, and Chinese numerals](funcKeys.html).
+    - Supports [quick input of dates, weekdays, times, lunar dates, uppercase RMB, and a simple calculator (actually Lua expression calculation)](funcKeys.html).
 - The dictionary of Pinyin benefits from using [Rime-ice Pinyin](https://github.com/iDvel/rime-ice)
     - The Table of General Standard Chinese Characters
     - Huayu Cloud Wind system dictionary

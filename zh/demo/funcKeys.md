@@ -16,6 +16,7 @@ aside: true
 - 日期打印
 - 大写人民币打印
 - 农历日期打印/转换
+- 简易计算器
 
 ## 时间打印
 在输入法内，只要输入关键词`time`，输入法会使用`Lua`脚本，自动根据当前的时间进行造句：
@@ -45,3 +46,20 @@ aside: true
 
 ![农历日期打印和转换](/image/demo/luaLunar.webp)
 
+## 简易计算器
+网友的呼声很高，所以在 [fca55ddff0](https://github.com/Mintimate/oh-my-rime/commit/fca55ddff09b88b0c022f9d883a22940659cf497)版本后，正式加入了简易计算器功能。
+
+> 实际上，这个功能我在 2024 年初就已经 PR 到上游代码 [baopaau/rime-lua-collection #3](https://github.com/baopaau/rime-lua-collection/pull/3) 了，但是因为一些原因，一直没有适配到薄荷内。
+
+如果你想调用计算器，那么只需要在输入法内输入`=`后输入计算等式即可：
+
+![简易计算器](/image/demo/luaCalculator.webp)
+
+当然，`=` 是可以修改为其他字母的，你可以覆写`recognizer/expression`配置项。
+
+如果你不想使用计算器，那么可以通过自定义配置进行关闭。举例，使用`double_pinyin_flypy.custom.yaml`文件，添加如下内容：
+```yaml
+patch:
+  # 关闭简易计算器
+  "recognizer/expression": ""
+```

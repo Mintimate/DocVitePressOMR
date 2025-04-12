@@ -63,7 +63,7 @@ GitHub仓库地址:
 
 如果需要开启，可以参考：[自定义默认激活方案](/zh/guide/defaultActivationScheme.html)
 
-## 支持的功能 <Badge type="tip" text="^2024.05" />
+## 支持的功能 <Badge type="tip" text="^2025.04" />
 目前支持的功能，主要是:
 - 功能方面
   - 支持亮色/暗色皮肤样式，在Windows（Windows 10 1809+ ）和macOS上，可以根据系统进行切换；
@@ -71,7 +71,7 @@ GitHub仓库地址:
   - 支持中英混合输入，如：输入: "哆啦A梦"；
   - 支持Emoji表情和[颜文字](kaomoji.html)；
   - 支持[多种反查输入](reverseWords.html): 拼音内支持拆字(Uu)反查输入、五笔(Uw)反查输入、笔画(Ui)反查输入；五笔内支持拼音(Up)反查输入；
-  - 支持[输入日期、星期、时间、农历日期和人民币大写快捷输入](funcKeys.html)。
+  - 支持[输入日期、星期、时间、农历日期、人民币大写快捷输入和简易计算器（实际是 Lua 表达式计算）](funcKeys.html)。
 - 拼音词库得益于使用[雾凇拼音](https://github.com/iDvel/rime-ice)
   - 《通用规范汉字表》
   - 华宇野风系统词库
