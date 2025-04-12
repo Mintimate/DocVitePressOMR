@@ -16,6 +16,7 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh \
 # libxml2-utils 为 Google WebP 工具包，可用于命令行 webp 处理(cwebp)
 RUN apt update && \
     apt install -y \
+    webp \
     wget \
     unzip \
     openssh-server \
