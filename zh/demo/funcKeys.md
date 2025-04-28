@@ -61,5 +61,5 @@ aside: true
 ```yaml
 patch:
   # 关闭简易计算器
-  "recognizer/expression": ""
+  "recognizer/patterns/expression": ""
 ```

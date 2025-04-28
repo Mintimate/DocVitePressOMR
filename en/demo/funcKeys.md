@@ -59,9 +59,8 @@ If you want to use the calculator, simply enter `=` followed by the calculation 
 
 Of course, `=` can be changed to other letters, and you can override the `recognizer/expression` configuration item.
 
-如果你不想使用计算器，那么可以通过自定义配置进行关闭。举例，使用`double_pinyin_flypy.custom.yaml`文件，添加如下内容：
 ```yaml
 patch:
-  # 关闭简易计算器
-  "recognizer/expression": ""
+  # Close the calculator function
+  "recognizer/patterns/expression": ""
 ```If you don't want to use the calculator, you can disable it through custom configuration. For example, using the `double_pinyin_flypy.custom.yaml` file, add the following content:
