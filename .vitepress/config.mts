@@ -94,7 +94,7 @@ export default withMermaid({
                 nav: [
                     {text: 'ChangeLog', link: '/en/changeLog/'},
                     {text: 'About', link: '/en/teamInfo'},
-                    {text: 'index', link: '/en/'},
+                    {text: 'Home', link: '/en/'},
                     {text: 'Demo', link: '/en/demo/'},
                     {text: 'Configuration', link: '/en/guide/'}
                 ],
