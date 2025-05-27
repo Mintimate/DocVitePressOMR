@@ -2,6 +2,7 @@
 <script setup>
 import DefaultTheme from 'vitepress/theme'
 import Wwads from "./components/wwads.vue";
+import Googleads from "./components/googleads.vue";
 import donate from "./components/donate.vue";
 
 const {Layout} = DefaultTheme
@@ -17,7 +18,7 @@ const {Layout} = DefaultTheme
 
     <template #aside-ads-before>
       <div class="supportMeCard" style="margin-bottom: 10px">
-        <wwads :horizontal="false"/>
+        <Googleads/>
       </div>
       <a href="https://afdian.com/a/mintimate" target="_blank" rel="noopener sponsored">
       <div class="supportMeCard">
