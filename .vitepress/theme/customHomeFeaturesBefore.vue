@@ -17,7 +17,7 @@ const {Layout} = DefaultTheme
     </template>
 
     <template #aside-ads-before>
-      <div class="supportMeCard" style="margin-bottom: 10px">
+      <div class="supportMeCard" style="margin: 10px 0; padding: 0;">
         <Googleads/>
       </div>
       <a href="https://afdian.com/a/mintimate" target="_blank" rel="noopener sponsored">
