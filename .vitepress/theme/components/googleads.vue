@@ -2,7 +2,7 @@
   <div class="google-adsense">
     <ins
       class="adsbygoogle"
-      style="display: block"
+      style="display:block; width:100%; min-width:300px"
       :data-ad-client="dataAdClient"
       :data-ad-slot="dataAdSlot"
       data-ad-format="auto"
@@ -26,12 +26,12 @@ const props = defineProps({
 })
 
 onMounted(() => {
-  // 初始化广告（延迟确保脚本加载完成）
+  // 确保DOM完全加载
   setTimeout(() => {
     try {
-      ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+      (window.adsbygoogle = window.adsbygoogle || []).push({})
     } catch (e) {
-      console.error('Google AdSense error:', e)
+      console.error('AdSense error:', e)
     }
   }, 500)
 })
