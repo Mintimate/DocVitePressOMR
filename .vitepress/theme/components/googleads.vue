@@ -2,11 +2,9 @@
   <div class="google-adsense">
     <ins
       class="adsbygoogle"
-      style="display:block; width:100%; min-width:300px"
+      style="display:inline-block;min-width:220px;height:150px"
       :data-ad-client="dataAdClient"
       :data-ad-slot="dataAdSlot"
-      data-ad-format="auto"
-      data-full-width-responsive="true"
     ></ins>
   </div>
 </template>
@@ -14,7 +12,7 @@
 <script setup>
 import { onMounted } from 'vue'
 
-const props = defineProps({
+defineProps({
   dataAdClient: {
     type: String,
     default: 'ca-pub-8322854923336162'
@@ -36,3 +34,6 @@ onMounted(() => {
   }, 500)
 })
 </script>
+
+<style scoped>
+</style>
