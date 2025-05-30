@@ -22,6 +22,13 @@ On macOS, install Squirrel to use Bopomofo or other input method configurations 
 
 ![Download Squirrel](/image/guide/downloadSquirrel.webp)
 
+::: info Notification
+
+If you cannot access GitHub, or the download speed is too slow; you can use the mirror download provided by Oh-my-rime (thanks to [CNB](https://cnb.cool) for computing power and storage support; automatically syncs with the latest Squirrel input method package):
+- [Squirrel Input Method Package (Mirrored from GitHub Release)](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Squirrel-latest.pkg)
+
+:::
+
 Then decompress and open it. You may get an error saying it can't be opened:
 ![Failed to open](/image/guide/macOS_FailOpen.webp)
 
@@ -89,6 +96,13 @@ To install Rime on Windows, use the Weasel input keyboard.
 On Windows, install Weasel to use Mint Pinyin or other configurations later. Go to the [Weasel repository](https://github.com/rime/weasel) and download the Weasel installer:
 
 ![Download Weasel](/image/guide/downloadWeasel.webp)
+
+::: info Notification
+
+If you cannot access GitHub, or the download speed is too slow; you can use the mirror download provided by Oh-my-rime (thanks to [CNB](https://cnb.cool) for computing power and storage support; automatically syncs with the latest Weasel input method package):
+- [Weasel Input Method Installer (Mirrored from GitHub Release)](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/weasel-installer-latest.exe)
+
+:::
 
 Then decompress and open it. Follow the prompts to install.
 

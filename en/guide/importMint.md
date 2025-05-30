@@ -19,9 +19,17 @@ Oh-My-Rime is an open-source project that uses the [GPL 3.0](https://github.com/
 Let's go to the project page of Oh-My-Rime:
 
 - [Oh-My-Rime GitHub Repository: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
+- [Oh-My-Rime CNB Repository: https://cnb.cool/Mintimate/rime/oh-my-rime](https://cnb.cool/Mintimate/rime/oh-my-rime)
 
 Download Oh-My-Rime to your local machine:
 ![Download Oh-My-Rime](/image/guide/downloadMintPinyin.webp)
+
+::: info Notification
+
+If you're unsure which file to download on GitHub, or the download speed is too slow; you can use the mirror download provided by Oh-my-rime (thanks to [CNB](https://cnb.cool) for computing power and storage support; automatically packaged Mintimate configuration):
+- [Oh-my-Rime Configuration Package （CNB Mirror）](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/oh-my-rime.zip)
+
+:::
 
 After extracting the downloaded file, the internal files should look like this:
 ![Internal files after extraction](/image/guide/unzipMintPinyin.webp)

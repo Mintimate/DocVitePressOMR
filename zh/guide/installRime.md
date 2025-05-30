@@ -22,6 +22,13 @@ aside: true
 
 ![下载鼠须管](/image/guide/downloadSquirrel.webp)
 
+::: info 提示信息
+
+如果你无法访问 GitHub，或者下载过慢；那么可以使用薄荷提供的镜像下载（感谢 [CNB](https://cnb.cool) 提供的算力和存储支持；自动同步最新版本鼠须管安装包）: 
+- [鼠须管安装包（镜像自 GitHub Release）](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Squirrel-latest.pkg)
+
+:::
+
 之后，我们解压并打开；可能会无法打开：
 ![无法打开](/image/guide/macOS_FailOpen.webp)
 
@@ -88,6 +95,13 @@ Windows上安装rime，可以使用小狼毫输入法。
 在Windows上安装小狼毫以便后续使用薄荷拼音或者其他输入法配置。进入[小狼毫的仓库地址](https://github.com/rime/weasel)，我们下载小狼毫安装包：
 
 ![下载小狼毫](/image/guide/downloadWeasel.webp)
+
+::: info 提示信息
+
+如果你无法访问 GitHub，或者下载过慢；那么可以使用薄荷提供的镜像下载（感谢 [CNB](https://cnb.cool) 提供的算力和存储支持；自动同步最新版本小狼毫安装包）: 
+- [小狼毫安装包（镜像自 GitHub Release）](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/weasel-installer-latest.exe)
+
+:::
 
 之后，我们解压并打开，按着提示安装即可。
 

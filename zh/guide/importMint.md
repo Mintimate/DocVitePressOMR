@@ -15,10 +15,18 @@
 薄荷输入配置是使用[GPL 3.0](https://github.com/Mintimate/oh-my-rime/blob/main/LICENSE)的开源项目，这意味着你可以看到它的一切源代码，并且自己定制和更改，但是请遵守开源协议，不得用于商用。
 
 我们进入薄荷输入法（rime配置）的项目地址: 
-- [薄荷输入配置Github地址: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
+- [薄荷输入配置 Github 地址: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
+- [薄荷输入配置 CNB 地址: https://cnb.cool/Mintimate/rime/oh-my-rime](https://cnb.cool/Mintimate/rime/oh-my-rime)
 
 下载薄荷到本地：
 ![下载薄荷输入配置到本地](/image/guide/downloadMintPinyin.webp)
+
+::: info 提示信息
+
+如果你在 GitHub 上不知道下载那一个，或者下载过慢；那么可以使用薄荷提供的镜像下载（感谢 [CNB](https://cnb.cool) 提供的算力和存储支持；自动打包薄荷方案）
+- [薄荷方案打包下载（ CNB 镜像）](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/oh-my-rime.zip)
+
+:::
 
 解压后，内部文件应该是这样的：
 ![解压后的内部文件](/image/guide/unzipMintPinyin.webp)
