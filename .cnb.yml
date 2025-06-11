@@ -20,28 +20,26 @@ $:
         # 环境启动后需要执行的命令
         - name: 安装依赖
           script: yarn
-  push:
-      - name: "推送镜像"
-        imports:
-          - https://cnb.cool/Mintimate/secret/-/blob/main/SyncToGitHub.yml
-        stages:
-          - name: 自动同步代码
-            image: tencentcom/git-sync
-            settings:
-              target_url: https://github.com/Mintimate/DocVitePressOMR.git
-              auth_type: https
-              username: ${GIT_USERNAME}
-              password: ${GIT_ACCESS_TOKEN}
-              branch: main
-              force: true
-
-# WebIDE 修改不出发流水线
+# WebIDE 修改不触发发流水线
 .skip_project: &skip_project
   ifModify:
     - "**"
     - "!(.ide/**)"
 main:
   push:
+    - name: "推送镜像"
+      imports:
+        - https://cnb.cool/Mintimate/secret/-/blob/main/SyncToGitHub.yml
+      stages:
+        - name: 自动同步代码
+          image: tencentcom/git-sync
+          settings:
+            target_url: https://github.com/Mintimate/DocVitePressOMR.git
+            auth_type: https
+            username: ${GIT_USERNAME}
+            password: ${GIT_ACCESS_TOKEN}
+            branch: main
+            force: true
     - name: "构建 AMD64 架构镜像"
       runner:
         tags: cnb:arch:amd64
