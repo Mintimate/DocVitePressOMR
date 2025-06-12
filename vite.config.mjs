@@ -11,7 +11,7 @@ export default defineConfig({
       targets: [
         {
           src: '.vitepress/theme/components/resources/fcitx5Online/Fcitx5.wasm',
-          dest: 'chunks'
+          dest: 'assets/chunks'
         }
       ]
     })
