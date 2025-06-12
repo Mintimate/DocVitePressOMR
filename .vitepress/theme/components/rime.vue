@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue'
 
 const loading = ref(true)
-const progress = ref(0)
 const error = ref(null)
 
 onMounted(async () => {
@@ -10,10 +9,8 @@ onMounted(async () => {
     // 动态导入模块
     const { loadZip } = await import('./resources/fcitx5Online/Fcitx5.js')
     
-    // 添加进度回调
-    await loadZip('/resources/fcitx5Online/rime-mint.zip', (loaded, total) => {
-      progress.value = Math.round((loaded / total) * 100)
-    })
+    // 加载zip文件,不再显示进度
+    await loadZip('/resources/fcitx5Online/rime-mint.zip')
     
     loading.value = false
   } catch (err) {
@@ -28,10 +25,8 @@ onMounted(async () => {
     <!-- 加载状态显示 -->
     <div v-if="loading" class="loading-overlay">
       <div class="loading-content">
-        <div class="progress-container">
-          <div class="progress-bar" :style="{ width: `${progress}%` }"></div>
-        </div>
-        <p>正在加载输入法引擎 ({{ progress }}%)...</p>
+        <div class="loading-spinner"></div>
+        <p>正在加载输入法引擎...</p>
         <p class="hint">加载完成后即可开始输入</p>
       </div>
     </div>
@@ -49,6 +44,7 @@ onMounted(async () => {
     ></textarea>
   </div>
 </template>
+
 <style scoped>
 .rime-container {
   position: relative;
@@ -77,19 +73,19 @@ onMounted(async () => {
   color: var(--vp-c-text-1);
 }
 
-.progress-container {
-  width: 100%;
-  height: 8px;
-  background-color: var(--vp-c-default-soft);
-  border-radius: 4px;
-  margin: 1rem 0;
-  overflow: hidden;
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 1rem;
+  border: 3px solid var(--vp-c-brand-soft);
+  border-top: 3px solid var(--vp-c-brand);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-.progress-bar {
-  height: 100%;
-  background-color: var(--vp-c-brand);
-  transition: width 0.3s ease;
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .hint {
