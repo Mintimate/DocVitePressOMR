@@ -10,7 +10,12 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: '.vitepress/theme/components/resources/fcitx5Online/Fcitx5.wasm',
+          src: [
+            '.vitepress/theme/components/resources/fcitx5Online/Fcitx5.wasm',
+            '.vitepress/theme/components/resources/fcitx5Online/libFcitx5Config.so',
+            '.vitepress/theme/components/resources/fcitx5Online/libFcitx5Core.so',
+            '.vitepress/theme/components/resources/fcitx5Online/libFcitx5Utils.so'
+          ],
           dest: 'assets/chunks'
         }
       ]
