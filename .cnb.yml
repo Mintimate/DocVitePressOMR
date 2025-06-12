@@ -40,167 +40,21 @@ main:
             password: ${GIT_ACCESS_TOKEN}
             branch: main
             force: true
-    - name: "构建 AMD64 架构镜像"
-      runner:
-        tags: cnb:arch:amd64
+    - name: "构建产物"
       docker:        
-        image: node:18
+        image: node:22
         volumes:
           - /root/.npm:copy-on-write
           - node_modules:copy-on-write
-      services:
-        - docker
-      env:
-        IMAGE_TAG: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest-linux-amd64
-        IMAGE_TAG_CURRENT: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:${CNB_COMMIT_SHORT}-linux-amd64
-      <<: *skip_project
       stages:
-        - name: docker login
-          script:
-            - docker login -u ${CNB_TOKEN_USER_NAME} -p "${CNB_TOKEN}" ${CNB_DOCKER_REGISTRY}
-        - name: docker build
-          script:
-            - docker build -t ${IMAGE_TAG_CURRENT} -t ${IMAGE_TAG} .
-        - name: docker push
-          script:
-            - docker push ${IMAGE_TAG_CURRENT}
-            - docker push ${IMAGE_TAG}
-        - name: resolve
-          type: cnb:resolve
-          options:
-            key: build-ci-amd64
-    - name: "构建 ARM64 架构镜像"
-      runner:
-        tags: cnb:arch:arm64:v8
-      docker:        
-        image: node:18
-        volumes:
-          - /root/.npm:copy-on-write
-          - node_modules:copy-on-write
-      services:
-        - docker
-      env:
-        IMAGE_TAG: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest-linux-arm64
-        IMAGE_TAG_CURRENT: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:${CNB_COMMIT_SHORT}-linux-arm64
-      <<: *skip_project
-      stages:
-        - name: docker login
-          script:
-            - docker login -u ${CNB_TOKEN_USER_NAME} -p "${CNB_TOKEN}" ${CNB_DOCKER_REGISTRY}
-        - name: docker build
-          script:
-            - docker build -t ${IMAGE_TAG_CURRENT} -t ${IMAGE_TAG} .
-        - name: docker push
-          script:
-            - docker push ${IMAGE_TAG_CURRENT}
-            - docker push ${IMAGE_TAG}
-        - name: resolve
-          type: cnb:resolve
-          options:
-            key: build-ci-arm64
-    - name: "聚合容器镜像标签并部署"
-      services:
-        - docker
-      imports: 
-        - https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml
-      env:
-        IMAGE_TAG: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:latest
-        IMAGE_TAG_CURRENT: ${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}:${CNB_COMMIT_SHORT}
-      <<: *skip_project
-      stages:
-        - name: 等待 AMD64 镜像打包完成
-          type: cnb:await
-          options:
-            key: build-ci-amd64
-        - name: 等待 ARM64 镜像打包完成
-          type: cnb:await
-          options:
-            key: build-ci-arm64
-        - name: 聚合最新标签
-          image: cnbcool/manifest
-          settings:
-            target: ${IMAGE_TAG}
-            template: ${IMAGE_TAG}-OS-ARCH
-            platforms:
-              - linux/amd64
-              - linux/arm64
-        - name: 聚合本次分支标签
-          image: cnbcool/manifest
-          settings:
-            target: ${IMAGE_TAG_CURRENT}
-            template: ${IMAGE_TAG_CURRENT}-OS-ARCH
-            platforms:
-              - linux/amd64
-              - linux/arm64        
-        - name: 删除临时标签
-          type: artifact:remove-tag
-          options:
-            name: ${CNB_REPO_NAME}
-            tags:
-              - ${CNB_COMMIT_SHORT}-linux-amd64
-              - ${CNB_COMMIT_SHORT}-linux-arm64
-              - latest-linux-amd64
-              - latest-linux-arm64
-            type: docker
-        - name: 通过 SSH 命令远程更新
-          image: tencentcom/ssh
-          settings:
-            host:
-              - ${REMOTE_HOST}
-            username: ${SERVER_USERNAME}
-            key: |
-              -----BEGIN OPENSSH PRIVATE KEY-----
-              ${SERVER_KEY}
-              -----END OPENSSH PRIVATE KEY-----
-            port: ${SERVER_PORT}
-            command_timeout: 2m
-            script: |
-              cd ${REMOTE_PATH}
-              docker compose pull
-              docker compose up -d
-              echo done
-        - name: resolve
-          type: cnb:resolve
-          options:
-            key: build-ci
-    - name: "刷新腾讯云EO缓存"
-      imports: 
-        - https://cnb.cool/Mintimate/secret/-/blob/main/TencentEOFresh.yaml
-        - https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml
-      <<: *skip_project
-      stages:
-        - name: 等待 AMD64 镜像打包完成
-          type: cnb:await
-          options:
-            key: build-ci-amd64
-        - name: 等待 ARM64 镜像打包完成
-          type: cnb:await
-          options:
-            key: build-ci-arm64
-        - name: 等待部署完成
-          type: cnb:await
-          options:
-            key: build-ci
-        - name: 打包获取 Sitemap
-          image: node:18
-          script: |
-            yarn
-            yarn run build
-        - name: 刷新 EO 缓存
-          image: docker.cnb.cool/mintimate/tool-forge/ask-eo
-          settings:
-            secret_id: ${SECRET_ID}
-            secret_key: ${SECRET_KEY}
-            zone_id: ${ZONE_ID_NO1}
-            domain: ${DOMAIN_NO1}
-            run_mode: "sitemap"
-            fresh_mode: "cache"
-            sleep_time: 0.8
-            once_batch: 5
-            sitemap_path: ".vitepress/dist/sitemap.xml"
-        - name: 调用企微提醒部署成功
-          image: docker.cnb.cool/mintimate/tool-forge/wecom-bot-push
-          script: |
-            echo "COMMIT 事件:\ ${CNB_COMMIT}"
-            python3 /app/main.py -s ${WECHAT_COM} -m "时间:\ $(date +%Y-%m-%d)\n构建SHA:\ ${CNB_COMMIT}\n\n博客构建、推送部署成功\n(●'◡'●)ﾉ♥"
-            echo "消息推送完成(●'◡'●)ﾉ♥！" 
+        - name: 安装依赖
+          script: yarn
+        - name: 构建产物
+          script: yarn build
+        - name: "部署流程"
+          imports:
+            - https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml
+          image: tencentcom/deploy-eopages:latest
+          script: 
+            - cd .vitepress
+            - edgeone pages deploy ./dist -n oh-my-rime -t $EO_SECRET
