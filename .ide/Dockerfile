@@ -1,5 +1,5 @@
 # .ide/Dockerfile
-FROM node:18
+FROM node:22
 
 # 以及按需安装其他软件
 # RUN apt-get update && apt-get install -y git
