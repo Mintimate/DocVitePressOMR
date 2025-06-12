@@ -1,5 +1,5 @@
 # 打包镜像
-FROM node:18 as builder
+FROM node:22 as builder
 
 # 安装系统依赖
 RUN apt update && \
