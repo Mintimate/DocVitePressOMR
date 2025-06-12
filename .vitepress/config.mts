@@ -107,6 +107,7 @@ export default withMermaid({
                         text: 'Demo',
                         items: [
                             {text: 'Overview', link: '/en/demo/'},
+                            {text: 'Online Experience', link: '/en/demo/fcitx5Online'},
                             {text: 'Rime-Ice and Oh-my-rime', link: '/en/demo/diffBetweenIceAndMint'},
                             {text: 'Appearance', link: '/en/demo/diffAppearance'},
                             {text: 'Reverse Lookup', link: '/en/demo/reverseWords'},

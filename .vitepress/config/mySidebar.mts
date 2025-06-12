@@ -25,6 +25,7 @@ export const locales_cn = {
             text: '效果演示',
             items: [
                 {text: '梗概', link: '/zh/demo/'},
+                {text: '在线体验', link: '/zh/demo/fcitx5Online'},
                 {text: '雾凇和薄荷', link: '/zh/demo/diffBetweenIceAndMint'},
                 {text: '外观展示', link: '/zh/demo/diffAppearance'},
                 {text: '反查模块', link: '/zh/demo/reverseWords'},
