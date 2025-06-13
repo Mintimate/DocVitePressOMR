@@ -27,6 +27,8 @@ aside: true
 - `=` 开始进行计算器。
 
 ## 特别鸣谢
-感谢 [CNB](https://cnb.cool) 提供的薄荷核心打包文件的存储和计算资源。
+感谢
+- [EdgeOne Page](https://cnb.cool) 提供的静态托管和 CDN 服务。
+- [CNB](https://cnb.cool) 提供的流水线构建和算力支持。
 
-会写代码，就会 CNB ~
+在线 Rime 输入体验，代码来源: [Github: rimeinn/fcitx5-rime.js](https://github.com/rimeinn/fcitx5-rime.js)

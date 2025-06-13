@@ -26,7 +26,8 @@ After the webpage is loaded, switch your local input method to English (ABC), th
 - `date`, `time` and `lunar` for date, time and lunar calendar.
 - `=` to start calculator.
 
-## Acknowledgements
-Thanks to [CNB](https://cnb.cool) for providing storage and computing resources for Mintimate core package files.
+## Acknowledgements  
+- [EdgeOne Page](https://cnb.cool) for providing static hosting and CDN services.  
+- [CNB](https://cnb.cool) for offering pipeline builds and computational support.  
 
-Can code, can CNB ~
+Online Rime input experience, source code: [Github: rimeinn/fcitx5-rime.js](https://github.com/rimeinn/fcitx5-rime.js)  
