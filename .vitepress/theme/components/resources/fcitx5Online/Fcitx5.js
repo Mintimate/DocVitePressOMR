@@ -1959,18 +1959,16 @@ export {
   fcitxReady
 };
 
-export async function loadZip(url) {
-  const [_, schema] = await Promise.all([
-    fcitxReady,
-    fetch(url).then(res => {
-      if (!res.ok) {
-        throw new Error(`Get ${url} error`);
-      }
-      return res.arrayBuffer()
-    })
-  ])
-  // librime-qjs expects js in user dir.
-  window.fcitx.unzip(schema, '/home/web_user/.local/share/fcitx5/rime')
+export async function loadZip(file) {
+  await fcitxReady
+  
+  const arrayBuffer = await new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = reject
+    reader.readAsArrayBuffer(file)
+  })
+  window.fcitx.unzip(arrayBuffer, '/home/web_user/.local/share/fcitx5/rime')
   window.fcitx.enable()
   window.fcitx.setInputMethods(['rime'])
 }

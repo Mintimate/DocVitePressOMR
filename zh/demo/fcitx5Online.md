@@ -14,7 +14,8 @@ aside: true
 
 ::: warning 警告
 
-- 在线加载的词库并不完全，**约占 3% 左右**。完整的词库，请下载 [oh-my-rime](https://github.com/Mintimate/oh-my-rime) 项目。
+- 请先下载预构建包(薄荷输入法方案): [rime-mint.zip](https://cnb.cool/Mintimate/rime/DocVitePressOMR/-/releases/download/1.0.0/rime-mint.zip)
+- 如果**加载错误的 zip，请刷新页面后重新加载 zip**。
 
 :::
 

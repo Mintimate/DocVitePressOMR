@@ -1,27 +1,94 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
-const loading = ref(true)
+const loading = ref(false)
 const error = ref(null)
+const fileInput = ref(null)
+const uploadSuccess = ref(false)
+const isInputEnabled = ref(false)
+const isDragging = ref(false) // 新增：拖拽状态
 
-onMounted(async () => {
+async function handleFile(file) {
+  if (!file) return
+  
+  // 检查文件类型是否为zip
+  if (!file.name.endsWith('.zip')) {
+    error.value = '请上传ZIP格式的文件'
+    isInputEnabled.value = false
+    return
+  }
+
+  loading.value = true
+  error.value = null
+  uploadSuccess.value = false
+  isInputEnabled.value = false
+
   try {
-    // 动态导入模块
+    console.log('Loading Rime input:', file)
     const { loadZip } = await import('./resources/fcitx5Online/Fcitx5.js')
-    
-    // 加载zip文件,不再显示进度
-    await loadZip('/resources/fcitx5Online/rime-mint.zip')
-    
+    await loadZip(file)
     loading.value = false
+    uploadSuccess.value = true
+    isInputEnabled.value = true
+    setTimeout(() => { uploadSuccess.value = false }, 3000) // Hide success message after 3 seconds
   } catch (err) {
     error.value = '输入法加载失败: ' + err.message
     console.error('Failed to load Rime input:', err)
+    loading.value = false
+    isInputEnabled.value = false
   }
-})
+}
+
+async function handleFileUpload(event) {
+  const file = event.target.files[0]
+  await handleFile(file)
+}
+
+function triggerFileInput() {
+  fileInput.value.click()
+}
+
+// 新增：拖拽相关事件处理
+function handleDragOver(e) {
+  e.preventDefault()
+  isDragging.value = true
+}
+
+function handleDragLeave() {
+  isDragging.value = false
+}
+
+async function handleDrop(e) {
+  e.preventDefault()
+  isDragging.value = false
+  
+  const file = e.dataTransfer.files[0]
+  await handleFile(file)
+}
 </script>
 
 <template>
   <div class="rime-container">
+    <!-- 文件上传区域 -->
+    <div 
+      class="upload-area" 
+      @click="triggerFileInput"
+      @dragover="handleDragOver"
+      @dragleave="handleDragLeave"
+      @drop="handleDrop"
+      :class="{ 'dragging': isDragging }"
+    >
+      <input 
+        ref="fileInput"
+        type="file" 
+        accept=".zip" 
+        @change="handleFileUpload"
+        style="display: none"
+      />
+      <p>点击上传或拖放Rime输入法方案ZIP文件</p>
+      <p class="hint">请上传包含输入法方案的ZIP压缩包</p>
+    </div>
+    
     <!-- 加载状态显示 -->
     <div v-if="loading" class="loading-overlay">
       <div class="loading-content">
@@ -31,56 +98,108 @@ onMounted(async () => {
       </div>
     </div>
     
+    <!-- 成功提示 -->
+     <div v-if="uploadSuccess" class="tip custom-block">
+      <p class="custom-block-title">TIP</p>
+      <div>
+        <p> ZIP 加载完成，可以在下方尝试输入</p>
+      </div>
+    </div>
+    
     <!-- 错误提示 -->
-    <div v-if="error" class="error-message">
-      {{ error }}
+    <div v-if="error" class="danger custom-block">
+      <p class="custom-block-title">Error</p>
+      <div>
+        <p>{{ error }}</p>
+      </div>
     </div>
     
     <!-- 输入区域 -->
     <textarea 
       class="rime-input" 
-      :disabled="loading"
-      placeholder="输入法加载完成后即可开始输入"
+      :disabled="!isInputEnabled"
+      placeholder="请先上传并加载输入法方案"
     ></textarea>
   </div>
 </template>
 
 <style scoped>
 .rime-container {
-  position: relative;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1rem;
+  padding: 20px 0 0 0;
+}
+
+.tip.custom-block {
+  padding: 8px 16px;
+  background-color: var(--vp-custom-block-tip-bg);
+  border-radius: 8px;
+  border-left: 4px solid var(--vp-c-brand);
   margin: 1rem 0;
 }
 
+.custom-block-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--vp-c-brand);
+}
+
+.title.vp-doc {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  color: var(--vp-c-brand);
+  text-decoration: underline;
+}
+
+.upload-area {
+  padding: 1.5rem;
+  border: 2px dashed var(--vp-c-divider);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.upload-area:hover, .upload-area.dragging {
+  border-color: var(--vp-c-brand);
+  background-color: var(--vp-c-bg-soft);
+}
+
+.upload-area p {
+  margin: 0;
+  color: var(--vp-c-text-1);
+}
+
+.upload-area .hint {
+  color: var(--vp-c-text-2);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
 .loading-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(var(--vp-c-bg), 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
-  border-radius: 8px;
-  backdrop-filter: blur(2px);
+  padding: 1rem;
 }
 
 .loading-content {
   text-align: center;
-  max-width: 80%;
-  color: var(--vp-c-text-1);
 }
 
 .loading-spinner {
-  width: 40px;
-  height: 40px;
-  margin: 0 auto 1rem;
-  border: 3px solid var(--vp-c-brand-soft);
+  border: 3px solid var(--vp-c-bg-soft);
   border-top: 3px solid var(--vp-c-brand);
   border-radius: 50%;
+  width: 24px;
+  height: 24px;
   animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
 }
 
 @keyframes spin {
@@ -88,48 +207,27 @@ onMounted(async () => {
   100% { transform: rotate(360deg); }
 }
 
-.hint {
-  color: var(--vp-c-text-2);
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
-  opacity: 0.8;
-}
-
-.error-message {
-  color: var(--vp-c-danger-1);
-  padding: 0.75rem 1rem;
-  background-color: var(--vp-c-danger-soft);
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  font-size: 0.875rem;
-}
-
 .rime-input {
   width: 100%;
-  min-height: 120px;
-  padding: 0.75rem 1rem;
+  height: 100%;
+  min-height: 200px;
+  padding: 1rem;
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
-  background-color: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
-  font-size: 0.9375rem;
-  line-height: 1.5;
-  transition: border-color 0.25s, background-color 0.25s;
-}
-
-.rime-input:disabled {
-  background-color: var(--vp-c-bg-alt);
-  cursor: not-allowed;
+  resize: none;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.25s;
+  flex-grow: 1;
 }
 
 .rime-input:focus {
   outline: none;
   border-color: var(--vp-c-brand);
-  box-shadow: 0 0 0 2px var(--vp-c-brand-soft);
 }
 
-.rime-input::placeholder {
-  color: var(--vp-c-text-3);
-  opacity: 0.6;
+.rime-input:disabled {
+  background-color: var(--vp-c-bg-soft);
+  cursor: not-allowed;
 }
 </style>

@@ -14,7 +14,8 @@ aside: true
 
 ::: warning Warning
 
-- The online dictionary is incomplete, **about 3% only**. For the complete dictionary, please download [oh-my-rime](https://github.com/Mintimate/oh-my-rime) project.
+- Please download the pre-built package (Oh-my-rime scheme): [rime-mint.zip](https://cnb.cool/Mintimate/rime/DocVitePressOMR/-/releases/download/1.0.0/rime-mint.zip)
+- If **the zip is loaded incorrectly, please refresh the page and then reload the zip**.
 
 :::
 
