@@ -1960,15 +1960,34 @@ export {
 };
 
 export async function loadZip(file) {
-  await fcitxReady
+  await fcitxReady;
+
+  let arrayBuffer;
   
-  const arrayBuffer = await new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = reject
-    reader.readAsArrayBuffer(file)
-  })
-  window.fcitx.unzip(arrayBuffer, '/home/web_user/.local/share/fcitx5/rime')
-  window.fcitx.enable()
-  window.fcitx.setInputMethods(['rime'])
+  if (file instanceof File || file instanceof Blob) {
+    arrayBuffer = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsArrayBuffer(file);
+    });
+  } else if (typeof file === 'string') {
+    try {
+
+      const response = await fetch(file);
+      if (!response.ok) {
+        throw new Error(`Get ${url} error`);
+      }
+      arrayBuffer = await response.arrayBuffer();
+    } catch (error) {
+      console.error('Failed to fetch zip file:', error);
+      throw error;
+    }
+  } else {
+    throw new Error('Invalid input: expected File object or URL string');
+  }
+
+  window.fcitx.unzip(arrayBuffer, '/home/web_user/.local/share/fcitx5/rime');
+  window.fcitx.enable();
+  window.fcitx.setInputMethods(['rime']);
 }
