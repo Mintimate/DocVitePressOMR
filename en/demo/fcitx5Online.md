@@ -10,7 +10,7 @@ aside: true
 ---
 
 # Online Demo
-<rime/>
+<rime lang="en"/>
 
 ::: warning Warning
 

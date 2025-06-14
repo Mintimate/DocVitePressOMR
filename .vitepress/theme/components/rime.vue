@@ -1,6 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 
+const props = defineProps({
+  lang: {
+    type: String,
+    default: 'zh'
+  }
+})
+
 const loading = ref(false)
 const error = ref(null)
 const fileInput = ref(null)
@@ -85,8 +92,8 @@ async function handleDrop(e) {
         @change="handleFileUpload"
         style="display: none"
       />
-      <p>点击上传或拖放Rime输入法方案ZIP文件</p>
-      <p class="hint">请上传包含输入法方案的ZIP压缩包</p>
+      <p v-text="lang === 'zh' ? '点击上传或拖放Rime输入法方案ZIP文件' : 'Click to upload or drag and drop Rime input ZIP file'"></p>
+      <p class="hint" v-text="lang === 'zh' ? '请上传包含输入法方案的ZIP压缩包' : 'Please upload a ZIP file containing the input method package'"></p>
     </div>
     
     <!-- 加载状态显示 -->
@@ -94,7 +101,7 @@ async function handleDrop(e) {
       <div class="loading-content">
         <div class="loading-spinner"></div>
         <p>正在加载输入法引擎...</p>
-        <p class="hint">加载完成后即可开始输入</p>
+        <p class="hint" v-text="lang === 'zh' ? '加载完成后即可开始输入' : 'After loading is complete, you can start typing'"></p>
       </div>
     </div>
     
@@ -102,7 +109,7 @@ async function handleDrop(e) {
      <div v-if="uploadSuccess" class="tip custom-block">
       <p class="custom-block-title">TIP</p>
       <div>
-        <p> ZIP 加载完成，可以在下方尝试输入</p>
+        <p v-text="lang === 'zh' ?'ZIP 加载完成，可以在下方尝试输入' : 'ZIP loaded, you can try typing below'"></p>
       </div>
     </div>
     
@@ -118,7 +125,7 @@ async function handleDrop(e) {
     <textarea 
       class="rime-input" 
       :disabled="!isInputEnabled"
-      placeholder="请先上传并加载输入法方案"
+      :placeholder="lang === 'zh' ? '请先上传并加载输入法方案' : 'Please upload and load the input method package first'"
     ></textarea>
   </div>
 </template>
