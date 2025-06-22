@@ -315,3 +315,21 @@ import_tables:
   - dicts/yourCustomDict         # 你的自定义词典
 ...
 ```
+
+## 举例: 拼音串最大长度
+
+如果你使用薄荷方案，会发现输入的拼应串长度有限制。
+
+举个例子，输入`geguoyougeguodeguogegediyougedidefangyan(各国有各国的国歌各地有个地的方言)`，当你在输入 25 个字符的时候，会自动截断。主要是**为了防止输入的拼音串过长，导致输入法卡顿**。薄荷方案使用 Lua 控制最大长度是 25 个字符。
+
+目前，可以通过`patch`进行修改，将`codeLengthLimit_processor`改为你想要的长度。
+
+举个例子，我们修改`薄荷拼音-全拼输入`的最大长度为 100，那么就追加或新建`rime_mint.custom.yaml`，添加`codeLengthLimit_processor`配置内容：
+
+```yaml
+patch:
+    # 设置「薄荷拼音-全拼输入」的拼音串最大长度为 100
+    codeLengthLimit_processor: 100
+```
+
+重新部署后，你的输入法就可以输入更长的拼音串了。

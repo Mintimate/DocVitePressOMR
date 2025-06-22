@@ -314,3 +314,21 @@ import_tables:
   - dicts/yourCustomDict         # Your custom dictionary
 ...
 ```
+
+## Example: Maximum Pinyin String Length
+
+If you use the Oh-my-rime, you'll notice that there's a limit to the length of the input Pinyin string.  
+
+For example, when typing `geguoyougeguodeguogegediyougedidefangyan(各国有各国的国歌各地有个地的方言)`, the input will be automatically truncated after 25 characters. This is primarily **to prevent excessively long Pinyin strings from causing input method lag**. The Oh-my-rime uses Lua to enforce a maximum length of 25 characters.  
+
+Currently, you can modify this limit via `patch` by changing `codeLengthLimit_processor` to your desired length.  
+
+For example, to set the maximum length for "Mint Pinyin - Full Pinyin Input" to 100, append or create a `rime_mint.custom.yaml` file and add the following configuration for `codeLengthLimit_processor`:  
+
+```yaml
+patch:
+    # Set the maximum Pinyin string length for "Mint Pinyin - Full Pinyin Input" to 100
+    codeLengthLimit_processor: 100
+```
+
+After redeploying, your input method will support longer Pinyin strings.
