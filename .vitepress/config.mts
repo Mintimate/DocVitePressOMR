@@ -144,7 +144,7 @@ export default withMermaid({
             message: '<a href="https://www.mintimate.cn" target="_blank">Powered by creativity and powered by Mintimate</a>',
             copyright: '<a href="https://beian.miit.gov.cn" target="_blank">闽ICP备2021000722号-3</a> | ' +
                 '          <a href="http://www.beian.gov.cn" target="_blank">闽公网安备 35021102001843号</a> <br/>' +
-                '友情链接♥️: <a href="http://www.mintimate.cn" target="_blank">Mintimate\'s Blog</a>'
+                '本项目 CDN 加速及安全防护由 <a href="https://edgeone.ai/zh?from=github" target="_blank">Tencent EdgeOne</a> 赞助'
         },
         search: {
             provider: 'local',
