@@ -22,7 +22,7 @@ aside: true
 
 ![下载鼠须管](/image/guide/downloadSquirrel.webp)
 
-::: info 提示信息
+::: info 镜像加速信息
 
 如果你无法访问 GitHub，或者下载过慢；那么可以使用薄荷提供的镜像下载（感谢 [CNB](https://cnb.cool) 提供的算力和存储支持；自动同步最新版本鼠须管安装包）: 
 - [鼠须管安装包（镜像自 GitHub Release）](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Squirrel-latest.pkg)
@@ -51,11 +51,22 @@ aside: true
 没错，原本只能在Linux上使用的Fcitx5，现在也可以在macOS上使用了：
 - [Fcitx5 macOS 小企鹅输入法](https://fcitx-contrib.github.io/)
 
-
 #### 安装Fcitx5
 安装方法也很简单，在官网下载[中州韵版 Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/releases/download/latest/Fcitx5-Rime.zip)，解压后，得到安装包：
 
 ![下载并解压，得到安装包](/image/guide/unzipFcitxMacOS.webp)
+
+::: info 镜像加速信息
+
+如果你无法访问 GitHub，或者下载过慢；那么可以使用薄荷提供的镜像下载（感谢 [CNB](https://cnb.cool) 提供的算力和存储支持；自动同步最新版本 Fcitx5 For macOS(中州韵) 安装包）: 
+- [Fcitx5-Rime 安装包（镜像自 GitHub Release）](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Fcitx5-Rime.zip)
+
+同时，支持 Terminal 终端一键安装:
+```bash
+cd /tmp && rm -rf Fcitx5Installer.app && curl -LO https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Fcitx5-Rime.zip && unzip Fcitx5-Rime.zip && open Fcitx5Installer.app
+```
+
+:::
 
 这个时候，和鼠须管一样，双击是无法打开的：
 ![双击无法打开](/image/guide/warningFcitx5MacOS.webp)
@@ -96,7 +107,7 @@ Windows上安装rime，可以使用小狼毫输入法。
 
 ![下载小狼毫](/image/guide/downloadWeasel.webp)
 
-::: info 提示信息
+::: info 镜像加速信息
 
 如果你无法访问 GitHub，或者下载过慢；那么可以使用薄荷提供的镜像下载（感谢 [CNB](https://cnb.cool) 提供的算力和存储支持；自动同步最新版本小狼毫安装包）: 
 - [小狼毫安装包（镜像自 GitHub Release）](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/weasel-installer-latest.exe)

@@ -22,7 +22,7 @@ On macOS, install Squirrel to use Bopomofo or other input method configurations 
 
 ![Download Squirrel](/image/guide/downloadSquirrel.webp)
 
-::: info Notification
+::: info Mirror Acceleration Information
 
 If you cannot access GitHub, or the download speed is too slow; you can use the mirror download provided by Oh-my-rime (thanks to [CNB](https://cnb.cool) for computing power and storage support; automatically syncs with the latest Squirrel input method package):
 - [Squirrel Input Method Package (Mirrored from GitHub Release)](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Squirrel-latest.pkg)
@@ -56,6 +56,18 @@ Indeed, Fcitx5, originally only available on Linux, can now be used on macOS as 
 The installation process is straightforward. Download the [Rime version of Fcitx5 macOS](https://github.com/fcitx-contrib/fcitx5-macos-installer/releases/download/latest/Fcitx5-Rime.zip) from the official website, unzip it, and you will get the installer package:
 
 ![Download and unzip to get the installer package](/image/guide/unzipFcitxMacOS.webp)
+
+::: info Mirror Acceleration Information
+
+If you cannot access GitHub, or the download speed is too slow; you can use the mirror download provided by Oh-my-rime (thanks to [CNB](https://cnb.cool) for computing power and storage support; automatically syncs with the latest Fcitx5 For macOS(Rime) installation package):
+- [Fcitx5-Rime 安装包（镜像自 GitHub Release）](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Fcitx5-Rime.zip)
+
+At the same time, you can also use the terminal to install it:
+```bash
+cd /tmp && rm -rf Fcitx5Installer.app && curl -LO https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Fcitx5-Rime.zip && unzip Fcitx5-Rime.zip && open Fcitx5Installer.app
+```
+
+:::
 
 At this point, similar to Squirrel, double-clicking may not open it:
 ![Double-clicking does not open](/image/guide/warningFcitx5MacOS.webp)
@@ -97,7 +109,7 @@ On Windows, install Weasel to use Mint Pinyin or other configurations later. Go 
 
 ![Download Weasel](/image/guide/downloadWeasel.webp)
 
-::: info Notification
+::: info Mirror Acceleration Information
 
 If you cannot access GitHub, or the download speed is too slow; you can use the mirror download provided by Oh-my-rime (thanks to [CNB](https://cnb.cool) for computing power and storage support; automatically syncs with the latest Weasel input method package):
 - [Weasel Input Method Installer (Mirrored from GitHub Release)](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/weasel-installer-latest.exe)
