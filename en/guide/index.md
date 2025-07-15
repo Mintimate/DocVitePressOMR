@@ -13,6 +13,38 @@ If you find this document or Oh-my-rime Pinyin useful, you can buy me a coffee:
 > Please be sure to leave a note "Mint Pinyin" or "oh-my-rime". Donors of coffee ☕️ will be credited in the "[Acknowledgements](#Acknowledgements)" (●'◡'●)ノ♥
 
 
+## Basic Concepts
+Oh-my-rime is an input schema, while RIME is actually an algorithmic core. To form a complete client input method, an input method framework is also required. ​**​These three layers together constitute an input method​​**.
+
+Squirrel (for macOS) and Weasel (for Windows) can be understood as a combination of the input method framework and the RIME core engine. Only the schema needs to be installed for immediate use. On Android and Linux, however, Fcitx5 serves as the input method framework. It requires installing the RIME core engine to support RIME schemas. The relationship is as follows:
+```mermaid
+flowchart TD
+    A[⌨️ User Key Press] --> B{🖥️ Input Method Framework<br/>e.g., ibus/fcitx}
+    B -->|Pass Keyboard Events| C[⚙️ RIME Core Engine<br/>Built-in in Weasel/Squirrel]
+    C -->|Load Configurations| D[👑 Schema Configuration<br/>e.g., Oh-my-rime, Wanxiang, rime-ice]
+    D -->|Use Dictionaries| E[📚 Dictionary Data]
+    D -->|Apply Rules| F[📐 Grammar Rules<br/>Phrase Processing]
+    D -->|UI Settings| G[🎨 UI Theme<br/>Colors/Layout]
+    C -->|Compute Results| H[👀 Candidate Bar/Status Window<br/>Real-time Feedback]
+    B -->|Render UI| H
+    H -->|User Selection| I[📝 Output Text to App]
+
+    classDef user fill:#ffe6e6,stroke:#ff4d4f,stroke-width:2px;
+    classDef engine fill:#e6f7ff,stroke:#1890ff,stroke-width:3px;
+    classDef config fill:#fff7e6,stroke:#ffa940,stroke-width:2px;
+    classDef data fill:#f6ffed,stroke:#52c41a,stroke-width:2px;
+    
+    class A,I user;
+    class B,C engine;
+    class D,F config;
+    class E,G data;
+    class H user; 
+
+    style C stroke:#1890ff,stroke-width:3px,stroke-dasharray:5 5
+    linkStyle 1 stroke:#ffa940,stroke-width:2px
+    linkStyle 4,5,6 stroke:#52c41a
+    linkStyle 0,2,3,7 stroke:#bfbfbf
+```
 
 ## Recommended Tutorials
 
