@@ -83,6 +83,9 @@ Linux上，如果使用的是的iBus，受限于不同的平台使用的iBus配�
 首先是macOS，鼠须管适配了系统提供的亮色和暗色的API接口。所以，鼠须管可以根据系统当前的外观，响应不同的外观。
 ![macOS外观](/image/demo/macOS_Mint.webp)
 
+如果你使用 Fcitx5 macOS，那么薄荷内自带的鼠须管皮肤不会生效，可以导入 Fcitx5 macOS 配置:
+- [移植版本-薄荷外观风格主题_Fcitx5 macOS](/resources/mint_green.conf)
+
 ## Windows外观
 其次，在Windows上；Windows上的系统API接口比较混乱；在Win10的后期（Windows 10 1809+ ），暗色模式才逐渐完善。小狼毫在`0.15`版本后，支持跟随系统暗色模式。
 

@@ -84,6 +84,9 @@ Next, let's take a look at the display effects on Windows and macOS.
 First, let's talk about macOS. Squirrel adapts to the light and dark APIs provided by the system. Therefore, Squirrel can respond to different appearances based on the current system appearance.
 ![macOS外观](/image/demo/macOS_Mint.webp)
 
+If you use Fcitx5 macOS, you can import the Fcitx5 macOS configuration:
+- [Transplanted Version - Mint Appearance Style Theme for Fcitx5 macOS](/resources/mint_green.conf)
+
 ## Appearance in Windows
 Next, on Windows; the system API interfaces on Windows are somewhat chaotic. It was only in the later stages of Windows 10 that the dark mode started to become more refined. Rime supports following the system's dark mode starting from version 0.15.
 
