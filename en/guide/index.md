@@ -18,32 +18,35 @@ Oh-my-rime is an input schema, while RIME is actually an algorithmic core. To fo
 
 Squirrel (for macOS) and Weasel (for Windows) can be understood as a combination of the input method framework and the RIME core engine. Only the schema needs to be installed for immediate use. On Android and Linux, however, Fcitx5 serves as the input method framework. It requires installing the RIME core engine to support RIME schemas. The relationship is as follows:
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'nodeBorder': '#888' }}}%%
 flowchart TD
-    A[⌨️ User Key Press] --> B{🖥️ Input Method Framework<br/>e.g., ibus/fcitx}
-    B -->|Pass Keyboard Events| C[⚙️ RIME Core Engine<br/>Built-in in Weasel/Squirrel]
-    C -->|Load Configurations| D[👑 Schema Configuration<br/>e.g., Oh-my-rime, Wanxiang, rime-ice]
+    A[⌨️ User Keypress] --> B{🖥️ Input Method Framework<br/>「e.g.: ibus/fcitx」}
+    B -->|Keyboard Event Passing| C[⚙️ RIME Core Engine<br/>「Built-in Weasel/Squirrel」 ]
+    C -->|Load Configuration| D[👑 Schema Configuration<br/>「Oh-my-rime/wanxiang/rime-ice」]
     D -->|Use Dictionaries| E[📚 Dictionary Data]
-    D -->|Apply Rules| F[📐 Grammar Rules<br/>Phrase Processing]
-    D -->|UI Settings| G[🎨 UI Theme<br/>Colors/Layout]
-    C -->|Compute Results| H[👀 Candidate Bar/Status Window<br/>Real-time Feedback]
-    B -->|Render UI| H
-    H -->|User Selection| I[📝 Output Text to App]
+    D -->|Apply Rules| F[📐 Grammar Rules</br/>Lexicon Processing]
+    D -->|UI Settings| G[🎨 Theme & Layout<br/>Colors/Design]
+    C -->|Processing Results| B 
+    B -->|Render UI| H[👀 Candidate Bar<br/>Status Panel<br/>Real-time Feedback]
+    B -.-> |User Selection| I[📝 Text Output to Application]
+    H -->|Output Content| I
 
-    classDef user fill:#ffe6e6,stroke:#ff4d4f,stroke-width:2px;
-    classDef engine fill:#e6f7ff,stroke:#1890ff,stroke-width:3px;
-    classDef config fill:#fff7e6,stroke:#ffa940,stroke-width:2px;
-    classDef data fill:#f6ffed,stroke:#52c41a,stroke-width:2px;
+    classDef user fill:#ffe6e6,stroke:#ff4d4f,stroke-width:2px,min-width:180px,min-height:40px,padding:10px;
+    classDef engine fill:#e6f7ff,stroke:#1890ff,stroke-width:3px,min-width:220px,min-height:60px,padding:12px;
+    classDef config fill:#fff7e6,stroke:#ffa940,stroke-width:2px,min-width:180px,min-height:60px,padding:10px;
+    classDef data fill:#f6ffed,stroke:#52c41a,stroke-width:2px,min-width:150px,min-height:50px,padding:10px;
     
     class A,I user;
     class B,C engine;
     class D,F config;
     class E,G data;
-    class H user; 
+    class H user;
 
-    style C stroke:#1890ff,stroke-width:3px,stroke-dasharray:5 5
+    style C stroke:#1890ff,stroke-width:3px,stroke-dasharray:5 5,min-height:60px
     linkStyle 1 stroke:#ffa940,stroke-width:2px
-    linkStyle 4,5,6 stroke:#52c41a
-    linkStyle 0,2,3,7 stroke:#bfbfbf
+    linkStyle 3,4,5 stroke:#52c41a
+    linkStyle 6 stroke:#E2626C
+    linkStyle 0,2,7,8,9 stroke:#bfbfbf
 ```
 
 ## Recommended Tutorials

@@ -23,6 +23,7 @@ aside: true
 鼠须管(macOS)和小狼毫(Windows)，可以理解为是输入法框架和 RIME 算法核心的结合体，只需要安装方案，就可以使用； 但是 Android 和 Linux 上的 Fcitx5 是输入法框架，需要安装 RIME 算法核心，才能安装 RIME 的方案，关系如下：
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'nodeBorder': '#888' }}}%%
 flowchart TD
     A[⌨️ 用户按键操作] --> B{🖥️ 输入法框架<br/>「如: ibus/fcitx」}
     B -->|键盘事件传递| C[⚙️ RIME 核心引擎<br/>「小狼毫/鼠须管自带」 ]
@@ -30,25 +31,27 @@ flowchart TD
     D -->|使用词典| E[📚 词典数据]
     D -->|应用规则| F[📐 语法规则</br/>词库处理]
     D -->|界面设置| G[🎨 界面主题<br/>配色/布局]
-    C -->|运算结果| H[👀 候选栏/状态窗<br/>实时反馈]
-    B -->|渲染界面| H
-    H -->|用户选择| I[📝 文本输出到应用]
+    C -->|运算结果| B 
+    B -->|渲染界面| H[👀 候选栏/状态窗<br/>实时反馈]
+    B -.-> |用户选择| I[📝 文本输出到应用]
+    H -->|输出内容| I
 
-    classDef user fill:#ffe6e6,stroke:#ff4d4f,stroke-width:2px;
-    classDef engine fill:#e6f7ff,stroke:#1890ff,stroke-width:3px;
-    classDef config fill:#fff7e6,stroke:#ffa940,stroke-width:2px;
-    classDef data fill:#f6ffed,stroke:#52c41a,stroke-width:2px;
+    classDef user fill:#ffe6e6,stroke:#ff4d4f,stroke-width:2px,min-width:180px,min-height:40px,padding:10px;
+    classDef engine fill:#e6f7ff,stroke:#1890ff,stroke-width:3px,min-width:220px,min-height:60px,padding:12px;
+    classDef config fill:#fff7e6,stroke:#ffa940,stroke-width:2px,min-width:180px,min-height:60px,padding:10px;
+    classDef data fill:#f6ffed,stroke:#52c41a,stroke-width:2px,min-width:150px,min-height:50px,padding:10px;
     
     class A,I user;
     class B,C engine;
     class D,F config;
     class E,G data;
-    class H user; 
+    class H user;
 
-    style C stroke:#1890ff,stroke-width:3px,stroke-dasharray:5 5
+    style C stroke:#1890ff,stroke-width:3px,stroke-dasharray:5 5,min-height:60px
     linkStyle 1 stroke:#ffa940,stroke-width:2px
-    linkStyle 4,5,6 stroke:#52c41a
-    linkStyle 0,2,3,7 stroke:#bfbfbf
+    linkStyle 3,4,5 stroke:#52c41a
+    linkStyle 6 stroke:#E2626C
+    linkStyle 0,2,7,8,9 stroke:#bfbfbf
 ```
 
 ## 推荐教程
