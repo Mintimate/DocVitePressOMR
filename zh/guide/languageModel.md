@@ -52,6 +52,13 @@ import_tables:
 
 ![下载万象拼音模型](/image/guide/downloadLMDG.webp)
 
+::: info 镜像加速信息
+
+如果你无法访问 GitHub，或者下载过慢；那么可以使用薄荷提供的镜像下载（感谢 [CNB](https://cnb.cool) 提供的算力和存储支持；自动同步最新版本 万象模型 : 
+- [万象模型「wanxiang-lts-zh-hans.gram」（镜像自 GitHub Release）](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/wanxiang-lts-zh-hans.gram)
+
+:::
+
 之后，移动配置文件到 Rime 的配置目录内，比如 macOS 鼠须管的配置目录：`$HOME/Library/Rime/`：
 
 ![移动配置文件](/image/guide/moveLMDG.webp)

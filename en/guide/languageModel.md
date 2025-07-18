@@ -52,6 +52,13 @@ To install the RIME-LMDG Model, you need to download the corresponding files and
 
 ![Download RIME-LMDG Model](/image/guide/downloadLMDG.webp)
 
+::: info Mirror Acceleration Information
+
+If you cannot access GitHub, or the download is too slow; then you can use the mirror acceleration provided by [CNB](https://cnb.cool) (thanks to [CNB](https://cnb.cool) for providing computing power and storage support; automatically synchronize the latest version of the RIME-LMDG Model:
+- [RIME-LMDG Model「wanxiang-lts-zh-hans.gram」 (Mirror from GitHub Release)](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/wanxiang-lts-zh-hans.gram)
+
+:::
+
 Then, move the configuration file to the Rime configuration directory, such as the macOS Squirrel configuration directory: `$HOME/Library/Rime/`:
 
 ![Move Configuration File](/image/guide/moveLMDG.webp)
