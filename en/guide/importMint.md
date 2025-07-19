@@ -154,8 +154,6 @@ chmod +x oh-my-rime-cli
 
 For Windows users, double-click to run.
 
-![Windows install oh-my-rime-cli](/image/guide/WindowsInstallCli.webp)
-
 ::: warning Warning
 
 Because I haven't signed my code, the file may be reported by the antivirus software. If you encounter this situation, you can try manually trusting this file.
