@@ -124,3 +124,34 @@ rime_dir="$HOME/.local/share/fcitx5/rime" bash rime-install Mintimate/oh-my-rime
 
 参考：
 - [rime-plum](https://github.com/rime/plum)
+
+## ⭐CLI导入和更新薄荷
+
+为了方便不会使用 Git 的用户更新和安装薄荷，我们提供了 CLI 工具，可以一键安装和更新薄荷输入法。
+
+![oh-my-rime-cli](/image/guide/oh-my-rime-cli.webp)
+
+下载地址：
+
+- [oh-my-rime-cli [Windows/Linux/MacOS]](https://cnb.cool/Mintimate/rime/oh-my-rime-cli/-/releases)
+
+![oh-my-rime-cli](/image/guide/DownloadCli.webp)
+
+项目源码: [oh-my-rime-cli](https://cnb.cool/Mintimate/rime/oh-my-rime-cli)
+
+下载后，Linux 和 macOS 用户在 Terminal 内提权执行即可：
+```bash
+# 提权
+chmod +x 「oh-my-rime-cli文件地址」
+# 执行(假设文件在当前目录且文件名为oh-my-rime-cli)
+./oh-my-rime-cli
+```
+
+至于 Windows 用户，双击运行即可。
+
+::: warning 警告
+
+因为我没有代码签名，所以文件可能会被杀毒软件误报，如果你遇到这种情况，可以尝试手动信任这个文件。
+
+并且，认准 [oh-my-rime-cli 的项目地址](https://cnb.cool/Mintimate/rime/oh-my-rime-cli)，不要下载其他来源的文件。
+:::

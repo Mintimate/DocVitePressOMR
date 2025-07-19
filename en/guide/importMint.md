@@ -129,3 +129,37 @@ rime_dir="$HOME/.local/share/fcitx5/rime" bash rime-install Mintimate/oh-my-rime
 
 Reference:
 - [rime-plum](https://github.com/rime/plum)
+
+## ⭐CLI Import and Update Oh-My-Rime
+
+To facilitate users who do not use Git to install and update oh-my-rime, we provide a CLI tool that can install and update oh-my-rime in one click.
+
+![oh-my-rime-cli](/image/guide/oh-my-rime-cli.webp)
+
+Download address:
+
+- [oh-my-rime-cli [Windows/Linux/MacOS]](https://cnb.cool/Mintimate/rime/oh-my-rime-cli/-/releases)
+
+![oh-my-rime-cli](/image/guide/DownloadCli.webp)
+
+Project source: [oh-my-rime-cli](https://cnb.cool/Mintimate/rime/oh-my-rime-cli)
+
+On Linux and macOS, you can execute the following command in the terminal after granting execution permissions:
+```bash
+# Grant execution permissions
+chmod +x oh-my-rime-cli
+# Execute (assuming the file is in the current directory and the file name is oh-my-rime-cli)
+./oh-my-rime-cli
+```
+
+For Windows users, double-click to run.
+
+![Windows install oh-my-rime-cli](/image/guide/WindowsInstallCli.webp)
+
+::: warning Warning
+
+Because I haven't signed my code, the file may be reported by the antivirus software. If you encounter this situation, you can try manually trusting this file.
+
+Also, make sure to use the [official oh-my-rime-cli project address](https://cnb.cool/Mintimate/rime/oh-my-rime-cli), and do not download files from other sources.
+
+:::
