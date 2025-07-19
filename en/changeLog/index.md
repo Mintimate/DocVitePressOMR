@@ -19,6 +19,25 @@ please be sure to note "Mint Pinyin" or "oh-my-rime" (●'◡'●)ﾉ♥
 
 :::
 
+Thank you to CNB for providing storage and acceleration resources. The following content is currently mirrored by Oh-my-rime, offering download links for users experiencing difficulty accessing GitHub:  
+
+| Original Repository | Packaged Mirror | Description |  
+| ------------------- | --------------- | ------------------------------------------------------------------------ |  
+| [oh-my-rime Github](https://github.com/Mintimate/oh-my-rime) | [oh-my-rime.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/oh-my-rime.zip) | Oh-my-rime Input Method Configuration Repository |  
+| [Squirrel Github](https://github.com/rime/Squirrel) | [Squirrel-latest.pkg](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Squirrel-latest.pkg) | Squirrel Client (macOS) |  
+| [Weasel Github](https://github.com/rime/weasel) | [weasel-installer-latest.exe](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/weasel-installer-latest.exe) | Weasel Client (Windows) |  
+| [Fcitx5-Rime(macOS) Github](https://github.com/fcitx-contrib/fcitx5-macos) | [Fcitx5-Rime.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Fcitx5-Rime.zip) | macOS Fcitx5-Rime Client |  
+| [RIME-LMDG Github](https://github.com/amzxyz/RIME-LMDG) | [wanxiang-lts-zh-hans.gram](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/wanxiang-lts-zh-hans.gram) | Wanxiang (LMDG) Model |  
+
+## 2025-S03  
+Features:
+- Breaking Changes: Switched to the Wanxiang dictionary for better compatibility with the Wanxiang model <Badge type="tip">[6dfbd6e76a](https://github.com/Mintimate/oh-my-rime/commit/f14c91f5a2ea6212f166057586210e6dfbd6e76a)</Badge>.  
+- Adapted Fcitx5 macOS skins and provided mirrored Fcitx5 downloads.  
+- Added a RIME and oh-my-rime relationship graph to Mintimate Docs: [Basic Concepts](/zh/guide/#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5).  
+
+Fixes:
+- Resolved conflicts between error correction and Wanxiang pre-edit scripts <Badge type="tip">[4a501002d9](https://github.com/Mintimate/oh-my-rime/commit/88ebe26fc340da18dcc1e8381283ab4a501002d9)</Badge>.  
+
 ## 2025-S02
 Features:
 - Added community theme in Oh-my-rime's documentation: [#191](https://github.com/Mintimate/oh-my-rime/issues/191)

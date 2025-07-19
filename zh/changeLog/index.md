@@ -19,6 +19,25 @@ sidebar: false
 
 :::
 
+感谢 CNB 提供的存储和加速资源，当前薄荷镜像以下内容，为不方便访问 GitHub 的用户提供下载链接:
+| 仓库原地址 | 打包镜像 | 描述 |
+| ---------- | -------- | ------------------------------------------------------------------------ |
+| [oh-my-rime Github](https://github.com/Mintimate/oh-my-rime) | [oh-my-rime.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/oh-my-rime.zip) | 薄荷输入法配置仓库， |
+| [Squirrel Github](https://github.com/rime/Squirrel) | [Squirrel-latest.pkg](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Squirrel-latest.pkg) | 鼠须管客户端 |
+| [Weasel Github](https://github.com/rime/weasel) | [weasel-installer-latest.exe](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/weasel-installer-latest.exe) | 小狼毫客户端 |
+| [Fcitx5-Rime(macOS) Github](https://github.com/fcitx-contrib/fcitx5-macos) | [Fcitx5-Rime.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Fcitx5-Rime.zip) | macOS Fcitx5-Rime 客户端 |
+| [RIME-LMDG Github](https://github.com/amzxyz/RIME-LMDG) | [wanxiang-lts-zh-hans.gram](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/wanxiang-lts-zh-hans.gram) | 万象模型 |
+
+## 2025-S03
+Features:
+- 破坏性变更: 为了更好兼容万象模型，切换词库为万象词库 <Badge type="tip">[6dfbd6e76a](https://github.com/Mintimate/oh-my-rime/commit/f14c91f5a2ea6212f166057586210e6dfbd6e76a)</Badge>
+- 适配Fcitx5 macOS 皮肤并提供 Fcitx5 镜像下载。
+- 薄荷文档添加 rime 和 oh-my-rime 关系图谱: [基本概念](/zh/guide/#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+
+Fix:
+- 解决纠错功能和万象预编辑脚本冲突问题 <Badge type="tip">[4a501002d9](https://github.com/Mintimate/oh-my-rime/commit/88ebe26fc340da18dcc1e8381283ab4a501002d9)</Badge>
+
+
 ## 2025-S02
 Features:
 - 薄荷文档内添加社区主题: [#191](https://github.com/Mintimate/oh-my-rime/issues/191)
