@@ -38,6 +38,11 @@ Features:
 Fixes:
 - Resolved conflicts between error correction and Wanxiang pre-edit scripts <Badge type="tip">[4a501002d9](https://github.com/Mintimate/oh-my-rime/commit/88ebe26fc340da18dcc1e8381283ab4a501002d9)</Badge>.  
 
+Thanks:
+| 时间       | 平台     | 用户            | 支持💵 | 留言          |
+| ---------- | -------- | --------------- | ----- | ------------- |
+| 2025/07/24 | 爱发电 | 微信用户: Xinyi | 50¥   | 膜雨月大佬，教程写得很有帮助，希望能交流一次呀 |
+
 ## 2025-S02
 Features:
 - Added community theme in Oh-my-rime's documentation: [#191](https://github.com/Mintimate/oh-my-rime/issues/191)
