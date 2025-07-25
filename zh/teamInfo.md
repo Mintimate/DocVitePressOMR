@@ -64,7 +64,7 @@ const members = [
     <div class="container">
       <p>如果需要反馈,建议:</p>
       <ul>
-        <li>QQ群: 703260572</li>
+        <li>QQ群: 703260572（倡导互助。若进群只等他人秒回问题，甚至抱怨本该自查（如看文档）的基础问题无人解答，请慎重加入或留群）</li>
         <li>Email: mintimate215@gmail.com</li>
       </ul>
     </div>
