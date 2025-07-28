@@ -1,3 +1,33 @@
+/* 覆盖默认配色 */
+:root {
+  /* 水鸭色核心 */
+  --vp-c-brand-1: #008080;       /* 主品牌色 - 饱和水鸭色 */
+  --vp-c-brand-2: #4DB3B3;       /* 辅品牌色 - 深海蓝绿 */
+
+  --vp-button-brand-bg: #0d8181;
+  --vp-c-brand-light: #7ef0f0;     /* 浅水蓝 - 高亮元素 */
+  --vp-c-brand-lighter: #0d5c6b;   /* 超浅蓝 - 背景块 */
+  --vp-c-brand-dark: #e6f9f9;      /* 深海蓝 - 边框/分割线 */
+
+  /** 提示框 */
+  --vp-c-indigo-soft: rgba(100, 150, 255, 0.14)
+  
+}
+
+/* ===== 暗黑模式 ===== */
+.dark {
+  /* 品牌色增强 */
+  --vp-c-brand-1: #66CCCC;       /* 更深的暗水鸭色 */
+  --vp-c-brand-2: #339999;       /* 接近黑蓝的深海色 */
+
+  /* 派生交互色重映射 */
+  --vp-c-brand-light: #a0f5f5;     /* 霓虹水蓝 - 暗模式高亮 */
+  --vp-c-brand-lighter: #0a262b;   /* 深蓝黑 - 卡片背景 */
+  --vp-c-brand-dark: #83d7e1;      /* 浅蓝灰 - 边框线 */
+  
+}
+
+
 :root {
     --vp-home-hero-name-color: transparent;
     --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
