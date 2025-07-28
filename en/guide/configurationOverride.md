@@ -8,9 +8,51 @@ head:
 description: Customization is easy to understand. The Mint Input Method is based on the Rime Input Method framework, which is essentially a set of Rime Input Method configurations. Different Rime clients have a large number of personalization configurations. Although the Mint Input Method has already made a lot of settings, there are still many configurations that have not been activated; users can configure them according to their preferences.
 ---
 # Configuration Overrides and Customization
-Customization is easy to understand. The Mint Input Method is based on the Rime Input Method framework, which is essentially a set of Rime Input Method configurations. Different Rime clients have a large number of personalization configurations. Although the Mint Input Method has already made a lot of settings, there are still many configurations that have not been activated; users can configure them according to their preferences.
+Customization is easy to understand. The Mint Input Method is based on the Rime Input Method framework, which is essentially a set of Rime Input Method configurations. Different Rime clients have a large number of personalization configurations. 
+
+Although the Mint Input Method has already made a lot of settings, there are still many configurations that have not been activated; users can configure them according to their preferences.
 
 As for overrides, it means that the Mint Input Method has already configured the Rime Input Method client, but it may not meet your preferences, so you can override it.
+
+```mermaid
+graph LR
+    U[User Modifies Configuration]:::custom --> T{Configuration Type}:::decision
+    T --> C1(Client Configuration):::client
+    T --> C2(Input Schema Configuration):::schema
+    
+    C1 --> P{Platform/Client}
+    P -->|Squirrel| S1[Modify squirrel.custom.yaml]:::clientFile
+    P -->|Weasel| S2[Modify weasel.custom.yaml]:::clientFile
+    P -->|Other Clients| S3[Open Client Interface Settings]:::otherClient
+    
+    S1 --> SA[Appearance/Skin/Layout Settings]:::clientAttr
+    S2 --> SB[Appearance/Skin/Layout Settings]:::clientAttr
+    S3 --> SC[Configure via Client GUI]:::otherAttr
+    
+    C2 --> G[Global Input Settings]:::global
+    C2 --> S[Specific Schema Settings]:::specific
+    
+    G --> D[Modify default.custom.yaml]:::globalFile
+    D --> GA[Inline Formatting/Global Configuration]:::globalAttr
+    
+    S --> R[Modify rime_mint.custom.yaml<br>or other schema files]:::specificFile
+    R --> SA1[Fuzzy Pinyin/Dictionary/Behavior Settings]:::specificAttr
+
+    classDef custom fill:#ffb6c1,stroke:#e91e63,color:#ffffff;
+    classDef decision fill:#f5f5f5,stroke:#9e9e9e,color:#333333,stroke-dasharray: 5 5;
+    classDef client fill:#bbdefb,stroke:#1565c0,color:#0d47a1;
+    classDef clientFile fill:#e3f2fd,stroke:#1976d2,color:#0d47a1;
+    classDef otherClient fill:#e1bee7,stroke:#9c27b0,color:#4a148c;
+    classDef clientAttr fill:#f0f4c3,stroke:#9e9d24,color:#5d4037;
+    classDef otherAttr fill:#f8bbd0,stroke:#e91e63,color:#880e4f;
+    classDef schema fill:#c5e1a5,stroke:#689f38,color:#33691e;
+    classDef global fill:#dcedc8,stroke:#558b2f,color:#33691e;
+    classDef globalFile fill:#fff9c4,stroke:#ffd600,color:#5d4037;
+    classDef globalAttr fill:#f0f4c3,stroke:#9e9d24,color:#5d4037;
+    classDef specific fill:#aed581,stroke:#558b2f,color:#33691e;
+    classDef specificFile fill:#fff9c4,stroke:#ffd600,color:#5d4037;
+    classDef specificAttr fill:#f0f4c3,stroke:#9e9d24,color:#5d4037;
+```
 
 ## Rime's Personalized Configuration Files
 Rime's configuration is generally divided into two types:
@@ -97,12 +139,19 @@ Next, let's look at the "Input Method Scheme Configuration". The global configur
 - If you want to modify the full Pinyin configuration within the Mint Input Method, it is recommended to use the `rime_mint.custom.yaml` file for overriding (Note: this is for the full Pinyin configuration within the Mint Input Method; if you are using the Double Fly Pinyin within the Mint Input Method, then use the `double_pinyin_flypy.custom.yaml` file. For other configurations within the Mint Input Method, follow this analogy).
 
 So, the priority is:
+
 ```mermaid
 graph LR
-    A(rime_mint.custom.yaml) --> B(rime_mint.schema.yaml)
-    B --> C(default.custom.yaml)
-    C --> D(default.yaml)
-    D --> E(Client's default.yaml)
+    A(rime_mint.custom.yaml):::custom --> B(rime_mint.schema.yaml):::schema
+    B --> C(default.custom.yaml):::defaultCustom
+    C --> D(default.yaml):::default
+    D --> E(Client's default.yaml):::client
+
+    classDef custom fill:#E0095F,stroke:#e91e63,color:#ffffff;
+    classDef schema fill:#c5e1a5,stroke:#689f38,color:#33691e;
+    classDef defaultCustom fill:#f0f4c3,stroke:#9e9d24,color:#5d4037;
+    classDef default fill:#fff9c4,stroke:#ffd600,color:#5d4037;
+    classDef client fill:#f5f5f5,stroke:#bdbdbd,color:#757575;
 ```
 
 Currently, the Mint Input Method has implemented the `default.yaml` configuration. When using the Mint configuration, it will automatically override the `default.yaml` that comes with the Rime client (Squirrel, Weasel, etc.).

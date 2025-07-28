@@ -8,9 +8,51 @@ head:
 description: 在Rime内，如何基于已经拥有的配置，定制化内容？覆写部分配置呢？本文以薄荷输入法配置为例
 ---
 # 配置覆写和定制
-定制很好理解，薄荷输入法基于Rime输入法框架，实际就是一套Rime输入法配置；不同的Rime客户端都有大量的个性化配置，虽然薄荷输入法已经进行了大量的设置，但是**还有很多配置并没有激活；用户可以根据自己的喜好进行配置**。
+定制很好理解，薄荷输入法基于Rime输入法框架，实际就是一套Rime输入法配置；不同的Rime客户端都有大量的个性化配置。
 
-至于覆写，就是**薄荷输入法已经对Rime输入法的客户端进行了配置**，但是可能不符合你的喜好，那么**你可以对其进行覆写**。
+虽然薄荷输入法已经进行了大量的设置，但是**还有很多配置并没有激活；用户可以根据自己的喜好进行配置**。
+
+至于覆写，就是**薄荷输入法已经对Rime输入法的客户端进行了配置**，但是可能不符合你的喜好，那么**你可以对其进行覆写**:
+
+```mermaid
+graph LR
+    U[用户修改配置]:::custom --> T{配置类型}:::decision
+    T --> C1(客户端配置):::client
+    T --> C2(输入方案配置):::schema
+    
+    C1 --> P{平台/客户端}
+    P -->|鼠须管| S1[修改 squirrel.custom.yaml]:::clientFile
+    P -->|小狼毫| S2[修改 weasel.custom.yaml]:::clientFile
+    P -->|其他客户端| S3[打开客户端界面配置]:::otherClient
+    
+    S1 --> SA[外观/皮肤/布局设置]:::clientAttr
+    S2 --> SB[外观/皮肤/布局设置]:::clientAttr
+    S3 --> SC[根据具体客户端设置]:::otherAttr
+    
+    C2 --> G[全局输入设置]:::global
+    C2 --> S[特定方案设置]:::specific
+    
+    G --> D[修改 default.custom.yaml]:::globalFile
+    D --> GA[行内格式/全局配置]:::globalAttr
+    
+    S --> R[修改 rime_mint.custom.yaml<br>等方案文件]:::specificFile
+    R --> SA1[模糊拼音/词库/行为设置]:::specificAttr
+
+    classDef custom fill:#ffb6c1,stroke:#e91e63,color:#ffffff;
+    classDef decision fill:#f5f5f5,stroke:#9e9e9e,color:#333333,stroke-dasharray: 5 5;
+    classDef client fill:#bbdefb,stroke:#1565c0,color:#0d47a1;
+    classDef clientFile fill:#e3f2fd,stroke:#1976d2,color:#0d47a1;
+    classDef otherClient fill:#e1bee7,stroke:#9c27b0,color:#4a148c;
+    classDef clientAttr fill:#f0f4c3,stroke:#9e9d24,color:#5d4037;
+    classDef otherAttr fill:#f8bbd0,stroke:#e91e63,color:#880e4f;
+    classDef schema fill:#c5e1a5,stroke:#689f38,color:#33691e;
+    classDef global fill:#dcedc8,stroke:#558b2f,color:#33691e;
+    classDef globalFile fill:#fff9c4,stroke:#ffd600,color:#5d4037;
+    classDef globalAttr fill:#f0f4c3,stroke:#9e9d24,color:#5d4037;
+    classDef specific fill:#aed581,stroke:#558b2f,color:#33691e;
+    classDef specificFile fill:#fff9c4,stroke:#ffd600,color:#5d4037;
+    classDef specificAttr fill:#f0f4c3,stroke:#9e9d24,color:#5d4037;
+```
 
 ## Rime的个性配置文件
 Rime的配置总体分为两种：
@@ -96,12 +138,19 @@ patch:
 - 创建`rime_mint.custom.yaml`文件，优先级高于`rime_mint.schema.yaml`。可以覆写`rime_mint.schema.yaml`的配置。
 
 所以，优先级是:
+
 ```mermaid
 graph LR
-    A(rime_mint.custom.yaml) --> B(rime_mint.schema.yaml)
-    B --> C(default.custom.yaml)
-    C --> D(default.yaml)
-    D --> E(客户端自带的default.yaml)
+    A(rime_mint.custom.yaml):::custom --> B(rime_mint.schema.yaml):::schema
+    B --> C(default.custom.yaml):::defaultCustom
+    C --> D(default.yaml):::default
+    D --> E(客户端自带的default.yaml):::client
+
+    classDef custom fill:#E0095F,stroke:#e91e63,color:#ffffff;
+    classDef schema fill:#c5e1a5,stroke:#689f38,color:#33691e;
+    classDef defaultCustom fill:#f0f4c3,stroke:#9e9d24,color:#5d4037;
+    classDef default fill:#fff9c4,stroke:#ffd600,color:#5d4037;
+    classDef client fill:#f5f5f5,stroke:#bdbdbd,color:#757575;
 ```
 
 目前，薄荷输入法已经实现了`default.yaml`配置。在使用薄荷配置的时候，会自动覆盖 rime 客户端(鼠须管、小狼毫等)系统自带的`default.yaml`。
