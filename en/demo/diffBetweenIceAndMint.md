@@ -35,8 +35,16 @@ And based on the above vocabulary, build the main maintenance vocabulary:
 - Emoji
 
 Next, let's talk about the differences between rime-ice and oh-my-rime.
+
 ## Similarities
-In terms of the basics, both are adapted to the Rime input method framework, support multiple input methods such as full spelling and double spelling, and have a comprehensive pinyin vocabulary (~~After all, oh-my-rime uses the rime-ice vocabulary~~ <Badge type="tip" text="^2024.07" /> Oh-my-rime uses the [Bailu Pinyin Vocabulary] (https://github.com/gaboolic/rime-frost), which is based on rime-ice and re-trained for word segmentation using methods such as jieba in Python; thus, the experience with Pinyin input is similar).
+
+In basic aspects, they are all adapted to the Rime input method framework, supporting various input methods such as full pinyin and double pinyin, with comprehensive pinyin dictionaries.
+
+oh-my-rime once directly used the rime-ice dictionary:
+- oh-my-rime switched from self-maintained dictionary to rime-ice. <Badge type="tip" text="As of 2024.07" />
+- oh-my-rime used the [rime-frost dictionary](https://github.com/gaboolic/rime-frost) (based on rime-ice and retrained using Python's jieba for word segmentation). <Badge type="tip" text="As of 2025.07" />
+- oh-my-rime adopted the [RIME-LMDG dictionary](https://github.com/amzxyz/RIME-LMDG), with some Lua code also using open-source implementations, overlapping with rime-ice, rime-frost, and RIME-LMDG. <Badge type="tip" text="Now" />
+
 
 rime-ice and oh-my-rime both use some tools and schemes from other repositories:
 - [melt_eng](https://github.com/tumuyan/rime-melt) English input (@tumuyan | [Apache 2.0](https://github.com/tumuyan/rime-melt/blob/master/LICENSE))
@@ -49,7 +57,10 @@ At the same time, oh-my-rime uses rime-ice's
 - Automatic capitalization of English vocabulary: [autocap_filter.lua](https://github.com/Mintimate/oh-my-rime/blob/main/lua/autocap_filter.lua)
 - And so on some detail similarities~
 
-So, in terms of use. The pinyin experience of rime-ice and oh-my-rime is similar.
+Of course, oh-my-rime also uses some tools provided by wanxiang, such as:
+- [Phonetic pinyin annotation](https://github.com/amzxyz/rime_wanxiang/blob/wanxiang/lua/super_preedit.lua)
+
+Therefore, in terms of usage experience, the pinyin input among rime-ice, oh-my-rime and wanxiang is quite similar.
 
 ## Differences
 There are also quite a few differences, after all, oh-my-rime was initially just my personal scheme, and many things also reflect my personal style.
@@ -66,8 +77,7 @@ Mainly reflected in:
 - rime-ice's symbol customization and oh-my-rime's are not the same. For example, the input of some special characters, the two are completely different;
 - The shortcuts of rime-ice and oh-my-rime are also different, and you need to mainly check the source code of each during use;
 - rime-ice, in order to ensure compatibility, uses the old version of Lua syntax introduction, but oh-my-rime considers that the new version of Lua syntax is more concise, and the higher version of librime will always popularize various clients, so it uses the new version of Lua syntax introduction;
-- rime-ice's GitHub repository is more active, and there are more experts answering questions in the issue; oh-my-rime is basically maintained and contributed by [Mintimate](https://github.com/Mintimate) and [YummyCocoa](https://github.com/YummyCocoa), occasionally rime-ice maintainer One of [@mirtlecn](https://github.com/mirtlecn) will push some content, so, if there is a problem, the answer may be much slower; it is recommended that if you have a question you don't know, you can see if there is an answer in rime-ice's issue.
-- And so on some small detail differences~
+- rime-ice GitHub repository is more active, with more experts answering questions in issues. oh-my-rime is primarily maintained and contributed by [@Mintimate](https://github.com/Mintimate) and [@YummyCocoa](https://github.com/YummyCocoa), who also communicate with wanxiang's author [@amzxyz](https://github.com/amzxyz) on QQ. Occasionally [@mirtlecn](https://github.com/mirtlecn), one of rime-ice's maintainers, might push some updates. Therefore, if you have questions, responses may take much longer. We recommend checking rime-ice's issues first to see if your question has already been answered.- And so on some small detail differences~
 
 So, the difference between rime-ice and oh-my-rime is mainly in the adapted input scheme, Lua script, shortcut, symbol customization, GitHub repository activity, etc.
 

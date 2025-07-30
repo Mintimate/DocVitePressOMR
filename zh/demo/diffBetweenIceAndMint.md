@@ -5,7 +5,7 @@ head:
   - - meta
     - name: keywords
       content: 薄荷输入法,雾凇拼音,薄荷和雾凇区别,rime输入方案,薄荷和雾凇那个好
-description: 雾凇拼音是非常好的Rime输入方案，薄荷输入法配置也大量参考了雾凇配置；但是，雾凇拼音和薄荷输入方案配置，具体有什么区别呢？甚至和白霜拼音有什么区别呢？
+description: 雾凇拼音是非常好的Rime输入方案，薄荷输入法配置也大量参考了雾凇配置；但是，雾凇拼音和薄荷输入方案配置，具体有什么区别呢？甚至和白霜拼音、万象拼音有什么区别呢？
 aside: true
 ---
 # 雾凇拼音
@@ -37,7 +37,12 @@ aside: true
 接下来就说一下雾凇和薄荷的区别。
 
 ## 相同点
-基础的方面，都是适配了Rime输入法框架，支持全拼、双拼等多种输入方式，拼音词库全面（~~毕竟薄荷使用了雾凇词库~~<Badge type="tip" text="^2024.07" />薄荷使用了[白霜拼音词库](https://github.com/gaboolic/rime-frost)，基于雾凇拼音并使用Python的 jieba 等方法重新分词训练；所以在拼音方面，体验类似）。
+基础的方面，都是适配了Rime输入法框架，支持全拼、双拼等多种输入方式，拼音词库全面。
+
+薄荷有一段时间是直接使用雾凇词库的:
+- 薄荷从自维护词库切换到雾凇词库。<Badge type="tip" text="截至 2024.07" />
+- 薄荷使用了[白霜拼音词库](https://github.com/gaboolic/rime-frost)(基于雾凇拼音并使用Python的 jieba 等方法重新分词训练)。 <Badge type="tip" text="截至 2025.07" />
+- 薄荷是用了[万象的词库](https://github.com/amzxyz/RIME-LMDG)，部分 Lua 同样使用开源代码，和雾凇、白霜、万象都有重合的部分。<Badge type="tip" text="Now" />
 
 雾凇和薄荷，都使用了一些其他仓库的工具和方案：
 - [melt_eng](https://github.com/tumuyan/rime-melt) 英文输入（@tumuyan | [Apache 2.0](https://github.com/tumuyan/rime-melt/blob/master/LICENSE)）
@@ -50,7 +55,10 @@ aside: true
 - 英文词汇自动大写转换: [autocap_filter.lua](https://github.com/Mintimate/oh-my-rime/blob/main/lua/autocap_filter.lua)
 - 等等一些小细节相同~
 
-所以，就使用而言。雾凇和薄荷的拼音体验类似。
+当然，薄荷也使用了万象提供的一些工具，如:
+- [音标拼音注释](https://github.com/amzxyz/rime_wanxiang/blob/wanxiang/lua/super_preedit.lua)
+
+所以，就使用而言。雾凇、薄荷和万象的拼音体验类似。
 
 ## 不同点
 不同点也是有挺多的，毕竟，薄荷最初只是我个人的方案，很多东西，还体现了我个人的风格。
@@ -67,7 +75,7 @@ aside: true
 - 雾凇的symbol等定制和薄荷的不一样。比如部分特殊字符的输入，两个是完全不同的；
 - 雾凇和薄荷的快捷键也是不一样的，使用过程中需要主要查看各自的源码；
 - 雾凇为了确保兼容性，使用的Lua语法引入是旧版的，但是薄荷考虑到新版的Lua语法更加简洁，同时较高版本的 librime 总会普及各个客户端，所以使用了新版的Lua语法引入；
-- 雾凇的GitHub仓库更活跃，issue内有更多大佬解答问题；薄荷基本上维护和贡献的都是[Mintimate](https://github.com/Mintimate)和[YummyCocoa](https://github.com/YummyCocoa)，偶尔雾凇维护者之一的[@mirtlecn](https://github.com/mirtlecn)会推送一下内容，所以，有问题的话，可能解答会慢很多；推荐有不知道的问题，可以在雾凇的issue内看看有没有答案。
+- 雾凇的GitHub仓库更活跃，issue内有更多大佬解答问题；薄荷基本上维护和贡献的都是[@Mintimate](https://github.com/Mintimate)和[@YummyCocoa](https://github.com/YummyCocoa)，在 QQ 上还有和万象作者[@amzxyz](https://github.com/amzxyz)交流，偶尔雾凇维护者之一的[@mirtlecn](https://github.com/mirtlecn)会推送一下内容，所以，有问题的话，可能解答会慢很多；推荐有不知道的问题，可以在雾凇的issue内看看有没有答案。
 - 等等一些小细节差异~
 
 所以，雾凇和薄荷的区别，主要是在于适配的输入方案、Lua脚本、快捷键、symbol等定制、GitHub仓库活跃度等方面。
