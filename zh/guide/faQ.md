@@ -148,3 +148,62 @@ autocap_filter = require("autocap_filter")
 之后，把`rime_mint.schema.yaml`中的`processors`、`filters`和`translators`中的`*`去掉即可。同理，其他输入方案也是一样的。
 
 建议使用`custom`文件去覆写`schema`，而不是直接修改`*.schema.yaml`。
+
+## 用户词典音标转写
+
+最开始薄荷使用的是没有音标的词库，类似这样：
+```yaml
+你	ni	19
+好	hao	6
+```
+
+但是后来转了万象，使用的是带音标的词库，类似这样：
+```yaml
+你	nǐ	19  
+好	hǎo	6
+```
+
+这样的用户词典产生的数据也是有音标的，所以如果你是从其他方案转过来，或者使用旧版本的薄荷，那么你可能会遇到音标转写的问题。
+
+理论上，**不影响词频的顺序，也就是动态调频是不影响的**。但是，如果你想使用实时显示音标的功能，那么在用户词典的词，**音标可能显示失败**。
+
+![音标显示功能参考](/image/guide/pinyinWithToneMark.webp)
+
+解决方案是刷写一遍用户词典，把音标填补上。具体操作如下：
+1. 同步一次用户词典，此时你会得到备份文件夹。
+2. 使用薄荷预编译好的执行文件([开源下载地址](https://cnb.cool/Mintimate/rime/rime-userdb-maker/-/releases/latest))，刷写一遍用户词典。
+3. 替换掉备份文件夹。
+4. 删除用户目录下的`*.userdb`文件夹。
+5. 重新同步一次用户词典。
+
+
+```mermaid
+flowchart LR
+    A([🔄 同步一次用户词典]) --> B[📝 薄荷预编译文件刷写用户词典]
+    B --> C[📂 替换掉备份文件夹]
+    C --> D[🗑️ 删除用户目录下*.userdb文件夹]
+    D --> E([✅ 重新同步一次用户词典])
+    
+    classDef start fill:#ff9ff3,stroke:#f368e0,stroke-width:3px,color:#fff,font-weight:bold,rx:15,ry:15;
+    classDef step fill:#74b9ff,stroke:#0984e3,stroke-width:2px,color:#fff,rx:10,ry:10;
+    classDef finish fill:#55efc4,stroke:#00b894,stroke-width:3px,color:#2d3436,font-weight:bold,rx:15,ry:15;
+    
+    class A start;
+    class B,C,D step;
+    class E finish;
+    
+    linkStyle 0 stroke:#f368e0,stroke-width:3px,stroke-dasharray:5 5;
+    linkStyle 1 stroke:#0984e3,stroke-width:2px;
+    linkStyle 2 stroke:#0984e3,stroke-width:2px;
+    linkStyle 3 stroke:#00b894,stroke-width:3px,stroke-dasharray:5 5;
+```
+
+以 Windows 为了，下载了 rime-dict-processor-windows-x64.zip 后，解压得到 rime-dict-processor.exe。在 CMD/Powershell 中执行：
+```cmd
+# CMD 中执行
+rime-dict-processor.exe -i "C:\Users\用户名\AppData\Roaming\Rime\syncData" -o "C:\Users\用户名\AppData\Roaming\Rime\syncData"
+# Powershell 中执行
+./rime-dict-processor.exe -i "C:\Users\用户名\AppData\Roaming\Rime\syncData" -o "C:\Users\用户名\AppData\Roaming\Rime\syncData"
+```
+
+![刷写用户词典](/image/guide/refreshUserdb.webp)

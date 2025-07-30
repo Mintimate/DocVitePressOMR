@@ -152,3 +152,62 @@ Then, remove the `*` in the `processors`, `filters` and `translators` in `rime_m
 The same is true for other input schemes.
 
 It is recommended to use the `custom` file to override the `schema`, rather than directly modifying `*.schema.yaml`.
+
+
+## User Dictionary Phonetic Transcription
+
+Initially, oh-my-rime used dictionaries without phonetic marks, like this:
+```yaml
+你	ni	19
+好	hao	6
+```
+
+Later it switched to Wanxiang-style dictionaries with phonetic marks, like this:
+```yaml
+你	nǐ	19  
+好	hǎo	6
+```
+
+User dictionaries created from this will also contain phonetic marks. So if you're migrating from another schema or using an older version of oh-my-rime, you might encounter phonetic transcription issues.
+
+Theoretically, **this doesn't affect word frequency ordering (dynamic frequency adjustment remains unaffected)**. However, if you want to use real-time phonetic mark display, **words from user dictionaries might fail to display phonetic marks**.
+
+![Phonetic mark display reference](/image/guide/pinyinWithToneMark.webp)
+
+Solution: Rewrite the user dictionary to add phonetic marks. Follow these steps:
+1. Sync the user dictionary once to create a backup folder.
+2. Use oh-my-rime's precompiled executable ([Open source download](https://cnb.cool/Mintimate/rime/rime-userdb-maker/-/releases/latest)) to rewrite the user dictionary.
+3. Replace the backup folder.
+4. Delete the `*.userdb` folders in the user directory.
+5. Sync the user dictionary again.
+
+```mermaid
+flowchart LR
+    A([🔄 Sync user dictionary once]) --> B[📝 Rewrite with oh-my-rime executable]
+    B --> C[📂 Replace backup folder]
+    C --> D[🗑️ Delete *.userdb folders]
+    D --> E([✅ Sync user dictionary again])
+    
+    classDef start fill:#ff9ff3,stroke:#f368e0,stroke-width:3px,color:#fff,font-weight:bold,rx:15,ry:15;
+    classDef step fill:#74b9ff,stroke:#0984e3,stroke-width:2px,color:#fff,rx:10,ry=10;
+    classDef finish fill:#55efc4,stroke:#00b894,stroke-width:3px,color:#2d3436,font-weight:bold,rx:15,ry=15;
+    
+    class A start;
+    class B,C,D step;
+    class E finish;
+    
+    linkStyle 0 stroke:#f368e0,stroke-width:3px,stroke-dasharray:5 5;
+    linkStyle 1 stroke:#0984e3,stroke-width:2px;
+    linkStyle 2 stroke:#0984e3,stroke-width:2px;
+    linkStyle 3 stroke:#00b894,stroke-width:3px,stroke-dasharray:5 5;
+```
+
+For Windows, after downloading rime-dict-processor-windows-x64.zip and extracting rime-dict-processor.exe, execute in CMD/Powershell:
+```cmd
+# In CMD
+rime-dict-processor.exe -i "C:\Users\Username\AppData\Roaming\Rime\syncData" -o "C:\Users\Username\AppData\Roaming\Rime\syncData"
+# In Powershell
+./rime-dict-processor.exe -i "C:\Users\Username\AppData\Roaming\Rime\syncData" -o "C:\Users\Username\AppData\Roaming\Rime\syncData"
+```
+
+![Rewriting user dictionary](/image/guide/refreshUserdb.webp)
