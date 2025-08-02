@@ -103,6 +103,17 @@ const isLoading = ref(false)
 const messagesContainer = ref(null)
 const textareaRef = ref(null)
 
+// 存储对话历史记录，用于上下文联系
+const chatHistory = ref([])
+// 最大保留的历史对话轮数
+const MAX_HISTORY_TURNS = 3
+
+// 获取最近的对话历史
+const getRecentChatHistory = () => {
+  // 只保留最近的MAX_HISTORY_TURNS轮对话
+  return chatHistory.value.slice(-MAX_HISTORY_TURNS * 2) // 每轮包含用户和AI的消息，所以乘以2
+}
+
 // 将文本转换为HTML
 const convertToHtml = (text) => {
   return md.render(text)
@@ -118,11 +129,19 @@ onMounted(() => {
   const welcomeText = '您好！我是薄荷输入法 AI助手 ，可以帮您解答关于薄荷输入法的各种问题。请随时向我提问！<br/> ' +
                       '内容基于`向量化的知识库` 和 `Hunyuan A13B RAG检索`，不保证正确性，请自行判断 😊… <br/><br/> ' + 
                       '你可能会喜欢 🤔 : [oh-my-rime](https://github.com/Mintimate/oh-my-rime)、[Mintimate\'s Blog](https://www.mintimate.cn)、[Bilibili](https://space.bilibili.com/355567627)'
+  
+  // 添加欢迎消息到显示列表
   messages.value.push({
     type: 'ai',
     text: welcomeText,
     html: convertToHtml(welcomeText),
     timestamp: new Date()
+  })
+  
+  // 添加欢迎消息到历史记录
+  chatHistory.value.push({
+    role: 'assistant',
+    content: '您好！我是薄荷输入法 AI助手 ，可以帮您解答关于薄荷输入法的各种问题。请随时向我提问！'
   })
 })
 
@@ -162,6 +181,12 @@ const sendMessage = async () => {
     timestamp: new Date()
   })
 
+  // 添加当前用户消息到历史记录
+  chatHistory.value.push({
+    role: 'user',
+    content: userMessage
+  })
+
   inputMessage.value = ''
   isLoading.value = true
 
@@ -179,13 +204,17 @@ const sendMessage = async () => {
   })
 
   try {
+    // 获取最近的对话历史
+    const recentHistory = getRecentChatHistory()
+    
     const response = await fetch('https://rime-knowledge.mintimate.cc/api/v1/chat/stream', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
       },
       body: JSON.stringify({
-        Query: userMessage
+        Query: userMessage,
+        History: recentHistory
       })
     })
 
@@ -272,10 +301,33 @@ const sendMessage = async () => {
       const defaultMessage = '抱歉，我暂时无法回答这个问题。'
       messages.value[aiMessageIndex].text = defaultMessage
       messages.value[aiMessageIndex].html = convertToHtml(defaultMessage)
+      
+      // 添加AI回复到历史记录
+      chatHistory.value.push({
+        role: 'assistant',
+        content: defaultMessage
+      })
     } else if (!answerContent.trim() && !thinkContent.trim() && accumulatedText.trim()) {
       // 如果有内容但没有标签，显示全部内容（兼容旧格式）
       messages.value[aiMessageIndex].text = accumulatedText
       messages.value[aiMessageIndex].html = convertToHtml(accumulatedText)
+      
+      // 添加AI回复到历史记录
+      chatHistory.value.push({
+        role: 'assistant',
+        content: accumulatedText
+      })
+    } else if (answerContent.trim()) {
+      // 如果有回答内容，添加到历史记录
+      chatHistory.value.push({
+        role: 'assistant',
+        content: answerContent
+      })
+    }
+    
+    // 如果历史记录超过了最大限制的两倍，则裁剪掉最早的对话
+    if (chatHistory.value.length > MAX_HISTORY_TURNS * 2 * 2) { // 每轮包含用户和AI的消息，所以乘以2
+      chatHistory.value = chatHistory.value.slice(-MAX_HISTORY_TURNS * 2)
     }
 
   } catch (error) {
