@@ -4,12 +4,19 @@ import DefaultTheme from 'vitepress/theme'
 import Wwads from "./components/wwads.vue";
 import Googleads from "./components/googleads.vue";
 import donate from "./components/donate.vue";
+import aiChat from "./components/aiChat.vue";
 
 const {Layout} = DefaultTheme
 </script>
 
 <template>
   <Layout>
+    <template #nav-bar-content-after>
+       <!-- AI聊天组件 - 固定在右下角 -->
+        <div class="askAi">
+          <aiChat/>
+        </div>
+    </template>
     <template #home-features-before>
       <div class="VPFeatures" style="margin-bottom: 20px">
         <wwads/>
