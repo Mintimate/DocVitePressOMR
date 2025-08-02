@@ -27,6 +27,12 @@ $:
     - "!(.ide/**)"
 main:
   push:
+    - name: "向量化数据"
+      stages:
+        - name: build knowledge base
+          image: cnbcool/knowledge-base
+          settings:
+            include: "**/**.md"
     - name: "推送镜像"
       imports:
         - https://cnb.cool/Mintimate/secret/-/blob/main/SyncToGitHub.yml
