@@ -14,7 +14,7 @@ aside: true
 
 ::: warning 警告
 
-- 请先下载预构建包(薄荷输入法方案): [rime-mint.zip](https://cnb.cool/Mintimate/rime/DocVitePressOMR/-/releases/download/1.0.0/rime-mint.zip)
+- 请先下载预构建包(薄荷输入法方案): [oh-my-rime-online.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/oh-my-rime-online.zip)
 - 如果**加载错误的 zip，请刷新页面后重新加载 zip**。
 
 :::

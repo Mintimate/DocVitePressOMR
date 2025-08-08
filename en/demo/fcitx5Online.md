@@ -14,7 +14,7 @@ aside: true
 
 ::: warning Warning
 
-- Please download the pre-built package (Oh-my-rime scheme): [rime-mint.zip](https://cnb.cool/Mintimate/rime/DocVitePressOMR/-/releases/download/1.0.0/rime-mint.zip)
+- Please download the pre-built package (Oh-my-rime scheme):  [oh-my-rime-online.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/oh-my-rime-online.zip)
 - If **the zip is loaded incorrectly, please refresh the page and then reload the zip**.
 
 :::
