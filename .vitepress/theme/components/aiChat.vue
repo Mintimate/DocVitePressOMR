@@ -127,7 +127,7 @@ const toggleThink = (index) => {
 // 初始化欢迎消息
 onMounted(() => {
   const welcomeText = '您好！我是薄荷输入法 AI助手 ，可以帮您解答关于薄荷输入法的各种问题。请随时向我提问！<br/> ' +
-                      '内容基于`向量化的知识库` 和 `Hunyuan A13B RAG检索`，不保证正确性，请自行判断 😊… <br/><br/> ' + 
+                      '内容基于`向量化的知识库` 和 `DeepSeek RAG检索`，不保证正确性，请自行判断 😊… <br/><br/> ' + 
                       '你可能会喜欢 🤔 : [oh-my-rime](https://github.com/Mintimate/oh-my-rime)、[Mintimate\'s Blog](https://www.mintimate.cn)、[Bilibili](https://space.bilibili.com/355567627)'
   
   // 添加欢迎消息到显示列表
