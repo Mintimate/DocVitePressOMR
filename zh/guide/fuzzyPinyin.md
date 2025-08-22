@@ -158,7 +158,7 @@ nin xing wo jin lai, jin lai jin mu qin。
 使用自动纠错，可以让我们在输入的时候，一些情况下打错拼音也可以输入我们想要的。
 > 注意: 自动纠错参考自『雾凇拼音』，此处特别感谢。
 
-## 薄荷拼音的模糊拼音<Badge type="tip" text="^2023.11.30" />
+## 薄荷拼音的模糊拼音<Badge type="tip" text="^2025.08.22" />
 薄荷输入法内的薄荷拼音默认关闭了除了自动纠错外的模糊拼音。
 
 如果你喜欢模糊拼音，可以参考上文，并对`rime_mint.schema.yaml`文件中的模糊拼音部分的注释进行删除：
@@ -170,22 +170,25 @@ nin xing wo jin lai, jin lai jin mu qin。
 
 在`rime_mint.custom.yaml`内追加内容：
 ```yaml
-  'speller/algebra':
-    - erase/^xx$/ # 首选保留
-    - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
-    - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
-    - derive/([aei])n$/$1ng/ # en => eng, in => ing
-    - derive/([aei])ng$/$1n/ # eng => en, ing => in
-    - derive/([iu])an$/$lan/ # ian => iang, uan => uang
-    - derive/([iu])ang$/$lan/ # iang => ian, uang => uan
-    - derive/([aeiou])ng$/$1gn/        # dagn => dang
-    - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
-    - derive/ong$/on/                  # zhonguo => zhong guo
-    - abbrev/^([a-z]).+$/$1/ #简拼（首字母）
-    - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
+patch:
+  'speller/algebra/+':
+     - erase/^xx$/ # 首选保留
+     - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
+     - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
+     - derive/([aei])n$/$1ng/ # en => eng, in => ing
+     - derive/([aei])ng$/$1n/ # eng => en, ing => in
+     - derive/([iu])an$/$lan/ # ian => iang, uan => uang
+     - derive/([iu])ang$/$lan/ # iang => ian, uang => uan
+     - derive/([aeiou])ng$/$1gn/        # dagn => dang
+     - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
+     - derive/ong$/on/                  # zhonguo => zhong guo
+     - abbrev/^([a-z]).+$/$1/ #简拼（首字母）
+     - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
 ```
 
 ![使用custom覆盖](/image/guide/fuzzyPinyinMintCustom.webp)
+
+> 注意⚠️: 选择的是`'speller/algebra/+'`，而不是`'speller/algebra'`；前者相比后者，后者是直接覆盖，前者是追加。
 
 
 保存并重新部署rime，这个时候，在编译阶段`rime_mint.custom.yaml`内`speller/algebra`会覆盖`rime_mint.schema.yaml`内的`speller/algebra`部分。

@@ -152,7 +152,7 @@ Through fuzzy pinyin, you can also enable automatic error correction (to a certa
 Using automatic error correction can allow us to input what we want even when we make some mistakes in typing.
 > Note: The automatic error correction is based on "Wusong Pinyin," and special thanks to them for the reference.
 
-## Fuzzy Pinyin in Mint Pinyin <Badge type="tip" text="^2023.11.30" />
+## Fuzzy Pinyin in Mint Pinyin <Badge type="tip" text="^2025.08.22" />
 By default, the fuzzy Pinyin feature, except for automatic error correction, is disabled in Mint Pinyin.
 
 If you prefer to use fuzzy Pinyin, you can refer to the previous text and remove the comments in the fuzzy Pinyin section of the `rime_mint.schema.yaml` file:
@@ -162,21 +162,24 @@ After removing the comments, redeploy the Rime input method to apply the new con
 
 To add content in `rime_mint.custom.yaml`:
 ```yaml
-  'speller/algebra':
-    - erase/^xx$/ # 首选保留
-    - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
-    - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
-    - derive/([aei])n$/$1ng/ # en => eng, in => ing
-    - derive/([aei])ng$/$1n/ # eng => en, ing => in
-    - derive/([iu])an$/$lan/ # ian => iang, uan => uang
-    - derive/([iu])ang$/$lan/ # iang => ian, uang => uan
-    - derive/([aeiou])ng$/$1gn/        # dagn => dang
-    - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
-    - derive/ong$/on/                  # zhonguo => zhong guo
-    - abbrev/^([a-z]).+$/$1/ #简拼（首字母）
-    - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
+patch:
+  'speller/algebra/+':
+     - erase/^xx$/ # 首选保留
+     - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
+     - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
+     - derive/([aei])n$/$1ng/ # en => eng, in => ing
+     - derive/([aei])ng$/$1n/ # eng => en, ing => in
+     - derive/([iu])an$/$lan/ # ian => iang, uan => uang
+     - derive/([iu])ang$/$lan/ # iang => ian, uang => uan
+     - derive/([aeiou])ng$/$1gn/        # dagn => dang
+     - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
+     - derive/ong$/on/                  # zhonguo => zhong guo
+     - abbrev/^([a-z]).+$/$1/ #简拼（首字母）
+     - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
 ```
 ![using Custom](/image/guide/fuzzyPinyinMintCustom.webp)
+
+> Note⚠️: Choose `'speller/algebra/+'` instead of `'speller/algebra'`; the former appends to the existing configuration, while the latter directly overrides it.
 
 After saving and redeploying Rime, during the compilation phase, the `speller/algebra` section in `rime_mint.custom.yaml` will override the corresponding section in `rime_mint.schema.yaml`.
 
@@ -185,10 +188,10 @@ After saving and redeploying Rime, during the compilation phase, the `speller/al
 
 In the process of learning Pinyin, we learn about complex vowels such as `un` and `ün`, as well as single vowels like `u` and `ü`.
 
-Although there is a `u` key on the keyboard, there is no `ü` key; however, the common agreement among various input methods and users is to map `v` to `ü`. However, some input methods will also blur `ü` into `u`, which is why many users who use the Mint scheme report that they cannot type words like `女(nv)` and `攻略(gong lve)`: By default, the Mint scheme does not blur Pinyin, so if you need blurred Pinyin, you need to configure the confusion between `ü` and `u` yourself.
+Although there is a `u` key on the keyboard, there is no `ü` key; however, the common agreement among various input methods and users is to map `v` to `ü`. However, some input methods will also blur `ü` into `u`, which is why many users who use the Mint scheme report that they cannot type words like `女(nv)` and `攻略(gong lve)`: **By default, the Mint scheme does not have fuzzy pinyin, so if you need fuzzy pinyin, you need to configure the confusion between `ü` and `u` yourself.**
 
-The configuration is actually very simple. Taking Mint Full Pinyin as an example (`rime_mint.schema.yaml`), we create a `mint_mint.custom.yaml` file and append the following content to it:
-```yaml
+The configuration is actually very simple. Taking Mint Full Pinyin as an example (`rime_mint.schema.yaml`), we create a `rime_mint.custom.yaml` file and append the following content to it:
+```yaml 
 patch:
   # Append to speller/algebra
   "speller/algebra/+":
