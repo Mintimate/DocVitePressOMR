@@ -87,6 +87,12 @@
 <script setup>
 import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import MarkdownIt from 'markdown-it'
+/**
+  AI聊天组件
+  作者: Mintimate
+  创建时间: 2025-08-02
+  描述: 基于RAG知识库的AI聊天助手组件，支持流式响应和思考过程展示
+*/
 
 // Props
 const props = defineProps({
@@ -98,6 +104,10 @@ const props = defineProps({
   maxHistoryTurns: {
     type: Number,
     default: 3
+  },
+  welcomeMessage: {
+    type: String,
+    default: '您好！我是 RAG 知识库检索助手，可以查看项目地址: https://github.com/Mintimate/knowledge-maker'
   }
 })
 
@@ -171,15 +181,11 @@ const toggleThink = (index) => {
 
 // 初始化欢迎消息
 onMounted(() => {
-  const welcomeText = '您好！我是薄荷输入法 AI助手 ，可以帮您解答关于薄荷输入法的各种问题。请随时向我提问！<br/> ' +
-                      '内容基于`向量化的知识库` 和 `DeepSeek RAG检索`，不保证正确性，请自行判断 😊… <br/><br/> ' + 
-                      '你可能会喜欢 🤔 : [oh-my-rime](https://github.com/Mintimate/oh-my-rime)、[Mintimate\'s Blog](https://www.mintimate.cn)、[Bilibili](https://space.bilibili.com/355567627)'
-  
   // 添加欢迎消息到显示列表
   messages.value.push({
     type: 'ai',
-    text: welcomeText,
-    html: convertToHtml(welcomeText),
+    text: props.welcomeMessage,
+    html: convertToHtml(props.welcomeMessage),
     timestamp: new Date()
   })
 })

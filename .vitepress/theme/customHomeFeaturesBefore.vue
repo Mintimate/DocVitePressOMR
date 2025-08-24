@@ -7,6 +7,15 @@ import donate from "./components/donate.vue";
 import aiChat from "./components/aiChat.vue";
 
 const {Layout} = DefaultTheme
+
+// AI聊天组件配置
+const aiChatConfig = {
+  apiUrl: 'https://rime-knowledge.mintimate.cc/api/v1/chat/stream',
+  maxHistoryTurns: 3,
+  welcomeMessage: '您好！我是薄荷输入法 AI助手 ，可以帮您解答关于薄荷输入法的各种问题。请随时向我提问！<br/> ' +
+                  '内容基于`向量化的知识库` 和 `DeepSeek RAG 检索`，不保证正确性，请自行判断 😊… <br/><br/> ' + 
+                  '你可能会喜欢 🤔 : [oh-my-rime](https://github.com/Mintimate/oh-my-rime)、[Mintimate\'s Blog](https://www.mintimate.cn)、[Bilibili](https://space.bilibili.com/355567627)'
+}
 </script>
 
 <template>
@@ -15,8 +24,9 @@ const {Layout} = DefaultTheme
        <!-- AI聊天组件 - 固定在导航栏 -->
         <div class="askAi">
           <aiChat 
-            :api-url="'https://rime-knowledge.mintimate.cc/api/v1/chat/stream'" 
-            :max-history-turns="3"
+            :api-url="aiChatConfig.apiUrl" 
+            :max-history-turns="aiChatConfig.maxHistoryTurns"
+            :welcome-message="aiChatConfig.welcomeMessage"
           />
         </div>
     </template>
