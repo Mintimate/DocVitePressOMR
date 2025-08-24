@@ -12,9 +12,12 @@ const {Layout} = DefaultTheme
 <template>
   <Layout>
     <template #nav-bar-content-after>
-       <!-- AI聊天组件 - 固定在右下角 -->
+       <!-- AI聊天组件 - 固定在导航栏 -->
         <div class="askAi">
-          <aiChat/>
+          <aiChat 
+            :api-url="'https://rime-knowledge.mintimate.cc/api/v1/chat/stream'" 
+            :max-history-turns="3"
+          />
         </div>
     </template>
     <template #home-features-before>

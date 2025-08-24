@@ -85,8 +85,21 @@
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted } from 'vue'
+import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import MarkdownIt from 'markdown-it'
+
+// Props
+const props = defineProps({
+  apiUrl: {
+    type: String,
+    // Refer to: https://github.com/Mintimate/knowledge-maker
+    default: 'http://localhost:8082/api/v1/chat/stream'
+  },
+  maxHistoryTurns: {
+    type: Number,
+    default: 3
+  }
+})
 
 // 初始化 markdown-it
 const md = new MarkdownIt({
@@ -105,13 +118,45 @@ const textareaRef = ref(null)
 
 // 存储对话历史记录，用于上下文联系
 const chatHistory = ref([])
-// 最大保留的历史对话轮数
-const MAX_HISTORY_TURNS = 3
+
+// 滚动控制相关
+const isUserScrolling = ref(false)
+const scrollTimeout = ref(null)
 
 // 获取最近的对话历史
 const getRecentChatHistory = () => {
-  // 只保留最近的MAX_HISTORY_TURNS轮对话
-  return chatHistory.value.slice(-MAX_HISTORY_TURNS * 2) // 每轮包含用户和AI的消息，所以乘以2
+  // 只保留最近的maxHistoryTurns轮对话
+  return chatHistory.value.slice(-props.maxHistoryTurns * 2) // 每轮包含用户和AI的消息，所以乘以2
+}
+
+// 检查是否应该自动滚动到底部
+const shouldAutoScroll = () => {
+  if (!messagesContainer.value) return false
+  const container = messagesContainer.value
+  const threshold = 100 // 距离底部100px内认为用户在底部
+  return container.scrollTop + container.clientHeight >= container.scrollHeight - threshold
+}
+
+// 智能滚动到底部
+const smartScrollToBottom = () => {
+  if (!isUserScrolling.value && shouldAutoScroll()) {
+    scrollToBottom()
+  }
+}
+
+// 监听用户滚动
+const handleScroll = () => {
+  isUserScrolling.value = true
+  
+  // 清除之前的定时器
+  if (scrollTimeout.value) {
+    clearTimeout(scrollTimeout.value)
+  }
+  
+  // 500ms后认为用户停止滚动
+  scrollTimeout.value = setTimeout(() => {
+    isUserScrolling.value = false
+  }, 500)
 }
 
 // 将文本转换为HTML
@@ -137,12 +182,6 @@ onMounted(() => {
     html: convertToHtml(welcomeText),
     timestamp: new Date()
   })
-  
-  // 添加欢迎消息到历史记录
-  chatHistory.value.push({
-    role: 'assistant',
-    content: '您好！我是薄荷输入法 AI助手 ，可以帮您解答关于薄荷输入法的各种问题。请随时向我提问！'
-  })
 })
 
 const toggleChat = () => {
@@ -153,9 +192,28 @@ const toggleChat = () => {
       if (textareaRef.value) {
         textareaRef.value.focus()
       }
+      // 添加滚动事件监听器
+      if (messagesContainer.value) {
+        messagesContainer.value.addEventListener('scroll', handleScroll, { passive: true })
+      }
     })
+  } else {
+    // 移除滚动事件监听器
+    if (messagesContainer.value) {
+      messagesContainer.value.removeEventListener('scroll', handleScroll)
+    }
   }
 }
+
+// 组件卸载时清理
+onUnmounted(() => {
+  if (messagesContainer.value) {
+    messagesContainer.value.removeEventListener('scroll', handleScroll)
+  }
+  if (scrollTimeout.value) {
+    clearTimeout(scrollTimeout.value)
+  }
+})
 
 const closeChat = () => {
   isOpen.value = false
@@ -200,14 +258,14 @@ const sendMessage = async () => {
   })
 
   nextTick(() => {
-    scrollToBottom()
+    smartScrollToBottom()
   })
 
   try {
     // 获取最近的对话历史
     const recentHistory = getRecentChatHistory()
     
-    const response = await fetch('https://rime-knowledge.mintimate.cc/api/v1/chat/stream', {
+    const response = await fetch(props.apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -231,65 +289,69 @@ const sendMessage = async () => {
     let answerContent = ''
     let isStreamComplete = false
 
-    while (true) {
-      const { done, value } = await reader.read()
+    // 使用异步迭代器处理流式数据
+    const processStream = async () => {
+      try {
+        let result
+        while (!(result = await reader.read()).done) {
+          const chunk = decoder.decode(result.value, { stream: true })
+          buffer += chunk
 
-      if (done) {
-        break
-      }
+          // 按行分割处理SSE数据
+          const lines = buffer.split('\n')
+          buffer = lines.pop() || '' // 保留最后一个不完整的行
 
-      // 解码数据块并添加到缓冲区
-      const chunk = decoder.decode(value, { stream: true })
-      buffer += chunk
+          for (const line of lines) {
+            const trimmedLine = line.trim()
+            if (trimmedLine.startsWith('data:')) {
+              try {
+                // 提取data:后的JSON数据
+                const jsonStr = trimmedLine.substring(5).trim()
+                if (jsonStr && jsonStr !== '[DONE]' && !jsonStr.includes('"success":true')) {
+                  const data = JSON.parse(jsonStr)
+                  if (data.content) {
+                    accumulatedText += data.content
 
-      // 按行分割处理SSE数据
-      const lines = buffer.split('\n')
-      buffer = lines.pop() || '' // 保留最后一个不完整的行
+                    // 提取思考内容
+                    const thinkMatch = accumulatedText.match(/<think>([\s\S]*?)(?:<\/think>|$)/)
+                    if (thinkMatch) {
+                      thinkContent = thinkMatch[1]
+                      messages.value[aiMessageIndex].thinkContent = thinkContent
+                      messages.value[aiMessageIndex].thinkHtml = convertToHtml(thinkContent)
+                    }
 
-      for (const line of lines) {
-        const trimmedLine = line.trim()
-        if (trimmedLine.startsWith('data:')) {
-          try {
-            // 提取data:后的JSON数据
-            const jsonStr = trimmedLine.substring(5).trim()
-            if (jsonStr && jsonStr !== '[DONE]' && !jsonStr.includes('"success":true')) {
-              const data = JSON.parse(jsonStr)
-              if (data.content) {
-                accumulatedText += data.content
+                    // 提取回答内容
+                    const answerMatch = accumulatedText.match(/<answer>([\s\S]*?)(?:<\/answer>|$)/)
+                    if (answerMatch) {
+                      answerContent = answerMatch[1]
+                      messages.value[aiMessageIndex].text = answerContent
+                      messages.value[aiMessageIndex].html = convertToHtml(answerContent)
+                    }
 
-                // 提取思考内容
-                const thinkMatch = accumulatedText.match(/<think>([\s\S]*?)(?:<\/think>|$)/)
-                if (thinkMatch) {
-                  thinkContent = thinkMatch[1]
-                  messages.value[aiMessageIndex].thinkContent = thinkContent
-                  messages.value[aiMessageIndex].thinkHtml = convertToHtml(thinkContent)
+                    // 智能滚动到底部
+                    nextTick(() => {
+                      smartScrollToBottom()
+                    })
+                  }
                 }
-
-                // 提取回答内容
-                const answerMatch = accumulatedText.match(/<answer>([\s\S]*?)(?:<\/answer>|$)/)
-                if (answerMatch) {
-                  answerContent = answerMatch[1]
-                  messages.value[aiMessageIndex].text = answerContent
-                  messages.value[aiMessageIndex].html = convertToHtml(answerContent)
-                }
-
-                // 自动滚动到底部
-                nextTick(() => {
-                  scrollToBottom()
-                })
+              } catch (e) {
+                // 忽略JSON解析错误，继续处理下一行
+                console.warn('解析SSE数据失败:', trimmedLine, e)
               }
+            } else if (trimmedLine.startsWith('event:done')) {
+              // 处理完成事件
+              isStreamComplete = true
+              return // 直接返回，结束处理
             }
-          } catch (e) {
-            // 忽略JSON解析错误，继续处理下一行
-            console.warn('解析SSE数据失败:', trimmedLine, e)
           }
-        } else if (trimmedLine.startsWith('event:done')) {
-          // 处理完成事件
-          isStreamComplete = true
-          break
         }
+      } finally {
+        // 确保 reader 被正确关闭
+        reader.releaseLock()
       }
     }
+
+    await processStream()
 
     // 流式响应完成后，如果有思考内容，默认折叠
     if (isStreamComplete && thinkContent.trim()) {
@@ -326,8 +388,8 @@ const sendMessage = async () => {
     }
     
     // 如果历史记录超过了最大限制的两倍，则裁剪掉最早的对话
-    if (chatHistory.value.length > MAX_HISTORY_TURNS * 2 * 2) { // 每轮包含用户和AI的消息，所以乘以2
-      chatHistory.value = chatHistory.value.slice(-MAX_HISTORY_TURNS * 2)
+    if (chatHistory.value.length > props.maxHistoryTurns * 2 * 2) { // 每轮包含用户和AI的消息，所以乘以2
+      chatHistory.value = chatHistory.value.slice(-props.maxHistoryTurns * 2)
     }
 
   } catch (error) {
@@ -338,7 +400,7 @@ const sendMessage = async () => {
   } finally {
     isLoading.value = false
     nextTick(() => {
-      scrollToBottom()
+      smartScrollToBottom()
     })
   }
 }
