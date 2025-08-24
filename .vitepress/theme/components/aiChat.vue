@@ -221,6 +221,11 @@ const closeChat = () => {
 
 const handleKeydown = (event) => {
   if (event.key === 'Enter' && !event.shiftKey) {
+    // 检查是否是输入法组合状态
+    if (event.isComposing || event.keyCode === 229) {
+      // 如果是输入法组合状态，不处理发送逻辑
+      return
+    }
     event.preventDefault()
     sendMessage()
   }
