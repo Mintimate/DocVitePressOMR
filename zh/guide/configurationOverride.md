@@ -157,7 +157,7 @@ graph LR
 
 所以：
 - 如果你想自定义全局样式，推荐使用`default.custom.yaml`文件覆写`default.yaml`；
-- 如果你想修改薄荷输入法内的全屏配置，推荐使用`rime_mint.custom.yaml`文件进行覆写（注意：是薄荷输入法内全拼配置；如果你是用薄荷输入法内的小鹤双拼，那么就是`double_pinyin_flypy.custom.yaml`文件，其他薄荷输入法内配置方案，以此类推）。
+- 如果你想修改薄荷输入法内的全拼配置，推荐使用`rime_mint.custom.yaml`文件进行覆写（注意：是薄荷输入法内全拼配置；如果你是用薄荷输入法内的小鹤双拼，那么就是`double_pinyin_flypy.custom.yaml`文件，其他薄荷输入法内配置方案，以此类推）。
 
 举例: 覆写全局的输入方案配置，设置候选为6个:
 ```yaml

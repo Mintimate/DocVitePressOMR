@@ -113,7 +113,7 @@ opencc -i simplified.txt -o traditional.txt -c t2s
 ```
 其中：
 - emoji.json - 该文件包含emoji表情的映射规则。OpenCC会根据这个json文件进行emoji的转换。
-- emoji.txt - 该文件包含所有emoji表情的列表,每行一个emoji。它作为emoji词典的输入,用于生成emoji.json映射文件。
+- emoji.txt - 该文件包含所有emoji表情的列表，每行一个emoji。它作为emoji词典的输入，用于生成emoji.json映射文件。
 - others.txt - 该文件包含一些特殊词汇表的形式。
 
 你可以自行修改，但是需要注意格式。尤其是`Tab`和`空格`：
