@@ -106,8 +106,6 @@
 <script setup>
 import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import MarkdownIt from 'markdown-it'
-// 导入腾讯云天御验证码
-import './resources/captcha/TCaptcha.js'
 
 /**
   AI聊天组件
@@ -251,15 +249,33 @@ const captchaLoadErrorCallback = () => {
 }
 
 // 触发验证码验证
-const triggerCaptcha = () => {
+const triggerCaptcha = async () => {
   if (!props.enableCaptcha) {
     // 如果未启用验证码，直接发送消息
     proceedWithMessage()
     return
   }
   
+  // 检查是否在客户端环境
+  if (typeof window === 'undefined') {
+    console.warn('服务端环境，跳过验证码验证')
+    proceedWithMessage()
+    return
+  }
+  
   try {
     isCaptchaVerifying.value = true
+    
+    // 动态加载验证码脚本
+    if (typeof window.TencentCaptcha === 'undefined') {
+      try {
+        await import('./resources/captcha/TCaptcha.js')
+      } catch (importError) {
+        console.error('验证码脚本加载失败:', importError)
+        captchaLoadErrorCallback()
+        return
+      }
+    }
     
     // 检查 TencentCaptcha 是否可用
     if (typeof window.TencentCaptcha === 'undefined') {
