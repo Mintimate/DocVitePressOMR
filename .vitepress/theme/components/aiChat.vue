@@ -69,31 +69,30 @@
         </div>
 
         <div class="ai-chat-input">
-          <!-- 验证码状态提示 -->
-          <div v-if="isCaptchaVerifying" class="captcha-status">
-            <div class="captcha-indicator">
-              <svg class="captcha-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11H16V18H8V11H9.2V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.4,8.7 10.4,10V11H13.6V10C13.6,8.7 12.8,8.2 12,8.2Z" />
-              </svg>
-              <span>请完成安全验证...</span>
-            </div>
-          </div>
+          <!-- 验证码组件 -->
+          <qCloudCaptcha 
+            :app-id="captchaAppId"
+            :enabled="enableCaptcha"
+            :show="captchaState.isVerifying"
+            embed-mode
+            @success="onCaptchaSuccess"
+            @cancel="onCaptchaCancel"
+            @error="onCaptchaError"
+            @hide="onCaptchaHide"
+          />
           
           <div class="input-container">
             <textarea 
               v-model="inputMessage" 
               @keydown="handleKeydown" 
-              :placeholder="isCaptchaVerifying ? '请先完成验证码验证...' : '请输入您关于薄荷配置上的问题...'" 
+              :placeholder="captchaState.isVerifying ? '请先完成验证码验证...' : '请输入您关于薄荷配置上的问题...'" 
               rows="1"
               ref="textareaRef"
-              :disabled="isCaptchaVerifying">
+              :disabled="captchaState.isVerifying">
             </textarea>
-            <button @click="sendMessage" :disabled="!inputMessage.trim() || isLoading || isCaptchaVerifying" class="send-button">
-              <svg v-if="!isCaptchaVerifying" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <button @click="sendMessage" :disabled="!inputMessage.trim() || isLoading || captchaState.isVerifying" class="send-button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-              </svg>
-              <svg v-else class="captcha-loading" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11H16V18H8V11H9.2V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.4,8.7 10.4,10V11H13.6V10C13.6,8.7 12.8,8.2 12,8.2Z" />
               </svg>
             </button>
           </div>
@@ -106,13 +105,20 @@
 <script setup>
 import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import MarkdownIt from 'markdown-it'
+import qCloudCaptcha from './qCloudCaptcha.vue'
 
 /**
   AI聊天组件
   作者: Mintimate
   创建时间: 2025-08-02
-  描述: 基于RAG知识库的AI聊天助手组件，支持流式响应和思考过程展示，集成腾讯云天御验证码
+  更新时间: 2025-09-11
+  描述: 基于RAG知识库的AI聊天助手组件，支持流式响应和思考过程展示，支持使用独立的验证码组件
 */
+
+// 注册组件
+const components = {
+  qCloudCaptcha
+}
 
 // Props
 const props = defineProps({
@@ -163,9 +169,11 @@ const isUserScrolling = ref(false)
 const scrollTimeout = ref(null)
 
 // 验证码相关状态
-const captchaTicket = ref('')
-const captchaRandstr = ref('')
-const isCaptchaVerifying = ref(false)
+const captchaState = ref({
+  isVerifying: false,
+  ticket: '',
+  randstr: ''
+})
 
 // 获取最近的对话历史
 const getRecentChatHistory = () => {
@@ -208,44 +216,33 @@ const convertToHtml = (text) => {
   return md.render(text)
 }
 
-// 验证码回调函数
-const captchaCallback = (res) => {
-  console.log('验证码回调结果:', res)
+// 验证码组件事件处理
+const onCaptchaSuccess = (data) => {
+  captchaState.value.ticket = data.ticket
+  captchaState.value.randstr = data.randstr
+  captchaState.value.isVerifying = false
   
-  if (res.ret === 0) {
-    // 验证成功
-    captchaTicket.value = res.ticket
-    captchaRandstr.value = res.randstr
-    isCaptchaVerifying.value = false
-    
-    // 验证成功后继续发送消息
-    proceedWithMessage()
-  } else if (res.ret === 2) {
-    // 用户主动关闭验证码
-    isCaptchaVerifying.value = false
-    console.log('用户取消了验证码验证')
-  } else {
-    // 其他错误
-    isCaptchaVerifying.value = false
-    console.error('验证码验证失败:', res)
-  }
+  // 验证成功后继续发送消息
+  proceedWithMessage()
 }
 
-// 验证码加载错误处理函数
-const captchaLoadErrorCallback = () => {
-  console.warn('验证码JS加载失败，生成容灾票据')
-  
-  // 生成容灾票据
-  const ticket = 'terror_1001_' + props.captchaAppId + '_' + Math.floor(new Date().getTime() / 1000)
-  const randstr = '@' + Math.random().toString(36).substr(2)
-  
-  captchaCallback({
-    ret: 0,
-    randstr: randstr,
-    ticket: ticket,
-    errorCode: 1001,
-    errorMessage: 'jsload_error'
-  })
+const onCaptchaCancel = () => {
+  captchaState.value.isVerifying = false
+  pendingMessage.value = '' // 清空待发送消息
+  console.log('用户取消了验证码验证')
+}
+
+const onCaptchaError = (error) => {
+  captchaState.value.isVerifying = false
+  pendingMessage.value = '' // 清空待发送消息
+  console.error('验证码验证失败:', error)
+}
+
+const onCaptchaHide = () => {
+  // 验证码隐藏时的处理
+  if (captchaState.value.isVerifying) {
+    captchaState.value.isVerifying = false
+  }
 }
 
 // 触发验证码验证
@@ -256,43 +253,15 @@ const triggerCaptcha = async () => {
     return
   }
   
-  // 检查是否在客户端环境
-  if (typeof window === 'undefined') {
-    console.warn('服务端环境，跳过验证码验证')
+  // 检查是否已有有效票据
+  if (captchaState.value.ticket && captchaState.value.randstr) {
+    // 如果已有有效票据，直接发送消息
     proceedWithMessage()
     return
   }
   
-  try {
-    isCaptchaVerifying.value = true
-    
-    // 动态加载验证码脚本
-    if (typeof window.TencentCaptcha === 'undefined') {
-      try {
-        await import('./resources/captcha/TCaptcha.js')
-      } catch (importError) {
-        console.error('验证码脚本加载失败:', importError)
-        captchaLoadErrorCallback()
-        return
-      }
-    }
-    
-    // 检查 TencentCaptcha 是否可用
-    if (typeof window.TencentCaptcha === 'undefined') {
-      console.error('TencentCaptcha 未加载')
-      captchaLoadErrorCallback()
-      return
-    }
-    
-    // 创建验证码实例
-    const captcha = new window.TencentCaptcha(props.captchaAppId, captchaCallback, {})
-    
-    // 显示验证码
-    captcha.show()
-  } catch (error) {
-    console.error('验证码初始化失败:', error)
-    captchaLoadErrorCallback()
-  }
+  // 设置验证状态，这会触发验证码组件显示
+  captchaState.value.isVerifying = true
 }
 
 // 切换思考内容展开/收起
@@ -344,6 +313,19 @@ onUnmounted(() => {
 
 const closeChat = () => {
   isOpen.value = false
+  
+  // 清理验证码相关状态
+  if (captchaState.value.isVerifying) {
+    captchaState.value.isVerifying = false
+    captchaState.value.ticket = ''
+    captchaState.value.randstr = ''
+    pendingMessage.value = ''
+  }
+  
+  // 移除滚动事件监听器
+  if (messagesContainer.value) {
+    messagesContainer.value.removeEventListener('scroll', handleScroll)
+  }
 }
 
 const handleKeydown = (event) => {
@@ -362,7 +344,7 @@ const handleKeydown = (event) => {
 const pendingMessage = ref('')
 
 const sendMessage = async () => {
-  if (!inputMessage.value.trim() || isLoading.value || isCaptchaVerifying.value) return
+  if (!inputMessage.value.trim() || isLoading.value || captchaState.value.isVerifying) return
 
   // 保存待发送的消息
   pendingMessage.value = inputMessage.value.trim()
@@ -423,13 +405,13 @@ const proceedWithMessage = async () => {
     }
     
     // 如果启用验证码且有票据，添加到请求中
-    if (props.enableCaptcha && captchaTicket.value && captchaRandstr.value) {
-      requestBody.CaptchaTicket = captchaTicket.value
-      requestBody.CaptchaRandstr = captchaRandstr.value
+    if (props.enableCaptcha && captchaState.value.ticket && captchaState.value.randstr) {
+      requestBody.CaptchaTicket = captchaState.value.ticket
+      requestBody.CaptchaRandstr = captchaState.value.randstr
       
       // 发送后清空票据，确保每次都需要重新验证
-      captchaTicket.value = ''
-      captchaRandstr.value = ''
+      captchaState.value.ticket = ''
+      captchaState.value.randstr = ''
     }
     
     const response = await fetch(props.apiUrl, {
@@ -1094,49 +1076,7 @@ const formatTime = (timestamp) => {
   border-radius: 0 0 6px 6px;
 }
 
-/* ===== 验证码状态 ===== */
-.captcha-status {
-  margin-bottom: 8px;
-  padding: 8px 12px;
-  background: var(--vp-c-warning-soft);
-  border: 1px solid var(--vp-c-warning);
-  border-radius: 6px;
-  font-size: 13px;
-}
 
-.captcha-indicator {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--vp-c-warning-dark);
-}
-
-.captcha-icon {
-  flex-shrink: 0;
-  animation: pulse 2s infinite;
-}
-
-.captcha-loading {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 .input-container {
   display: flex;
