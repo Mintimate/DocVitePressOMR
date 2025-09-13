@@ -106,6 +106,7 @@
 import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import MarkdownIt from 'markdown-it'
 import qCloudCaptcha from './qCloudCaptcha.vue'
+import gtCaptcha from './gtCaptcha.vue'
 
 /**
   AI聊天组件
@@ -117,7 +118,8 @@ import qCloudCaptcha from './qCloudCaptcha.vue'
 
 // 注册组件
 const components = {
-  qCloudCaptcha
+  qCloudCaptcha,
+  gtCaptcha
 }
 
 // Props
@@ -171,8 +173,14 @@ const scrollTimeout = ref(null)
 // 验证码相关状态
 const captchaState = ref({
   isVerifying: false,
+  // 腾讯云验证码字段
   ticket: '',
-  randstr: ''
+  randstr: '',
+  // 极验验证码字段
+  lot_number: '',
+  captcha_output: '',
+  pass_token: '',
+  gen_time: ''
 })
 
 // 获取最近的对话历史
@@ -217,9 +225,20 @@ const convertToHtml = (text) => {
 }
 
 // 验证码组件事件处理
-const onCaptchaSuccess = (data) => {
-  captchaState.value.ticket = data.ticket
-  captchaState.value.randstr = data.randstr
+const onCaptchaSuccess = (data) => {  
+  // 根据验证码类型存储不同的数据
+  if (data.ticket && data.randstr) {
+    // 腾讯云验证码
+    captchaState.value.ticket = data.ticket
+    captchaState.value.randstr = data.randstr
+  } else if (data.lot_number && data.captcha_output && data.pass_token && data.gen_time) {
+    // 极验验证码
+    captchaState.value.lot_number = data.lot_number
+    captchaState.value.captcha_output = data.captcha_output
+    captchaState.value.pass_token = data.pass_token
+    captchaState.value.gen_time = data.gen_time
+  }
+  
   captchaState.value.isVerifying = false
   
   // 验证成功后继续发送消息
@@ -229,12 +248,26 @@ const onCaptchaSuccess = (data) => {
 const onCaptchaCancel = () => {
   captchaState.value.isVerifying = false
   pendingMessage.value = '' // 清空待发送消息
+  // 清空所有验证码相关状态
+  captchaState.value.ticket = ''
+  captchaState.value.randstr = ''
+  captchaState.value.lot_number = ''
+  captchaState.value.captcha_output = ''
+  captchaState.value.pass_token = ''
+  captchaState.value.gen_time = ''
   console.log('用户取消了验证码验证')
 }
 
 const onCaptchaError = (error) => {
   captchaState.value.isVerifying = false
   pendingMessage.value = '' // 清空待发送消息
+  // 清空所有验证码相关状态
+  captchaState.value.ticket = ''
+  captchaState.value.randstr = ''
+  captchaState.value.lot_number = ''
+  captchaState.value.captcha_output = ''
+  captchaState.value.pass_token = ''
+  captchaState.value.gen_time = ''
   console.error('验证码验证失败:', error)
 }
 
@@ -253,8 +286,12 @@ const triggerCaptcha = async () => {
     return
   }
   
-  // 检查是否已有有效票据
-  if (captchaState.value.ticket && captchaState.value.randstr) {
+  // 检查是否已有有效票据（腾讯云或极验）
+  const hasTencentTicket = captchaState.value.ticket && captchaState.value.randstr
+  const hasGeetestTicket = captchaState.value.lot_number && captchaState.value.captcha_output && 
+                          captchaState.value.pass_token && captchaState.value.gen_time
+  
+  if (hasTencentTicket || hasGeetestTicket) {
     // 如果已有有效票据，直接发送消息
     proceedWithMessage()
     return
@@ -319,6 +356,10 @@ const closeChat = () => {
     captchaState.value.isVerifying = false
     captchaState.value.ticket = ''
     captchaState.value.randstr = ''
+    captchaState.value.lot_number = ''
+    captchaState.value.captcha_output = ''
+    captchaState.value.pass_token = ''
+    captchaState.value.gen_time = ''
     pendingMessage.value = ''
   }
   
@@ -405,13 +446,30 @@ const proceedWithMessage = async () => {
     }
     
     // 如果启用验证码且有票据，添加到请求中
-    if (props.enableCaptcha && captchaState.value.ticket && captchaState.value.randstr) {
-      requestBody.CaptchaTicket = captchaState.value.ticket
-      requestBody.CaptchaRandstr = captchaState.value.randstr
-      
-      // 发送后清空票据，确保每次都需要重新验证
-      captchaState.value.ticket = ''
-      captchaState.value.randstr = ''
+    if (props.enableCaptcha) {
+      // 腾讯云验证码
+      if (captchaState.value.ticket && captchaState.value.randstr) {
+        requestBody.CaptchaTicket = captchaState.value.ticket
+        requestBody.CaptchaRandstr = captchaState.value.randstr
+        
+        // 发送后清空票据，确保每次都需要重新验证
+        captchaState.value.ticket = ''
+        captchaState.value.randstr = ''
+      }
+      // 极验验证码
+      else if (captchaState.value.lot_number && captchaState.value.captcha_output && 
+               captchaState.value.pass_token && captchaState.value.gen_time) {
+        requestBody.lot_number = captchaState.value.lot_number
+        requestBody.captcha_output = captchaState.value.captcha_output
+        requestBody.pass_token = captchaState.value.pass_token
+        requestBody.gen_time = captchaState.value.gen_time
+        
+        // 发送后清空票据，确保每次都需要重新验证
+        captchaState.value.lot_number = ''
+        captchaState.value.captcha_output = ''
+        captchaState.value.pass_token = ''
+        captchaState.value.gen_time = ''
+      }
     }
     
     const response = await fetch(props.apiUrl, {
