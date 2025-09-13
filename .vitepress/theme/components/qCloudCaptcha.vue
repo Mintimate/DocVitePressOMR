@@ -41,9 +41,13 @@ const props = defineProps({
   },
   containerId: {
     type: String,
-    default: 'captcha-embed'
+    default: 'captcha-container'
   },
   embedMode: {
+    type: Boolean,
+    default: false
+  },
+  globalMode: {
     type: Boolean,
     default: false
   }
@@ -82,14 +86,28 @@ const captchaCallback = (res) => {
   }
 }
 
+// DOM就绪检查函数
+const waitForDOMReady = async (element, maxAttempts = 10) => {
+  for (let i = 0; i < maxAttempts; i++) {
+    // 检查元素是否已渲染且可见
+    if (element && element.offsetParent !== null && element.getBoundingClientRect().width > 0) {
+      return true
+    }
+    // 使用requestAnimationFrame等待下一帧
+    await new Promise(resolve => requestAnimationFrame(resolve))
+  }
+  console.warn('DOM元素未能在预期时间内就绪')
+  return false
+}
+
 // 验证码加载错误处理函数
 const captchaLoadErrorCallback = () => {
   console.warn('验证码JS加载失败，生成容灾票据')
-  
+
   // 生成容灾票据
   const ticket = 'terror_1001_' + props.appId + '_' + Math.floor(new Date().getTime() / 1000)
   const randstr = '@' + Math.random().toString(36).substr(2)
-  
+
   captchaCallback({
     ret: 0,
     randstr: randstr,
@@ -141,7 +159,13 @@ const showCaptcha = async () => {
     // 动态加载验证码脚本
     if (typeof window.TencentCaptcha === 'undefined') {
       try {
-        await import('./resources/captcha/TCaptcha.js')
+        if (!props.globalMode) {
+          // 加载国内版本
+          await import('./resources/captcha/TCaptcha.js')
+        } else {
+          // 加载国外版本
+          await import('./resources/captcha/TCaptchaGlobal.js')
+        }
       } catch (importError) {
         console.error('验证码脚本加载失败:', importError)
         captchaLoadErrorCallback()
@@ -156,8 +180,8 @@ const showCaptcha = async () => {
       return
     }
     
-    // 再次等待确保DOM稳定
-    await new Promise(resolve => setTimeout(resolve, 100))
+    // 等待DOM完全稳定并确保容器可用
+    await waitForDOMReady(captchaContainer)
     
     // 创建验证码实例
     captchaInstance.value = new window.TencentCaptcha(captchaContainer, props.appId, captchaCallback, {
