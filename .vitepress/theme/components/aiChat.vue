@@ -107,6 +107,7 @@ import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import MarkdownIt from 'markdown-it'
 import qCloudCaptcha from './qCloudCaptcha.vue'
 import gtCaptcha from './gtCaptcha.vue'
+import googleCaptcha from './googleCaptcha.vue'
 
 /**
   AI聊天组件
@@ -119,7 +120,8 @@ import gtCaptcha from './gtCaptcha.vue'
 // 注册组件
 const components = {
   qCloudCaptcha,
-  gtCaptcha
+  gtCaptcha,
+  googleCaptcha
 }
 
 // Props
@@ -180,7 +182,10 @@ const captchaState = ref({
   lot_number: '',
   captcha_output: '',
   pass_token: '',
-  gen_time: ''
+  gen_time: '',
+  // Google reCAPTCHA v3 字段
+  recaptcha_token: '',
+  recaptcha_action: ''
 })
 
 // 获取最近的对话历史
@@ -237,6 +242,10 @@ const onCaptchaSuccess = (data) => {
     captchaState.value.captcha_output = data.captcha_output
     captchaState.value.pass_token = data.pass_token
     captchaState.value.gen_time = data.gen_time
+  } else if (data.recaptcha_token || (data.token && (data.action || data.version))) {
+    // Google reCAPTCHA v2/v3 验证码
+    captchaState.value.recaptcha_token = data.recaptcha_token || data.token
+    captchaState.value.recaptcha_action = data.recaptcha_action || data.action || 'verify'
   }
   
   captchaState.value.isVerifying = false
@@ -255,6 +264,8 @@ const onCaptchaCancel = () => {
   captchaState.value.captcha_output = ''
   captchaState.value.pass_token = ''
   captchaState.value.gen_time = ''
+  captchaState.value.recaptcha_token = ''
+  captchaState.value.recaptcha_action = ''
   console.log('用户取消了验证码验证')
 }
 
@@ -268,6 +279,8 @@ const onCaptchaError = (error) => {
   captchaState.value.captcha_output = ''
   captchaState.value.pass_token = ''
   captchaState.value.gen_time = ''
+  captchaState.value.recaptcha_token = ''
+  captchaState.value.recaptcha_action = ''
   console.error('验证码验证失败:', error)
 }
 
@@ -286,12 +299,13 @@ const triggerCaptcha = async () => {
     return
   }
   
-  // 检查是否已有有效票据（腾讯云或极验）
+  // 检查是否已有有效票据（腾讯云、极验或Google reCAPTCHA）
   const hasTencentTicket = captchaState.value.ticket && captchaState.value.randstr
   const hasGeetestTicket = captchaState.value.lot_number && captchaState.value.captcha_output && 
                           captchaState.value.pass_token && captchaState.value.gen_time
+  const hasGoogleTicket = captchaState.value.recaptcha_token
   
-  if (hasTencentTicket || hasGeetestTicket) {
+  if (hasTencentTicket || hasGeetestTicket || hasGoogleTicket) {
     // 如果已有有效票据，直接发送消息
     proceedWithMessage()
     return
@@ -360,6 +374,8 @@ const closeChat = () => {
     captchaState.value.captcha_output = ''
     captchaState.value.pass_token = ''
     captchaState.value.gen_time = ''
+    captchaState.value.recaptcha_token = ''
+    captchaState.value.recaptcha_action = ''
     pendingMessage.value = ''
   }
   
@@ -469,6 +485,17 @@ const proceedWithMessage = async () => {
         captchaState.value.captcha_output = ''
         captchaState.value.pass_token = ''
         captchaState.value.gen_time = ''
+      }
+      // Google reCAPTCHA v3 验证码
+      else if (captchaState.value.recaptcha_token) {
+        requestBody.recaptcha_token = captchaState.value.recaptcha_token
+        if (captchaState.value.recaptcha_action) {
+          requestBody.recaptcha_action = captchaState.value.recaptcha_action
+        }
+        
+        // 发送后清空票据，确保每次都需要重新验证
+        captchaState.value.recaptcha_token = ''
+        captchaState.value.recaptcha_action = ''
       }
     }
     
