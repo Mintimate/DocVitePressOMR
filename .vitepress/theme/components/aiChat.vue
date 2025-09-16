@@ -14,8 +14,7 @@
     </button>
 
     <!-- 聊天窗口 -->
-    <div v-if="isOpen" class="ai-chat-modal" @click="closeChat">
-      <div class="ai-chat-window" @click.stop>
+    <div v-if="isOpen" class="ai-chat-window">
         <div class="ai-chat-header">
           <h2 class="ai-header-title">
             <svg t="1754120888533" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -75,6 +74,7 @@
             :enabled="enableCaptcha"
             :show="captchaState.isVerifying"
             embed-mode
+            global-mode
             @success="onCaptchaSuccess"
             @cancel="onCaptchaCancel"
             @error="onCaptchaError"
@@ -98,7 +98,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -320,8 +319,9 @@ const toggleThink = (index) => {
   messages.value[index].thinkExpanded = !messages.value[index].thinkExpanded
 }
 
-// 初始化欢迎消息
+// 初始化欢迎消息和事件监听器
 onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
   // 添加欢迎消息到显示列表
   messages.value.push({
     type: 'ai',
@@ -354,6 +354,7 @@ const toggleChat = () => {
 
 // 组件卸载时清理
 onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
   if (messagesContainer.value) {
     messagesContainer.value.removeEventListener('scroll', handleScroll)
   }
@@ -384,6 +385,26 @@ const closeChat = () => {
     messagesContainer.value.removeEventListener('scroll', handleScroll)
   }
 }
+
+// 点击窗口外部关闭聊天窗口
+const handleClickOutside = (event) => {
+  // 如果正在验证验证码，不关闭聊天窗口
+  if (captchaState.value.isVerifying) {
+    return
+  }
+  
+  for (const selector of captchaElements) {
+    if (event.target.closest(selector)) {
+      return
+    }
+  }
+  
+  if (isOpen.value && !event.target.closest('.ai-chat-container')) {
+    closeChat()
+  }
+}
+
+
 
 const handleKeydown = (event) => {
   if (event.key === 'Enter' && !event.shiftKey) {
@@ -654,6 +675,9 @@ const formatTime = (timestamp) => {
 /* ===== 基础容器 ===== */
 .ai-chat-container {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  z-index: 1000;
 }
 
 /* ===== AI按钮 ===== */
@@ -663,52 +687,54 @@ const formatTime = (timestamp) => {
   align-items: center;
   width: 36px;
   height: 36px;
-  color: #00d4aa;
+  margin-left: 8px;
+  color: var(--vp-c-text-2);
   background: transparent;
   border: none;
   border-radius: 6px;
-  margin-left: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   box-sizing: border-box;
   pointer-events: auto;
 }
 
 .ai-chat-button:hover,
 .ai-chat-button.active {
-  color: #00b894;
-  transform: scale(1.1);
-  filter: drop-shadow(0 2px 8px rgba(0, 212, 170, 0.3));
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-bg-soft);
 }
 
 .ai-chat-button.active {
-  transform: scale(1.05);
-  filter: drop-shadow(0 2px 8px rgba(0, 212, 170, 0.4));
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
 }
 
-/* ===== 聊天模态框 ===== */
-.ai-chat-modal {
-  position: fixed;
-  inset: 0;
-  background: var(--vp-backdrop-bg-color);
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  z-index: 100;
-  padding: 60px 20px 20px;
-}
-
+/* ===== 聊天窗口 ===== */
 .ai-chat-window {
+  position: absolute;
+  top: 50px;
+  right: 0;
   background: var(--vp-local-search-bg);
   border: 1px solid var(--vp-c-divider);
-  border-radius: 6px;
-  width: 100%;
-  max-width: 800px;
-  height: 70vh;
-  max-height: 85hv;
+  border-radius: 12px;
+  width: 620px;
+  height: 600px;
   display: flex;
   flex-direction: column;
-  box-shadow: var(--vp-shadow-3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  transform-origin: top right;
+  animation: chatWindowOpen 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes chatWindowOpen {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 /* ===== 聊天头部 ===== */
@@ -1228,24 +1254,68 @@ const formatTime = (timestamp) => {
 }
 
 /* ===== 响应式设计 ===== */
-@media (max-width: 768px) {
-  .ai-chat-modal {
-    padding: 20px 10px 10px;
-  }
-
+@media (max-width: 1024px) {
   .ai-chat-window {
-    height: 85vh;
-    max-height: none;
+    width: 420px;
+    height: 550px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ai-chat-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    height: 70vh;
+    border-radius: 12px;
+    max-height: 600px;
+    z-index: 9999;
+    transform-origin: center center;
+    animation: chatWindowOpenMobile 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .ai-chat-button {
     width: 32px;
     height: 32px;
-    font-size: 12px;
   }
 
   .message {
     max-width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  .ai-chat-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95vw;
+    height: 75vh;
+    border-radius: 12px;
+    max-height: 550px;
+    z-index: 9999;
+    transform-origin: center center;
+    animation: chatWindowOpenMobile 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  .ai-chat-button {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* 移动端专用动画 */
+@keyframes chatWindowOpenMobile {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 </style>

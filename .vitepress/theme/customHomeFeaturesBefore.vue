@@ -10,8 +10,8 @@ const {Layout} = DefaultTheme
 
 // AI聊天组件配置
 const aiChatConfig = {
-  apiUrl: 'https://rime-knowledge.mintimate.cc/api/v1/chat/stream',
-  captchaAppId: "191056602",
+  apiUrl: 'http://localhost:8082/api/v1/chat/stream',
+  captchaAppId: "189904202",
   maxHistoryTurns: 3,
   welcomeMessage: '您好！我是薄荷输入法 AI助手 ，可以帮您解答关于薄荷输入法的各种问题。请随时向我提问！<br/> ' +
                   '内容基于`向量化的知识库` 和 `DeepSeek RAG 检索`，不保证正确性，请自行判断 😊… <br/><br/> ' + 
