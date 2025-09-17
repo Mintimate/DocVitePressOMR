@@ -70,12 +70,14 @@
         <div class="ai-chat-input">
 
           <!-- 验证码组件 -->
-          <qCloudCaptcha 
-            :app-id="captchaAppId"
+          <aliyunCaptcha 
+            ref="aliyunCaptchaRef"
+            scene-id="35cbv6al"
+            prefix="7ybuhu"
             :enabled="enableCaptcha"
             :show="captchaState.isVerifying"
-            embed-mode
-            global-mode
+            embedMode
+            @verify="onAliyunCaptchaVerify"
             @success="onCaptchaSuccess"
             @cancel="onCaptchaCancel"
             @error="onCaptchaError"
@@ -108,6 +110,7 @@ import MarkdownIt from 'markdown-it'
 import qCloudCaptcha from './captcha/qCloudCaptcha.vue'
 import gtCaptcha from './captcha/gtCaptcha.vue'
 import googleCaptcha from './captcha/googleCaptcha.vue'
+import aliyunCaptcha  from './captcha/aliyunCaptcha.vue'
 
 /**
   AI聊天组件
@@ -121,7 +124,8 @@ import googleCaptcha from './captcha/googleCaptcha.vue'
 const components = {
   qCloudCaptcha,
   gtCaptcha,
-  googleCaptcha
+  googleCaptcha,
+  aliyunCaptcha
 }
 
 // Props
@@ -185,7 +189,9 @@ const captchaState = ref({
   gen_time: '',
   // Google reCAPTCHA v3 字段
   recaptcha_token: '',
-  recaptcha_action: ''
+  recaptcha_action: '',
+  // 阿里云验证码字段
+  aliyun_captcha_param: null
 })
 
 // 获取最近的对话历史
@@ -247,6 +253,9 @@ const onCaptchaSuccess = (data) => {
     // Google reCAPTCHA v2/v3 验证码
     captchaState.value.recaptcha_token = data.recaptcha_token || data.token
     captchaState.value.recaptcha_action = data.recaptcha_action || data.action || 'verify'
+  } else if (data.result || data.bizResult !== undefined) {
+    // 阿里云验证码
+    captchaState.value.aliyun_captcha_param = data
   }
   
   captchaState.value.isVerifying = false
@@ -267,6 +276,7 @@ const onCaptchaCancel = () => {
   captchaState.value.gen_time = ''
   captchaState.value.recaptcha_token = ''
   captchaState.value.recaptcha_action = ''
+  captchaState.value.aliyun_captcha_param = null
   console.log('用户取消了验证码验证')
 }
 
@@ -282,6 +292,7 @@ const onCaptchaError = (error) => {
   captchaState.value.gen_time = ''
   captchaState.value.recaptcha_token = ''
   captchaState.value.recaptcha_action = ''
+  captchaState.value.aliyun_captcha_param = null
   console.error('验证码验证失败:', error)
 }
 
@@ -289,6 +300,47 @@ const onCaptchaHide = () => {
   // 验证码隐藏时的处理
   if (captchaState.value.isVerifying) {
     captchaState.value.isVerifying = false
+  }
+}
+
+// 处理阿里云验证码的验证请求
+const aliyunCaptchaRef = ref(null)
+
+const onAliyunCaptchaVerify = async (captchaVerifyParam) => {
+  try {
+    console.log('阿里云验证码参数:', captchaVerifyParam)
+    
+    // 这里应该调用后端API验证
+    // 示例代码 - 实际项目中需要替换为真实的API调用
+    const result = await fetch('/api/verify-aliyun-captcha', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ captchaVerifyParam })
+    })
+    
+    if (result.ok) {
+      const data = await result.json()
+      
+      // 返回验证结果给阿里云验证码组件
+      if (aliyunCaptchaRef.value && aliyunCaptchaRef.value.setVerifyResult) {
+        aliyunCaptchaRef.value.setVerifyResult({
+          captchaResult: data.captchaVerifyResult || true,
+          bizResult: data.bizResult || true
+        })
+      }
+    } else {
+      throw new Error('验证请求失败')
+    }
+  } catch (error) {
+    console.error('阿里云验证码验证失败:', error)
+    
+    // 返回失败结果给阿里云验证码组件
+    if (aliyunCaptchaRef.value && aliyunCaptchaRef.value.setVerifyResult) {
+      aliyunCaptchaRef.value.setVerifyResult({
+        captchaResult: false,
+        bizResult: false
+      })
+    }
   }
 }
 
@@ -300,13 +352,14 @@ const triggerCaptcha = async () => {
     return
   }
   
-  // 检查是否已有有效票据（腾讯云、极验或Google reCAPTCHA）
+  // 检查是否已有有效票据（腾讯云、极验、Google reCAPTCHA 或阿里云）
   const hasTencentTicket = captchaState.value.ticket && captchaState.value.randstr
   const hasGeetestTicket = captchaState.value.lot_number && captchaState.value.captcha_output && 
                           captchaState.value.pass_token && captchaState.value.gen_time
   const hasGoogleTicket = captchaState.value.recaptcha_token
+  const hasAliyunTicket = captchaState.value.aliyun_captcha_param
   
-  if (hasTencentTicket || hasGeetestTicket || hasGoogleTicket) {
+  if (hasTencentTicket || hasGeetestTicket || hasGoogleTicket || hasAliyunTicket) {
     // 如果已有有效票据，直接发送消息
     proceedWithMessage()
     return
@@ -379,6 +432,7 @@ const closeChat = () => {
     captchaState.value.gen_time = ''
     captchaState.value.recaptcha_token = ''
     captchaState.value.recaptcha_action = ''
+    captchaState.value.aliyun_captcha_param = null
     pendingMessage.value = ''
   }
   
