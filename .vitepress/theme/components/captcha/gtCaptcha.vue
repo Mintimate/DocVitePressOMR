@@ -220,7 +220,7 @@ const showCaptcha = async () => {
     // 动态加载极验验证码脚本
     if (typeof window.initGeetest4 === 'undefined') {
       try {
-        await import('./resources/captcha/gt4.js')
+        await import('./captcha/gt4.js')
       } catch (importError) {
         console.error('极验验证码脚本加载失败:', importError)
         captchaLoadErrorCallback()

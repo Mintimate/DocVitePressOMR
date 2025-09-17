@@ -68,6 +68,7 @@
         </div>
 
         <div class="ai-chat-input">
+
           <!-- 验证码组件 -->
           <qCloudCaptcha 
             :app-id="captchaAppId"
@@ -104,9 +105,9 @@
 <script setup>
 import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import MarkdownIt from 'markdown-it'
-import qCloudCaptcha from './qCloudCaptcha.vue'
-import gtCaptcha from './gtCaptcha.vue'
-import googleCaptcha from './googleCaptcha.vue'
+import qCloudCaptcha from './captcha/qCloudCaptcha.vue'
+import gtCaptcha from './captcha/gtCaptcha.vue'
+import googleCaptcha from './captcha/googleCaptcha.vue'
 
 /**
   AI聊天组件
@@ -230,6 +231,7 @@ const convertToHtml = (text) => {
 
 // 验证码组件事件处理
 const onCaptchaSuccess = (data) => {  
+  console.log(data)
   // 根据验证码类型存储不同的数据
   if (data.ticket && data.randstr) {
     // 腾讯云验证码
@@ -392,12 +394,7 @@ const handleClickOutside = (event) => {
   if (captchaState.value.isVerifying) {
     return
   }
-  
-  for (const selector of captchaElements) {
-    if (event.target.closest(selector)) {
-      return
-    }
-  }
+
   
   if (isOpen.value && !event.target.closest('.ai-chat-container')) {
     closeChat()

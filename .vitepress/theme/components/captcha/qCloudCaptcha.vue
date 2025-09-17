@@ -161,10 +161,10 @@ const showCaptcha = async () => {
       try {
         if (!props.globalMode) {
           // 加载国内版本
-          await import('./resources/captcha/TCaptcha.js')
+          await import('./captcha/TCaptcha.js')
         } else {
           // 加载国外版本
-          await import('./resources/captcha/TCaptchaGlobal.js')
+          await import('./captcha/TCaptchaGlobal.js')
         }
       } catch (importError) {
         console.error('验证码脚本加载失败:', importError)
