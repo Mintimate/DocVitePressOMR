@@ -91,7 +91,7 @@
               ref="textareaRef"
               :disabled="captchaState.isVerifying">
             </textarea>
-            <button @click="sendMessage" :disabled="!inputMessage.trim() || isLoading || captchaState.isVerifying" class="send-button">
+            <button id="rag-send" @click="sendMessage" :disabled="!inputMessage.trim() || isLoading || captchaState.isVerifying" class="send-button">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
               </svg>
@@ -109,6 +109,7 @@ import qCloudCaptcha from './captcha/qCloudCaptcha.vue'
 import gtCaptcha from './captcha/gtCaptcha.vue'
 import googleCaptcha from './captcha/googleCaptcha.vue'
 import cloudflareCaptcha from './captcha/cloudflareCaptcha.vue'
+import aliyunCaptcha from './captcha/aliyunCaptcha.vue'
 
 /**
   AI聊天组件
@@ -123,7 +124,8 @@ const components = {
   qCloudCaptcha,
   gtCaptcha,
   googleCaptcha,
-  cloudflareCaptcha
+  cloudflareCaptcha,
+  aliyunCaptcha
 }
 
 // Props
@@ -189,7 +191,9 @@ const captchaState = ref({
   recaptcha_token: '',
   recaptcha_action: '',
   // Cloudflare Turnstile 字段
-  cf_token: ''
+  cf_token: '',
+  // 阿里云验证码字段（简化）
+  aliyun_app_id: ''
 })
 
 // 获取最近的对话历史
@@ -254,16 +258,24 @@ const onCaptchaSuccess = (data) => {
   } else if (data.token && !data.action && !data.version) {
     // Cloudflare Turnstile 验证码
     captchaState.value.cf_token = data.token
+  } else if (data.captcha_param && (data.result || data.bizResult)) {
+    // 阿里云验证码 - 简化参数处理
+    const captchaParam = typeof data.captcha_param === 'string' 
+      ? data.captcha_param 
+      : JSON.stringify(data.captcha_param)
+    
+    // 根据阿里云验证码2.0标准格式存储
+    captchaState.value.ticket = captchaParam
+    captchaState.value.randstr = data.scene || 'default'
+    captchaState.value.aliyun_app_id = data.captchaAppId || ''
   }
-  
-  captchaState.value.isVerifying = false
   
   // 验证成功后继续发送消息
   proceedWithMessage()
 }
 
 const onCaptchaCancel = () => {
-  captchaState.value.isVerifying = false
+  // captchaState.value.isVerifying = false // 延迟到消息发送完成后设置
   pendingMessage.value = '' // 清空待发送消息
   // 清空所有验证码相关状态
   captchaState.value.ticket = ''
@@ -275,11 +287,12 @@ const onCaptchaCancel = () => {
   captchaState.value.recaptcha_token = ''
   captchaState.value.recaptcha_action = ''
   captchaState.value.cf_token = ''
+  captchaState.value.aliyun_app_id = ''
   console.log('用户取消了验证码验证')
 }
 
 const onCaptchaError = (error) => {
-  captchaState.value.isVerifying = false
+  // captchaState.value.isVerifying = false // 延迟到消息发送完成后设置
   pendingMessage.value = '' // 清空待发送消息
   // 清空所有验证码相关状态
   captchaState.value.ticket = ''
@@ -291,14 +304,15 @@ const onCaptchaError = (error) => {
   captchaState.value.recaptcha_token = ''
   captchaState.value.recaptcha_action = ''
   captchaState.value.cf_token = ''
+  captchaState.value.aliyun_app_id = ''
   console.error('验证码验证失败:', error)
 }
 
 const onCaptchaHide = () => {
   // 验证码隐藏时的处理
-  if (captchaState.value.isVerifying) {
-    captchaState.value.isVerifying = false
-  }
+  // 不要在这里直接设置 isVerifying 为 false
+  // 让 onCaptchaSuccess 或 onCaptchaCancel 来处理状态变更
+  console.log('验证码组件已隐藏')
 }
 
 // 触发验证码验证
@@ -380,7 +394,7 @@ const closeChat = () => {
   
   // 清理验证码相关状态
   if (captchaState.value.isVerifying) {
-    captchaState.value.isVerifying = false
+    // captchaState.value.isVerifying = false // 延迟到消息发送完成后设置
     captchaState.value.ticket = ''
     captchaState.value.randstr = ''
     captchaState.value.lot_number = ''
@@ -390,6 +404,7 @@ const closeChat = () => {
     captchaState.value.recaptcha_token = ''
     captchaState.value.recaptcha_action = ''
     captchaState.value.cf_token = ''
+    captchaState.value.aliyun_app_id = ''
     pendingMessage.value = ''
   }
   
@@ -497,10 +512,22 @@ const proceedWithMessage = async () => {
     
     // 如果启用验证码且有票据，添加到请求头中
     if (props.enableCaptcha) {
-      // 腾讯云验证码
+      // 腾讯云验证码或阿里云验证码
       if (captchaState.value.ticket && captchaState.value.randstr) {
-        headers['X-Captcha-Ticket'] = captchaState.value.ticket
-        headers['X-Captcha-Randstr'] = captchaState.value.randstr
+        // 检查是否是阿里云验证码（通过应用ID标识）
+        if (captchaState.value.aliyun_app_id) {
+          // 阿里云验证码
+          headers['X-Aliyun-Captcha-Param'] = captchaState.value.ticket
+          headers['X-Aliyun-Scene'] = captchaState.value.randstr
+          headers['X-Aliyun-App-Id'] = captchaState.value.aliyun_app_id
+          
+          // 发送后清空票据，确保每次都需要重新验证
+          captchaState.value.aliyun_app_id = ''
+        } else {
+          // 腾讯云验证码
+          headers['X-Captcha-Ticket'] = captchaState.value.ticket
+          headers['X-Captcha-Randstr'] = captchaState.value.randstr
+        }
         
         // 发送后清空票据，确保每次都需要重新验证
         captchaState.value.ticket = ''
@@ -669,6 +696,8 @@ const proceedWithMessage = async () => {
     messages.value[aiMessageIndex].html = convertToHtml(errorMessage)
   } finally {
     isLoading.value = false
+    // 消息发送完成后，重置验证状态
+    captchaState.value.isVerifying = false
     nextTick(() => {
       smartScrollToBottom()
     })
