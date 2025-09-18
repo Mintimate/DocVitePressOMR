@@ -109,7 +109,6 @@ import qCloudCaptcha from './captcha/qCloudCaptcha.vue'
 import gtCaptcha from './captcha/gtCaptcha.vue'
 import googleCaptcha from './captcha/googleCaptcha.vue'
 import cloudflareCaptcha from './captcha/cloudflareCaptcha.vue'
-import CloudflareCaptcha from './captcha/cloudflareCaptcha.vue'
 
 /**
   AI聊天组件
@@ -491,12 +490,17 @@ const proceedWithMessage = async () => {
       History: recentHistory
     }
     
-    // 如果启用验证码且有票据，添加到请求中
+    // 构建请求头
+    const headers = {
+      'Content-Type': 'application/json; charset=utf-8',
+    }
+    
+    // 如果启用验证码且有票据，添加到请求头中
     if (props.enableCaptcha) {
       // 腾讯云验证码
       if (captchaState.value.ticket && captchaState.value.randstr) {
-        requestBody.CaptchaTicket = captchaState.value.ticket
-        requestBody.CaptchaRandstr = captchaState.value.randstr
+        headers['X-Captcha-Ticket'] = captchaState.value.ticket
+        headers['X-Captcha-Randstr'] = captchaState.value.randstr
         
         // 发送后清空票据，确保每次都需要重新验证
         captchaState.value.ticket = ''
@@ -505,10 +509,10 @@ const proceedWithMessage = async () => {
       // 极验验证码
       else if (captchaState.value.lot_number && captchaState.value.captcha_output && 
                captchaState.value.pass_token && captchaState.value.gen_time) {
-        requestBody.lot_number = captchaState.value.lot_number
-        requestBody.captcha_output = captchaState.value.captcha_output
-        requestBody.pass_token = captchaState.value.pass_token
-        requestBody.gen_time = captchaState.value.gen_time
+        headers['X-Geetest-Lot-Number'] = captchaState.value.lot_number
+        headers['X-Geetest-Captcha-Output'] = captchaState.value.captcha_output
+        headers['X-Geetest-Pass-Token'] = captchaState.value.pass_token
+        headers['X-Geetest-Gen-Time'] = captchaState.value.gen_time
         
         // 发送后清空票据，确保每次都需要重新验证
         captchaState.value.lot_number = ''
@@ -518,9 +522,9 @@ const proceedWithMessage = async () => {
       }
       // Google reCAPTCHA v3 验证码
       else if (captchaState.value.recaptcha_token) {
-        requestBody.recaptcha_token = captchaState.value.recaptcha_token
+        headers['X-Recaptcha-Token'] = captchaState.value.recaptcha_token
         if (captchaState.value.recaptcha_action) {
-          requestBody.recaptcha_action = captchaState.value.recaptcha_action
+          headers['X-Recaptcha-Action'] = captchaState.value.recaptcha_action
         }
         
         // 发送后清空票据，确保每次都需要重新验证
@@ -529,7 +533,7 @@ const proceedWithMessage = async () => {
       }
       // Cloudflare Turnstile 验证码
       else if (captchaState.value.cf_token) {
-        requestBody.cf_token = captchaState.value.cf_token
+        headers['X-Cf-Turnstile-Token'] = captchaState.value.cf_token
         
         // 发送后清空票据，确保每次都需要重新验证
         captchaState.value.cf_token = ''
@@ -538,9 +542,7 @@ const proceedWithMessage = async () => {
     
     const response = await fetch(props.apiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
+      headers: headers,
       body: JSON.stringify(requestBody)
     })
 
