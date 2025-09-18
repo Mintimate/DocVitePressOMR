@@ -81,7 +81,7 @@
             @error="onCaptchaError"
             @hide="onCaptchaHide"
           />
-          
+
           <div class="input-container">
             <textarea 
               v-model="inputMessage" 
@@ -108,6 +108,8 @@ import MarkdownIt from 'markdown-it'
 import qCloudCaptcha from './captcha/qCloudCaptcha.vue'
 import gtCaptcha from './captcha/gtCaptcha.vue'
 import googleCaptcha from './captcha/googleCaptcha.vue'
+import cloudflareCaptcha from './captcha/cloudflareCaptcha.vue'
+import CloudflareCaptcha from './captcha/cloudflareCaptcha.vue'
 
 /**
   AI聊天组件
@@ -121,7 +123,8 @@ import googleCaptcha from './captcha/googleCaptcha.vue'
 const components = {
   qCloudCaptcha,
   gtCaptcha,
-  googleCaptcha
+  googleCaptcha,
+  cloudflareCaptcha
 }
 
 // Props
@@ -185,7 +188,9 @@ const captchaState = ref({
   gen_time: '',
   // Google reCAPTCHA v3 字段
   recaptcha_token: '',
-  recaptcha_action: ''
+  recaptcha_action: '',
+  // Cloudflare Turnstile 字段
+  cf_token: ''
 })
 
 // 获取最近的对话历史
@@ -247,6 +252,9 @@ const onCaptchaSuccess = (data) => {
     // Google reCAPTCHA v2/v3 验证码
     captchaState.value.recaptcha_token = data.recaptcha_token || data.token
     captchaState.value.recaptcha_action = data.recaptcha_action || data.action || 'verify'
+  } else if (data.token && !data.action && !data.version) {
+    // Cloudflare Turnstile 验证码
+    captchaState.value.cf_token = data.token
   }
   
   captchaState.value.isVerifying = false
@@ -267,6 +275,7 @@ const onCaptchaCancel = () => {
   captchaState.value.gen_time = ''
   captchaState.value.recaptcha_token = ''
   captchaState.value.recaptcha_action = ''
+  captchaState.value.cf_token = ''
   console.log('用户取消了验证码验证')
 }
 
@@ -282,6 +291,7 @@ const onCaptchaError = (error) => {
   captchaState.value.gen_time = ''
   captchaState.value.recaptcha_token = ''
   captchaState.value.recaptcha_action = ''
+  captchaState.value.cf_token = ''
   console.error('验证码验证失败:', error)
 }
 
@@ -300,13 +310,14 @@ const triggerCaptcha = async () => {
     return
   }
   
-  // 检查是否已有有效票据（腾讯云、极验或Google reCAPTCHA）
+  // 检查是否已有有效票据（腾讯云、极验、Google reCAPTCHA 或 Cloudflare）
   const hasTencentTicket = captchaState.value.ticket && captchaState.value.randstr
   const hasGeetestTicket = captchaState.value.lot_number && captchaState.value.captcha_output && 
                           captchaState.value.pass_token && captchaState.value.gen_time
   const hasGoogleTicket = captchaState.value.recaptcha_token
+  const hasCloudflareTicket = captchaState.value.cf_token
   
-  if (hasTencentTicket || hasGeetestTicket || hasGoogleTicket) {
+  if (hasTencentTicket || hasGeetestTicket || hasGoogleTicket || hasCloudflareTicket) {
     // 如果已有有效票据，直接发送消息
     proceedWithMessage()
     return
@@ -379,6 +390,7 @@ const closeChat = () => {
     captchaState.value.gen_time = ''
     captchaState.value.recaptcha_token = ''
     captchaState.value.recaptcha_action = ''
+    captchaState.value.cf_token = ''
     pendingMessage.value = ''
   }
   
@@ -514,6 +526,13 @@ const proceedWithMessage = async () => {
         // 发送后清空票据，确保每次都需要重新验证
         captchaState.value.recaptcha_token = ''
         captchaState.value.recaptcha_action = ''
+      }
+      // Cloudflare Turnstile 验证码
+      else if (captchaState.value.cf_token) {
+        requestBody.cf_token = captchaState.value.cf_token
+        
+        // 发送后清空票据，确保每次都需要重新验证
+        captchaState.value.cf_token = ''
       }
     }
     
