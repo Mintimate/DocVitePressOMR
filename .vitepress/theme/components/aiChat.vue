@@ -69,12 +69,12 @@
 
         <div class="ai-chat-input">
 
-          <!-- 验证码组件 -->
+          <!-- 国际版腾讯云验证码 -->
           <qCloudCaptcha 
             :app-id="captchaAppId"
             :enabled="enableCaptcha"
             :show="captchaState.isVerifying"
-            embed-mode
+            :animation="true"
             global-mode
             @success="onCaptchaSuccess"
             @cancel="onCaptchaCancel"

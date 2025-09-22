@@ -217,7 +217,7 @@ const loadRecaptchaScript = () => {
     // 根据版本选择不同的加载方式
     if (props.version === 'v3') {
       // v3 使用 render 参数
-      script.src = `https://www.google.com/recaptcha/api.js?render=${props.appId}&hl=${props.language}`
+      script.src = `https://www.recaptcha.net/recaptcha/api.js?render=${props.appId}&hl=${props.language}`
       
       script.onload = () => {
         scriptLoaded = true
@@ -237,7 +237,7 @@ const loadRecaptchaScript = () => {
       }
     } else {
       // v2 使用标准加载方式，按照官方示例设置回调函数
-      script.src = `https://www.google.com/recaptcha/api.js?onload=${callbackName.value}&render=explicit&hl=${props.language}`
+      script.src = `https://www.recaptcha.net/recaptcha/api.js?onload=${callbackName.value}&render=explicit&hl=${props.language}`
       
       // 为 v2 设置全局回调函数，使用唯一名称避免冲突
       window[callbackName.value] = () => {

@@ -1,17 +1,26 @@
 <template>
-  <div v-if="isVisible" class="captcha-status">
+  <div v-if="isVisible" class="captcha-status" :class="{ 'no-animation': !animation }">
     <div class="captcha-indicator">
       <svg class="captcha-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11H16V18H8V11H9.2V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.4,8.7 10.4,10V11H13.6V10C13.6,8.7 12.8,8.2 12,8.2Z" />
       </svg>
-      <span>{{ statusText }}</span>
+      <span>{{ currentStatusText }}</span>
     </div>
+    
+    <!-- 天御验证码无感模式进度显示 -->
+    <div v-if="showProgress && animation" class="captcha-progress">
+      <div class="progress-bar">
+        <div class="progress-fill" :style="{ width: progress + '%' }"></div>
+      </div>
+      <div class="progress-text">{{ progressText }}</div>
+    </div>
+    
     <div :id="containerId" class="captcha-container"></div>
   </div>
 </template>
 
 <script setup>
-import { ref, nextTick, onUnmounted, watch } from 'vue'
+import { ref, nextTick, onUnmounted, watch, computed } from 'vue'
 
 /**
  * 腾讯云天御验证码组件
@@ -50,6 +59,10 @@ const props = defineProps({
   globalMode: {
     type: Boolean,
     default: false
+  },
+  animation: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -61,9 +74,33 @@ const isVisible = ref(false)
 const captchaInstance = ref(null)
 const captchaTicket = ref('')
 const captchaRandstr = ref('')
+const isExecuting = ref(false)
+const progress = ref(0)
+const showProgress = ref(false)
+const progressText = ref('')
+const verificationSteps = ref([
+  '连接腾讯云天御服务',
+  '分析用户行为',
+  '生成天御验证码令牌',
+  '判断是否需要二次验证'
+])
+const currentStepIndex = ref(0)
+
+// 计算属性
+const currentStatusText = computed(() => {
+  if (isExecuting.value) {
+    return '正在验证中...'
+  }
+  return props.statusText
+})
 
 // 验证码回调函数
 const captchaCallback = (res) => {
+  // 清理进度动画
+  if (showProgress.value) {
+    showProgress.value = false
+    isExecuting.value = false
+  }
   
   if (res.ret === 0) {
     // 验证成功，存储票据信息
@@ -140,8 +177,48 @@ const showCaptcha = async () => {
   
   try {
     isVisible.value = true
+    isExecuting.value = true
     emit('show')
     
+    if (props.animation) {
+      // 显示加载动画
+      showProgress.value = true
+      progress.value = 0
+      currentStepIndex.value = 0
+      progressText.value = verificationSteps.value[0]
+      
+      // 每250ms切换到下一个步骤，总共1秒完成所有步骤
+      const stepInterval = setInterval(() => {
+        currentStepIndex.value++
+        if (currentStepIndex.value < verificationSteps.value.length) {
+          progressText.value = verificationSteps.value[currentStepIndex.value]
+          progress.value = (currentStepIndex.value / verificationSteps.value.length) * 100
+        } else {
+          clearInterval(stepInterval)
+          progress.value = 100
+          // 动画完成后，开始初始化验证码
+          setTimeout(() => {
+            initializeCaptcha()
+          }, 200)
+        }
+      }, 250)
+      
+      // 存储定时器引用以便清理
+      window._qcloudProgressInterval = stepInterval
+    } else {
+      // 不显示动画，直接初始化验证码
+      initializeCaptcha()
+    }
+    
+  } catch (error) {
+    console.error('验证码初始化失败:', error)
+    captchaLoadErrorCallback()
+  }
+}
+
+// 初始化验证码实例
+const initializeCaptcha = async () => {
+  try {
     // 等待DOM更新完成
     await nextTick()
     
@@ -183,15 +260,23 @@ const showCaptcha = async () => {
     // 等待DOM完全稳定并确保容器可用
     await waitForDOMReady(captchaContainer)
     
+    // 隐藏进度条，准备显示验证码
+    if (props.animation) {
+      showProgress.value = false
+    }
+    
     // 创建验证码实例
     captchaInstance.value = new window.TencentCaptcha(captchaContainer, props.appId, captchaCallback, {
-        type: props.embedMode ? 'embed' : 'popup'
+        type: props.embedMode ? 'embed' : 'popup',
+        userLanguage: "zh-cn",
+        loading: props.embedMode
     })
     
     // 显示验证码
     captchaInstance.value.show()
+    
   } catch (error) {
-    console.error('验证码初始化失败:', error)
+    console.error('验证码实例创建失败:', error)
     captchaLoadErrorCallback()
   }
 }
@@ -199,7 +284,16 @@ const showCaptcha = async () => {
 // 隐藏验证码
 const hideCaptcha = () => {
   isVisible.value = false
+  isExecuting.value = false
+  showProgress.value = false
+  progress.value = 0
   emit('hide')
+  
+  // 清理进度定时器
+  if (window._qcloudProgressInterval) {
+    clearInterval(window._qcloudProgressInterval)
+    window._qcloudProgressInterval = null
+  }
   
   // 清理验证码容器
   const captchaContainer = document.getElementById(props.containerId)
@@ -238,11 +332,12 @@ onUnmounted(() => {
 .captcha-status {
   margin-bottom: 8px;
   padding: 12px 16px;
-  background: linear-gradient(135deg, var(--vp-c-brand-soft) 0%, var(--vp-c-bg-soft) 100%);
-  border: 1px solid var(--vp-c-brand-1);
+  background: rgba(24, 144, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(24, 144, 255, 0.2);
   border-radius: 8px;
   font-size: 13px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.1);
   animation: slideInUp 0.3s ease-out;
 }
 
@@ -250,9 +345,9 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--vp-c-brand-1);
+  color: #1890ff;
   font-weight: 500;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .captcha-icon {
@@ -260,10 +355,40 @@ onUnmounted(() => {
   animation: pulse 2s infinite;
 }
 
+/* ===== 进度条 ===== */
+.captcha-progress {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(24, 144, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1890ff 0%, #40a9ff 50%, #69c0ff 100%);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+  animation: shimmer 2s infinite;
+}
+
+.progress-text {
+  font-size: 12px;
+  color: #1890ff;
+  text-align: center;
+  opacity: 0.8;
+}
+
 .captcha-container {
   border-radius: 6px;
   overflow: visible;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 12px rgba(24, 144, 255, 0.15);
   animation: fadeInScale 0.4s ease-out 0.1s both;
   max-width: 100%;
   width: fit-content;
@@ -271,6 +396,15 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* ===== 动画效果 ===== */
+.no-animation,
+.no-animation *,
+.no-animation .captcha-icon,
+.no-animation .captcha-container {
+  animation: none !important;
+  transition: none !important;
 }
 
 @keyframes slideInUp {
@@ -300,7 +434,79 @@ onUnmounted(() => {
     opacity: 1;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.6;
   }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.progress-fill {
+  background: linear-gradient(
+    90deg,
+    #1890ff 0%,
+    #40a9ff 25%,
+    #69c0ff 50%,
+    #91d5ff 75%,
+    #1890ff 100%
+  );
+  background-size: 200px 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+/* ===== 响应式设计 ===== */
+@media (max-width: 768px) {
+  .captcha-status {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  
+  .captcha-indicator {
+    gap: 6px;
+  }
+  
+  .progress-text {
+    font-size: 11px;
+  }
+}
+
+/* ===== 深色模式适配 ===== */
+@media (prefers-color-scheme: dark) {
+  .captcha-status {
+    background: rgba(24, 144, 255, 0.15);
+    border-color: rgba(24, 144, 255, 0.3);
+  }
+  
+  .progress-text {
+    color: #69c0ff;
+  }
+  
+  .progress-bar {
+    background: rgba(24, 144, 255, 0.2);
+  }
+}
+
+/* ===== VitePress 主题适配 ===== */
+.dark .captcha-status {
+  background: rgba(24, 144, 255, 0.15);
+  border-color: rgba(24, 144, 255, 0.3);
+}
+
+.dark .captcha-indicator {
+  color: #69c0ff;
+}
+
+.dark .progress-text {
+  color: #69c0ff;
+}
+
+.dark .progress-bar {
+  background: rgba(24, 144, 255, 0.2);
 }
 </style>
