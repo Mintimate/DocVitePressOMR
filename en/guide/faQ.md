@@ -211,3 +211,18 @@ rime-dict-processor.exe -i "C:\Users\Username\AppData\Roaming\Rime\syncData" -o 
 ```
 
 ![Rewriting user dictionary](/image/guide/refreshUserdb.webp)
+
+## Setting Weasel Candidates to Horizontal Layout
+
+In Squirrel, you can configure horizontal candidate layout by adding this to `squirrel.custom.yaml`:
+
+```yaml
+patch:
+  "style/text_orientation": horizontal  # Candidate arrangement direction (horizontal for horizontal, vertical for vertical)
+```
+
+For Weasel, the configuration in `weasel.custom.yaml` might not work. In this case, you can configure it like this in `weasel.custom.yaml`:
+```yaml
+patch:
+  "style/horizontal": true
+```

@@ -207,3 +207,18 @@ rime-dict-processor.exe -i "C:\Users\用户名\AppData\Roaming\Rime\syncData" -o
 ```
 
 ![刷写用户词典](/image/guide/refreshUserdb.webp)
+
+## 小狼毫设置候选为横向
+
+在鼠须管上通过在`squirrel.cusom.yaml`内配置：
+
+```yaml
+patch:
+  "style/text_orientation": horizontal  # 候选项排列方向（horizontal为横向，vertical为纵向）
+```
+
+小狼毫的配置文件(`weasel.custom.yaml`内配置)可能不行，这个时候可以在`weasel.custom.yaml`内配置这样:
+```yaml
+patch:
+  "style/horizontal": true
+```
