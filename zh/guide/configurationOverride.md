@@ -332,12 +332,14 @@ patch:
 
 所以，不要以为鼠须管和小狼毫能修改的配置都是一样的。具体可以修改那些外观配置，建议查看`squirrel.yaml`和`weasel.yaml`文件，然后根据自己的需求进行修改。
 
-## 举例: 自定义输词库
+## 举例: 自定义词库
 如果你想自定义词库，那么可以这样操作，以薄荷输入法内的「薄荷拼音-全拼输入」为例：
 1. 打开或创建`rime_mint.custom.yaml`文件；
-2. 使用`patch`进行覆写，将`translator/dictionary`改为你的自定义词库；
+2. 在 `dicts` 目录下新建一个以`.dict.yaml`为结尾的文件，内容参考: `rime_mint.chars.dict.yaml`，内部填充你自己的自定义词典。**注意内部的 Tab 和空格，建议使用 [VSCODE](https://code.visualstudio.com/download) 打开。**
+3. 在项目目录内，参考`rime_mint.dict.yaml` 文件，创建`rime_mint.custom.dict.yaml`，添加对`dicts`内新文件的引用。
+3. 使用`patch`进行覆写，将`translator/dictionary`改为你的自定义词库；
 
-可能的内容:
+`rime_mint.custom.yaml`可能的内容:
 ```yaml
 patch:
   # 设置「薄荷拼音-全拼输入」的词典，使用 rime_mint.custom.dict.yaml 文件
@@ -345,25 +347,46 @@ patch:
 ```
 
 同时，可以看到，我们这里定位到`rime_mint.custom.dict.yaml`文件，那么我们可以创建这个文件，然后在这个文件内写入我们的词库。建议把薄荷自带的词库拷贝一份，然后进行修改:
+
 ```yaml
 ---
-name: rime_mint.custom                  # 注意name和文件名一致
-version: "2024.02.11"
+name: rime_mint                  # 注意name和文件名一致
+version: "2025.07.06"
 sort: by_weight
+use_preset_vocabulary: false
 # 此处为 输入法所用到的词库，既补充拓展词库的地方
 # 雾凇拼音词库，由Github Robot自动更新
 import_tables:
   - dicts/custom_simple          # 自定义
-  - dicts/rime_ice.8105          # 霧凇拼音 常用字集合
-  - dicts/rime_ice.41448         # 霧凇拼音 完整字集合
-  - dicts/rime_ice.base          # 雾凇拼音 基础词库
-  - dicts/rime_ice.ext           # 雾凇拼音 扩展词库
-  - dicts/other_kaomoji          # 颜文字表情（按`vv`呼出)
-  - dicts/other_emoji            # Emoji(仅仅作为补充，实际使用一般是OpenCC生效)
+  - dicts/rime_mint.chars        # 单字词库（万象拼音词库基础版本）
+  - dicts/rime_mint.base         # 基础词库（万象拼音词库基础版本）
+  - dicts/rime_mint.correlation  # 关联词库（万象拼音词库基础版本）
+  - dicts/rime_mint.compatible   # 兼容词库（万象拼音词库基础版本）
+  - dicts/rime_mint.ext          # 联想词库（万象拼音词库基础版本）
+  - dicts/other_kaomoji          # 颜文字表情（按`VV`呼出)
   - dicts/rime_ice.others        # 雾凇拼音 others词库（用于自动纠错）
-  - dicts/yourCustomDict         # 你的自定义词典
+  - dicts/my_custom_dicts        # 在 dicts 下，参考 rime_mint.chars.dict.yaml 文件新建的 my_custom_dicts.dict.yaml
+  # 20240608 Emoji完全交由OpenCC，不再使用字典作为补充
+  # - dicts/other_emoji            # Emoji(仅仅作为补充，实际使用一般是OpenCC生效)
 ...
 ```
+
+`dicts/my_custom_dicts.dict.yaml` 参考内容:
+
+```yaml
+# Rime dictionary
+# encoding: utf-8
+#https://github.com/amzxyz/RIME-LMDG
+---
+name: my_custom_dicts
+version: "2025-10-01"
+sort: by_weight
+
+...
+阿瓦隆	a wa long	915
+```
+
+> 这个方法，主要是一些用户一直想添加搜狗词库。虽然我认为完全没必要，现有词库也是 AMZ 经过分词模型计算得出，添加搜狗词库徒增卡顿；但是也提供一个方法，给想尝试的人。
 
 ## 举例: 拼音串最大长度
 

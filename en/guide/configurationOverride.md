@@ -331,12 +331,14 @@ If your input method skin has `candidate_list_layout: stacked` set, due to the r
 At the same time, currently, the configuration priority of `candidate_list_layout` is higher than `horizontal: true`. However, if the `candidate_list_layout` setting is invalid, you can also try `horizontal: true`.
 :::
 
-## Example: Customizing the Input Dictionary
+## Example: Custom Dictionary
 If you want to customize the dictionary, you can do so as follows, taking the "Mint Pinyin - Full Pinyin Input" in the Mint Input Method as an example:
 1. Open or create the `rime_mint.custom.yaml` file;
-2. Use `patch` to override, change `translator/dictionary` to your custom dictionary;
+2. Create a new file ending with `.dict.yaml` in the `dicts` directory, refer to the content of `rime_mint.chars.dict.yaml`, and fill in your own custom dictionary. **Pay attention to the internal tabs and spaces, it is recommended to use [VSCODE](https://code.visualstudio.com/download) to open it.**
+3. In the project directory, refer to the `rime_mint.dict.yaml` file, create `rime_mint.custom.dict.yaml`, and add references to new files in `dicts`.
+4. Use `patch` to override, change `translator/dictionary` to your custom dictionary;
 
-Possible content:
+Possible content of `rime_mint.custom.yaml`:
 ```yaml
 patch:
   # Set the dictionary of "Mint Pinyin - Full Pinyin Input", use the rime_mint.custom.dict.yaml file
@@ -344,25 +346,46 @@ patch:
 ```
 
 At the same time, you can see that we are locating the `rime_mint.custom.dict.yaml` file here, so we can create this file and then write our dictionary into this file. It is recommended to copy a set of the dictionary that comes with Mint and then modify it:
+
 ```yaml
 ---
-name: rime_mint.custom                  # Note that the name is consistent with the file name
-version: "2024.02.11"
+name: rime_mint                  # Note that the name is consistent with the file name
+version: "2025.07.06"
 sort: by_weight
+use_preset_vocabulary: false
 # This is the dictionary used by the input method, which is where to supplement the extended dictionary
 # The Mist Pinyin dictionary, automatically updated by Github Robot
 import_tables:
   - dicts/custom_simple          # Custom
-  - dicts/rime_ice.8105          # Mist Pinyin Common Character Set
-  - dicts/rime_ice.41448         # Mist Pinyin Complete Character Set
-  - dicts/rime_ice.base          # Mist Pinyin Basic Dictionary
-  - dicts/rime_ice.ext           # Mist Pinyin Extended Dictionary
-  - dicts/other_kaomoji          # Facial expressions (call out by pressing `vv`)
-  - dicts/other_emoji            # Emoji (just as a supplement, usually effective by OpenCC)
+  - dicts/rime_mint.chars        # Single character dictionary (Wanxiang Pinyin dictionary basic version)
+  - dicts/rime_mint.base         # Basic dictionary (Wanxiang Pinyin dictionary basic version)
+  - dicts/rime_mint.correlation  # Correlation dictionary (Wanxiang Pinyin dictionary basic version)
+  - dicts/rime_mint.compatible   # Compatible dictionary (Wanxiang Pinyin dictionary basic version)
+  - dicts/rime_mint.ext          # Association dictionary (Wanxiang Pinyin dictionary basic version)
+  - dicts/other_kaomoji          # Facial expressions (call out by pressing `VV`)
   - dicts/rime_ice.others        # Mist Pinyin others dictionary (for automatic error correction)
-  - dicts/yourCustomDict         # Your custom dictionary
+  - dicts/my_custom_dicts        # In dicts, refer to rime_mint.chars.dict.yaml file to create new my_custom_dicts.dict.yaml
+  # 20240608 Emoji is completely handled by OpenCC, no longer using dictionary as supplement
+  # - dicts/other_emoji            # Emoji (just as a supplement, usually effective by OpenCC)
 ...
 ```
+
+Reference content for `dicts/my_custom_dicts.dict.yaml`:
+
+```yaml
+# Rime dictionary
+# encoding: utf-8
+#https://github.com/amzxyz/RIME-LMDG
+---
+name: my_custom_dicts
+version: "2025-10-01"
+sort: by_weight
+
+...
+阿瓦隆	a wa long	915
+```
+
+> This method is mainly for some users who have always wanted to add Sogou dictionaries. Although I think it's completely unnecessary, the existing dictionary is also calculated by AMZ through word segmentation models, adding Sogou dictionaries will only increase lag; but it also provides a method for those who want to try.
 
 ## Example: Maximum Pinyin String Length
 
