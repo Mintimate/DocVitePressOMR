@@ -328,7 +328,8 @@ patch:
 ::: warning Warning
 If your input method skin has `candidate_list_layout: stacked` set, due to the reason that local configuration is greater than global configuration, this setting may be invalid.
 
-At the same time, currently, the configuration priority of `candidate_list_layout` is higher than `horizontal: true`. However, if the `candidate_list_layout` setting is invalid, you can also try `horizontal: true`.
+At the same time, currently, the configuration priority of `candidate_list_layout` is higher than `horizontal: true`. However, if the `candidate_list_layout` setting is invalid (for example: on Weasel, setting `style/candidate_list_layout` to `linear` in `weasel.custom.yaml` is invalid), you need to set `horizontal: true`.
+
 :::
 
 ## Example: Custom Dictionary

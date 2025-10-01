@@ -306,7 +306,8 @@ patch:
 ::: warning 警告
 如果你的输入法皮肤里设置有`candidate_list_layout: stacked`，根据局部配置大于全局配置的原因，那么这个设置可能会失效。
 
-同时，目前`candidate_list_layout`的配置优先级大于`horizontal: true`的优先级，不过如果`candidate_list_layout`设置无效，也可以尝试`horizontal: true`。
+同时，目前`candidate_list_layout`的配置优先级大于`horizontal: true`的优先级，不过如果`candidate_list_layout`设置无效（如: 小狼毫上，设置`weasel.custom.yaml`内`style/candidate_list_layout`为`linear`无效，就需要设置`horizontal: true`。
+
 :::
 
 ## 举例: 自定义皮肤
