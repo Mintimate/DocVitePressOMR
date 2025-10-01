@@ -28,6 +28,11 @@ sidebar: false
 | [Fcitx5-Rime(macOS) Github](https://github.com/fcitx-contrib/fcitx5-macos) | [Fcitx5-Rime.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Fcitx5-Rime.zip) | macOS Fcitx5-Rime 客户端 |
 | [RIME-LMDG Github](https://github.com/amzxyz/RIME-LMDG) | [wanxiang-lts-zh-hans.gram](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/wanxiang-lts-zh-hans.gram) | 万象模型 |
 
+## 2025-S04
+Performance:
+- 调整文档内部的字典覆写和横向显示 Demo 描述。
+- 文档内部的 RAG 检索升级。
+
 ## 2025-S03
 Features:
 - 破坏性变更: 为了更好兼容万象模型，切换词库为万象词库 <Badge type="tip">[6dfbd6e76a](https://github.com/Mintimate/oh-my-rime/commit/f14c91f5a2ea6212f166057586210e6dfbd6e76a)</Badge>

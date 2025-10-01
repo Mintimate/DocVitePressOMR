@@ -29,6 +29,11 @@ Thank you to CNB for providing storage and acceleration resources. The following
 | [Fcitx5-Rime(macOS) Github](https://github.com/fcitx-contrib/fcitx5-macos) | [Fcitx5-Rime.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Fcitx5-Rime.zip) | macOS Fcitx5-Rime Client |  
 | [RIME-LMDG Github](https://github.com/amzxyz/RIME-LMDG) | [wanxiang-lts-zh-hans.gram](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/wanxiang-lts-zh-hans.gram) | Wanxiang (LMDG) Model |  
 
+## 2025-S04
+Performance:
+- Adjusted the dictionary override and horizontal display demo descriptions in the documentation.
+- Upgraded the internal RAG retrieval in the documentation.
+
 ## 2025-S03  
 Features:
 - Breaking Changes: Switched to the Wanxiang dictionary for better compatibility with the Wanxiang model <Badge type="tip">[6dfbd6e76a](https://github.com/Mintimate/oh-my-rime/commit/f14c91f5a2ea6212f166057586210e6dfbd6e76a)</Badge>.  
