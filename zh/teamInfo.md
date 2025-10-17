@@ -34,11 +34,19 @@ const members = [
     ],
   },
   {
-    avatar: 'https://avatars.githubusercontent.com/u/41545962',
+    avatar: '/image/avatar/Jian787.webp',
     name: 'Jian787',
     title: '薄荷配置内地球拼音词库的维护者之一，提供人工校验的多音字词库',
     links: [
       { icon: 'github', link: 'https://github.com/Jian787' },
+    ],
+  },
+  {
+    avatar: 'https://avatars.githubusercontent.com/u/129564993',
+    name: 'amzxyz',
+    title: '万象拼音生态体系构建者，当前也帮忙维护薄荷内万象有关内容，尤其是 Lua 相关内容',
+    links: [
+      { icon: 'github', link: 'https://github.com/amzxyz' },
     ],
   },
 ]

@@ -40,6 +40,14 @@ const members = [
       { icon: 'github', link: 'https://github.com/Jian787' },
     ],
   },
+  {
+    avatar: '/image/avatar/amzxyz.webp',
+    name: 'amzxyz'
+    title: 'Builder of the Wanxiang Pinyin ecosystem, currently also assisting in maintaining Wanxiang-related content within the Bohe project, particularly regarding Lua.',
+    links: [
+      { icon: 'github', link: 'https://github.com/amzxyz' },
+    ],
+  }
 
 ]
 </script>
