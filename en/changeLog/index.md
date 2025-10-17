@@ -34,6 +34,9 @@ Performance:
 - Adjusted the dictionary override and horizontal display demo descriptions in the documentation.
 - Upgraded the internal RAG retrieval in the documentation.
 
+Fix:
+- Fixed abnormal association issues under full pinyin input <Badge type="tip">[df133d347b](https://github.com/Mintimate/oh-my-rime/commit/12437f63209b494f8f8b8277d56fe4df133d347b)</Badge>
+
 ## 2025-S03  
 Features:
 - Breaking Changes: Switched to the Wanxiang dictionary for better compatibility with the Wanxiang model <Badge type="tip">[6dfbd6e76a](https://github.com/Mintimate/oh-my-rime/commit/f14c91f5a2ea6212f166057586210e6dfbd6e76a)</Badge>.  

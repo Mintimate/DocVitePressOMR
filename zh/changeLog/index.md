@@ -33,6 +33,9 @@ Performance:
 - 调整文档内部的字典覆写和横向显示 Demo 描述。
 - 文档内部的 RAG 检索升级。
 
+Fix:
+- 解决了全拼下，异常联想问题  <Badge type="tip">[df133d347b](https://github.com/Mintimate/oh-my-rime/commit/12437f63209b494f8f8b8277d56fe4df133d347b)</Badge>
+
 ## 2025-S03
 Features:
 - 破坏性变更: 为了更好兼容万象模型，切换词库为万象词库 <Badge type="tip">[6dfbd6e76a](https://github.com/Mintimate/oh-my-rime/commit/f14c91f5a2ea6212f166057586210e6dfbd6e76a)</Badge>
