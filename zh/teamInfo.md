@@ -42,7 +42,7 @@ const members = [
     ],
   },
   {
-    avatar: 'https://avatars.githubusercontent.com/u/129564993',
+    avatar: '/image/avatar/amzxyz.webp',
     name: 'amzxyz',
     title: '万象拼音生态体系构建者，当前也帮忙维护薄荷内万象有关内容，尤其是 Lua 相关内容',
     links: [
