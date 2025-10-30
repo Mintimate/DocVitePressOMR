@@ -37,6 +37,12 @@ Performance:
 Fix:
 - Fixed abnormal association issues under full pinyin input <Badge type="tip">[df133d347b](https://github.com/Mintimate/oh-my-rime/commit/12437f63209b494f8f8b8277d56fe4df133d347b)</Badge>
 
+Thanks:
+| Time       | Platform | User            | Support💵 | Message       |
+| ---------- | -------- | --------------- | ----- | ------------- |
+| 2025/10/05 | 爱发电 | QQ用户: Lii(892***084) | 100¥   | 薄荷输入法简直丝滑无比 |
+| 2025/10/25 | 爱发电 | QQ用户: 白水(290***894) | 100¥   | 期待您的回复 |
+
 ## 2025-S03  
 Features:
 - Breaking Changes: Switched to the Wanxiang dictionary for better compatibility with the Wanxiang model <Badge type="tip">[6dfbd6e76a](https://github.com/Mintimate/oh-my-rime/commit/f14c91f5a2ea6212f166057586210e6dfbd6e76a)</Badge>.  
@@ -47,7 +53,7 @@ Fixes:
 - Resolved conflicts between error correction and Wanxiang pre-edit scripts <Badge type="tip">[4a501002d9](https://github.com/Mintimate/oh-my-rime/commit/88ebe26fc340da18dcc1e8381283ab4a501002d9)</Badge>.  
 
 Thanks:
-| 时间       | 平台     | 用户            | 支持💵 | 留言          |
+| Time       | Platform | User            | Support💵 | Message       |
 | ---------- | -------- | --------------- | ----- | ------------- |
 | 2025/07/24 | 爱发电 | 微信用户: Xinyi | 50¥   | 膜雨月大佬，教程写得很有帮助，希望能交流一次呀 |
 | 2025/09/03 | 微信赞赏 | 微信用户: Derek | 20¥   | Derek |
