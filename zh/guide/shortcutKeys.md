@@ -234,14 +234,4 @@ patch:
       Shift_R: commit_code  # 右Shift提交当前输入并切换到英文
 ```
 
-### 可选的switch_key值
-
-`switch_key`支持以下几种值：
-
-- `commit_code`: 提交原始的输入码（如输入"like"会直接上屏"like"）
-- `commit_text`: 提交当前高亮的候选词
-- `inline_ascii`: 在当前位置临时切换到英文模式
-- `clear`: 清除输入码
-- `noop`: 屏蔽该按键的切换功能
-
 配置完成后，需要重新部署输入法（Ctrl+` 或 F4 → 重新部署）才能生效。
