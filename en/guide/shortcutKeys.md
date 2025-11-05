@@ -213,3 +213,21 @@ key_binder:
 ```
 
 Reference issue: [https://github.com/Mintimate/oh-my-rime/issues/42](https://github.com/Mintimate/oh-my-rime/issues/42)
+
+## Shift Key Direct Commit Configuration
+
+When using the Rime input method, by default, pressing the Shift key to switch to English mode displays a candidate box that requires pressing Enter again to commit the text. If you want the current input to be committed immediately upon pressing the Shift key, you can configure `ascii_composer` to achieve this.
+
+### Configuration Method
+
+Add the following configuration to `default.custom.yaml` or the corresponding schema's `*.custom.yaml` file:
+
+```yaml
+patch:
+  ascii_composer:
+    switch_key:
+      Shift_L: commit_code  # Left Shift commits current input and switches to English
+      Shift_R: commit_code  # Right Shift commits current input and switches to English
+```
+
+After completing the configuration, you need to redeploy the input method for it to take effect.
