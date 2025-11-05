@@ -217,3 +217,21 @@ key_binder:
 ```
 
 参考issue: [https://github.com/Mintimate/oh-my-rime/issues/42](https://github.com/Mintimate/oh-my-rime/issues/42)
+
+## Shift键直接上屏配置
+
+在使用Rime输入法时，默认情况下按下Shift键切换到英文模式时，会显示一个候选框，需要再按回车才能上屏。如果你希望按下Shift键后立即上屏当前输入的内容，可以通过配置`ascii_composer`来实现。
+
+### 配置方法
+
+在`default.custom.yaml`或对应方案的`*.custom.yaml`文件中添加以下配置：
+
+```yaml
+patch:
+  ascii_composer:
+    switch_key:
+      Shift_L: commit_code  # 左Shift提交当前输入并切换到英文
+      Shift_R: commit_code  # 右Shift提交当前输入并切换到英文
+```
+
+配置完成后，需要重新部署输入法才能生效。
