@@ -12,25 +12,35 @@ aside: true
 # Special Function Keys
 
 With the help of `Lua` scripts, Oh-my-rime has implemented some specific function keys:
-- Time printing
-- Week printing
-- Date printing
+- Time/Week/Date/Solar Terms printing
 - Capitalized Chinese currency printing
+- Lunar date printing/conversion
+- Simple calculator
 
-## Time Printing
+## Time/Week/Date/Solar Terms <Badge type="tip" text="^2025.11" />
 
-Within the input method, simply input the keyword "`time`," and the input method will automatically generate a sentence based on the current time using a Lua script:
-![Time Printing](/image/demo/timeKey.webp)
+Before version [7ae364ea06](https://github.com/Mintimate/oh-my-rime/commit/2c53f68cf4bb9461bda82e1b2862307ae364ea06), multiple Lua scripts were used to implement time, week, and date printing.
 
-## Week Printing
+However, after this version, AMZ contributed the [shijian.lua](https://github.com/Mintimate/oh-my-rime/blob/8c8fb9c40a8e4bdff8a325049e96119f6699c965/lua/shijian.lua) script to implement the printing of time and other information.
 
-Similar to the previous function, but the keyword is changed to "`week`":
-![Week Printing](/image/demo/weekKey.webp)
+You can use the following keywords to activate the corresponding functions:
+- Time: osj
+- Date: orq
+- Lunar calendar: onl
+- Week: oxq
+- Week of the year: oww
+- Solar terms: ojq
+- Date + Time: ors
+- Timestamp: ott
+- Uppercase N date: N20250315 or N0312 without year
+- Festivals: ojr
+- Greeting template: oday
 
-## Date Printing
+![shijian.lua usage effect](/image/demo/shijianLua.webp)
 
-Keyword: "date":
-![Date Printing](/image/demo/dateKey.webp)
+If you want to set the order of each date in `orq`, you can override the `date_format` configuration item:
+
+![Override date_format](/image/demo/overrideDateFormat.webp)
 
 ## Capitalized Chinese Currency Printing
 
@@ -59,8 +69,9 @@ If you want to use the calculator, simply enter `=` followed by the calculation 
 
 Of course, `=` can be changed to other letters, and you can override the `recognizer/expression` configuration item.
 
+If you don't want to use the calculator, you can disable it through custom configuration. For example, using the `double_pinyin_flypy.custom.yaml` file, add the following content:
 ```yaml
 patch:
-  # Close the calculator function
+  # Close the simple calculator
   "recognizer/patterns/expression": ""
-```If you don't want to use the calculator, you can disable it through custom configuration. For example, using the `double_pinyin_flypy.custom.yaml` file, add the following content:
+```

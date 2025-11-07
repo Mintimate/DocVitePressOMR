@@ -11,25 +11,35 @@ aside: true
 
 # 特殊功能键
 借助lua脚本，薄荷拼音实现了一些特定的功能键：
-- 时间打印
-- 星期打印
-- 日期打印
+- 时间/星期/日期/节气等打印
 - 大写人民币打印
 - 农历日期打印/转换
 - 简易计算器
 
-## 时间打印
-在输入法内，只要输入关键词`time`，输入法会使用`Lua`脚本，自动根据当前的时间进行造句：
-![时间打印](/image/demo/timeKey.webp)
+## 时间/星期/日期/节气 <Badge type="tip" text="^2025.11" />
 
-## 星期打印
-和上面类似，只不过关键词变成`week`:
-![星期打印](/image/demo/weekKey.webp)
+在 [7ae364ea06](https://github.com/Mintimate/oh-my-rime/commit/2c53f68cf4bb9461bda82e1b2862307ae364ea06) 版本后之前，使用多个 Lua 脚本实现时间(time)、星期(week)、日期(date)的打印。
 
-## 日期打印
-关键词`date`:
-![日期打印](/image/demo/dateKey.webp)
+但是在这个版本之后，AMZ 推送了 [shijian.lua](https://github.com/Mintimate/oh-my-rime/blob/8c8fb9c40a8e4bdff8a325049e96119f6699c965/lua/shijian.lua) 脚本来实现时间等信息的打印。
 
+你可以使用下列关键词来激活对应的功能：
+- 时间：osj
+- 日期：orq
+- 农历：onl
+- 星期：oxq
+- 今年第几周：oww
+- 节气：ojq
+- 日期+时间：ors
+- 时间戳：ott
+- 大写N日期：N20250315 或者N0312不带年
+- 节日：ojr
+- 问候模板：oday
+
+![shijian.luia 使用效果](/image/demo/shijianLua.webp)
+
+如果你想设置 `orq` 内每个日期的顺序，可以覆写`date_format`配置项：
+
+![覆写date_format](/image/demo/overrideDateFormat.webp)
 
 ## 大写人民币打印
 这个大写人民币打印就比较有意思了，使用大写字母`R`进行激活，后续输入键盘上的数字键（小键盘上的无效，要字母上方的数字）：

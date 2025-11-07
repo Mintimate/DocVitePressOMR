@@ -29,6 +29,9 @@ sidebar: false
 | [RIME-LMDG Github](https://github.com/amzxyz/RIME-LMDG) | [wanxiang-lts-zh-hans.gram](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/wanxiang-lts-zh-hans.gram) | 万象模型 |
 
 ## 2025-S04
+Features:
+- 破坏性变更: 移除 mint_date_time_translator 相关配置，使用 shijian.lua 进行代替. <Badge type="tip">[7ae364ea06](https://github.com/Mintimate/oh-my-rime/commit/2c53f68cf4bb9461bda82e1b2862307ae364ea06)</Badge>
+
 Performance:
 - 调整文档内部的字典覆写和横向显示 Demo 描述。
 - 文档内部的 RAG 检索升级。

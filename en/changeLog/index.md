@@ -30,6 +30,9 @@ Thank you to CNB for providing storage and acceleration resources. The following
 | [RIME-LMDG Github](https://github.com/amzxyz/RIME-LMDG) | [wanxiang-lts-zh-hans.gram](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/wanxiang-lts-zh-hans.gram) | Wanxiang (LMDG) Model |  
 
 ## 2025-S04
+Features:
+- Breaking changes: Remove mint_date_time_translator related configurations, use shijian.lua instead. <Badge type="tip">[7ae364ea06](https://github.com/Mintimate/oh-my-rime/commit/2c53f68cf4bb9461bda82e1b2862307ae364ea06)</Badge>
+
 Performance:
 - Adjusted the dictionary override and horizontal display demo descriptions in the documentation.
 - Upgraded the internal RAG retrieval in the documentation.
