@@ -291,27 +291,6 @@ Comparing `rime_mint.custom.yaml` and `rime_mint.schema.yaml`：
 
 ![Compare](/image/guide/compareRimeMintSchemaAndCustom.webp)
 
-## Example: Customizing Skins
-If you want to customize the skin, you first need to identify your current Rime client. Different clients use different skins, so you need to modify according to your client.
-
-The Oh-my-rime (input scheme) integrates two sets of skins that can be used within Squirrel and Weasel: the Duck Series and the Green Series.
-
-For the Squirrel client, if you want to change the Duck Series skin to the Green Series, patch as follows in the `squirrel.custom.yaml` file:
-```yaml
-# Only one patch node can be in a file
-patch:
-  # Override the light mode skin to mint_light_green (Jade Green)
-  "style/color_scheme": mint_light_green
-  # Override the dark mode skin to mint_dark_green (Emerald Green)
-  "style/color_scheme_dark": mint_dark_green
-```
-Afterward, redeploy.
-
-For the Weasel client, if you want to change the Green Series skin to the Duck Series, it is also done in the same way, except the file name is `weasel.custom.yaml`.
-
-In fact, the properties that can be patched depend on the file without `custom`.
-
-So, don't assume that Squirrel and Weasel can modify the same configurations. To see which appearance configurations can be modified, it is recommended to check the `squirrel.yaml` and `weasel.yaml` files, and then modify according to your needs.
 
 ## Example: Horizontal Input Method
 If you want to change the layout of the input method to horizontal on macOS, you can do the following:
@@ -331,6 +310,29 @@ If your input method skin has `candidate_list_layout: stacked` set, due to the r
 At the same time, currently, the configuration priority of `candidate_list_layout` is higher than `horizontal: true`. However, if the `candidate_list_layout` setting is invalid (for example: on Weasel, setting `style/candidate_list_layout` to `linear` in `weasel.custom.yaml` is invalid), you need to set `horizontal: true`.
 
 :::
+
+## Example: Customizing Skins
+If you want to customize the skin, you first need to identify your current Rime client. Different clients use different skins, so you need to modify according to your client.
+
+The Oh-my-rime (input scheme) integrates two sets of skins that can be used within Squirrel and Weasel: the Duck Series and the Green Series.
+
+For the Squirrel client, if you want to change the Duck Series skin to the Green Series, patch as follows in the `squirrel.custom.yaml` file:
+```yaml
+# Only one patch node can be in a file
+patch:
+  # Override the light mode skin to mint_light_green (Jade Green)
+  "style/color_scheme": mint_light_green
+  # Override the dark mode skin to mint_dark_green (Emerald Green)
+  "style/color_scheme_dark": mint_dark_green
+```
+
+Afterward, redeploy.
+
+For the Weasel client, if you want to change the Green Series skin to the Duck Series, it is also done in the same way, except the file name is `weasel.custom.yaml`.
+
+In fact, the properties that can be patched depend on the file without `custom`.
+
+So, don't assume that Squirrel and Weasel can modify the same configurations. To see which appearance configurations can be modified, it is recommended to check the `squirrel.yaml` and `weasel.yaml` files, and then modify according to your needs.
 
 ## Example: Custom Dictionary
 If you want to customize the dictionary, you can do so as follows, taking the "Mint Pinyin - Full Pinyin Input" in the Mint Input Method as an example:
@@ -371,7 +373,31 @@ import_tables:
 ...
 ```
 
-Reference content for `dicts/my_custom_dicts.dict.yaml`:
+Here you need to note that the dictionary you see looks like this:
+```yaml
+# Rime dictionary
+# encoding: utf-8
+#https://github.com/amzxyz/RIME-LMDG
+---
+name: rime_mint.chars
+version: "2025-10-29"
+sort: by_weight
+
+...
+啊	a	915
+阿	ā	749
+啊	ā	537
+锕	ā	346
+啊	á	336
+嗄	á	305
+腌	ā	268
+吖	ā	250
+啊	à	146
+啊	ǎ	19
+呵	a	1
+```
+
+You will find that there are tone marks, this is because of the special nature of the Wanxiang dictionary that has tone processing. You can set your own without tone marks, for example, reference content for `dicts/my_custom_dicts.dict.yaml`:
 
 ```yaml
 # Rime dictionary
@@ -387,6 +413,8 @@ sort: by_weight
 ```
 
 > This method is mainly for some users who have always wanted to add Sogou dictionaries. Although I think it's completely unnecessary, the existing dictionary is also calculated by AMZ through word segmentation models, adding Sogou dictionaries will only increase lag; but it also provides a method for those who want to try.
+
+As an extension, the tone marks in the dictionary are used in conjunction with [oh-my-rime/lua/super_preedit.lua](https://github.com/Mintimate/oh-my-rime/blob/main/lua/super_preedit.lua) to display tones.
 
 ## Example: Maximum Pinyin String Length
 

@@ -372,7 +372,31 @@ import_tables:
 ...
 ```
 
-`dicts/my_custom_dicts.dict.yaml` 参考内容:
+这里需要注意，你看到的自有词库是这样的：
+```yaml
+# Rime dictionary
+# encoding: utf-8
+#https://github.com/amzxyz/RIME-LMDG
+---
+name: rime_mint.chars
+version: "2025-10-29"
+sort: by_weight
+
+...
+啊	a	915
+阿	ā	749
+啊	ā	537
+锕	ā	346
+啊	á	336
+嗄	á	305
+腌	ā	268
+吖	ā	250
+啊	à	146
+啊	ǎ	19
+呵	a	1
+```
+
+你会发现有音调，这是因为万象词库的特殊性做了音调处理。你自己设置的可以无须音调，比如 `dicts/my_custom_dicts.dict.yaml` 参考内容:
 
 ```yaml
 # Rime dictionary
@@ -388,6 +412,8 @@ sort: by_weight
 ```
 
 > 这个方法，主要是一些用户一直想添加搜狗词库。虽然我认为完全没必要，现有词库也是 AMZ 经过分词模型计算得出，添加搜狗词库徒增卡顿；但是也提供一个方法，给想尝试的人。
+
+扩展一下，词库内的音调是用来配合[oh-my-rime/lua/super_preedit.lua](https://github.com/Mintimate/oh-my-rime/blob/main/lua/super_preedit.lua)显示音调的。
 
 ## 举例: 拼音串最大长度
 
