@@ -186,7 +186,7 @@ patch:
 
 After saving and redeploying Rime, during the compilation phase, the `speller/algebra` section in `rime_mint.custom.yaml` will override the corresponding section in `rime_mint.schema.yaml`.
 
-::: warning
+::: warning Warning
 
 Note ⚠️: The example demonstrates the fuzzy pinyin for the `rime_mint` scheme, which is the full pinyin fuzzy pinyin. If you are using a mixed scheme of double pinyin and full pinyin, such as Mint's `rime_mint_flypy`, you need to pay attention to the regular expression order in `speller/algebra`. You cannot use `speller/algebra/+` to append content; you need to use `speller/algebra` to override the content to ensure that the priority of fuzzy pinyin is higher than that of double pinyin:
 

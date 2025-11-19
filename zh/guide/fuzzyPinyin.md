@@ -193,7 +193,7 @@ patch:
 
 保存并重新部署rime，这个时候，在编译阶段`rime_mint.custom.yaml`内`speller/algebra`会覆盖`rime_mint.schema.yaml`内的`speller/algebra`部分。
 
-::: warning
+::: warning 警告
 
 注意⚠️: 样例里面演示 `rime_mint` 方案的模糊拼音，也就是全拼的模糊拼音。如果你使用的是双拼和全拼的混合方案，比如薄荷内地`rime_mint_flypy`。那么需要注意`speller/algebra`内地正则顺序。不能使用`speller/algebra/+`来追加内容，需要使用`speller/algebra`来覆盖内容，确保模糊拼音的优先级，高于双拼的优先级:
 
