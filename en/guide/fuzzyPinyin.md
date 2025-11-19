@@ -57,6 +57,8 @@ To implement fuzzy pinyin in Rime, you need to modify the `speller/algebra` modu
 - derive/([aeiou])ng$/$1gn/ # dagn => dang
 - derive/([dtngkhrzcs])o(u|ng)$/$1o/ # zho => zhong|zhou  
 - derive/ong$/on/ # zhonguo => zhong guo
+- derive/ao$/oa/ # hoa => hao
+- derive/([iu])a(o|ng?)$/a$1$2/ # tain => tian
 - abbrev/^([a-z]).+$/$1/ # Simple pinyin (first letter)
 - abbrev/^([zcs]h).+$/$1/ # Simple pinyin (zh, ch, sh)
 ```
@@ -143,6 +145,7 @@ Through fuzzy pinyin, you can also enable automatic error correction (to a certa
     - derive/([jqx])iong$/$1inog/
     - derive/([jqx])iong$/$1oing/
     - derive/([jqx])iong$/$1iogn/
+    - derive/([jqx])iong$/$1oign/
     # Others
     - derive/([rtsdghkzc])o(u|ng)$/$1o/ # do → dou|dong
     - derive/ong$/on/ # lon → long
@@ -152,7 +155,7 @@ Through fuzzy pinyin, you can also enable automatic error correction (to a certa
 Using automatic error correction can allow us to input what we want even when we make some mistakes in typing.
 > Note: The automatic error correction is based on "Wusong Pinyin," and special thanks to them for the reference.
 
-## Fuzzy Pinyin in Mint Pinyin <Badge type="tip" text="^2025.08.22" />
+## Fuzzy Pinyin in Oh-my-rime <Badge type="tip" text="^2025.11.19" />
 By default, the fuzzy Pinyin feature, except for automatic error correction, is disabled in Mint Pinyin.
 
 If you prefer to use fuzzy Pinyin, you can refer to the previous text and remove the comments in the fuzzy Pinyin section of the `rime_mint.schema.yaml` file:
@@ -179,10 +182,17 @@ patch:
 ```
 ![using Custom](/image/guide/fuzzyPinyinMintCustom.webp)
 
-> Note⚠️: Choose `'speller/algebra/+'` instead of `'speller/algebra'`; the former appends to the existing configuration, while the latter directly overrides it.
+> Choose `'speller/algebra/+'` instead of `'speller/algebra'`; the former appends to the existing configuration, while the latter directly overrides it.
 
 After saving and redeploying Rime, during the compilation phase, the `speller/algebra` section in `rime_mint.custom.yaml` will override the corresponding section in `rime_mint.schema.yaml`.
 
+::: warning
+
+Note ⚠️: The example demonstrates the fuzzy pinyin for the `rime_mint` scheme, which is the full pinyin fuzzy pinyin. If you are using a mixed scheme of double pinyin and full pinyin, such as Mint's `rime_mint_flypy`, you need to pay attention to the regular expression order in `speller/algebra`. You cannot use `speller/algebra/+` to append content; you need to use `speller/algebra` to override the content to ensure that the priority of fuzzy pinyin is higher than that of double pinyin:
+
+![Using custom override, fuzzy pinyin priority higher than double pinyin](/image/guide/fuzzyPinyinMintCustomFlypy.webp)
+
+:::
 
 ## Mapping of u/ü and v <Badge type="tip" text="^2024.10.02" />
 
@@ -197,5 +207,4 @@ patch:
   "speller/algebra/+":
     - derive/v/u/ # u => ü
 ```
-
-After redeploying, we can blur `u` and `ü`.
+After redeploying, you can blur `u` and `ü`.

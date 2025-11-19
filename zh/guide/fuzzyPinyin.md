@@ -158,7 +158,7 @@ nin xing wo jin lai, jin lai jin mu qin。
 使用自动纠错，可以让我们在输入的时候，一些情况下打错拼音也可以输入我们想要的。
 > 注意: 自动纠错参考自『雾凇拼音』，此处特别感谢。
 
-## 薄荷拼音的模糊拼音<Badge type="tip" text="^2025.08.22" />
+## 薄荷的模糊拼音<Badge type="tip" text="^2025.11.19" />
 薄荷输入法内的薄荷拼音默认关闭了除了自动纠错外的模糊拼音。
 
 如果你喜欢模糊拼音，可以参考上文，并对`rime_mint.schema.yaml`文件中的模糊拼音部分的注释进行删除：
@@ -188,10 +188,18 @@ patch:
 
 ![使用custom覆盖](/image/guide/fuzzyPinyinMintCustom.webp)
 
-> 注意⚠️: 选择的是`'speller/algebra/+'`，而不是`'speller/algebra'`；前者相比后者，后者是直接覆盖，前者是追加。
+>  选择的是`'speller/algebra/+'`，而不是`'speller/algebra'`；前者相比后者，后者是直接覆盖，前者是追加。
 
 
 保存并重新部署rime，这个时候，在编译阶段`rime_mint.custom.yaml`内`speller/algebra`会覆盖`rime_mint.schema.yaml`内的`speller/algebra`部分。
+
+::: warning
+
+注意⚠️: 样例里面演示 `rime_mint` 方案的模糊拼音，也就是全拼的模糊拼音。如果你使用的是双拼和全拼的混合方案，比如薄荷内地`rime_mint_flypy`。那么需要注意`speller/algebra`内地正则顺序。不能使用`speller/algebra/+`来追加内容，需要使用`speller/algebra`来覆盖内容，确保模糊拼音的优先级，高于双拼的优先级:
+
+![使用custom覆盖，模糊拼音优先级高于双拼](/image/guide/fuzzyPinyinMintCustomFlypy.webp)
+
+:::
 
 ## u/ü与v映射 <Badge type="tip" text="^2024.10.02" />
 我们学习拼音的过程中，会学习到`un`和`ün`这样的复韵母，以及`u`和`ü`这样的单韵母。
