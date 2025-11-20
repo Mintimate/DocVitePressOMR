@@ -47,6 +47,8 @@ main:
             branch: main
             force: true
     - name: "构建产物"
+      imports:
+        - https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml
       docker:        
         image: node:22
         volumes:
@@ -58,8 +60,6 @@ main:
         - name: 构建产物
           script: yarn build
         - name: "部署流程"
-          imports:
-            - https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml
           image: tencentcom/deploy-eopages:latest
           script: 
             - cd .vitepress
