@@ -17,6 +17,9 @@ aside: true
 - 请先下载预构建包(薄荷输入法方案): [oh-my-rime-online.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/oh-my-rime-online.zip)
 - 如果**加载错误的 zip，请刷新页面后重新加载 zip**。
 
+友情构建♥️:
+- [雾凇输入法方案-在线体验包](https://cnb.cool/Mintimate/rime/DocVitePressOMR/-/releases/latest/download/rime-ice-online.zip)
+
 :::
 
 ## 使用方法

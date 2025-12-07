@@ -17,6 +17,9 @@ aside: true
 - Please download the pre-built package (Oh-my-rime scheme):  [oh-my-rime-online.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/oh-my-rime-online.zip)
 - If **the zip is loaded incorrectly, please refresh the page and then reload the zip**.
 
+Friendly build♥️:
+- [Ice Rime Scheme - Online Demo Package](https://cnb.cool/Mintimate/rime/DocVitePressOMR/-/releases/latest/download/rime-ice-online.zip)
+
 :::
 
 ## Usage
