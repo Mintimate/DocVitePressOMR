@@ -12,6 +12,7 @@ If you find this document or Oh-my-rime Pinyin useful, you can buy me a coffee:
 
 > Please be sure to leave a note "Mint Pinyin" or "oh-my-rime". Donors of coffee ☕️ will be credited in the "[Acknowledgements](#Acknowledgements)" (●'◡'●)ノ♥
 
+![oh-my-rime](/image/demo/guideAbstract.webp)
 
 ## Basic Concepts
 Oh-my-rime is an input schema, while RIME is actually an algorithmic core. To form a complete client input method, an input method framework is also required. ​**​These three layers together constitute an input method​​**.
