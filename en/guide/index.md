@@ -52,7 +52,7 @@ flowchart TD
 
  I created a cartoon illustration to explain the interdependency between the three components:
 
-![Schema and Framework](/image/demo/guideToRime.webp)
+![Schema and Framework](/image/guide/guideToRime.webp)
 
 ## Recommended Tutorials
 
