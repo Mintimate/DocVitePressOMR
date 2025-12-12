@@ -56,6 +56,10 @@ flowchart TD
     linkStyle 0,2,7,8,9 stroke:#bfbfbf
 ```
 
+制作了一下卡通图片，用于说明三者的相互依赖关系：
+
+![输入方案和框架](/image/demo/guideToRime.webp)
+
 ## 推荐教程
 这里推荐一些教程，用于辅助深度定制：
 - [Rime官方Wiki文档](https://github.com/rime/home/wiki)

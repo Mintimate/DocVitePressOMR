@@ -50,6 +50,10 @@ flowchart TD
     linkStyle 0,2,7,8,9 stroke:#bfbfbf
 ```
 
+ I created a cartoon illustration to explain the interdependency between the three components:
+
+![Schema and Framework](/image/demo/guideToRime.webp)
+
 ## Recommended Tutorials
 
 Here are some recommended tutorials to assist with advanced customization:
