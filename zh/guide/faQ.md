@@ -214,7 +214,7 @@ rime-dict-processor.exe -i "C:\Users\用户名\AppData\Roaming\Rime\syncData" -o
 
 ```yaml
 patch:
-  "style/text_orientation": horizontal  # 候选项排列方向（horizontal为横向，vertical为纵向）
+  "style/candidate_list_layout": linear # linear: 横向 / stacked: 竖向 / tabled: 表格
 ```
 
 小狼毫的配置文件(`weasel.custom.yaml`内配置)可能不行，这个时候可以在`weasel.custom.yaml`内配置这样:

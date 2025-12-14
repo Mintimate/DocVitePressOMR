@@ -218,7 +218,7 @@ In Squirrel, you can configure horizontal candidate layout by adding this to `sq
 
 ```yaml
 patch:
-  "style/text_orientation": horizontal  # Candidate arrangement direction (horizontal for horizontal, vertical for vertical)
+  "style/candidate_list_layout": linear # linear: horizontal / stacked: vertical / tabled: table
 ```
 
 For Weasel, the configuration in `weasel.custom.yaml` might not work. In this case, you can configure it like this in `weasel.custom.yaml`:
