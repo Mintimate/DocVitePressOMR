@@ -22,7 +22,7 @@ GitHub仓库地址:
 - [oh-my-rime: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
 
 镜像仓库地址（如果你无法访问GitHub）: 
-- [oh-my-rime: https://gitlab.mintimate.cn/Mintimate/oh-my-rime](https://gitlab.mintimate.cn/Mintimate/oh-my-rime)
+- [oh-my-rime: https://cnb.cool/Mintimate/rime/oh-my-rime](https://cnb.cool/Mintimate/rime/oh-my-rime)
 
 ::: tip
 本质上，薄荷输入法就是Rime的一套输入配置。所以，**本网站，同时也是一份非官方的Rime配置文档**。

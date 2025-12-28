@@ -21,7 +21,7 @@ This section will showcase the adaptation and usage effects of the Mint Input Me
 
 GitHub repository address: [oh-my-rime: https://github.com/Mintimate/oh-my-rime](https://github.com/Mintimate/oh-my-rime)
 
-Mirror repository address (if you cannot access GitHub): [oh-my-rime: https://gitlab.mintimate.cn/Mintimate/oh-my-rime](https://gitlab.mintimate.cn/Mintimate/oh-my-rime)
+Mirror repository address (if you cannot access GitHub): [oh-my-rime: https://cnb.cool/Mintimate/rime/oh-my-rime](https://cnb.cool/Mintimate/rime/oh-my-rime)
 
 ::: tip
 In essence, the Mint input method is a set of input configurations for Rime. Therefore, **this website is also an unofficial Rime configuration document**.
