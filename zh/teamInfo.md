@@ -66,6 +66,23 @@ const members = [
   :members="members"/>
 
   <VPTeamPageSection>
+    <template #title>里程碑</template>
+  </VPTeamPageSection>
+  <div class="vp-doc" :class="$style.VPTeamContent">
+    <div :class="$style.milestoneCard">
+       <div :class="$style.milestoneImageContainer">
+         <img src="/image/global/4096-stars.webp" alt="4096 Stars Milestone" :class="$style.milestoneImage"/>
+       </div>
+       <div :class="$style.milestoneText">
+          <h3>🎉 4096 Stars 达成！</h3>
+          <p>2026年1月4日，oh-my-rime 项目成功达成 4096 个 star！这是一个值得纪念的时刻。</p>
+          <p>特别感谢 <a href="https://github.com/amzxyz" target="_blank"><strong>amzxyz</strong></a>、<a href="https://github.com/iDvel" target="_blank"><strong>iDvel</strong></a>、<a href="https://github.com/eagleoflqj" target="_blank"><strong>eagleoflqj</strong></a>、<a href="https://github.com/KyleBing" target="_blank"><strong>KyleBing</strong></a>等开源社区的贡献者。</p>
+          <p>同时感谢热心群友解答问题，以及所有赞赏用户。是你们的支持让薄荷输入法变得更好！</p>
+       </div>
+    </div>
+  </div>
+
+  <VPTeamPageSection>
     <template #title>联系我们</template>
   </VPTeamPageSection>
   <div class="vp-doc " :class="$style.VPTeamContent">
@@ -104,9 +121,56 @@ const members = [
     padding: 20px 32px;
 }
 
+.milestoneCard {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to right, rgba(0, 128, 128, 0.1), rgba(77, 179, 179, 0.1));
+    border: 1px solid rgba(0, 128, 128, 0.2);
+    border-radius: 12px;
+    padding: 24px;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.milestoneImageContainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.milestoneImage {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.milestoneImage:hover {
+    transform: scale(1.02);
+}
+
+.milestoneText {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.milestoneText h3 {
+    margin-top: 0;
+    color: var(--vp-c-brand-1);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
 @media (min-width: 768px){
 .VPTeamContent{
     padding: 20px 128px;
+}
+.milestoneCard {
+    flex-direction: row;
+    align-items: center;
 }
 }
 

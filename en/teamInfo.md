@@ -66,6 +66,23 @@ const members = [
 />
 
   <VPTeamPageSection>
+    <template #title>Milestone</template>
+  </VPTeamPageSection>
+  <div class="vp-doc" :class="$style.VPTeamContent">
+    <div :class="$style.milestoneCard">
+       <div :class="$style.milestoneImageContainer">
+         <img src="/image/global/4096-stars.webp" alt="4096 Stars Milestone" :class="$style.milestoneImage"/>
+       </div>
+       <div :class="$style.milestoneText">
+          <h3>🎉 4096 Stars Achieved!</h3>
+          <p>On January 4, 2026, the oh-my-rime project successfully reached 4096 stars! This is a memorable moment.</p>
+          <p>Special thanks to contributors from the open source community such as <a href="https://github.com/amzxyz" target="_blank"><strong>amzxyz</strong></a>, <a href="https://github.com/iDvel" target="_blank"><strong>iDvel</strong></a>, <a href="https://github.com/eagleoflqj" target="_blank"><strong>eagleoflqj</strong></a> and <a href="https://github.com/KyleBing" target="_blank"><strong>KyleBing</strong></a>.</p>
+          <p>We also thank the enthusiastic group members for answering questions, and all the users who sponsored. Your support makes Mint Input Method better!</p>
+       </div>
+    </div>
+  </div>
+
+  <VPTeamPageSection>
     <template #title>Contact Us</template>
   </VPTeamPageSection>
   <div class="vp-doc " :class="$style.VPTeamContent">
@@ -104,9 +121,56 @@ const members = [
     padding: 20px 32px;
 }
 
+.milestoneCard {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to right, rgba(0, 128, 128, 0.1), rgba(77, 179, 179, 0.1));
+    border: 1px solid rgba(0, 128, 128, 0.2);
+    border-radius: 12px;
+    padding: 24px;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.milestoneImageContainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.milestoneImage {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.milestoneImage:hover {
+    transform: scale(1.02);
+}
+
+.milestoneText {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.milestoneText h3 {
+    margin-top: 0;
+    color: var(--vp-c-brand-1);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
 @media (min-width: 768px){
 .VPTeamContent{
     padding: 20px 128px;
+}
+.milestoneCard {
+    flex-direction: row;
+    align-items: center;
 }
 }
 
@@ -116,5 +180,3 @@ const members = [
 }
 }
 </style>
-
-
