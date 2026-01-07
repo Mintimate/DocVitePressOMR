@@ -335,20 +335,17 @@ patch:
 
 ## 举例: 自定义词库
 如果你想自定义词库，那么可以这样操作，以薄荷输入法内的「薄荷拼音-全拼输入」为例：
-1. 打开或创建`rime_mint.custom.yaml`文件；
-2. 在 `dicts` 目录下新建一个以`.dict.yaml`为结尾的文件，内容参考: `rime_mint.chars.dict.yaml`，内部填充你自己的自定义词典。**注意内部的 Tab 和空格，建议使用 [VSCODE](https://code.visualstudio.com/download) 打开。**
-3. 在项目目录内，参考`rime_mint.dict.yaml` 文件，创建`rime_mint.custom.dict.yaml`，添加对`dicts`内新文件的引用。
-3. 使用`patch`进行覆写，将`translator/dictionary`改为你的自定义词库；
+```mermaid
+graph LR
+    A(rime_mint.custom.yaml):::custom --> B(rime_mint.custom.dict.yaml):::customDict
+    B --> C(自定义词典.dict.yaml):::dict
 
-`rime_mint.custom.yaml`可能的内容:
-```yaml
-patch:
-  # 设置「薄荷拼音-全拼输入」的词典，使用 rime_mint.custom.dict.yaml 文件
-  translator/dictionary: rime_mint.custom
+    classDef custom fill:#E0095F,stroke:#e91e63,color:#ffffff;
+    classDef customDict fill:#c5e1a5,stroke:#689f38,color:#33691e;
+    classDef dict fill:#f0f4c3,stroke:#9e9d24,color:#5d4037;
 ```
-
-同时，可以看到，我们这里定位到`rime_mint.custom.dict.yaml`文件，那么我们可以创建这个文件，然后在这个文件内写入我们的词库。建议把薄荷自带的词库拷贝一份，然后进行修改:
-
+1. 在 `dicts` 目录下参考`rime_mint.chars.dict.yaml`创建一个以`.dict.yaml`为结尾的词库文件。例如：`my_custom_dicts.dict.yaml`。在其中填充你自己的词典。**注意内部的 Tab 和空格，建议使用 [VSCODE](https://code.visualstudio.com/download) 打开。**
+2. 在项目根目录下参考薄荷自带的`rime_mint.dict.yaml` 词库配置文件创建`rime_mint.custom.dict.yaml`，引用`1`中创建的自定义词典。例如下方代码中的`dicts/my_custom_dicts`。建议把薄荷自带的词库`rime_mint.dict.yaml`拷贝一份，然后进行修改。
 ```yaml
 ---
 name: rime_mint                  # 注意name和文件名一致
@@ -371,8 +368,16 @@ import_tables:
   # - dicts/other_emoji            # Emoji(仅仅作为补充，实际使用一般是OpenCC生效)
 ...
 ```
+3. 打开或创建`rime_mint.custom.yaml`文件，使用`patch`进行覆写，将`translator/dictionary`改为你的自定义词库配置。按照`2`中新建的`rime_mint.custom.dict.yaml`就是`rime_mint.custom`。
+`rime_mint.custom.yaml`可能的内容:
+```yaml
+patch:
+  # 设置「薄荷拼音-全拼输入」的词典，使用 rime_mint.custom.dict.yaml 文件
+  translator/dictionary: rime_mint.custom
+```
 
-这里需要注意，你看到的自有词库是这样的：
+4. 其他
+这里需要注意，你看到的`dicts`中薄荷自带的词库是这样的：
 ```yaml
 # Rime dictionary
 # encoding: utf-8
