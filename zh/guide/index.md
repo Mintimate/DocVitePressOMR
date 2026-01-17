@@ -110,3 +110,7 @@ flowchart TD
 倡导互助。若进群只等他人秒回问题，甚至抱怨本该自查（如看文档）的基础问题无人解答，请慎重加入或留群。
 
 > 注意: 这是交流群，不是客服群；本身也是开源配置，也不存在售后和客服关系。
+
+当然，你也可以在 GitHub [Issues](https://github.com/Mintimate/oh-my-rime/issues) 和 [Discussions](https://github.com/Mintimate/oh-my-rime/discussions) 内进行讨论。同样注意 GitHub 的 Issues 等规范，维护者也尽可能保持中立和开源态度，一些 Issues 可能处理后就关闭(这很正常，也符合常规 Issues 处理)，不要跑去已经关闭的 Issues 吐槽其他功能，甚至吐槽维护者“不承认”问题，这没有意义，commit 提交历史在哪里摆着。
+
+> 我有没有商业，“不承认“什么问题有什么意思么？ 真的是”沉默的大多数不会表达感谢，只有少数遇到困难的才会不断抱怨“？可以当作没看到，处理一些 Issues 由感而发 😫。

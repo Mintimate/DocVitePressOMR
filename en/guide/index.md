@@ -109,3 +109,7 @@ If you have QQ and want to explore and discuss Rime together:
 - QQ Group: 703260572 (Reject ads, support casual chat~)
 
 > Note: This is a discussion group, not a customer service group. It is also an open source project, so there is no after-sales or customer service relationship.
+
+You can also discuss in GitHub [Issues](https://github.com/Mintimate/oh-my-rime/issues) and [Discussions](https://github.com/Mintimate/oh-my-rime/discussions). Please also note GitHub's guidelines for Issues and similar features. The maintainer strives to remain neutral and uphold open-source principles. Some Issues may be closed after resolution (which is normal and follows standard Issue handling practices). Do not go to already closed Issues to complain about other features or even criticize the maintainer for "not acknowledging" problems—this is meaningless, as the commit history is right there for all to see.
+
+> Do I have any commercial motives? What would be the point of "not acknowledging" any issues? Is it really that "the silent majority doesn’t express gratitude, while only a minority facing difficulties keeps complaining"? You can treat this as unseen—just some thoughts sparked while handling Issues 😫.
