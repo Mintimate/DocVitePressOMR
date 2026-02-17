@@ -42,12 +42,12 @@ Although there is no phonetic shape, we have introduced auxiliary codes. By defa
 
 In fact, **other Double Pinyin schemes are also supported.** However, the Double Pinyin Fly's shape code is more well-known, and in Mint, the Natural Code can also use the Natural Code shape code for auxiliary positioning. Other Double Pinyin schemes use [Moqi's shape code](https://github.com/gaboolic/rime-shuangpin-fuzhuma) for auxiliary positioning.
 
-If you want to change the key to activate the auxiliary code, you can use `custom` to override the `axu_code` in the [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml) file, and add new auxiliary activation codes to the `alphabet` in `speller`.
+If you want to change the key to activate the auxiliary code, you can use `custom` to override the `aux_code` in the [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml) file, and add new auxiliary activation codes to the `alphabet` in `speller`.
 
-More settings for `axu_code`:
+More settings for `aux_code`:
 ```YAML
 # Xiaohe Phonetic Shape Configuration
-axu_code:
+aux_code:
   # Activation code
   trigger_word: ";"
   # Mode to display auxiliary code
@@ -66,7 +66,7 @@ Example of Overriding: On Android phones, the default `?123` symbol keyboard in 
 
 patch:
   # Set the trigger key
-  "axu_code/trigger_word": ","
+  "aux_code/trigger_word": ","
   # Release the semicolon and let the comma participate in input
   "speller/alphabet": zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA~,
 ```
@@ -82,7 +82,7 @@ Referenced from:
 - [https://github.com/HowcanoeWang/rime-lua-aux-code](https://github.com/HowcanoeWang/rime-lua-aux-code)
 
 ## Auxiliary Code OpenCC
-Haha, actually this is no longer auxiliary code content. For convenience when not using auxiliary codes, you can also directly see the content of the shape. You can change `show_aux_notice` in `axu_code` to `always`.
+Haha, actually this is no longer auxiliary code content. For convenience when not using auxiliary codes, you can also directly see the content of the shape. You can change `show_aux_notice` in `aux_code` to `always`.
 
 You can also use Chaifen OpenCC made by [GGboxCloud](https://github.com/GGboxCloud):
 ```yaml
@@ -99,8 +99,8 @@ chaifen_cc:
     - reverse_lookup
   tips: char             #  Add filter to single character: char; All: all，
 ```
-![Auxiliary Code VS axu_code Shape Code](/image/demo/showHelperInfoForDoublePinyinFly.webp)
+![Auxiliary Code VS aux_code Shape Code](/image/demo/showHelperInfoForDoublePinyinFly.webp)
 
 ::: warning Warning
-Auxiliary Code OpenCC, just for prompt purposes. If you need the auxiliary code to participate in word positioning and follow-up, you still need to use `axu_code` for positioning.
+Auxiliary Code OpenCC, just for prompt purposes. If you need the auxiliary code to participate in word positioning and follow-up, you still need to use `aux_code` for positioning.
 :::

@@ -41,12 +41,12 @@ aside: true
 
 实际上，**其他双拼方案也是支持的。只不过小鹤双拼的形码比较有名，在薄荷内自然码也可以使用自然码的形码作为辅助定位。其他双拼，使用[墨奇的形码](https://github.com/gaboolic/rime-shuangpin-fuzhuma)作为辅助定位。**
 
-如果想切换激活辅助码的按键，可以使用`custom`覆写 [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml) 的`axu_code`，并且`speller`内的`alphabet`追加新的辅助激活码。
+如果想切换激活辅助码的按键，可以使用`custom`覆写 [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml) 的`aux_code`，并且`speller`内的`alphabet`追加新的辅助激活码。
 
-`axu_code`的更多设置：
+`aux_code`的更多设置：
 ```YAML
 # 小鹤音形配置
-axu_code:
+aux_code:
   # 激活码
   trigger_word: ";"
   # 展示辅码的模式
@@ -64,7 +64,7 @@ axu_code:
 
 patch:
   # 设置激发键
-  "axu_code/trigger_word": ","
+  "aux_code/trigger_word": ","
   # 释放分号，并让逗号参与输入
   "speller/alphabet": zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA~,
 
@@ -82,7 +82,7 @@ patch:
 - [https://github.com/HowcanoeWang/rime-lua-aux-code](https://github.com/HowcanoeWang/rime-lua-aux-code)
 
 ## 辅码OpenCC
-哈哈，其实这个已经不是辅码内容了。 为了方便在不使用辅码情况下，也可以直接看到形的内容。你可以把`axu_code`的`show_aux_notice`改为`always`。
+哈哈，其实这个已经不是辅码内容了。 为了方便在不使用辅码情况下，也可以直接看到形的内容。你可以把`aux_code`的`show_aux_notice`改为`always`。
 
 也可以使用 [GGboxCloud](https://github.com/GGboxCloud) 制作的 Chaifen OpenCC:
 ```yaml
@@ -99,8 +99,8 @@ chaifen_cc:
     - reverse_lookup
   tips: char             #  单字加滤镜: char; 全部: all，
 ```
-![辅助码 VS axu_code 形码](/image/demo/showHelperInfoForDoublePinyinFly.webp)
+![辅助码 VS aux_code 形码](/image/demo/showHelperInfoForDoublePinyinFly.webp)
 
 ::: warning 警告
-辅码 OpenCC，仅仅作为提示作用。 如果需要辅码参与词的定位和后续，那么还是需要用`axu_code`进行定位。
+辅码 OpenCC，仅仅作为提示作用。 如果需要辅码参与词的定位和后续，那么还是需要用`aux_code`进行定位。
 :::
