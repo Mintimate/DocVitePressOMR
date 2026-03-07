@@ -87,6 +87,24 @@ recognizer:
 
 ![拆字反查](/image/demo/reverseChaizi.webp)
 
+::: tip 输入注释显示（声起）
+在薄荷输入法内，反查结果支持显示完整的拼音注释。这一功能由「**声起**」开关控制：
+- **声杳**：关闭拼音注释显示
+- **声起**：开启拼音注释显示，在反查时会在输入框显示完整拼音
+
+开启后，输入 `Uuniuniuniu` 时，preedit 会实时显示为带声调的完整拼音（如 `niú niú niú`），帮助你确认拆字组合的正确读音。
+
+**工作原理**：
+1. 在 schema 中定义 `tone_display` 开关
+   ```yaml
+   - name: tone_display
+     states: [ 声杳, 声起 ]
+     reset: 0
+   ```
+2. Lua 过滤器 `super_preedit.lua` 读取开关状态，将输入编码转换为带声调的全拼显示在 preedit 区域
+3. 反查时 `reverse_lookup` 配置的 `overwrite_comment: true` 确保注释被正确覆盖显示
+:::
+
 ## 五笔反查
 在薄荷拼音内，中文输入法模式下，使用`Uw`进行激活五笔模式，后续输入的内容，将使用五笔进行解析。
 

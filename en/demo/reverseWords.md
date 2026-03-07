@@ -83,6 +83,24 @@ recognizer:
 
 With that, the reverse lookup is configured.
 
+::: tip Input Comment Display (Tone Display)
+In Oh-my-rime, the reverse lookup results support displaying complete Pinyin annotations. This feature is controlled by the "**Tone Display**" switch:
+- **Tone Hidden (声杳)**: Disable Pinyin annotation display
+- **Tone Display (声起)**: Enable Pinyin annotation display, showing complete Pinyin in the input box during reverse lookup
+
+When enabled, typing `Uuniuniuniu` will display the full Pinyin with tones in real-time in the preedit area (e.g., `niú niú niú`), helping you confirm the correct pronunciation of the radical combination.
+
+**How it works**:
+1. Define the `tone_display` switch in the schema
+   ```yaml
+   - name: tone_display
+     states: [ 声杳, 声起 ]
+     reset: 0
+   ```
+2. The Lua filter `super_preedit.lua` reads the switch state and converts input codes to full Pinyin with tones in the preedit area
+3. During reverse lookup, `reverse_lookup`'s `overwrite_comment: true` ensures comments are correctly overlaid and displayed
+:::
+
 ## Radical-based Reverse Lookup
 
 **Personally, I think this is the most practical type of reverse lookup**; In Oh-my-rime, press `Uu` to activate the radical-based input mode. Subsequent inputs will be interpreted using the radical library.
