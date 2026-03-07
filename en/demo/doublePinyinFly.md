@@ -9,43 +9,102 @@ description: In Mint Input Method, a customized scheme based on Double Pinyin Fl
 aside: true
 ---
 
-# Double Pinyin Flypy
-[小鹤音形](https://flypy.com/) actually contains two parts:
-- Double Spelling: The initial and final sounds are each represented by a letter, and the sound of a Chinese character is expressed in two letters;
-- Double Shape: According to the splitting rules, a Chinese character is split into two parts by the root, to distinguish homophones;
+# Double Pinyin Flypy <Badge type="tip" text="^2024.07" />
 
-We usually use Double Pinyin Flypy more, that is, the double spelling part. If you are using double shape, then most of the time it is four characters on the screen.
+## Understanding Xiaohe Phonetics
 
-For example (referenced from [Xiaohe(Double Pinyin Flypy) Official Document](https://flypy.cc/#/xh)):
+[Xiaohe Phonetics (小鹤音形)](https://flypy.com/) is a complete Chinese character input scheme consisting of two core parts:
 
-| Single Character | Full Spelling | Double Spelling | Double Shape | Full Code |
+| Component | Description | Input Method |
+| --- | --- | --- |
+| **Double Pinyin** | Each initial and final is represented by one letter, expressing the sound of a Chinese character in two letters | 2 keys for sound |
+| **Double Shape** | According to splitting rules, a Chinese character is split into two parts by radicals to distinguish homophones | 2 keys for shape |
+
+For example (referenced from [Xiaohe Official Documentation](https://flypy.cc/#/xh)):
+
+| Single Character | Full Pinyin | Double Pinyin | Double Shape | Full Code |
 | --- | --- | --- | --- | --- |
-| Small | xiao | xn | ld丨丶 | xnld |
-| Crane | he | he | dn丶bird | hedn |
-| Sound | yin | yb | lo立day | yblo |
-| Shape | xing | xk | kp open丿 | xkkp |
+| 小 | xiao | xn | ld丨丶 | xnld |
+| 鹤 | he | he | dn丶鸟 | hedn |
+| 音 | yin | yb | lo立日 | yblo |
+| 形 | xing | xk | kp开丿 | xkkp |
 
-So? How does Mint use Double Pinyin Flypy?
+Traditional Xiaohe Phonetics uses "four-code character determination": Double Pinyin 2 codes + Double Shape 2 codes = 4 codes for input. This method provides precise positioning but requires memorizing shape code rules, making the learning curve steeper.
 
-The answer is: Double spelling is the main, and the shape is used as the positioning auxiliary code.
-## Usage within Mint
-Currently, Mint can use the content of Double Pinyin Flypy. You can use the hotkey (`Ctrl/Control + ~` or `F4`) to switch to `小鹤双拼-薄荷定制`:
+## Mint's Design Philosophy
+
+Mint Input Method adopts a "**Double Pinyin primarily, Shape Code auxiliarily**" design approach:
+
+::: tip Why not use Phonetics directly?
+You might not believe it—**the author doesn't know shape codes** 😅
+
+So I introduced it as auxiliary code, allowing users to experience the benefits of shape codes without being "held hostage" by four-code input. Conveniently, this design also:
+1. **Lower learning curve**: Regular users can use Double Pinyin normally without memorizing shape codes
+2. **Use on demand**: Shape codes serve as auxiliary positioning when encountering many homophones
+3. **Flexible freedom**: Use it when you want, ignore it completely when you don't
+:::
+
+This design allows Mint to maintain Double Pinyin's efficiency while preserving shape code's precise positioning capability, while lowering the entry barrier.
+
+## Scheme Switching
+
+Use the hotkey (`Ctrl/Control + ~` or `F4`) to switch to "Xiaohe Double Pinyin - Mint Customization":
+
 ![Switch and use Double Pinyin Flypy](/image/demo/switchDoublePinyinFly.webp)
 
-Usage guide:
-- Switch to `小鹤双拼-薄荷定制`, you can use Xiaohe's double spelling keys for double spelling input. The dictionary used is the same as `薄荷拼音-全拼输入`. You can refer to the `translator`'s `dictionary` and `prism` in the repository [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml).
+After switching, you can use Xiaohe's Double Pinyin key layout for input. The dictionary is the same as "Mint Pinyin - Full Pinyin Input" (see the `translator` configuration in [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml)).
 
-## Auxiliary Code
-Although there is no phonetic shape, we have introduced auxiliary codes. By default, after inputting, use `;` to activate the auxiliary code, and then use the Double Pinyin shape code to locate words.
+## Auxiliary Code Feature Details
+
+### What is Auxiliary Code?
+
+Auxiliary code is an "optional" Chinese character positioning mechanism. After Double Pinyin input, enter auxiliary code mode through a specific activation key (default `;`), then input shape codes to filter candidates.
 
 ![Auxiliary Code](/image/demo/AxuCodeDemo.webp)
 
-In fact, **other Double Pinyin schemes are also supported.** However, the Double Pinyin Fly's shape code is more well-known, and in Mint, the Natural Code can also use the Natural Code shape code for auxiliary positioning. Other Double Pinyin schemes use [Moqi's shape code](https://github.com/gaboolic/rime-shuangpin-fuzhuma) for auxiliary positioning.
+### How Auxiliary Code Works
 
-If you want to change the key to activate the auxiliary code, you can use `custom` to override the `aux_code` in the [double_pinyin_flypy.schema.yaml](https://github.com/Mintimate/oh-my-rime/blob/main/double_pinyin_flypy.schema.yaml) file, and add new auxiliary activation codes to the `alphabet` in `speller`.
+Mint implements auxiliary code functionality through a Lua filter. Core workflow:
 
-More settings for `aux_code`:
-```YAML
+```
+User inputs Double Pinyin → Display candidates → Input ; to activate → Input shape code → Filter matching candidates
+```
+
+**Configuration Interpretation** (`double_pinyin_flypy.schema.yaml`):
+
+```yaml {93}
+filters:
+  # ... other filters ...
+  - lua_filter@*auxCode_filter@flypy_full   # Xiaohe Double Pinyin Auxiliary Code (Phonetic Shape)
+```
+
+This configuration means:
+- `lua_filter`: Use Lua filter
+- `*auxCode_filter`: Filter name (corresponds to `lua/auxCode_filter.lua`)
+- `@flypy_full`: Auxiliary code data file (corresponds to `lua/aux_code/flypy_full.txt`)
+
+### Auxiliary Code Data Files
+
+Auxiliary code files are located in the `lua/aux_code/` directory, format is `Character=ShapeCode`:
+
+```
+啊=kk
+阿=ek
+爱=py
+安=bn
+```
+
+Mint includes three auxiliary code schemes:
+
+| Filename | Applicable Scheme | Description |
+| --- | --- | --- |
+| `flypy_full.txt` | Xiaohe Double Pinyin | Xiaohe Shape Code |
+| `ZRM_Aux-code_4.3.txt` | Natural Code | Natural Code Shape Code (default) |
+| `moqi_aux_code.txt` | Other Double Pinyin | [Moqi Shape Code](https://github.com/gaboolic/rime-shuangpin-fuzhuma) |
+
+### Auxiliary Code Configuration
+
+```yaml {190-198}
 # Xiaohe Phonetic Shape Configuration
 aux_code:
   # Activation code
@@ -57,7 +116,16 @@ aux_code:
   show_aux_notice: "trigger"
 ```
 
-Example of Overriding: On Android phones, the default `?123` symbol keyboard in the Little Penguin Input Method does not process symbols through Rime, so we use a comma to replace the trigger key:
+| Configuration | Options | Description |
+| --- | --- | --- |
+| `trigger_word` | Any character (default `;`) | Key to activate auxiliary code mode |
+| `show_aux_notice` | `always` | Always display shape code hints for candidates |
+| | `trigger` | Display shape code hints only after entering activation code |
+| | `none` | Never display shape code hints |
+
+### Customizing Activation Key
+
+If the default `;` key is inconvenient (e.g., Android Little Penguin Input Method's symbol keyboard doesn't process through Rime), you can override via `custom.yaml`:
 
 ```yaml
 # double_pinyin_flypy.custom.yaml
@@ -65,27 +133,24 @@ Example of Overriding: On Android phones, the default `?123` symbol keyboard in 
 # encoding: utf-8
 
 patch:
-  # Set the trigger key
+  # Set activation key to comma
   "aux_code/trigger_word": ","
-  # Release the semicolon and let the comma participate in input
+  # Let comma participate in input (add to alphabet)
   "speller/alphabet": zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA~,
 ```
 
-> Although I think using a comma as an auxiliary code is a bit "awkward", it might be a matter of habit?
-
 ![Effect after customizing the trigger key](/image/demo/customAxuCodeForDoubleFly.webp)
 
-Core code:
-- [https://github.com/Mintimate/oh-my-rime/blob/main/lua/auxCode_filter.lua](https://github.com/Mintimate/oh-my-rime/blob/main/lua/auxCode_filter.lua)
+### Core Code
 
-Referenced from:
-- [https://github.com/HowcanoeWang/rime-lua-aux-code](https://github.com/HowcanoeWang/rime-lua-aux-code)
+- [auxCode_filter.lua](https://github.com/Mintimate/oh-my-rime/blob/main/lua/auxCode_filter.lua) - Auxiliary code filter implementation
+- Referenced from [rime-lua-aux-code](https://github.com/HowcanoeWang/rime-lua-aux-code)
 
-## Auxiliary Code OpenCC
-Haha, actually this is no longer auxiliary code content. For convenience when not using auxiliary codes, you can also directly see the content of the shape. You can change `show_aux_notice` in `aux_code` to `always`.
+## Shape Code Hints (OpenCC Character Splitting)
 
-You can also use Chaifen OpenCC made by [GGboxCloud](https://github.com/GGboxCloud):
-```yaml
+Besides auxiliary code positioning, Mint also supports displaying shape code hints through OpenCC character splitting filter:
+
+```yaml {173-184}
 # Crane Shape Splitting Auxiliary Filter
 chaifen_cc:
   opencc_config: fly_Chaifen.json
@@ -97,10 +162,27 @@ chaifen_cc:
     - abc
     - storkfly
     - reverse_lookup
-  tips: char             #  Add filter to single character: char; All: all，
+  tips: char             # Add filter to single character: char; All: all
 ```
+
+Use `Ctrl+Shift+C` to toggle this feature.
+
 ![Auxiliary Code VS aux_code Shape Code](/image/demo/showHelperInfoForDoublePinyinFly.webp)
 
-::: warning Warning
-Auxiliary Code OpenCC, just for prompt purposes. If you need the auxiliary code to participate in word positioning and follow-up, you still need to use `aux_code` for positioning.
+::: warning Note
+OpenCC character splitting filter is **for hint purposes only**. Shape codes do not participate in actual candidate filtering. To position candidates via shape codes, please use the auxiliary code feature.
 :::
+
+## Scheme Comparison Summary
+
+| Feature | Xiaohe Phonetics (Original) | Mint Xiaohe Double Pinyin |
+| --- | --- | --- |
+| Input Method | Four-code character determination (must input shape code) | Double Pinyin + Optional auxiliary code |
+| Shape Code Role | Required, for positioning | Optional, for auxiliary positioning |
+| Learning Curve | Higher (need to memorize shape codes) | Lower (progressive learning possible) |
+| Input Efficiency | High (precise positioning) | Flexible (use on demand) |
+
+Mint's design allows users to:
+1. **Beginner Stage**: Use only Double Pinyin, completely ignore shape codes
+2. **Intermediate Stage**: Use auxiliary code for quick positioning when encountering homophones
+3. **Advanced Stage**: Efficient input with proficiency
