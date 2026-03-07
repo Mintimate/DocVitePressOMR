@@ -8,7 +8,7 @@ head:
 description: 薄荷输入法自带的反查功能，帮助使用者在使用的过程中，可以拆字输入、笔画输入和五笔输入。比如： 输入三个“牛”，可以自动组合为“犇”
 aside: true
 ---
-# 反查功能 <Badge type="tip" text="^2024.04" />
+# 反查功能 <Badge type="tip" text="^2026.03" />
 所谓反查，简单地说就是使用其他输入模式，查找现有输入模式下的字符输入。
 
 > 2024.04: 反查功能，由原本的`uu/~u`、`uw/~w`、`ui/~i`等，统一改为`Uu`、`Uw`、`Ui`等，方便记忆。
@@ -25,59 +25,101 @@ aside: true
 - 拼音反查(Up)
 
 ## 配置方法
-如果不需要某些反查，可以按照这个配置方法进行逆向配置。
 
-以反查拆字为例，在目标输入方案的头部`dependencies`内引入拆字的方案：
-```yaml
-dependencies:
-    - radical_pinyin_flypy
-```
-之后是在`engine`的`segmentors`和`translators`引入`tag`：
-```yaml
-  segmentors:
-    - ascii_segmentor # 標識西文段落
-    - matcher         # 標識符合特定規則的段落，如網址、反查等
-    - affix_segmentor@radical_reverse_lookup   # 引入的反查
-    - abc_segmentor             # 標識常規的文字段落
-    - punct_segmentor           # 標識句讀段落
-    - fallback_segmentor        # 標識其他未標識段落
-  translators:
-   - punct_translator  # ※ 轉換標點符號
-   - script_translator
-   - reverse_lookup_translator@radical_reverse_lookup
-```
+薄荷输入法已内置完整的反查配置。本节介绍如何自定义和移除反查功能。
 
-这个`tag`可以这样定义：
-```yaml
-radical_reverse_lookup:
-  tag: radical_lookup
-  dictionary: radical_pinyin
-  enable_completion: false
-  enable_sentence: false
-  prefix: "Uu"
-  suffix: " '"
-  comment_format:
-    - erase/^.*$//
-    - xform/([nljqxy])v/$1ü/
-  tips: 〔拆字〕
+::: tip 推荐使用 custom 文件覆写
+Rime 支持 `.custom.yaml` 文件覆写配置，这样可以在不修改原文件的情况下自定义设置，且不会因更新而被覆盖。
 
-reverse_lookup:
-  tags: [wubi98_mint,stroke,radical_lookup]
-  overwrite_comment: true
-  dictionary: dicts/rime_ice.8105
+例如，覆写薄荷拼音配置，创建 `rime_mint.custom.yaml` 文件。
+:::
+
+### 自定义反查
+
+如果需要修改反查的前缀或提示文字，可以在 `custom` 文件中覆写。以拆字反查为例：
+
+```yaml
+# rime_mint.custom.yaml
+patch:
+  radical_reverse_lookup:
+    prefix: "Vu"           # 将前缀从 Uu 改为 Vu
+    tips: 〔拆字反查〕      # 修改提示文字
+  # 同步修改 recognizer 以匹配新前缀
+  "recognizer/patterns/radical_lookup": "Vu[a-z]*'?$"
 ```
 
-末尾的`recognizer`内引入：
+::: warning 注意同步 recognizer
+修改反查前缀时，必须同步更新 `recognizer/patterns` 中对应的匹配规则，否则新的前缀无法触发反查功能。
+:::
+
+如果需要开启「声起」功能以显示带声调的拼音注释：
+
 ```yaml
-# 反查映射
-recognizer:
-  import_preset: default
-  patterns:
-    punct: "^/([0-9]0?|[a-z]+)$"
-    radical_lookup: "Uu[a-z]*'?$"
+# rime_mint.custom.yaml
+patch:
+  "switches/@next":
+    name: tone_display
+    states: [ 声杳, 声起 ]
+    reset: 1               # 默认开启
 ```
 
-这样，反查就配置好了。
+### 移除反查功能
+
+如果不需要某些反查功能，可以在 `custom` 文件中移除相关配置。以移除笔画反查为例：
+
+```yaml
+# rime_mint.custom.yaml
+patch:
+  # 移除依赖
+  "dependencies/@next": {}
+  # 从 segmentors 中移除
+  "engine/segmentors/@before 4": {}
+  # 从 translators 中移除
+  "engine/translators/@before 6": {}
+  # 从 reverse_lookup.tags 中移除
+  "reverse_lookup/tags/@before 2": {}
+  # 移除 recognizer pattern
+  "recognizer/patterns/stroke": {}
+```
+
+### 添加新的反查
+
+如果需要添加新的反查功能，需要完成以下步骤：
+
+1. **添加依赖**：在 `dependencies` 中引入目标方案
+   ```yaml
+   dependencies:
+     - radical_pinyin
+   ```
+
+2. **添加引擎组件**：在 `engine` 的 `segmentors` 和 `translators` 中引入
+   ```yaml
+   engine:
+     segmentors:
+       - affix_segmentor@radical_reverse_lookup
+     translators:
+       - reverse_lookup_translator@radical_reverse_lookup
+   ```
+
+3. **定义反查配置**：
+   ```yaml
+   radical_reverse_lookup:
+     tag: radical_lookup
+     dictionary: radical_pinyin
+     prefix: "Uu"
+     tips: 〔拆字〕
+   
+   reverse_lookup:
+     tags: [radical_lookup]
+     overwrite_comment: true
+   ```
+
+4. **添加识别规则**：
+   ```yaml
+   recognizer:
+     patterns:
+       radical_lookup: "Uu[a-z]*'?$"
+   ```
 
 ## 拆字反查
 

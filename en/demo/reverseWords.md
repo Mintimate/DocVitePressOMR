@@ -8,7 +8,7 @@ head:
 description: Oh-my-rime's built-in reverse lookup function helps users to input characters using other input methods, such as radical-based input, stroke-based input, and Wubi input.
 aside: true
 ---
-# Reverse Lookup Function <Badge type="tip" text="^2024.04" />
+# Reverse Lookup Function <Badge type="tip" text="^2026.03" />
 Reverse lookup, in simple terms, refers to using alternative input methods to find characters under the current input method.
 
 Translation to English:
@@ -26,62 +26,102 @@ The Oh-my-rime (Mint Input Method's Pinyin scheme) includes three types of rever
 The Wubi input supports:
 - Pinyin reverse lookup (Up)
 
-## Configuration Method
-If you don't need certain reverse lookup features, you can perform reverse configuration according to this method.
+## Configuration
 
-Taking character decomposition reverse lookup as an example, import the decomposition scheme in the `dependencies` section at the beginning of the target input scheme:
+Oh-my-rime comes with complete reverse lookup configurations built-in. This section explains how to customize and remove reverse lookup features.
+
+::: tip Recommended: Use Custom Files for Overrides
+Rime supports `.custom.yaml` files for overriding configurations, allowing you to customize settings without modifying original files, and your changes won't be overwritten by updates.
+
+For example, to override Mint Pinyin settings, create a `rime_mint.custom.yaml` file.
+:::
+
+### Customize Reverse Lookup
+
+To modify the prefix or hint text of a reverse lookup, you can override it in a `custom` file. Using radical lookup as an example:
 
 ```yaml
-dependencies:
-    - radical_pinyin_flypy
+# rime_mint.custom.yaml
+patch:
+  radical_reverse_lookup:
+    prefix: "Vu"           # Change prefix from Uu to Vu
+    tips: 〔Radical Lookup〕 # Modify hint text
+  # Update recognizer to match the new prefix
+  "recognizer/patterns/radical_lookup": "Vu[a-z]*'?$"
 ```
 
-Then, introduce the `tag` in the `segmentors` and `translators` sections under `engine`.
+::: warning Sync recognizer Configuration
+When modifying the reverse lookup prefix, you must also update the corresponding pattern in `recognizer/patterns`, otherwise the new prefix will not trigger the reverse lookup.
+:::
+
+To enable the "Tone Display" feature for showing Pinyin with tones:
+
 ```yaml
-  segmentors:
-    - ascii_segmentor # 標識西文段落
-    - matcher         # 標識符合特定規則的段落，如網址、反查等
-    - affix_segmentor@radical_reverse_lookup   # 引入的反查
-    - abc_segmentor             # 標識常規的文字段落
-    - punct_segmentor           # 標識句讀段落
-    - fallback_segmentor        # 標識其他未標識段落
-  translators:
-   - punct_translator  # ※ 轉換標點符號
-   - script_translator
-   - reverse_lookup_translator@radical_reverse_lookup
+# rime_mint.custom.yaml
+patch:
+  "switches/@next":
+    name: tone_display
+    states: [ 声杳, 声起 ]
+    reset: 1               # Enable by default
 ```
 
-this `tag` can be defined as follows:
+### Remove Reverse Lookup
+
+If you don't need certain reverse lookup features, you can remove them in the `custom` file. Using stroke lookup removal as an example:
+
 ```yaml
-radical_reverse_lookup:
-  tag: radical_lookup
-  dictionary: radical_pinyin
-  enable_completion: false
-  enable_sentence: false
-  prefix: "Uu"
-  suffix: " '"
-  comment_format:
-    - erase/^.*$//
-    - xform/([nljqxy])v/$1ü/
-  tips: 〔拆字〕
-
-reverse_lookup:
-  tags: [wubi98_mint,stroke,radical_lookup]
-  overwrite_comment: true
-  dictionary: dicts/rime_ice.8105
+# rime_mint.custom.yaml
+patch:
+  # Remove dependency
+  "dependencies/@next": {}
+  # Remove from segmentors
+  "engine/segmentors/@before 4": {}
+  # Remove from translators
+  "engine/translators/@before 6": {}
+  # Remove from reverse_lookup.tags
+  "reverse_lookup/tags/@before 2": {}
+  # Remove recognizer pattern
+  "recognizer/patterns/stroke": {}
 ```
 
-At the end, introduce it in the `recognizer` section:
-```yaml
-# 反查映射
-recognizer:
-  import_preset: default
-  patterns:
-    punct: "^/([0-9]0?|[a-z]+)$"
-    radical_lookup: "Uu[a-z]*'?$"
-```
+### Add New Reverse Lookup
 
-With that, the reverse lookup is configured.
+To add a new reverse lookup feature, complete the following steps:
+
+1. **Add dependency**: Import the target scheme in `dependencies`
+   ```yaml
+   dependencies:
+     - radical_pinyin
+   ```
+
+2. **Add engine components**: Import in `segmentors` and `translators` under `engine`
+   ```yaml
+   engine:
+     segmentors:
+       - affix_segmentor@radical_reverse_lookup
+     translators:
+       - reverse_lookup_translator@radical_reverse_lookup
+   ```
+
+3. **Define reverse lookup configuration**:
+   ```yaml
+   radical_reverse_lookup:
+     tag: radical_lookup
+     dictionary: radical_pinyin
+     prefix: "Uu"
+     tips: 〔Radical〕
+   
+   reverse_lookup:
+     tags: [radical_lookup]
+     overwrite_comment: true
+   ```
+
+4. **Add recognition rule**:
+   ```yaml
+   recognizer:
+     patterns:
+       radical_lookup: "Uu[a-z]*'?$"
+   ```
 
 ::: tip Input Comment Display (Tone Display)
 In Oh-my-rime, the reverse lookup results support displaying complete Pinyin annotations. This feature is controlled by the "**Tone Display**" switch:
