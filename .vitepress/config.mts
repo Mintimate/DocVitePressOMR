@@ -1,7 +1,9 @@
 // Vitepress 默认配置文件（使用新的Mermaid插件版本代替）
 // import {defineConfig} from 'vitepress'
 import { withMermaid } from "vitepress-plugin-mermaid";
-import { locales_cn } from './config/mySidebar.mjs';
+import { en } from "./config/en.mts";
+import { search } from "./config/search.mts";
+import { zh } from "./config/zh.mts";
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
@@ -59,85 +61,8 @@ export default withMermaid({
     ],
     /** 多语言设置 */
     locales: {
-        root: {
-            label: locales_cn.label,
-            title: locales_cn.title,
-            description: locales_cn.description,
-            lang: 'zh',
-            link: '/zh/',
-            themeConfig: {
-                nav: locales_cn.nav,
-                outline: {
-                    level: locales_cn["outline"]["level"],
-                    label: locales_cn["outline"]["label"],
-                },
-                sidebar: locales_cn.sidebar,
-                search:{
-                    provider:'local',
-                    options: locales_cn.search
-                },
-                notFound: locales_cn.notFound
-            },
-        },
-        en: {
-            label: 'English',
-            lang: 'en', // optional, will be added as `lang` attribute on `html` tag
-            title: "oh-my-rime",
-            head: [
-                [
-                    'meta', {name: 'keywords', content: 'oh-my-rime,rime,Mint Pinyin,Squirrel,Weasel,rime in Linux'}
-                ]
-            ],
-            description: "A template for fast initializing rime, because I usually use oh-my-zsh, when using rime, it feels like using omz; so I named it oh-my-rime, you can also call it Mintimate Pinyin, or Mint Input.",
-            link: '/en/', // default /en/ -- shows on navbar translations menu, can be external
-            themeConfig: {
-                nav: [
-                    {text: 'ChangeLog', link: '/en/changeLog/'},
-                    {text: 'About', link: '/en/teamInfo'},
-                    {text: 'Home', link: '/en/'},
-                    {text: 'Demo', link: '/en/demo/'},
-                    {text: 'Configuration', link: '/en/guide/'}
-                ],
-                outline: {
-                    level: 'deep',
-                    label: 'On this page'
-                },
-                sidebar: {
-                    '/en/demo/': [{
-                        text: 'Demo',
-                        items: [
-                            {text: 'Overview', link: '/en/demo/'},
-                            {text: 'Online Experience', link: '/en/demo/fcitx5Online'},
-                            {text: 'Rime-Ice and Oh-my-rime', link: '/en/demo/diffBetweenIceAndMint'},
-                            {text: 'Appearance', link: '/en/demo/diffAppearance'},
-                            {text: 'Reverse Lookup', link: '/en/demo/reverseWords'},
-                            {text: 'XiaoHe Double Pinyin', link: '/en/demo/doublePinyinFly'},
-                            {text: 'Special Function Keys', link: '/en/demo/funcKeys'},
-                            {text: 'Kaomoji', link: '/en/demo/kaomoji'},
-                        ]
-                    }],
-                    '/en/guide/': [{
-                        text: 'Configuration Tutorial',
-                        items: [
-                            {text: 'Guide', link: '/en/guide/'},
-                            {text: 'Install Rime', link: '/en/guide/installRime'},
-                            {text: 'Import Oh-my-rime', link: '/en/guide/importMint'},
-                            {text: 'Configuration and Overrides', link: '/en/guide/configurationOverride'},
-                            {text: 'Custom Default Activation Scheme', link: '/en/guide/defaultActivationScheme'},
-                            {text: 'Emoji Configuration (OpenCC) ', link: '/en/guide/openccEmoji'},
-                            {text: 'FuzzyPinyin', link: '/en/guide/fuzzyPinyin'},
-                            {text: 'Language Model', link: '/en/guide/languageModel'},
-                            {text: 'Symbols Input', link: '/en/guide/symbolsInput'},
-                            {text: 'Lua Extensions', link: '/en/guide/luaExtensions'},
-                            {text: 'shortcutKeys', link: '/en/guide/shortcutKeys'},
-                            {text: 'Customization Input', link: '/en/guide/customizationInput'},
-                            {text: 'Device Sync', link: '/en/guide/deviceSync'},
-                            {text: '[Optional] Q&A', link: '/en/guide/faQ'},
-                        ]
-                    }]
-                },
-            }
-        },
+        root: zh,
+        en: en,
     },
     themeConfig: {
         logo: '/favicon.svg',
@@ -148,42 +73,7 @@ export default withMermaid({
                 '          <a href="http://www.beian.gov.cn" target="_blank">闽公网安备 35021102001843号</a> <br/>' +
                 '本项目 CDN 加速及安全防护由 <a href="https://edgeone.ai/zh?from=github" target="_blank">Tencent EdgeOne</a> 赞助'
         },
-        search: {
-            provider: 'local',
-            options: {
-              miniSearch: {
-                options: {
-                  tokenize: (term) => {
-                    if (typeof term === 'string') term = term.toLowerCase();
-                    // @ts-ignore
-                    const segmenter = Intl.Segmenter && new Intl.Segmenter("zh", { granularity: "word" });
-                    if (!segmenter) return [term];
-                    const tokens = [];
-                    for (const seg of segmenter.segment(term)) {
-                      // @ts-ignore
-                      tokens.push(seg.segment);
-                    }
-                    return tokens;
-                  },
-                },
-                searchOptions: {
-                  combineWith: 'AND', // important for search chinese
-                  processTerm: (term) => {
-                    if (typeof term === 'string') term = term.toLowerCase();
-                    // @ts-ignore
-                    const segmenter = Intl.Segmenter && new Intl.Segmenter("zh", { granularity: "word" });
-                    if (!segmenter) return term;
-                    const tokens = [];
-                    for (const seg of segmenter.segment(term)) {
-                      // @ts-ignore
-                      tokens.push(seg.segment);
-                    }
-                    return tokens;
-                  },
-                },
-              },
-            },
-          },
+        search: search,
         // https://vitepress.dev/reference/default-theme-config
 
         socialLinks: [
