@@ -29,7 +29,7 @@ aside: true
 - 星期：oxq
 - 今年第几周：oww
 - 节气：ojq
-- 日期+时间：ors
+- 日期+时间：odt
 - 时间戳：ott
 - 大写N日期：N20250315 或者N0312不带年
 - 节日：ojr
@@ -37,7 +37,7 @@ aside: true
 
 ![shijian.luia 使用效果](/image/demo/shijianLua.webp)
 
-如果你想设置 `orq` 内每个日期的顺序，可以覆写`date_format`配置项：
+如果你想设置 `orq` 内每个日期的顺序，可以覆写`date_formats`配置项：
 
 ![覆写date_format](/image/demo/overrideDateFormat.webp)
 
@@ -65,7 +65,7 @@ aside: true
 
 ![简易计算器](/image/demo/luaCalculator.webp)
 
-当然，`=` 是可以修改为其他字母的，你可以覆写`recognizer/expression`配置项。
+当然，`=` 是可以修改为其他字母的，你可以覆写`recognizer/patterns/expression`配置项。
 
 如果你不想使用计算器，那么可以通过自定义配置进行关闭。举例，使用`double_pinyin_flypy.custom.yaml`文件，添加如下内容：
 ```yaml

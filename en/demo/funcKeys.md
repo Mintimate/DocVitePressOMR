@@ -30,7 +30,7 @@ You can use the following keywords to activate the corresponding functions:
 - Week: oxq
 - Week of the year: oww
 - Solar terms: ojq
-- Date + Time: ors
+- Date + Time: odt
 - Timestamp: ott
 - Uppercase N date: N20250315 or N0312 without year
 - Festivals: ojr
@@ -38,7 +38,7 @@ You can use the following keywords to activate the corresponding functions:
 
 ![shijian.lua usage effect](/image/demo/shijianLua.webp)
 
-If you want to set the order of each date in `orq`, you can override the `date_format` configuration item:
+If you want to set the order of each date in `orq`, you can override the `date_formats` configuration item:
 
 ![Override date_format](/image/demo/overrideDateFormat.webp)
 
@@ -67,7 +67,7 @@ If you want to use the calculator, simply enter `=` followed by the calculation 
 
 ![Simple Calculator](/image/demo/luaCalculator.webp)
 
-Of course, `=` can be changed to other letters, and you can override the `recognizer/expression` configuration item.
+Of course, `=` can be changed to other letters, and you can override the `recognizer/patterns/expression` configuration item.
 
 If you don't want to use the calculator, you can disable it through custom configuration. For example, using the `double_pinyin_flypy.custom.yaml` file, add the following content:
 ```yaml
