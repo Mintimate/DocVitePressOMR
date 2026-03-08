@@ -1,7 +1,7 @@
 // Vitepress 默认配置文件（使用新的Mermaid插件版本代替）
 // import {defineConfig} from 'vitepress'
 import { withMermaid } from "vitepress-plugin-mermaid";
-import {locales_cn} from './config/mySidebar.mjs'
+import { locales_cn } from './config/mySidebar.mjs';
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
@@ -127,6 +127,8 @@ export default withMermaid({
                             {text: 'Emoji Configuration (OpenCC) ', link: '/en/guide/openccEmoji'},
                             {text: 'FuzzyPinyin', link: '/en/guide/fuzzyPinyin'},
                             {text: 'Language Model', link: '/en/guide/languageModel'},
+                            {text: 'Symbols Input', link: '/en/guide/symbolsInput'},
+                            {text: 'Lua Extensions', link: '/en/guide/luaExtensions'},
                             {text: 'shortcutKeys', link: '/en/guide/shortcutKeys'},
                             {text: 'Customization Input', link: '/en/guide/customizationInput'},
                             {text: 'Device Sync', link: '/en/guide/deviceSync'},
