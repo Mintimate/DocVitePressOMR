@@ -30,6 +30,8 @@ export const zh: LocaleSpecificConfig<DefaultTheme.Config> = {
                     {text: '小鹤双拼', link: '/zh/demo/doublePinyinFly'},
                     {text: '特殊功能键', link: '/zh/demo/funcKeys'},
                     {text: '颜文字', link: '/zh/demo/kaomoji'},
+                    {text: '九宫格输入', link: '/zh/demo/t9Input'},
+                    {text: '中英混合输入', link: '/zh/demo/cnEnInput'},
                 ]
             }],
             '/zh/guide/': [{

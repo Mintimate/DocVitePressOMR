@@ -35,6 +35,8 @@ export const en: LocaleSpecificConfig<DefaultTheme.Config> = {
                     {text: 'XiaoHe Double Pinyin', link: '/en/demo/doublePinyinFly'},
                     {text: 'Special Function Keys', link: '/en/demo/funcKeys'},
                     {text: 'Kaomoji', link: '/en/demo/kaomoji'},
+                    {text: 'T9 (Nine-Key) Input', link: '/en/demo/t9Input'},
+                    {text: 'Chinese-English Mixed Input', link: '/en/demo/cnEnInput'},
                 ]
             }],
             '/en/guide/': [{
