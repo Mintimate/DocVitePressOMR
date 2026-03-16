@@ -44,5 +44,5 @@ features:
     details: Highly customizable, you can modify it according to your preferences based on this configuration; but you need to comply with the open source license
   - title: Fully Open Source
     icon: ☕
-    details: The code is already <a target="_blank" href="https://github.com/Mintimate/oh-my-rime">open source on Github</a>, if you like it, please give it a Star; you can also generously <a target="_blank" href="https://afdian.com/a/mintimate">buy us a coffee( ◔ ڼ ◔ )</a>
+    details: The code is already <a target="_blank" href="https://github.com/Mintimate/oh-my-rime">open source on Github</a>, if you like it, please give it a Star; you can also generously <a target="_blank" href="https://ifdian.net/a/mintimate">buy us a coffee( ◔ ڼ ◔ )</a>
 ---

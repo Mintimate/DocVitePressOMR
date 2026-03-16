@@ -40,7 +40,7 @@ const aiChatConfig = {
       <div class="supportMeCard" style="margin: 10px 0; padding: 0">
         <Googleads :dataAdSlot="'1079004688'"/>
       </div>
-      <a href="https://afdian.com/a/mintimate" target="_blank" rel="noopener sponsored">
+      <a href="https://ifdian.net/a/mintimate" target="_blank" rel="noopener sponsored">
       <div class="supportMeCard">
         <span class="supportMeCardText">
               Sponsor a scoop of matcha powder for better posts. <br/>(●'◡'●)ﾉ♥

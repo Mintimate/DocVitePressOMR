@@ -31,10 +31,10 @@ let toggleCollapse = () => {
         </slot>
         <slot name="link">
           <p style="font-size: smaller" v-if="lang === 'zh'">
-            Tips:如果你有爱发电账号，那么也可以访问<a href="https://afdian.com/a/mintimate" target="_blank">爱发电平台</a>
+            Tips:如果你有爱发电账号，那么也可以访问<a href="https://ifdian.net/a/mintimate" target="_blank">爱发电平台</a>
           </p>
           <p style="font-size: smaller" v-else>
-            Tips:If you have an Afdian account, you can also visit <a href="https://afdian.com/a/mintimate" target="_blank">Afdian</a>.
+            Tips:If you have an Afdian account, you can also visit <a href="https://ifdian.net/a/mintimate" target="_blank">Afdian</a>.
           </p>
         </slot>
       </div>
