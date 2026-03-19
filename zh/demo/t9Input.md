@@ -74,7 +74,26 @@ aside: true
 
 ## 激活方案
 
-九宫格方案在薄荷中默认已激活，可以通过方案切换热键（`Ctrl/Control + ~`）切换到「中文九键」方案。
+九宫格方案在薄荷中默认已激活，可以查看 `default.yaml` 内查看到：
+
+```yaml
+# 以下内容，实际会由default.custom.yaml和方案配置所覆写
+## 九宫格依赖于 rime_mint ，如果需要使用其他方案（比如: 小鹤双拼的 九宫格），可以使用 custom 文件覆写
+schema_list:
+  - schema: rime_mint            # 薄荷拼音
+  - schema: double_pinyin_flypy  # 小鹤双拼
+  - schema: rime_mint_flypy      # 薄荷拼音-小鹤混输方案
+  - schema: terra_pinyin         # 地球拼音-薄荷定制
+  - schema: wubi98_mint          # 五笔98-五笔小筑
+  - schema: wubi86_jidian        # 五笔86-极点86
+  - schema: t9                   # 仓九宫格-全拼输入
+  # 以下方案薄荷进行了适配，但是没有激活
+  # - schema: double_pinyin_abc    # 智能ABC双拼
+  # - schema: double_pinyin_mspy   # 微软双拼
+  # - schema: double_pinyin_sogou  # 搜狗双拼
+  # - schema: double_pinyin_ziguang # 紫光双拼
+  # - schema: double_pinyin         # 自然码双拼
+```
 
 如果你的方案列表中没有九宫格，可以在 `default.yaml` 或 `default.custom.yaml` 中添加：
 
@@ -86,20 +105,4 @@ patch:
     - schema: t9          # 添加九宫格方案
 ```
 
-## 英文输入支持
-
-九宫格方案默认只支持中文输入。如需支持英文，需要额外配置：
-
-1. 将 `tools/Hamster/melt_eng.custom.yaml` 复制到配置目录
-2. 在 `t9.schema.yaml` 的 `engine/translators` 中取消注释英文翻译器
-
-```yaml
-# t9.schema.yaml（或使用 custom 文件覆写）
-engine:
-  translators:
-    - table_translator@melt_eng   # 取消此行注释以启用英文输入
-```
-
-::: tip 仓输入法用户
-`tools/Hamster/` 目录下已经提供了针对仓输入法优化的配置文件，直接使用即可。
-:::
+还需要需要同时启用九宫格方案（输入方案设置）和九宫格布局（键盘设置 - 键盘布局 - 中文 9 键）。元书参考: [元书输入法 - 九宫格设置](https://ihsiao.com/apps/hamster/v3/docs/guides/chinese-ninekey-configuration/)。

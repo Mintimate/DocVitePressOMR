@@ -74,7 +74,27 @@ On desktop platforms (Windows/macOS/Linux), the T9 scheme can be loaded but with
 
 ## Activating the Scheme
 
-The T9 scheme is activated by default in oh-my-rime. You can switch to the「中文九键」(Chinese Nine-Key) scheme using the scheme switcher hotkey (`Ctrl/Control + ~`).
+The T9 scheme is activated by default in oh-my-rime. You can view it in `default.yaml`:
+
+```yaml
+# The following content may be overridden by default.custom.yaml and schema configurations
+## T9 depends on rime_mint; if you need to use other schemes (e.g., T9 for Xiaohe Double Pinyin), 
+## you can override with a custom file
+schema_list:
+  - schema: rime_mint            # Mint Pinyin
+  - schema: double_pinyin_flypy  # Xiaohe Double Pinyin
+  - schema: rime_mint_flypy      # Mint Pinyin-Xiaohe Mixed Input
+  - schema: terra_pinyin         # Terra Pinyin-Mint Custom
+  - schema: wubi98_mint          # Wubi 98-Wubi Xiaozhu
+  - schema: wubi86_jidian        # Wubi 86-Jidian 86
+  - schema: t9                   # Hamster T9-Full Pinyin
+  # The following schemes are adapted by Mint but not activated by default
+  # - schema: double_pinyin_abc    # Smart ABC Double Pinyin
+  # - schema: double_pinyin_mspy   # Microsoft Double Pinyin
+  # - schema: double_pinyin_sogou  # Sogou Double Pinyin
+  # - schema: double_pinyin_ziguang # Ziguang Double Pinyin
+  # - schema: double_pinyin         # Natural Code Double Pinyin
+```
 
 If the T9 scheme is not in your scheme list, add it to `default.yaml` or `default.custom.yaml`:
 
@@ -86,20 +106,4 @@ patch:
     - schema: t9          # Add T9 scheme
 ```
 
-## English Input Support
-
-The T9 scheme only supports Chinese input by default. To enable English input:
-
-1. Copy `tools/Hamster/melt_eng.custom.yaml` to your configuration directory
-2. Uncomment the English translator in `t9.schema.yaml`'s `engine/translators`
-
-```yaml
-# t9.schema.yaml (or override with a custom file)
-engine:
-  translators:
-    - table_translator@melt_eng   # Uncomment to enable English input
-```
-
-::: tip Hamster IME Users
-The `tools/Hamster/` directory already provides configuration files optimized for Hamster IME. Just use them directly.
-:::
+You also need to enable the T9 scheme (Input Scheme Settings) and the nine-key layout (Keyboard Settings - Keyboard Layout - Chinese 9-Key). For Yuan Shu IME reference: [Yuan Shu IME - T9 Configuration](https://ihsiao.com/apps/hamster/v3/docs/guides/chinese-ninekey-configuration/).
