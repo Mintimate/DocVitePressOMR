@@ -55,6 +55,7 @@ export const en: LocaleSpecificConfig<DefaultTheme.Config> = {
                     {text: 'shortcutKeys', link: '/en/guide/shortcutKeys'},
                     {text: 'Customization Input', link: '/en/guide/customizationInput'},
                     {text: 'Device Sync', link: '/en/guide/deviceSync'},
+                    {text: 'AI MCP Service', link: '/en/guide/mcpService'},
                     {text: '[Optional] Q&A', link: '/en/guide/faQ'},
                 ]
             }]

@@ -50,6 +50,7 @@ export const zh: LocaleSpecificConfig<DefaultTheme.Config> = {
                     {text: '输入法快捷键', link: '/zh/guide/shortcutKeys'},
                     {text: '输入个性定制', link: '/zh/guide/customizationInput'},
                     {text: '多设备同步', link: '/zh/guide/deviceSync'},
+                    {text: 'AI MCP 服务', link: '/zh/guide/mcpService'},
                     {text: '[可选]问题答疑', link: '/zh/guide/faQ'},
                 ]
             }

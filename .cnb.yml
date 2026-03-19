@@ -126,15 +126,10 @@ main:
           - /root/.npm:copy-on-write
           - node_modules:copy-on-write
       stages:
-        - name: 安装依赖
-          script: yarn
-        - name: 构建产物
-          script: yarn build
         - name: "部署流程"
           image: tencentcom/deploy-eopages:latest
           script: 
-            - cd .vitepress
-            - edgeone pages deploy ./dist -n oh-my-rime -t $EO_SECRET
+            - edgeone pages deploy -n oh-my-rime -t $EO_SECRET
   "crontab: 0 0 */7 * *":
     - stages:
       - name: release clean
