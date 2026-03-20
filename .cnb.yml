@@ -129,6 +129,7 @@ main:
         - name: "部署流程"
           image: tencentcom/deploy-eopages:latest
           script: 
+            - apk add --no-cache git
             - edgeone pages deploy -n oh-my-rime -t $EO_SECRET
   "crontab: 0 0 */7 * *":
     - stages:
