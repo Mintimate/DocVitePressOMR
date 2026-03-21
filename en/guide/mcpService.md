@@ -4,7 +4,7 @@ title: AI MCP Service
 head:
   - - meta
     - name: keywords
-      content: Mint Pinyin,MCP,AI,Knowledge Base,Cursor,Windsurf,VS Code,Claude
+      content: Mint Pinyin,MCP,AI,Knowledge Base,Cursor,Windsurf,VS Code,Claude,Cherry Studio
   - - meta
     - property: "og:description"
       content: "Oh-my-rime provides an MCP (Model Context Protocol) service that allows AI assistants to query the oh-my-rime knowledge base directly."
@@ -108,6 +108,28 @@ Add the following to the Claude Desktop configuration file (config file path: on
   }
 }
 ```
+
+### Cherry Studio
+
+In Cherry Studio's settings, go to the **MCP Servers** configuration page and add a new Streamable HTTP type server:
+
+```json
+{
+  "mcpServers": {
+    "oh-my-rime-knowledge": {
+      "isActive": true,
+      "name": "Oh My Rime Knowledge",
+      "type": "streamable-http",
+      "description": "Oh My Rime knowledge base query",
+      "baseUrl": "https://www.mintimate.cc/mcp"
+    }
+  }
+}
+```
+
+::: warning Note
+Cherry Studio uses a different configuration format from other clients. Please use `baseUrl` instead of `url`, `type` instead of `transport`, and note that the `name` and `type` fields are required.
+:::
 
 ::: tip Note
 The configuration format may vary slightly across different AI editors/clients. Please refer to the official documentation of your tool. The examples above are for reference only — the key point is to set the MCP endpoint `https://www.mintimate.cc/mcp` in the corresponding MCP settings.

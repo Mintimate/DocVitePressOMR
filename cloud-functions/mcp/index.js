@@ -179,6 +179,7 @@ async function handleToolsCall(request) {
   }
 
   try {
+    console.log(`[MCP] tools/call query_oh-my-rime - query: "${args.query}"${args.keyword ? `, keyword: "${args.keyword}"` : ""}`);
     const result = await queryKnowledgeBase(args.query, args.keyword);
 
     // Format knowledge base results into readable text

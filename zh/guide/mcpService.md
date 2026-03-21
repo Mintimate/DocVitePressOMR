@@ -4,7 +4,7 @@ title: AI MCP 服务
 head:
   - - meta
     - name: keywords
-      content: 薄荷拼音,MCP,AI,知识库,Cursor,Windsurf,VS Code,Claude
+      content: 薄荷拼音,MCP,AI,知识库,Cursor,Windsurf,VS Code,Claude,Cherry Studio
   - - meta
     - property: "og:description"
       content: "薄荷输入法提供 MCP (Model Context Protocol) 服务，让 AI 助手直接查询薄荷输入法知识库。"
@@ -108,6 +108,28 @@ flowchart LR
   }
 }
 ```
+
+### Cherry Studio
+
+在 Cherry Studio 的设置中，进入 **MCP 服务器** 配置页面，添加一个新的 Streamable HTTP 类型的服务器：
+
+```json
+{
+  "mcpServers": {
+    "oh-my-rime-knowledge": {
+      "isActive": true,
+      "name": "Oh My Rime Knowledge",
+      "type": "streamable-http",
+      "description": "薄荷输入法知识库查询",
+      "baseUrl": "https://www.mintimate.cc/mcp"
+    }
+  }
+}
+```
+
+::: warning 注意
+Cherry Studio 的配置格式与其他客户端不同，请注意使用 `baseUrl` 而非 `url`，使用 `type` 而非 `transport`，并且 `name` 和 `type` 字段为必填项。
+:::
 
 ::: tip 提示
 不同的 AI 编辑器/客户端配置格式可能略有差异，请参考对应工具的官方文档。以上配置仅供参考，核心是将 MCP 服务地址 `https://www.mintimate.cc/mcp` 配置到对应的 MCP 设置中。
