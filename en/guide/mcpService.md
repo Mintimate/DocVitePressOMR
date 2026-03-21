@@ -45,7 +45,10 @@ flowchart LR
 | **Endpoint** | `https://www.mintimate.cc/mcp` |
 | **Transport** | Streamable HTTP |
 | **Protocol Version** | `2025-03-26` |
-| **Available Tool** | `query_oh-my-rime` — Semantic search of the oh-my-rime knowledge base |
+| **Available Tools** | `query_oh-my-rime` — Semantic search of the oh-my-rime knowledge base |
+|  | `get_download_links` — Get client and config package download links |
+|  | `get_schema_list` — Get supported input schema list |
+|  | `get_author_info` — Get author information |
 
 ## Configuration in AI Editors
 
@@ -137,21 +140,37 @@ The configuration format may vary slightly across different AI editors/clients. 
 
 ## Usage
 
-Once configured, you can directly ask questions about oh-my-rime in your AI conversation, and the AI will automatically invoke the `query_oh-my-rime` tool to query the knowledge base. For example:
+Once configured, you can directly ask questions about oh-my-rime in your AI conversation, and the AI will automatically choose the appropriate tool to answer. For example:
 
-- *"How do I install oh-my-rime on macOS?"*
-- *"How to configure fuzzy pinyin in oh-my-rime?"*
-- *"How to enable the XiaoHe double pinyin scheme?"*
-- *"What is configuration override in Rime?"*
+- *"How do I install oh-my-rime on macOS?"* → calls `query_oh-my-rime`
+- *"How to configure fuzzy pinyin in oh-my-rime?"* → calls `query_oh-my-rime`
+- *"What input schemas are available?"* → calls `get_schema_list`
+- *"Give me the download links"* → calls `get_download_links`
+- *"Who made Oh My Rime?"* → calls `get_author_info`
 
 ### Tool Parameters
 
-The `query_oh-my-rime` tool supports the following parameters:
+#### `query_oh-my-rime` — Knowledge Base Semantic Search
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `query` | string | ✅ | Natural language query, supports both Chinese and English. e.g. `How to configure oh-my-rime` |
 | `keyword` | string | ❌ | Keyword filter, multiple keywords separated by semicolons. e.g. `macOS;install;Rime` |
+| `top_k` | number | ❌ | Maximum number of results to return (default: 5, range: 1-10) |
+
+#### `get_download_links` — Get Download Links
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `resource` | string | ❌ | Resource name, options: `all`, `oh-my-rime`, `squirrel`, `weasel`, `fcitx5-rime`, `wanxiang-model`, `oh-my-rime-cli`. Default: `all` |
+
+#### `get_schema_list` — Get Input Schema List
+
+No parameters required. Returns all supported input schemas and their activation status.
+
+#### `get_author_info` — Get Author Info
+
+No parameters required. Returns author Mintimate's profile, blog, social media links, and open-source project information.
 
 ::: info Note
 MCP tool invocations are typically handled automatically by the AI assistant. You just need to ask in natural language — there's no need to manually pass these parameters.

@@ -46,6 +46,9 @@ flowchart LR
 | **传输协议** | Streamable HTTP |
 | **协议版本** | `2025-03-26` |
 | **可用工具** | `query_oh-my-rime` — 语义搜索薄荷输入法知识库 |
+|  | `get_download_links` — 获取客户端和配置包下载链接 |
+|  | `get_schema_list` — 获取支持的输入方案列表 |
+|  | `get_author_info` — 获取作者信息 |
 
 ## 在 AI 编辑器中配置
 
@@ -137,21 +140,37 @@ Cherry Studio 的配置格式与其他客户端不同，请注意使用 `baseUrl
 
 ## 使用方法
 
-配置完成后，你可以在 AI 对话中直接提问关于薄荷输入法的问题，AI 会自动调用 `query_oh-my-rime` 工具来查询知识库。例如：
+配置完成后，你可以在 AI 对话中直接提问关于薄荷输入法的问题，AI 会自动选择合适的工具来回答。例如：
 
-- *"如何在 macOS 上安装薄荷输入法？"*
-- *"薄荷输入法怎么配置模糊拼音？"*
-- *"如何开启小鹤双拼方案？"*
-- *"Rime 的配置文件覆写是怎么回事？"*
+- *"如何在 macOS 上安装薄荷输入法？"* → 调用 `query_oh-my-rime`
+- *"薄荷输入法怎么配置模糊拼音？"* → 调用 `query_oh-my-rime`
+- *"有哪些输入方案可以用？"* → 调用 `get_schema_list`
+- *"给我下载链接"* → 调用 `get_download_links`
+- *"薄荷输入法的作者是谁？"* → 调用 `get_author_info`
 
 ### 工具参数
 
-`query_oh-my-rime` 工具支持以下参数：
+#### `query_oh-my-rime` — 知识库语义搜索
 
 | 参数 | 类型 | 必填 | 说明 |
 |------|------|------|------|
 | `query` | string | ✅ | 自然语言查询，支持中英文。例如：`如何配置薄荷输入法` |
 | `keyword` | string | ❌ | 关键词过滤，多个关键词用英文分号分隔。例如：`macOS;安装;Rime` |
+| `top_k` | number | ❌ | 返回结果的最大数量（默认 5，范围 1-10） |
+
+#### `get_download_links` — 获取下载链接
+
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| `resource` | string | ❌ | 指定资源名称，可选值: `all`、`oh-my-rime`、`squirrel`、`weasel`、`fcitx5-rime`、`wanxiang-model`、`oh-my-rime-cli`。默认 `all` |
+
+#### `get_schema_list` — 获取输入方案列表
+
+无需参数，返回所有支持的输入方案及其激活状态。
+
+#### `get_author_info` — 获取作者信息
+
+无需参数，返回作者 Mintimate 的个人简介、博客、社交媒体链接及开源项目信息。
 
 ::: info 说明
 MCP 工具的调用通常由 AI 助手自动完成，你只需要用自然语言提问即可，无需手动传递这些参数。
