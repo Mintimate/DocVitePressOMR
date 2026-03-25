@@ -43,8 +43,8 @@
   background: var(--vp-local-search-bg);
   border: 1px solid var(--vp-c-divider);
   border-radius: 12px;
-  width: 620px;
-  height: 600px;
+  width: var(--chat-width, 620px);
+  height: var(--chat-height, 600px);
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
@@ -613,11 +613,39 @@
   cursor: not-allowed;
 }
 
+/* ===== 调整大小手柄 ===== */
+.resize-handle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  cursor: sw-resize;
+  z-index: 10;
+}
+
+.resize-handle::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid var(--vp-c-text-3);
+  border-left: 2px solid var(--vp-c-text-3);
+  border-bottom-left-radius: 2px;
+  transition: border-color 0.2s;
+}
+
+.resize-handle:hover::after {
+  border-color: var(--vp-c-brand-1);
+}
+
 /* ===== 响应式设计 ===== */
 @media (max-width: 1024px) {
   .ai-chat-window {
-    width: 420px;
-    height: 550px;
+    width: var(--chat-width, 420px);
+    height: var(--chat-height, 550px);
   }
 }
 
@@ -627,8 +655,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 90vw;
-    height: 70vh;
+    width: 90vw !important;
+    height: 70vh !important;
     border-radius: 12px;
     max-height: 600px;
     z-index: 9999;
@@ -644,6 +672,10 @@
   .message {
     max-width: 95%;
   }
+
+  .resize-handle {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
@@ -652,8 +684,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 95vw;
-    height: 75vh;
+    width: 95vw !important;
+    height: 75vh !important;
     border-radius: 12px;
     max-height: 550px;
     z-index: 9999;

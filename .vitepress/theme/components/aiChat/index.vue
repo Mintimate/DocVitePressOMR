@@ -14,7 +14,10 @@
     </button>
 
     <!-- 聊天窗口 -->
-    <div v-if="isOpen" class="ai-chat-window">
+    <div v-if="isOpen" class="ai-chat-window" ref="chatWindowRef" :style="windowStyle">
+      <!-- 调整大小手柄 -->
+      <div class="resize-handle" @mousedown.prevent="startResize"></div>
+
         <div class="ai-chat-header">
           <h2 class="ai-header-title">
             <svg t="1754120888533" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +126,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, onUnmounted } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import qCloudCaptcha from '../captcha/qCloudCaptcha.vue'
 import { useCaptcha } from './composables/useCaptcha'
 import { useChat } from './composables/useChat'
@@ -228,6 +231,69 @@ setFallbackTools(props.defaultTools)
 
 // 标记是否已经获取过 MCP 工具列表（懒加载，首次打开聊天窗口时才获取）
 let mcpToolsFetched = false
+
+// ==================== 窗口拖拽调整大小 ====================
+const chatWindowRef = ref(null)
+const windowWidth = ref(null)
+const windowHeight = ref(null)
+
+const windowStyle = computed(() => {
+  const style = {}
+  if (windowWidth.value) style['--chat-width'] = `${windowWidth.value}px`
+  if (windowHeight.value) style['--chat-height'] = `${windowHeight.value}px`
+  return style
+})
+
+let isResizing = false
+let startX = 0
+let startY = 0
+let startWidth = 0
+let startHeight = 0
+
+const startResize = (e) => {
+  isResizing = true
+  startX = e.clientX
+  startY = e.clientY
+  
+  if (chatWindowRef.value) {
+    const rect = chatWindowRef.value.getBoundingClientRect()
+    startWidth = rect.width
+    startHeight = rect.height
+  } else {
+    startWidth = windowWidth.value || 620
+    startHeight = windowHeight.value || 600
+  }
+  
+  document.addEventListener('mousemove', handleResize)
+  document.addEventListener('mouseup', stopResize)
+  document.body.style.userSelect = 'none'
+}
+
+const handleResize = (e) => {
+  if (!isResizing) return
+  
+  // 向左拖拽宽度增加，向下拖拽高度增加
+  const deltaX = startX - e.clientX
+  const deltaY = e.clientY - startY
+  
+  // 限制最小尺寸
+  const newWidth = Math.max(320, startWidth + deltaX)
+  const newHeight = Math.max(400, startHeight + deltaY)
+  
+  // 限制最大尺寸（不超过屏幕）
+  const maxWidth = typeof window !== 'undefined' ? window.innerWidth - 40 : 1920
+  const maxHeight = typeof window !== 'undefined' ? window.innerHeight - 100 : 1080
+  
+  windowWidth.value = Math.min(newWidth, maxWidth)
+  windowHeight.value = Math.min(newHeight, maxHeight)
+}
+
+const stopResize = () => {
+  isResizing = false
+  document.removeEventListener('mousemove', handleResize)
+  document.removeEventListener('mouseup', stopResize)
+  document.body.style.userSelect = ''
+}
 
 // ==================== 事件处理桥接 ====================
 
