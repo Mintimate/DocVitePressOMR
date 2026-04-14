@@ -3,11 +3,7 @@ $:
   # vscode 事件：专供页面中启动远程开发用
   vscode:
     - docker:
-        # 自定义开发环境
-        build:
-          # 指定构建镜像的 Dockerfile 文件
-          dockerfile: .ide/Dockerfile
-          # 用来声明缓存构建过程中依赖的文件列表。
+        image: docker.cnb.cool/flyinbug/dev-ops/nodejs:latest
         volumes:
           # 缓存文件
           - node_modules:copy-on-write
