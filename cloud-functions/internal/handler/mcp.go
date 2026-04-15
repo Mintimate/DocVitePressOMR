@@ -21,6 +21,7 @@ package handler
 
 import (
 	"bytes"
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -41,6 +42,17 @@ const (
 	mcpServerVersion   = "2.0.0"
 	mcpProtocolVersion = "2025-03-26"
 )
+
+// ── embed static text content ─────────────────────────────────────────────────
+
+//go:embed static/author_info.md
+var authorInfoText string
+
+//go:embed static/download_links.md
+var downloadLinksText string
+
+//go:embed static/schema_list.md
+var schemaListText string
 
 // ── MCP tool definitions ──────────────────────────────────────────────────────
 
@@ -75,16 +87,7 @@ var mcpTools = []map[string]interface{}{
 		"description": "Get download links for Oh My Rime related resources, including Rime client " +
 			"installers (Squirrel for macOS, Weasel for Windows, Fcitx5), " +
 			"Oh My Rime configuration package, Wanxiang language model, and CLI tool.",
-		"inputSchema": map[string]interface{}{
-			"type": "object",
-			"properties": map[string]interface{}{
-				"resource": map[string]interface{}{
-					"type":        "string",
-					"enum":        []string{"all", "oh-my-rime", "squirrel", "weasel", "fcitx5-rime", "wanxiang-model", "oh-my-rime-cli"},
-					"description": "Specific resource to get download link for. Use 'all' for all links (default: 'all').",
-				},
-			},
-		},
+		"inputSchema": map[string]interface{}{"type": "object", "properties": map[string]interface{}{}},
 	},
 	{
 		"name":        "get_author_info",
@@ -98,110 +101,6 @@ var mcpTools = []map[string]interface{}{
 		"inputSchema": map[string]interface{}{"type": "object", "properties": map[string]interface{}{}},
 	},
 }
-
-// ── Static Data: Download Links ───────────────────────────────────────────────
-
-type downloadLink struct {
-	Name        string
-	GitHub      string
-	Mirror      string
-	Description string
-	Platform    string
-}
-
-var downloadLinks = map[string]downloadLink{
-	"oh-my-rime": {
-		Name:        "Oh My Rime 薄荷输入法配置包",
-		GitHub:      "https://github.com/Mintimate/oh-my-rime",
-		Mirror:      "https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/oh-my-rime.zip",
-		Description: "薄荷输入法配置仓库完整打包，解压后导入 Rime 即可使用。",
-	},
-	"squirrel": {
-		Name:        "鼠须管 (Squirrel) — macOS 客户端",
-		GitHub:      "https://github.com/rime/Squirrel",
-		Mirror:      "https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Squirrel-latest.pkg",
-		Description: "macOS 平台的 Rime 输入法框架客户端。",
-		Platform:    "macOS",
-	},
-	"weasel": {
-		Name:        "小狼毫 (Weasel) — Windows 客户端",
-		GitHub:      "https://github.com/rime/weasel",
-		Mirror:      "https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/weasel-installer-latest.exe",
-		Description: "Windows 平台的 Rime 输入法框架客户端。",
-		Platform:    "Windows",
-	},
-	"fcitx5-rime": {
-		Name:        "Fcitx5-Rime — macOS Fcitx5 客户端",
-		GitHub:      "https://github.com/fcitx-contrib/fcitx5-macos",
-		Mirror:      "https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Fcitx5-Rime.zip",
-		Description: "macOS 平台的 Fcitx5 输入法框架 Rime 客户端。",
-		Platform:    "macOS",
-	},
-	"wanxiang-model": {
-		Name:        "万象语言模型 (Wanxiang LTS)",
-		GitHub:      "https://github.com/amzxyz/RIME-LMDG",
-		Mirror:      "https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/wanxiang-lts-zh-hans.gram",
-		Description: "万象语言模型，可提升输入预测的准确性。",
-	},
-	"oh-my-rime-cli": {
-		Name:        "Oh My Rime CLI 命令行工具",
-		GitHub:      "https://cnb.cool/Mintimate/rime/oh-my-rime-cli",
-		Mirror:      "https://cnb.cool/Mintimate/rime/oh-my-rime-cli/-/releases",
-		Description: "一键安装和更新薄荷输入法的 CLI 工具，支持 Windows/Linux/macOS。",
-	},
-}
-
-// ── Static Data: Input Schemas ────────────────────────────────────────────────
-
-type inputSchema struct {
-	ID          string
-	Name        string
-	Type        string
-	Description string
-}
-
-var schemasDefault = []inputSchema{
-	{"rime_mint", "薄荷拼音 (全拼)", "全拼", "招牌主打输入类型，支持各种反查、中英混合输入，词库基于雾凇拼音词库。"},
-	{"terra_pinyin", "地球拼音", "全拼", "带声调输入的拼音方案。"},
-	{"double_pinyin_flypy", "小鹤双拼", "双拼", "基于小鹤双拼键位图定制，支持辅码滤镜提示。"},
-	{"wubi98_mint", "98五笔 (薄荷定制)", "五笔", "基于98五笔基础版本定制的轻量版本。"},
-	{"wubi86_jidian", "86五笔 (极点码表)", "五笔", "基于86五笔极点码表定制的轻量版本。"},
-}
-
-var schemasOptional = []inputSchema{
-	{"double_pinyin", "自然码双拼", "双拼", "基于自然码键位图定制的双拼输入方式。"},
-	{"double_pinyin_abc", "智能ABC双拼", "双拼", "基于智能ABC键位图定制的双拼输入方式。"},
-	{"double_pinyin_mspy", "微软双拼", "双拼", "基于微软双拼键位图定制的双拼输入方式。"},
-	{"double_pinyin_sogou", "搜狗双拼", "双拼", "基于搜狗双拼键位图定制的双拼输入方式。"},
-	{"double_pinyin_ziguang", "紫光双拼", "双拼", "基于紫光双拼键位图定制的双拼输入方式。"},
-}
-
-const schemaActivationGuide = "如需开启未默认激活的方案，请参考文档: https://www.mintimate.cc/zh/guide/defaultActivationScheme.html"
-
-// ── Static Data: Author Info ──────────────────────────────────────────────────
-
-const authorInfoText = `# Oh My Rime 作者信息
-
-**Mintimate**
-
-Oh My Rime（薄荷输入法）作者，开源项目爱好者。
-
-## 联系方式 & 社交媒体
-
-- 博客: https://www.mintimate.cn
-- GitHub: https://github.com/Mintimate
-- CNB: https://cnb.cool/u/Mintimate
-- Bilibili: https://space.bilibili.com/355567627
-- YouTube: https://www.youtube.com/@mintimate
-
-## 开源项目
-
-- **Oh My Rime**: 薄荷输入法 —— 跨平台 Rime 输入法配置方案
-  https://github.com/Mintimate/oh-my-rime
-- **Open Kounter**: A lightweight visitor counter based on KV
-  https://github.com/Mintimate/open-kounter
-- **Homebrew CN**: Homebrew CN — fast one-line Homebrew installer using China mirrors
-  https://github.com/Mintimate/homebrew-cn`
 
 // ── JSON-RPC types ────────────────────────────────────────────────────────────
 
@@ -267,11 +166,11 @@ func mcpToolsCall(req mcpRequest, cfg config.Config) map[string]interface{} {
 	case "query_oh-my-rime":
 		return mcpQueryKnowledge(req.ID, args, cfg)
 	case "get_download_links":
-		return mcpGetDownloadLinks(req.ID, args)
+		return mcpOK(req.ID, mcpText(downloadLinksText))
 	case "get_author_info":
 		return mcpOK(req.ID, mcpText(authorInfoText))
 	case "get_schema_list":
-		return mcpGetSchemaList(req.ID)
+		return mcpOK(req.ID, mcpText(schemaListText))
 	default:
 		return mcpError(req.ID, -32602, fmt.Sprintf("Unknown tool: %s", name))
 	}
@@ -301,56 +200,6 @@ func mcpQueryKnowledge(id interface{}, args map[string]interface{}, cfg config.C
 	if content == "" {
 		content = "No results found for the given query."
 	}
-	return mcpOK(id, mcpText(content))
-}
-
-func mcpGetDownloadLinks(id interface{}, args map[string]interface{}) map[string]interface{} {
-	resource := "all"
-	if args != nil {
-		if r, ok := args["resource"].(string); ok && r != "" {
-			resource = r
-		}
-	}
-
-	var content string
-	if resource == "all" {
-		content = "# Oh My Rime 下载链接\n\n以下所有镜像链接均由 CNB 提供加速，适合无法访问 GitHub 的用户。\n\n"
-		for _, key := range []string{"oh-my-rime", "squirrel", "weasel", "fcitx5-rime", "wanxiang-model", "oh-my-rime-cli"} {
-			item := downloadLinks[key]
-			content += fmt.Sprintf("## %s\n%s\n", item.Name, item.Description)
-			if item.Platform != "" {
-				content += fmt.Sprintf("- 平台: %s\n", item.Platform)
-			}
-			content += fmt.Sprintf("- GitHub: %s\n- 镜像下载: %s\n\n---\n\n", item.GitHub, item.Mirror)
-		}
-	} else if item, ok := downloadLinks[resource]; ok {
-		content = fmt.Sprintf("# %s\n\n%s\n", item.Name, item.Description)
-		if item.Platform != "" {
-			content += fmt.Sprintf("- 平台: %s\n", item.Platform)
-		}
-		content += fmt.Sprintf("- GitHub: %s\n- 镜像下载: %s", item.GitHub, item.Mirror)
-	} else {
-		keys := make([]string, 0, len(downloadLinks))
-		for k := range downloadLinks {
-			keys = append(keys, k)
-		}
-		content = fmt.Sprintf("Unknown resource: %s. Available: %s", resource, strings.Join(keys, ", "))
-	}
-
-	return mcpOK(id, mcpText(content))
-}
-
-func mcpGetSchemaList(id interface{}) map[string]interface{} {
-	content := "# Oh My Rime 支持的输入方案\n\n## 默认激活的方案\n\n"
-	for _, s := range schemasDefault {
-		content += fmt.Sprintf("- **%s** (`%s`) [%s]: %s\n", s.Name, s.ID, s.Type, s.Description)
-	}
-	content += "\n## 可用但未默认激活的方案\n\n"
-	for _, s := range schemasOptional {
-		content += fmt.Sprintf("- **%s** (`%s`) [%s]: %s\n", s.Name, s.ID, s.Type, s.Description)
-	}
-	content += fmt.Sprintf("\n## 如何激活其他方案？\n\n%s", schemaActivationGuide)
-
 	return mcpOK(id, mcpText(content))
 }
 
