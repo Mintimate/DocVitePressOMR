@@ -147,12 +147,12 @@ const props = defineProps({
     type: String,
     // Refer to: https://github.com/Mintimate/knowledge-maker
     // 聚合接口（保留兼容）
-    default: 'http://localhost:8082/api/v1/chat/stream'
+    default: 'http://localhost:9000/api/v1/chat/stream'
   },
   mcpBaseUrl: {
     type: String,
     // MCP 接口基础 URL，用于 Tool Use 模式
-    default: 'http://localhost:8082/api/v1/mcp'
+    default: 'http://localhost:9000/api/v1/mcp'
   },
   maxHistoryTurns: {
     type: Number,
