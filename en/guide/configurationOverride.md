@@ -160,6 +160,12 @@ So:
 - If you want to customize the global style, it is recommended to use the `default.custom.yaml` file to override `default.yaml`;
 - If you want to modify the configuration of the Mint Input Method, it is recommended to use the `rime_mint.custom.yaml` file for overriding.
 
+::: warning Special Note on page_size, key_binder and Similar Configurations
+To maintain compatibility with the [Rimetool](https://github.com/yanhuacuo/rimetool) visual configuration tool, Oh My Rime **redundantly includes** `menu` (containing `page_size`) and `key_binder` configurations **within each schema's `.schema.yaml` file**. This means these configuration items have independent definitions in the schema files and **will not be inherited from `default.yaml`**.
+
+Therefore, if you want to modify the candidate count, key bindings, or similar configurations, **do not override them in `default.custom.yaml`. Instead, override them in the corresponding schema's `.custom.yaml` file**. See the section [Example: Overriding Candidate Count and Key Bindings](#example-overriding-candidate-count-and-key-bindings) below for details.
+:::
+
 Example: Override the global input scheme configuration and set the candidate to 6:
 ```yaml
 patch:
@@ -433,3 +439,61 @@ patch:
 ```
 
 After redeploying, your input method will support longer Pinyin strings.
+
+## Example: Overriding Candidate Count and Key Bindings
+
+Some users may find that after overriding `page_size` (candidate count) or `key_binder` (key bindings) in `default.custom.yaml` and redeploying, the changes do not take effect. This is because Oh My Rime, for compatibility with [Rimetool](https://github.com/yanhuacuo/rimetool), **includes a copy of** `menu` and `key_binder` configurations **within each schema's configuration file**.
+
+::: tip Background
+[Rimetool](https://github.com/yanhuacuo/rimetool) is a visual configuration tool for the Rime input method that directly reads and modifies configurations within schema files (`.schema.yaml`). To allow Rimetool to correctly recognize and modify these configuration items, Oh My Rime redundantly writes `menu`, `key_binder`, and other configurations into each schema file, rather than relying solely on the global settings in `default.yaml`.
+
+Reference Issue: [oh-my-rime#120](https://github.com/Mintimate/oh-my-rime/issues/120)
+:::
+
+According to Rime's configuration priority, configurations within schema files (`.schema.yaml`) will override configurations with the same name in `default.yaml` and `default.custom.yaml`. So even if you modify `page_size` in `default.custom.yaml`, the `page_size` in the schema file will still take precedence.
+
+Taking the Double Fly (Xiaohe) schema `double_pinyin_flypy.schema.yaml` as an example, the end of the file contains configurations like:
+
+```yaml
+key_binder:
+  import_preset: default
+  # ...
+  bindings:
+    # ...
+
+menu:
+  # Number of candidates
+  page_size: 6
+```
+
+This means that if you want to change the candidate count to 9, **it is not enough to only set it in `default.custom.yaml`**:
+
+```yaml
+# ❌ Only modifying default.custom.yaml will NOT take effect for the schema
+patch:
+  "menu/page_size": 9
+```
+
+You need to override it in the **corresponding schema's `.custom.yaml` file**. For example, to change the candidate count for Double Fly Pinyin, create or edit `double_pinyin_flypy.custom.yaml`:
+
+```yaml
+# ✅ Modifying double_pinyin_flypy.custom.yaml takes effect for the Double Fly schema
+patch:
+  "menu/page_size": 9
+```
+
+Similarly, if you want to modify key bindings, you also need to override `key_binder` in the schema's `.custom.yaml`. For example, to add a custom shortcut for Double Fly Pinyin:
+
+```yaml
+patch:
+  "key_binder/bindings/@next":
+    accept: "Control+Shift+E"
+    toggle: emoji_suggestion
+    when: always
+```
+
+::: warning Note
+All major schemas in Oh My Rime (Mint Pinyin `rime_mint`, Double Fly Pinyin `double_pinyin_flypy`, Mint Pinyin-Xiaohe Mixed `rime_mint_flypy`, Terra Pinyin `terra_pinyin`, etc.) have this redundant configuration. Therefore, **if you want to modify `page_size`, `key_binder`, or similar configurations, please override them directly in the corresponding schema's `.custom.yaml` file, rather than in `default.custom.yaml`**.
+
+If you use multiple schemas and want the changes to take effect for all of them, you need to create separate `.custom.yaml` files for each schema.
+:::

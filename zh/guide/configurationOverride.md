@@ -159,6 +159,12 @@ graph LR
 - 如果你想自定义全局样式，推荐使用`default.custom.yaml`文件覆写`default.yaml`；
 - 如果你想修改薄荷输入法内的全拼配置，推荐使用`rime_mint.custom.yaml`文件进行覆写（注意：是薄荷输入法内全拼配置；如果你是用薄荷输入法内的小鹤双拼，那么就是`double_pinyin_flypy.custom.yaml`文件，其他薄荷输入法内配置方案，以此类推）。
 
+::: warning 关于 page_size、key_binder 等配置的特别说明
+薄荷输入法为了兼容 [Rimetool](https://github.com/yanhuacuo/rimetool) 可视化配置工具，在每个方案的`.schema.yaml`文件内**冗余写入了**`menu`（含`page_size`）和`key_binder`等配置。这意味着这些配置项在方案文件中有独立的定义，**不会从`default.yaml`继承**。
+
+因此，如果你想修改候选词个数、快捷键绑定等配置，**请不要在`default.custom.yaml`中覆写，而是在对应方案的`.custom.yaml`文件中覆写**。详见后文 [举例: 覆写候选个数和快捷键](#举例-覆写候选个数和快捷键) 章节。
+:::
+
 举例: 覆写全局的输入方案配置，设置候选为6个:
 ```yaml
 patch:
@@ -432,3 +438,61 @@ patch:
 ```
 
 重新部署后，你的输入法就可以输入更长的拼音串了。
+
+## 举例: 覆写候选个数和快捷键
+
+有些用户可能会发现，在`default.custom.yaml`中覆写`page_size`（候选词个数）或`key_binder`（快捷键绑定）后，重新部署却没有生效。这是因为薄荷输入法为了兼容 [Rimetool](https://github.com/yanhuacuo/rimetool)，在**每个方案的配置文件内也写了一份**`menu`和`key_binder`等配置。
+
+::: tip 背景说明
+[Rimetool](https://github.com/yanhuacuo/rimetool) 是一个 Rime 输入法的可视化配置工具，它直接读取和修改方案文件（`.schema.yaml`）内的配置。为了让 Rimetool 能够正确识别和修改这些配置项，薄荷输入法在每个方案文件中都冗余地写入了`menu`、`key_binder`等配置，而不是仅依赖`default.yaml`的全局设置。
+
+参考 Issue: [oh-my-rime#120](https://github.com/Mintimate/oh-my-rime/issues/120)
+:::
+
+根据 Rime 的配置优先级，方案文件（`.schema.yaml`）内的配置会覆盖`default.yaml`和`default.custom.yaml`中的同名配置。所以，即使你在`default.custom.yaml`中修改了`page_size`，方案文件内的`page_size`仍然会生效。
+
+以小鹤双拼方案`double_pinyin_flypy.schema.yaml`为例，文件末尾有这样的配置：
+
+```yaml
+key_binder:
+  import_preset: default
+  # ...
+  bindings:
+    # ...
+
+menu:
+  # 候选词个数
+  page_size: 6
+```
+
+这意味着，如果你想修改候选词个数为 9 个，**仅在`default.custom.yaml`中设置是不够的**：
+
+```yaml
+# ❌ 仅修改 default.custom.yaml，不会对方案生效
+patch:
+  "menu/page_size": 9
+```
+
+你需要在**对应方案的`.custom.yaml`文件**中进行覆写。例如，修改小鹤双拼的候选词个数，需要创建或编辑`double_pinyin_flypy.custom.yaml`：
+
+```yaml
+# ✅ 修改 double_pinyin_flypy.custom.yaml，对小鹤双拼方案生效
+patch:
+  "menu/page_size": 9
+```
+
+同理，如果你想修改快捷键绑定，也需要在方案的`.custom.yaml`中覆写`key_binder`。例如，为小鹤双拼添加一个自定义快捷键：
+
+```yaml
+patch:
+  "key_binder/bindings/@next":
+    accept: "Control+Shift+E"
+    toggle: emoji_suggestion
+    when: always
+```
+
+::: warning 注意
+薄荷输入法内的所有主要方案（薄荷拼音`rime_mint`、小鹤双拼`double_pinyin_flypy`、薄荷拼音-小鹤混输`rime_mint_flypy`、地球拼音`terra_pinyin`等）都存在这种冗余配置。因此，**如果你想修改`page_size`、`key_binder`等配置，请直接在对应方案的`.custom.yaml`文件中覆写，而不是在`default.custom.yaml`中覆写**。
+
+如果你使用了多个方案，并且希望所有方案都生效，那么需要为每个方案分别创建`.custom.yaml`文件进行覆写。
+:::
