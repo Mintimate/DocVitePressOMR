@@ -126,6 +126,9 @@ main:
           image: tencentcom/deploy-eopages:latest
           script: 
             - apk add --no-cache git
+            - wget https://go.dev/dl/go1.24.5.linux-amd64.tar.gz
+            - tar -C /usr/local -xzf go1.24.5.linux-amd64.tar.gz
+            - export PATH=$PATH:/usr/local/go/bin
             - edgeone pages deploy -n oh-my-rime -t $EO_SECRET
   "crontab: 0 0 */7 * *":
     - stages:
