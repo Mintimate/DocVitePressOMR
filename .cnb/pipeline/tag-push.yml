@@ -2,7 +2,7 @@
 $:
   tag_push:
     - docker:
-        build: .ide/Dockerfile
+        image: docker.cnb.cool/flyinbug/dev-ops/nodejs:latest
       imports:
         - https://cnb.cool/Mintimate/secret/-/blob/main/SyncToGitHub.yml
       stages:
