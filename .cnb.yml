@@ -97,8 +97,8 @@ main:
     - name: "向量化数据"
       stages:
         - name: build knowledge base
-          image: cnbcool/knowledge-base
-          settings:
+          type: knowledge:update
+          options:
             include: "**/**.md"
     - name: "推送镜像"
       imports:
