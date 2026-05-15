@@ -1,0 +1,14 @@
+# 清理旧 release 流水线
+clean:
+  "crontab: 0 0 */7 * *":
+    - stages:
+      - name: release clean
+        image: docker.cnb.cool/cnb/plugins/cnbcool/release-clean:latest
+        settings:
+          filter: "RECENT_N=2"
+          debug: false
+      - name: 制作标签
+        script: 
+          - DATETIME_TAG=$(date +%Y-%m-%d)
+          - git tag -a "$DATETIME_TAG" -m "Auto Sync at $DATETIME_TAG"
+          - git push origin "$DATETIME_TAG" -f

@@ -1,0 +1,20 @@
+# 构建产物流水线
+build:
+  push:
+    - name: "构建产物"
+      imports:
+        - https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml
+      docker:        
+        image: node:22
+        volumes:
+          - /root/.npm:copy-on-write
+          - node_modules:copy-on-write
+      stages:
+        - name: "部署流程"
+          image: tencentcom/deploy-eopages:latest
+          script: 
+            - apk add --no-cache git
+            - wget https://go.dev/dl/go1.24.5.linux-amd64.tar.gz
+            - tar -C /usr/local -xzf go1.24.5.linux-amd64.tar.gz
+            - export PATH=$PATH:/usr/local/go/bin
+            - edgeone pages deploy -n oh-my-rime -t $EO_SECRET

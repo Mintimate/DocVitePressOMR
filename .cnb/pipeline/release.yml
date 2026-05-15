@@ -1,0 +1,52 @@
+# 标签发布流水线
+release:
+  tag_push:
+    - docker:
+        build: .ide/Dockerfile
+      imports:
+        - https://cnb.cool/Mintimate/secret/-/blob/main/SyncToGitHub.yml
+      stages:
+        - name: 创建日期
+          script: 
+            - DATETIME_TAG=$(date +%Y-%m-%d)
+            - echo "##[set-output DATETIME_TAG=$DATETIME_TAG]"
+          exports:
+            DATETIME_TAG: DATETIME_TAG
+        - name: 创建发布标签
+          type: git:release
+          options:
+            title: ${DATETIME_TAG}
+            description: Auto Sync at ${DATETIME_TAG}
+            latest: true
+        - name: 下载上游客户端
+          script: .cnb/scripts/download-releases.sh
+          exports:
+            weasel_file: weasel_file
+            squirrel_file: squirrel_file
+            fctix5_macOS_file: fctix5_macOS_file
+            wanxiang_file: wanxiang_file
+        - name: 自动打包方案包
+          parallel: true
+          jobs:
+            - name: 薄荷在线方案包
+              image: docker.cnb.cool/mintimate/rime/deploy-schema
+              settings:
+                user_recipe_list: 'Mintimate/oh-my-rime:plum/full'
+                package_items: 'build opencc lua'
+                zip_file: oh-my-rime-online.zip
+            - name: 雾凇在线方案包
+              image: docker.cnb.cool/mintimate/rime/deploy-schema
+              settings:
+                user_recipe_list: 'iDvel/rime-ice:others/recipes/full'
+                package_items: 'build opencc lua'
+                zip_file: rime-ice-online.zip
+        - name: release 上传附件
+          image: cnbcool/attachments:latest
+          settings:
+            attachments:
+              - $weasel_file
+              - $squirrel_file
+              - $fctix5_macOS_file
+              - $wanxiang_file
+              - oh-my-rime-online.zip
+              - rime-ice-online.zip
