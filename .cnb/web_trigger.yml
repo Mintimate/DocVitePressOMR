@@ -1,0 +1,8 @@
+# 手动触发按钮配置
+branch:
+  - reg: ^main
+    buttons:
+      - name: 覆盖最新版本 Tag
+        event: web_trigger_clean
+        permissions:
+          roles: [master, developer]

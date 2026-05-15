@@ -58,8 +58,8 @@ main:
             - git tag -a "$DATETIME_TAG" -m "Auto Sync at $DATETIME_TAG"
             - git push origin "$DATETIME_TAG" -f
 
-    # 手动触发按钮
-  web_trigger:
+    # 手动触发按钮（对应 .cnb/web_trigger.yml）
+  web_trigger_clean:
     - name: 手动清理并打标签
       stages:
         - name: release clean
