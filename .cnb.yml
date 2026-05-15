@@ -1,6 +1,16 @@
-# .cnb.yml
+# .cnb.yml - 仅包含 include 列表
+include:
+  - .cnb/pipeline/tag-push.yml
+  - .cnb/pipeline/main-push.yml
+
+# WebIDE 修改不触发流水线
+.skip_project: &skip_project
+  ifModify:
+    - "**"
+    - "!(.ide/**)"
+
+# vscode 开发环境
 $:
-  # vscode 事件：专供页面中启动远程开发用
   vscode:
     - docker:
         image: docker.cnb.cool/flyinbug/dev-ops/nodejs:latest
@@ -12,28 +22,3 @@ $:
       stages:
         - name: 安装依赖
           script: yarn
-
-  # 标签事件
-  tag_push:
-    - imports:
-        - .cnb/pipeline/release.yml
-
-# WebIDE 修改不触发发流水线
-.skip_project: &skip_project
-  ifModify:
-    - "**"
-    - "!(.ide/**)"
-
-main:
-  push:
-    - name: "向量化数据"
-      stages:
-        - name: build knowledge base
-          type: knowledge:update
-          options:
-            include: "**/*.md"
-    - imports:
-        - .cnb/pipeline/push.yml
-        - .cnb/pipeline/build.yml
-    - imports:
-        - .cnb/pipeline/clean.yml

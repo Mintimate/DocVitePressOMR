@@ -1,5 +1,5 @@
 # 标签发布流水线
-release:
+$:
   tag_push:
     - docker:
         build: .ide/Dockerfile
@@ -25,21 +25,18 @@ release:
             squirrel_file: squirrel_file
             fctix5_macOS_file: fctix5_macOS_file
             wanxiang_file: wanxiang_file
-        - name: 自动打包方案包
-          parallel: true
-          jobs:
-            - name: 薄荷在线方案包
-              image: docker.cnb.cool/mintimate/rime/deploy-schema
-              settings:
-                user_recipe_list: 'Mintimate/oh-my-rime:plum/full'
-                package_items: 'build opencc lua'
-                zip_file: oh-my-rime-online.zip
-            - name: 雾凇在线方案包
-              image: docker.cnb.cool/mintimate/rime/deploy-schema
-              settings:
-                user_recipe_list: 'iDvel/rime-ice:others/recipes/full'
-                package_items: 'build opencc lua'
-                zip_file: rime-ice-online.zip
+        - name: 自动打包薄荷方案包
+          image: docker.cnb.cool/mintimate/rime/deploy-schema
+          settings:
+            user_recipe_list: 'Mintimate/oh-my-rime:plum/full'
+            package_items: 'build opencc lua'
+            zip_file: oh-my-rime-online.zip
+        - name: 自动打包雾凇方案包
+          image: docker.cnb.cool/mintimate/rime/deploy-schema
+          settings:
+            user_recipe_list: 'iDvel/rime-ice:others/recipes/full'
+            package_items: 'build opencc lua'
+            zip_file: rime-ice-online.zip
         - name: release 上传附件
           image: cnbcool/attachments:latest
           settings:

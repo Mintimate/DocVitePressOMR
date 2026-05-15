@@ -1,0 +1,74 @@
+# 推送镜像 & 向量化知识库 & 构建部署
+main:
+  push:
+    # 向量化知识库
+    - name: 向量化数据
+      stages:
+        - name: build knowledge base
+          type: knowledge:update
+          options:
+            include: "**/*.md"
+
+    # 推送镜像
+    - name: 推送镜像
+      imports:
+        - https://cnb.cool/Mintimate/secret/-/blob/main/SyncToGitHub.yml
+      stages:
+        - name: 自动同步代码
+          image: tencentcom/git-sync
+          settings:
+            target_url: https://github.com/Mintimate/DocVitePressOMR.git
+            auth_type: https
+            username: ${GIT_USERNAME}
+            password: ${GIT_ACCESS_TOKEN}
+            branch: main
+            force: true
+
+    # 构建产物
+    - name: 构建产物
+      imports:
+        - https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml
+      docker:        
+        image: node:22
+        volumes:
+          - /root/.npm:copy-on-write
+          - node_modules:copy-on-write
+      stages:
+        - name: 部署流程
+          image: tencentcom/deploy-eopages:latest
+          script: 
+            - apk add --no-cache git
+            - wget https://go.dev/dl/go1.24.5.linux-amd64.tar.gz
+            - tar -C /usr/local -xzf go1.24.5.linux-amd64.tar.gz
+            - export PATH=$PATH:/usr/local/go/bin
+            - edgeone pages deploy -n oh-my-rime -t $EO_SECRET
+
+    # 定时清理（每7天）
+  "crontab: 0 0 */7 * *":
+    - name: 定时清理
+      stages:
+        - name: release clean
+          image: docker.cnb.cool/cnb/plugins/cnbcool/release-clean:latest
+          settings:
+            filter: "RECENT_N=2"
+            debug: false
+        - name: 制作标签
+          script: 
+            - DATETIME_TAG=$(date +%Y-%m-%d)
+            - git tag -a "$DATETIME_TAG" -m "Auto Sync at $DATETIME_TAG"
+            - git push origin "$DATETIME_TAG" -f
+
+    # 手动触发按钮
+  web_trigger:
+    - name: 手动清理并打标签
+      stages:
+        - name: release clean
+          image: docker.cnb.cool/cnb/plugins/cnbcool/release-clean:latest
+          settings:
+            filter: "RECENT_N=2"
+            debug: false
+        - name: 制作标签
+          script: 
+            - DATETIME_TAG=$(date +%Y-%m-%d)
+            - git tag -a "$DATETIME_TAG" -m "Auto Sync at $DATETIME_TAG"
+            - git push origin "$DATETIME_TAG" -f
