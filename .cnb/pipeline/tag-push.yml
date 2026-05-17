@@ -19,7 +19,7 @@ $:
             description: Auto Sync at ${DATETIME_TAG}
             latest: true
         - name: 下载上游客户端
-          script: .cnb/scripts/download-releases.sh
+          script: bash .cnb/scripts/download-releases.sh
           exports:
             weasel_file: weasel_file
             squirrel_file: squirrel_file
