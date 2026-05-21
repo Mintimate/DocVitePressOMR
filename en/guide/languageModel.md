@@ -66,7 +66,7 @@ Then, move the configuration file to the Rime configuration directory, such as t
 Here, the language model file we downloaded is: `wanxiang-lts-zh-hans.gram`, so if we want to use it in `薄荷全拼 (rime_mint)`, we can add it in `rime_mint.custom.yaml`:
 
 ::: info Parameter Notes
-As of **2026-05-19**, the grammar parameters have been updated. To accommodate the gbl evaluation metric (which includes a "model-free" dimension), the previous strategy of flattening dictionary weights has been reverted to preserve peak-like, high-variance word frequencies in the dictionary. The adjusted model parameters are optimized for the current dictionary to improve sentence- and character-level accuracy.
+As of **2026-05-21**, the grammar parameters have been updated. Based on the author's corpus annotation and debugging, three parameters — collocation_penalty, non_collocation_penalty, and rear_penalty — have been adjusted for improved sentence- and character-level accuracy.
 :::
 
 ```yaml
@@ -75,10 +75,10 @@ patch:
   "grammar/language": wanxiang-lts-zh-hans
   "grammar/collocation_max_length": 8
   "grammar/collocation_min_length": 2
-  "grammar/collocation_penalty": -15
-  "grammar/non_collocation_penalty": -1
+  "grammar/collocation_penalty": -16
+  "grammar/non_collocation_penalty": -8
   "grammar/weak_collocation_penalty": -100
-  "grammar/rear_penalty": -10
+  "grammar/rear_penalty": -20
 
   # Load within translator
   "translator/contextual_suggestions": true
