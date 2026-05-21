@@ -66,7 +66,7 @@ import_tables:
 这里，我们下载的语言模型文件是：`wanxiang-lts-zh-hans.gram`，所以我们如果要在`薄荷全拼（rime_mint）`中使用，可以在`rime_mint.custom.yaml`中添加：
 
 ::: info 参数说明
-自 **2026-05-19** 起，grammar 参数已更新。由于 gbl 评价体系引入的“不依赖模型”维度，原先压平词库权重的策略已恢复为保留词库波峰型高差距词频；配合新的模型参数，可在当前词库下获得更佳的句子与文字正确率。
+自 **2026-05-21** 起，grammar 参数已更新。由万象作者基于实际语料标注和调试后，更新了 collocation_penalty、non_collocation_penalty、rear_penalty 三个参数，以获得更佳的句子与文字正确率。
 :::
 
 ```yaml
@@ -75,10 +75,10 @@ patch:
   "grammar/language": wanxiang-lts-zh-hans
   "grammar/collocation_max_length": 8
   "grammar/collocation_min_length": 2
-  "grammar/collocation_penalty": -15
-  "grammar/non_collocation_penalty": -1
+  "grammar/collocation_penalty": -16
+  "grammar/non_collocation_penalty": -8
   "grammar/weak_collocation_penalty": -100
-  "grammar/rear_penalty": -10
+  "grammar/rear_penalty": -20
 
   # translator 内加载
   "translator/contextual_suggestions": true
