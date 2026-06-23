@@ -98,9 +98,9 @@ else
 fi
 
 # 设置本地开发环境变量，覆盖 .env 中的生产配置
-# 确保前端 AI 聊天组件能正确定位到本地 Go 后端
-export AI_API_URL=http://localhost:9000/api/v1/chat/stream
-export AI_MCP_BASE_URL=http://localhost:9000/api/v1/mcp
+# 确保前端 AI 聊天组件能正确定位到本地 Go Agent 代理
+export AI_AGENT_API_URL=http://localhost:9000/api/v1/agent/chat/stream
+export AGENT_BASE_URL=${AGENT_BASE_URL:-https://oh-my-rime.agent.mintimate.cc}
 export AI_ENABLE_CAPTCHA=true
 export AI_CAPTCHA_APP_ID=${CAPTCHA_APP_ID:-189904202}
 

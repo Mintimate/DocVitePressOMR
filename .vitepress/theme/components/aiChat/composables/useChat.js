@@ -53,9 +53,11 @@ export function useChat(convertToHtml) {
   /**
    * 智能滚动到底部（仅在用户未手动滚动且接近底部时自动滚动）
    */
-  const smartScrollToBottom = () => {
-    if (!isUserScrolling.value && shouldAutoScroll()) {
-      scrollToBottom()
+  const smartScrollToBottom = (force = false) => {
+    if (force || (!isUserScrolling.value && shouldAutoScroll())) {
+      nextTick(() => {
+        scrollToBottom()
+      })
     }
   }
 

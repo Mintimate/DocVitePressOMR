@@ -10,6 +10,7 @@
 //	AI_MODEL              — 模型名称，如 hunyuan-t1-20250711
 //	AI_MCP_BASE_URL       — （可选）MCP 专用 AI 基础 URL，留空则复用 AI_BASE_URL
 //	RAG_SYSTEM_PROMPT     — （可选）RAG 系统提示词
+//	AGENT_BASE_URL        — （可选）Oh My Rime Agent 服务地址，默认 https://oh-my-rime.agent.mintimate.cc
 //	CAPTCHA_ENABLED       — 是否启用验证码: true / false，留空则根据 CAPTCHA_TYPE 是否非空判断
 //	CAPTCHA_TYPE          — 验证码类型: cloudflare / tencent / geetest / google_v2 / google_v3
 //	CLOUDFLARE_SECRET_KEY — Cloudflare Turnstile 服务端密钥
@@ -40,6 +41,8 @@ type Config struct {
 	AIMCPBaseURL string // MCP 专用 AI 基础 URL，留空则复用 AIBaseURL
 	// RAG
 	RAGSystemPrompt string
+	// Agent
+	AgentBaseURL string
 	// 验证码
 	CaptchaEnabled           bool // 显式控制验证码开关
 	CaptchaType              string
@@ -109,6 +112,7 @@ func Load() Config {
 		AIModel:                  os.Getenv("AI_MODEL"),
 		AIMCPBaseURL:             aiMCPBaseURL,
 		RAGSystemPrompt:          prompt,
+		AgentBaseURL:             agentBaseURL(),
 		CaptchaEnabled:           captchaEnabled,
 		CaptchaType:              captchaType,
 		CloudflareSecretKey:      os.Getenv("CLOUDFLARE_SECRET_KEY"),
@@ -126,13 +130,20 @@ func Load() Config {
 	}
 }
 
+func agentBaseURL() string {
+	if value := strings.TrimSpace(os.Getenv("AGENT_BASE_URL")); value != "" {
+		return strings.TrimRight(value, "/")
+	}
+	return "https://oh-my-rime.agent.mintimate.cc"
+}
+
 // CORSMiddleware returns a Gin middleware that sets CORS headers and handles OPTIONS preflight.
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "*")
 		c.Header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
-		c.Header("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization, Mcp-Session-Id, X-Captcha-Ticket, X-Captcha-Randstr, X-Geetest-Lot-Number, X-Geetest-Captcha-Output, X-Geetest-Pass-Token, X-Geetest-Gen-Time, X-Recaptcha-Token, X-Recaptcha-Action, X-Cf-Turnstile-Token, X-Session-Token")
-		c.Header("Access-Control-Expose-Headers", "Mcp-Session-Id, X-Session-Token")
+		c.Header("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization, Mcp-Session-Id, X-Captcha-Ticket, X-Captcha-Randstr, X-Geetest-Lot-Number, X-Geetest-Captcha-Output, X-Geetest-Pass-Token, X-Geetest-Gen-Time, X-Recaptcha-Token, X-Recaptcha-Action, X-Cf-Turnstile-Token, X-Session-Token, X-Agent-Conversation-Id")
+		c.Header("Access-Control-Expose-Headers", "Mcp-Session-Id, X-Session-Token, X-Agent-Conversation-Id")
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(http.StatusNoContent)
 			return

@@ -541,6 +541,62 @@
   word-break: break-word;
 }
 
+.think-content :deep(.agent-trace) {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.think-content :deep(.agent-trace-item) {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.think-content :deep(.agent-trace-dot) {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-3);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.think-content :deep(.agent-trace-item.active .agent-trace-dot) {
+  color: var(--vp-c-brand-1);
+  animation: spin 1.2s linear infinite;
+}
+
+.think-content :deep(.agent-trace-item.done .agent-trace-dot) {
+  color: var(--vp-c-green-1, #10b981);
+}
+
+.think-content :deep(.agent-trace-title) {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--vp-c-text-1);
+}
+
+.think-content :deep(.agent-trace-detail) {
+  margin-top: 3px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--vp-c-text-2);
+}
+
+.think-content :deep(.agent-trace-detail code) {
+  font-size: 11px;
+  word-break: break-word;
+}
+
 /* ===== 输入区域 ===== */
 .ai-chat-input {
   padding: 12px 16px;

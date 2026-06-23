@@ -1,11 +1,12 @@
-// Oh My Rime 知识库 RAG + MCP 后端 — EdgeOne Pages Go Cloud Function (Framework 模式)
+// Oh My Rime Agent + MCP 后端 — EdgeOne Pages Go Cloud Function (Framework 模式)
 //
 // 路由总览：
 //
 //	GET  /                     — 服务信息
 //	GET  /api/v1/health        — 健康检查
-//	POST /api/v1/chat          — RAG 非流式问答（需验证码）
-//	POST /api/v1/chat/stream   — RAG 流式问答（SSE，需验证码）
+//	POST /api/v1/chat          — Agent 非流式问答（需验证码）
+//	POST /api/v1/chat/stream   — Agent 流式问答（SSE，需验证码）
+//	POST /api/v1/agent/chat/stream — Agent 流式问答别名（SSE，需验证码）
 //	GET  /api/v1/mcp/tools     — Tool Use 工具列表（前端 AI 组件）
 //	POST /api/v1/mcp/tools/call — Tool Use 工具调用（前端 AI 组件）
 //	POST /api/v1/mcp/llm/chat  — Tool Use LLM 聊天（需验证码）
@@ -15,7 +16,7 @@
 //
 //	internal/config/     — Config 结构、loadConfig、CORS 中间件、AI 客户端
 //	internal/knowledge/  — CNB 知识库 HTTP 客户端、结果格式化
-//	internal/handler/    — 各路由 handler（rag.go / tooluse.go / mcp.go）
+//	internal/handler/    — 各路由 handler（agent.go / rag.go / tooluse.go / mcp.go）
 //	internal/captcha/    — 多提供商验证码服务（Cloudflare Turnstile 等）
 //	internal/middleware/  — 验证码中间件（session token 机制）
 package main
@@ -55,14 +56,15 @@ func main() {
 func registerRoutes(r *gin.Engine, cfg config.Config, aiClient *openai.Client, captchaMW *middleware.CaptchaMiddleware) {
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"service": "Oh My Rime 知识库 RAG + MCP 后端",
+			"service": "Oh My Rime Agent + MCP 后端",
 			"status":  "running",
 			"endpoints": map[string]string{
-				"health": "/api/v1/health",
-				"chat":   "/api/v1/chat",
-				"stream": "/api/v1/chat/stream",
-				"tools":  "/api/v1/mcp/tools",
-				"mcp":    "/mcp",
+				"health":      "/api/v1/health",
+				"chat":        "/api/v1/chat",
+				"stream":      "/api/v1/chat/stream",
+				"agentStream": "/api/v1/agent/chat/stream",
+				"tools":       "/api/v1/mcp/tools",
+				"mcp":         "/mcp",
 			},
 		})
 	})
@@ -70,12 +72,13 @@ func registerRoutes(r *gin.Engine, cfg config.Config, aiClient *openai.Client, c
 	api := r.Group("/api/v1")
 	{
 		api.GET("/health", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{"status": "ok", "message": "RAG 服务运行正常"})
+			c.JSON(http.StatusOK, gin.H{"status": "ok", "message": "Agent 代理服务运行正常"})
 		})
 
-		// RAG 问答 — 前端 AI 组件直接调用（需验证码）
-		api.POST("/chat", captchaMW.VerifyCaptcha(), handler.RagChat(cfg, aiClient))
-		api.POST("/chat/stream", captchaMW.VerifyCaptcha(), handler.RagStreamChat(cfg, aiClient))
+		// Agent 问答 — 前端 AI 组件直接调用（需验证码）
+		api.POST("/chat", captchaMW.VerifyCaptcha(), handler.AgentChat(cfg))
+		api.POST("/chat/stream", captchaMW.VerifyCaptcha(), handler.AgentStreamChat(cfg))
+		api.POST("/agent/chat/stream", captchaMW.VerifyCaptcha(), handler.AgentStreamChat(cfg))
 
 		// Tool Use — 前端 AI 组件 Function Calling 流程
 		mcpGroup := api.Group("/mcp")
