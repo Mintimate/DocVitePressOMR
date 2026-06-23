@@ -129,9 +129,9 @@
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import qCloudCaptcha from '../captcha/qCloudCaptcha.vue'
 import { useCaptcha } from './composables/useCaptcha'
+import { useAgentChat } from './composables/useAgentChat'
 import { useChat } from './composables/useChat'
 import { useMarkdown } from './composables/useMarkdown'
-import { useToolCall } from './composables/useToolCall'
 
 /**
   AI聊天组件
@@ -145,14 +145,7 @@ import { useToolCall } from './composables/useToolCall'
 const props = defineProps({
   apiUrl: {
     type: String,
-    // Refer to: https://github.com/Mintimate/knowledge-maker
-    // 聚合接口（保留兼容）
-    default: 'http://localhost:9000/api/v1/chat/stream'
-  },
-  mcpBaseUrl: {
-    type: String,
-    // MCP 接口基础 URL，用于 Tool Use 模式
-    default: 'http://localhost:9000/api/v1/mcp'
+    default: '/api/v1/agent/chat/stream'
   },
   maxHistoryTurns: {
     type: Number,
@@ -160,7 +153,7 @@ const props = defineProps({
   },
   welcomeMessage: {
     type: String,
-    default: '您好！我是 RAG 知识库检索助手，可以查看项目地址: https://github.com/Mintimate/knowledge-maker'
+    default: '您好！我是 Oh My Rime Agent，可以帮你查询文档、判断配置文件，并生成安全的 Rime 配置建议。'
   },
   captchaAppId: {
     type: String,
@@ -170,11 +163,6 @@ const props = defineProps({
   enableCaptcha: {
     type: Boolean,
     default: false
-  },
-  defaultTools: {
-    type: String,
-    // 降级工具定义 JSON 字符串，从环境变量 AI_DEFAULT_TOOLS 传入
-    default: ''
   }
 })
 
@@ -218,19 +206,11 @@ const {
 } = useChat(convertToHtml)
 
 const {
-  toolCallStatus,
-  toolCallSteps,
-  setFallbackTools,
-  fetchMCPTools,
-  executeToolUseFlow,
-  resetToolCallState
-} = useToolCall(convertToHtml, smartScrollToBottom)
-
-// 初始化降级工具定义
-setFallbackTools(props.defaultTools)
-
-// 标记是否已经获取过 MCP 工具列表（懒加载，首次打开聊天窗口时才获取）
-let mcpToolsFetched = false
+  agentStatus: toolCallStatus,
+  agentSteps: toolCallSteps,
+  sendAgentMessage,
+  resetAgentState
+} = useAgentChat(convertToHtml, smartScrollToBottom)
 
 // ==================== 窗口拖拽调整大小 ====================
 const chatWindowRef = ref(null)
@@ -322,14 +302,9 @@ const handleCloseChat = () => {
   closeChat()
 }
 
-// 延迟获取 MCP 工具列表：覆盖 useChat 的 toggleChat，在首次打开时获取
 const originalToggleChat = toggleChat
 const lazyToggleChat = () => {
   originalToggleChat()
-  if (isOpen.value && !mcpToolsFetched) {
-    mcpToolsFetched = true
-    fetchMCPTools(props.mcpBaseUrl)
-  }
 }
 
 // 键盘事件桥接
@@ -362,7 +337,7 @@ const sendMessage = async () => {
   }
 }
 
-// 实际发送消息的函数（Tool Use 模式）
+// 实际发送消息的函数（Agent 模式）
 const proceedWithMessage = async () => {
   if (!pendingMessage.value.trim()) return
 
@@ -381,15 +356,7 @@ const proceedWithMessage = async () => {
   nextTick(() => { scrollToBottom() })
 
   try {
-    // 构建 LLM 消息（含历史对话）
     const recentHistory = getRecentChatHistory(props.maxHistoryTurns)
-    const llmMessages = [
-      ...recentHistory.map(h => ({ role: h.role, content: h.content }))
-    ]
-    // 确保最后一条是当前用户消息
-    if (llmMessages.length === 0 || llmMessages[llmMessages.length - 1].content !== userMessage) {
-      llmMessages.push({ role: 'user', content: userMessage })
-    }
 
     // 构建验证码数据（仅在启用验证码时传递）
     const captchaData = props.enableCaptcha ? {
@@ -404,10 +371,10 @@ const proceedWithMessage = async () => {
       cf_token: captchaState.value.cf_token
     } : null
 
-    // 执行 Tool Use 完整流程
-    await executeToolUseFlow({
-      mcpBaseUrl: props.mcpBaseUrl,
-      llmMessages,
+    await sendAgentMessage({
+      apiUrl: props.apiUrl,
+      message: userMessage,
+      context: buildAgentContext(recentHistory),
       aiMessageIndex,
       messages,
       addAssistantHistory,
@@ -419,13 +386,13 @@ const proceedWithMessage = async () => {
 
   } catch (error) {
     console.error('AI请求失败:', error)
-    resetToolCallState()
+    resetAgentState()
     const errorMessage = '抱歉，连接AI服务失败。请检查网络连接或稍后再试。'
     messages.value[aiMessageIndex].text = errorMessage
     messages.value[aiMessageIndex].html = convertToHtml(errorMessage)
   } finally {
     isLoading.value = false
-    resetToolCallState()
+    resetAgentState()
     resetCaptchaVerifying()
     // 每次交互结束后清除验证码字段，确保下次提问时重新触发验证码验证
     clearCaptchaFields()
@@ -433,6 +400,23 @@ const proceedWithMessage = async () => {
       scrollToBottom()
     })
   }
+}
+
+const buildAgentContext = (recentHistory) => {
+  const lines = ['User is asking from the Oh My Rime documentation website.']
+  if (typeof window !== 'undefined') {
+    lines.push(`Current page: ${window.location.href}`)
+  }
+
+  const previousTurns = recentHistory
+    .slice(0, -1)
+    .map(item => `${item.role}: ${item.content}`)
+    .join('\n')
+  if (previousTurns) {
+    lines.push('', 'Recent local chat history:', previousTurns)
+  }
+
+  return lines.join('\n')
 }
 
 // ==================== 生命周期 ====================

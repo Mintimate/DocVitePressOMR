@@ -10,13 +10,11 @@ const {Layout} = DefaultTheme
 // AI聊天组件配置 - 从环境变量读取（空字符串时使用 undefined，让 prop 默认值生效）
 // 环境变量名与 EO 控制面板保持一致，同时兼容旧的 AI_ 前缀变量名
 const aiChatConfig = {
-  apiUrl: import.meta.env.AI_API_URL || undefined,
-  mcpBaseUrl: import.meta.env.AI_MCP_BASE_URL || undefined,
+  apiUrl: import.meta.env.AI_AGENT_API_URL || import.meta.env.AI_API_URL || undefined,
   captchaAppId: import.meta.env.CAPTCHA_APP_ID || import.meta.env.AI_CAPTCHA_APP_ID || undefined,
   enableCaptcha: (import.meta.env.CAPTCHA_ENABLED || import.meta.env.AI_ENABLE_CAPTCHA) === 'true',
   maxHistoryTurns: Number(import.meta.env.AI_MAX_HISTORY_TURNS) || 3,
-  welcomeMessage: import.meta.env.AI_WELCOME_MESSAGE || undefined,
-  defaultTools: import.meta.env.AI_DEFAULT_TOOLS || undefined
+  welcomeMessage: import.meta.env.AI_WELCOME_MESSAGE || undefined
 }
 </script>
 
@@ -27,12 +25,10 @@ const aiChatConfig = {
         <div class="askAi">
           <aiChat 
             :api-url="aiChatConfig.apiUrl" 
-            :mcp-base-url="aiChatConfig.mcpBaseUrl"
             :captcha-app-id="aiChatConfig.captchaAppId"
             :enable-captcha="aiChatConfig.enableCaptcha"
             :max-history-turns="aiChatConfig.maxHistoryTurns"
             :welcome-message="aiChatConfig.welcomeMessage"
-            :default-tools="aiChatConfig.defaultTools"
           />
         </div>
     </template>
