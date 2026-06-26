@@ -4,35 +4,51 @@ title: Lua功能扩展
 head:
   - - meta
     - name: keywords
-      content: Rime Lua脚本,薄荷输入法Lua,Rime日期时间,Rime计算器,Rime大写金额
-description: 薄荷输入法内的Lua功能扩展详解，包括日期时间输入、计算器、大写金额转换、农历等高级功能。
+      content: Rime Lua脚本,薄荷输入法Lua,oh-my-rime lua目录,shijian.lua,number_translator.lua,mint_calculator_translator.lua,chineseLunarCalendar_translator.lua,select_character.lua,codeLengthLimit_processor.lua,kp_number_processor.lua,auxCode_filter.lua,corrector_filter.lua,super_preedit.lua,autocap_filter.lua,reduce_english_filter.lua,force_gc.lua,tag_user_dict.lua
+description: 薄荷输入法内的 Lua 功能扩展详解，按 lua 目录文件名、Rime 注册名、processor、translator、filter、触发编码和配置项说明日期时间、计算器、金额大写、农历、以词定字、辅码、小键盘数字、候选标记等功能。
 ---
 
 # Lua 功能扩展
 
-薄荷输入法（oh-my-rime）通过 Lua 脚本提供了丰富的扩展功能，这些功能大大增强了输入法的实用性。本文详细介绍各个 Lua 功能模块的使用方法和配置。
+薄荷输入法（oh-my-rime）通过 `lua/` 目录中的脚本提供扩展功能。本文按 Lua 文件名、Rime 注册名、模块类型、触发编码和配置项组织，方便搜索 `shijian.lua`、`select_character.lua`、`auxCode_filter.lua`、`kp_number_processor.lua` 等关键词时直接定位到对应功能。
+
+## Lua 目录与注册方式
+
+在方案文件中，Lua 脚本通常通过以下方式注册：
+
+| 注册写法 | 类型 | 用途 |
+|------|------|------|
+| `lua_processor@*模块名` | processor | 处理按键事件，如以词定字、小键盘数字、输入长度限制 |
+| `lua_translator@*模块名` | translator | 根据输入编码生成候选，如日期时间、金额大写、计算器、农历 |
+| `lua_filter@*模块名` | filter | 调整或标注候选，如错音错字提示、辅码筛选、英文降频 |
+| `lua_filter@*模块名@命名空间` | filter + namespace | 同一个脚本读取不同数据文件，例如 `lua_filter@*auxCode_filter@flypy_full` 读取 `lua/aux_code/flypy_full.txt` |
 
 ## 功能概览
 
-薄荷输入法内置了以下 Lua 功能模块：
+薄荷输入法内置了以下 Lua 文件和辅助数据。这里的“默认启用”以 `rime_mint.schema.yaml` 为参考；双拼、辅码或自定义方案可能会额外启用其他 Lua。
 
-| 模块 | 类型 | 功能说明 |
-|------|------|----------|
-| `shijian` | translator | 日期、时间、星期、节日、节气、问候等 |
-| `number_translator` | translator | 数字金额大小写转换 |
-| `chineseLunarCalendar_translator` | translator | 公历转农历 |
-| `mint_calculator_translator` | translator | 计算器（动态表达式计算） |
-| `select_character` | processor | 以词定字 |
-| `codeLengthLimit_processor` | processor | 限制输入编码最大长度 |
-| `corrector_filter` | filter | 错音错字提示 |
-| `super_preedit` | filter | 输入码显示全拼并带声调 |
-| `autocap_filter` | filter | 英文自动大写 |
-| `reduce_english_filter` | filter | 降低部分英语单词候选位置 |
-| `force_gc` | translator | 强制垃圾回收（性能优化） |
+| Lua 文件或目录 | 注册名或命名空间 | 类型 | 默认启用 | 功能和检索关键词 |
+|------|------|------|------|------|
+| `shijian.lua` | `shijian` | translator | 是 | 日期、时间、星期、节日、节气、问候、`osj`、`/sj`、`N20250315` |
+| `number_translator.lua` | `number_translator` | translator | 是 | 数字金额大写、人民币大写、`R1234` |
+| `chineseLunarCalendar_translator.lua` | `chineseLunarCalendar_translator` | translator | 是 | 农历、公历转农历、`/nl`、`onl`、`N20240115` |
+| `mint_calculator_translator.lua` | `mint_calculator_translator` | translator | 是 | 计算器、数学表达式、`=1+1`、`sqrt` |
+| `kp_number_processor.lua` | `kp_number_processor` | processor | 是 | 小键盘数字、数字键盘、候选选择、`kp_number_mode` |
+| `select_character.lua` | `select_character` | processor | 是 | 以词定字、首字、末字、`select_first_character`、`select_last_character` |
+| `codeLengthLimit_processor.lua` | `codeLengthLimit_processor` | processor | 是 | 输入长度限制、最长编码、拼音串过长、卡顿 |
+| `corrector_filter.lua` | `corrector_filter` | filter | 是 | 错音错字提示、拼写纠错、候选注释 |
+| `super_preedit.lua` | `super_preedit` | filter | 是 | 输入码全拼显示、声调显示、`tone_display`、`声杳`、`声起` |
+| `autocap_filter.lua` | `autocap_filter` | filter | 是 | 英文自动大写、句首大写 |
+| `reduce_english_filter.lua` | `reduce_english_filter` | filter | 是 | 英文候选降频、短英文置顶、`rug`、`mode: all` |
+| `force_gc.lua` | `force_gc` | translator | 是 | 强制垃圾回收、内存稳定、Lua GC |
+| `auxCode_filter.lua` | `auxCode_filter@flypy_full` 等 | filter | 否 | 辅助码、形码筛选、小鹤双拼、自然码、墨奇、`aux_code/trigger_word` |
+| `aux_code/*.txt` | `flypy_full`、`ZRM_Aux-code_4.3`、`moqi_aux_code` | 数据文件 | 按方案 | 辅码数据、`汉字=形码`、小鹤形码、自然码形码 |
+| `tag_user_dict.lua` | `tag_user_dict` | filter | 否 | 候选来源标记、用户词典、用户短语、`user_table`、`user_phrase` |
+| `log.lua` | `log` | helper | 否 | Lua 调试日志、开发调试、输出日志文件 |
 
 ## 日期时间输入（shijian）
 
-这是薄荷输入法中最为常用的 Lua 功能之一。通过特定的引导键，可以快速输入当前的日期、时间、星期等信息。
+`lua/shijian.lua` 注册为 `lua_translator@*shijian`，是薄荷输入法中最常用的 Lua translator 之一。通过特定的引导键，可以快速输入当前日期、时间、星期、节日、节气、问候模板等内容。
 
 ### 基本用法
 
@@ -152,7 +168,7 @@ patch:
 
 ## 数字金额大写（number_translator）
 
-在中文输入模式下，输入大写 `R` 后跟数字，可以将数字转换为大写金额格式。
+`lua/number_translator.lua` 注册为 `lua_translator@*number_translator`，用于人民币金额大写、数字金额大写和中文大写金额转换。在中文输入模式下，输入大写 `R` 后跟数字，可以将数字转换为大写金额格式。
 
 ### 使用示例
 
@@ -174,7 +190,7 @@ recognizer:
 
 ## 计算器（mint_calculator_translator）
 
-在中文输入模式下，输入 `=` 后跟数学表达式，可以直接计算结果。
+`lua/mint_calculator_translator.lua` 注册为 `lua_translator@*mint_calculator_translator`，用于在输入法候选区直接计算数学表达式。在中文输入模式下，输入 `=` 后跟表达式即可得到计算结果。
 
 ### 使用示例
 
@@ -197,7 +213,7 @@ recognizer:
 
 ## 农历转换（chineseLunarCalendar_translator）
 
-除了上述 `N` 模式外，薄荷输入法也配置了农历翻译器。方案中的配置：
+`lua/chineseLunarCalendar_translator.lua` 注册为 `lua_translator@*chineseLunarCalendar_translator`，用于农历查询和公历转农历。除了上述 `N` 模式外，薄荷输入法也配置了农历翻译器。方案中的配置：
 
 ```yaml
 chineseLunarCalendar_translator: lunar
@@ -205,9 +221,34 @@ chineseLunarCalendar_translator: lunar
 
 使用 `/nl` 或 `onl` 可以直接输出当天的农历日期。
 
+## 小键盘数字处理（kp_number_processor）
+
+`lua/kp_number_processor.lua` 注册为 `lua_processor@*kp_number_processor`，用于处理小键盘数字和主键盘数字的行为。它解决的问题是：数字键既可能要参与编码，也可能要直接上屏，还可能要在有候选菜单时选择第几个候选。
+
+在 `rime_mint.schema.yaml` 中，处理器位于 `engine/processors` 前部：
+
+```yaml
+engine:
+  processors:
+    - lua_processor@*kp_number_processor
+```
+
+可配置项：
+
+```yaml
+kp_number_mode: auto  # auto | compose
+```
+
+| 模式 | 说明 |
+|------|------|
+| `auto` | 默认模式。空闲时小键盘数字直接上屏；正在输入时，小键盘数字参与编码 |
+| `compose` | 小键盘数字始终参与编码，不直接上屏 |
+
+主键盘数字在有候选菜单时仍可用于选候选；如果输入内容匹配 `recognizer/patterns` 中的网址、反查、金额、计算器、农历等功能编码，数字会继续作为编码输入。
+
 ## 错音错字提示（corrector_filter）
 
-此 Lua 过滤器会在你输入时提示可能的错音错字。例如，当你输入了常见的拼写错误时，候选项的注释区会显示正确的拼写提示。
+`lua/corrector_filter.lua` 注册为 `lua_filter@*corrector_filter`。此 Lua 过滤器会在你输入时提示可能的错音错字。例如，当你输入了常见的拼写错误时，候选项的注释区会显示正确的拼写提示。
 
 此功能需要配合方案中的以下配置：
 
@@ -220,11 +261,11 @@ translator:
 
 ## 英文自动大写（autocap_filter）
 
-当英文单词出现在句首或特定上下文时，此过滤器会自动将首字母大写。
+`lua/autocap_filter.lua` 注册为 `lua_filter@*autocap_filter`。当英文单词出现在句首或特定上下文时，此过滤器会自动将首字母大写。常见检索词包括英文自动大写、句首大写、auto capitalization、autocap。
 
 ## 降低英文候选（reduce_english_filter）
 
-此过滤器用于解决短英文单词在拼音输入时的干扰问题。例如输入 `rug` 时，默认会优先显示英文 `rug`，开启后会优先显示中文 `如果`。
+`lua/reduce_english_filter.lua` 注册为 `lua_filter@*reduce_english_filter`。此过滤器用于解决短英文单词在拼音输入时的干扰问题。例如输入 `rug` 时，默认会优先显示英文 `rug`，开启后会优先显示中文 `如果`。
 
 ### 配置模式
 
@@ -254,17 +295,15 @@ patch:
 
 ## 以词定字（select_character）
 
-薄荷输入法默认使用 `[` 和 `]` 来实现以词定字功能：
-- `[`：选取词组的第一个字
-- `]`：选取词组的最后一个字
+`lua/select_character.lua` 注册为 `lua_processor@*select_character`。以词定字是指先输入一个词语，让目标词出现在候选区，然后通过预先定义好的按键直接上屏这个词的第一个字或最后一个字。薄荷输入法默认使用 `[` 和 `]`：
+- `[`：上屏候选词的第一个字
+- `]`：上屏候选词的最后一个字
 
-例如，输入 `mingbai`（明白）后：
-- 按 `[` 上屏「明」
-- 按 `]` 上屏「白」
+例如，想输入「钛」时，直接输入 `tai` 可能很难找到这个字；可以输入 `tai he jin`，当候选区出现「钛合金」后，按 `[` 即可上屏「钛」。如果按 `]`，则会上屏「金」。
 
 ### 修改定字按键
 
-如果想修改以词定字的按键（例如换成 `-` 和 `=`），可以在方案的 `key_binder` 中配置：
+如果想修改以词定字的按键（例如换成 `-` 和 `=`），可以在方案的 `key_binder` 中配置。修改后就需要按新的绑定键，例如 `select_first_character: "minus"` 表示按 `-` 上屏首字：
 
 ```yaml
 patch:
@@ -272,9 +311,54 @@ patch:
   key_binder/select_last_character: "equal"    # 使用 = 选末字
 ```
 
+## 辅码过滤（auxCode_filter）
+
+`lua/auxCode_filter.lua` 注册为 `lua_filter@*auxCode_filter@命名空间`，用于双拼辅码、形码筛选和候选项形码提示。常见写法是：
+
+```yaml
+filters:
+  - lua_filter@*auxCode_filter@flypy_full
+```
+
+这里的 `@flypy_full` 是命名空间，也对应 `lua/aux_code/flypy_full.txt`。如果没有找到指定文件，脚本会回退到默认的 `lua/aux_code/ZRM_Aux-code_4.3.txt`。
+
+辅码数据文件位于 `lua/aux_code/`，格式为 `汉字=形码`：
+
+```text
+啊=kk
+阿=ek
+爱=py
+安=bn
+```
+
+内置辅码数据：
+
+| 文件名 | 常见用途 | 说明 |
+|------|------|------|
+| `flypy_full.txt` | 小鹤双拼、小鹤音形 | 小鹤形码 |
+| `ZRM_Aux-code_4.3.txt` | 自然码 | 自然码形码，也是默认回退文件 |
+| `moqi_aux_code.txt` | 其他双拼方案 | 墨奇形码 |
+
+辅码常用配置：
+
+```yaml
+aux_code:
+  trigger_word: ";"
+  show_aux_notice: "trigger"  # always | trigger | none
+```
+
+| 配置项 | 说明 |
+|------|------|
+| `aux_code/trigger_word` | 激活辅码筛选的按键，默认是 `;` |
+| `aux_code/show_aux_notice: always` | 始终显示候选项的形码提示 |
+| `aux_code/show_aux_notice: trigger` | 输入激活键后才显示形码提示 |
+| `aux_code/show_aux_notice: none` | 不显示形码提示 |
+
+例如输入双拼编码后，候选区出现多个同音候选；继续输入 `;` 和形码，`auxCode_filter` 会按字或词的辅助码筛选候选。更完整的小鹤双拼辅码说明可参考[小鹤音形教程](../demo/doublePinyinFly.md)。
+
 ## 输入码全拼显示（super_preedit）
 
-此过滤器可以将输入码实时转换为带声调的全拼显示。例如输入 `nihao` 时，预编辑区会显示为 `nǐ hǎo`。
+`lua/super_preedit.lua` 注册为 `lua_filter@*super_preedit`。此过滤器可以将输入码实时转换为带声调的全拼显示。例如输入 `nihao` 时，预编辑区会显示为 `nǐ hǎo`。
 
 此功能通过方案中的 `tone_display` 开关控制：
 
@@ -290,7 +374,7 @@ switches:
 
 ## 输入长度限制（codeLengthLimit_processor）
 
-薄荷输入法默认限制拼音串最大长度为 25 个字符，以防止过长输入导致卡顿。
+`lua/codeLengthLimit_processor.lua` 注册为 `lua_processor@*codeLengthLimit_processor`。薄荷输入法默认限制拼音串最大长度为 25 个字符，以防止过长输入导致卡顿。
 
 修改方法：
 
@@ -302,3 +386,31 @@ patch:
 ::: warning 提示
 增大输入长度限制可能会导致输入法在长拼音串时出现卡顿，建议根据设备性能适当调整。
 :::
+
+## 强制垃圾回收（force_gc）
+
+`lua/force_gc.lua` 注册为 `lua_translator@*force_gc`。它会调用 Lua 的 `collectgarbage("step")` 做增量垃圾回收，用于缓解 Lua 长时间运行后的内存增长问题。这个模块通常不需要用户手动输入触发，也不需要额外配置，保留在方案中即可。
+
+## 候选来源标记（tag_user_dict）
+
+`lua/tag_user_dict.lua` 注册为 `lua_filter@*tag_user_dict`，默认不在 `rime_mint.schema.yaml` 中启用。它主要用于调试候选来源，给不同类型的候选追加标记，例如用户词典、用户短语、自动补全、自动造句、默认短语。
+
+示例配置：
+
+```yaml
+patch:
+  "engine/filters/+":
+    - lua_filter@*tag_user_dict
+  tag_user_dict:
+    user_table: "☁"
+    completion: "☁"
+    sentence: "~"
+    phrase: ""
+    user_phrase: "*"
+```
+
+常见检索关键词：候选来源、用户词典标记、用户短语标记、`user_table`、`completion`、`sentence`、`phrase`、`user_phrase`。更完整的 custom 写法可参考[自定义输入](./customizationInput.md)。
+
+## 调试日志（log）
+
+`lua/log.lua` 是 Lua 调试辅助模块，供其他 Lua 脚本开发或排查问题时 `require("log")` 使用。它不是 processor、translator 或 filter，默认不作为输入法功能启用。常见用途是给 `auxCode_filter.lua` 等脚本临时输出日志，定位候选处理、辅码匹配或配置读取问题。

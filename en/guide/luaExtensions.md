@@ -4,35 +4,51 @@ title: Lua Extensions
 head:
   - - meta
     - name: keywords
-      content: Rime Lua scripts,oh-my-rime Lua,Rime date time,Rime calculator,Rime number conversion
-description: Detailed guide on Lua extension features in oh-my-rime, including date/time input, calculator, number conversion, lunar calendar, and more.
+      content: Rime Lua scripts,oh-my-rime Lua,oh-my-rime lua directory,shijian.lua,number_translator.lua,mint_calculator_translator.lua,chineseLunarCalendar_translator.lua,select_character.lua,codeLengthLimit_processor.lua,kp_number_processor.lua,auxCode_filter.lua,corrector_filter.lua,super_preedit.lua,autocap_filter.lua,reduce_english_filter.lua,force_gc.lua,tag_user_dict.lua
+description: Detailed guide to oh-my-rime Lua extensions, organized by lua directory filename, Rime registration name, processor, translator, filter, trigger code, and configuration keys for date/time, calculator, Chinese amount conversion, lunar calendar, select character from word, auxiliary code, keypad numbers, and candidate source tags.
 ---
 
 # Lua Extensions
 
-Oh-my-rime provides a rich set of extension features through Lua scripts, greatly enhancing the practicality of the input method. This article details the usage and configuration of each Lua module.
+Oh-my-rime provides extension features through scripts in the `lua/` directory. This page is organized by Lua filename, Rime registration name, module type, trigger code, and configuration key, so searches for keywords such as `shijian.lua`, `select_character.lua`, `auxCode_filter.lua`, or `kp_number_processor.lua` can land on the correct feature.
+
+## Lua Directory and Registration
+
+In schema files, Lua scripts are usually registered in one of these forms:
+
+| Registration | Type | Purpose |
+|------|------|------|
+| `lua_processor@*module_name` | processor | Handle key events, such as select character from word, keypad numbers, and input length limits |
+| `lua_translator@*module_name` | translator | Generate candidates from input codes, such as date/time, Chinese amount, calculator, and lunar calendar |
+| `lua_filter@*module_name` | filter | Adjust or annotate candidates, such as pronunciation hints, auxiliary code filtering, and English candidate demotion |
+| `lua_filter@*module_name@namespace` | filter + namespace | Let one script read different data files, for example `lua_filter@*auxCode_filter@flypy_full` reads `lua/aux_code/flypy_full.txt` |
 
 ## Feature Overview
 
-Oh-my-rime includes the following built-in Lua modules:
+Oh-my-rime includes the following Lua files and auxiliary data. "Enabled by default" refers to `rime_mint.schema.yaml`; double-pinyin, auxiliary-code, or custom schemas may enable additional Lua modules.
 
-| Module | Type | Description |
-|--------|------|-------------|
-| `shijian` | translator | Date, time, weekday, holidays, solar terms, greetings |
-| `number_translator` | translator | Number to Chinese uppercase amount conversion |
-| `chineseLunarCalendar_translator` | translator | Gregorian to Lunar calendar conversion |
-| `mint_calculator_translator` | translator | Calculator (dynamic expression evaluation) |
-| `select_character` | processor | Select individual character from word |
-| `codeLengthLimit_processor` | processor | Limit maximum input code length |
-| `corrector_filter` | filter | Pronunciation error hints |
-| `super_preedit` | filter | Display full pinyin with tones in preedit |
-| `autocap_filter` | filter | Auto-capitalize English words |
-| `reduce_english_filter` | filter | Lower ranking of certain English candidates |
-| `force_gc` | translator | Force garbage collection (performance) |
+| Lua File or Directory | Registration or Namespace | Type | Enabled by Default | Feature and Search Keywords |
+|------|------|------|------|------|
+| `shijian.lua` | `shijian` | translator | Yes | Date, time, weekday, holidays, solar terms, greetings, `osj`, `/sj`, `N20250315` |
+| `number_translator.lua` | `number_translator` | translator | Yes | Chinese uppercase amount, RMB amount, `R1234` |
+| `chineseLunarCalendar_translator.lua` | `chineseLunarCalendar_translator` | translator | Yes | Lunar calendar, Gregorian to lunar date, `/nl`, `onl`, `N20240115` |
+| `mint_calculator_translator.lua` | `mint_calculator_translator` | translator | Yes | Calculator, math expression, `=1+1`, `sqrt` |
+| `kp_number_processor.lua` | `kp_number_processor` | processor | Yes | Keypad numbers, numeric keypad, candidate selection, `kp_number_mode` |
+| `select_character.lua` | `select_character` | processor | Yes | Select character from word, first character, last character, `select_first_character`, `select_last_character` |
+| `codeLengthLimit_processor.lua` | `codeLengthLimit_processor` | processor | Yes | Input length limit, maximum code length, long pinyin string, lag prevention |
+| `corrector_filter.lua` | `corrector_filter` | filter | Yes | Pronunciation error hints, spelling correction, candidate comment |
+| `super_preedit.lua` | `super_preedit` | filter | Yes | Full pinyin display, tone display, `tone_display`, `声杳`, `声起` |
+| `autocap_filter.lua` | `autocap_filter` | filter | Yes | Auto-capitalize English, sentence initial capitalization |
+| `reduce_english_filter.lua` | `reduce_english_filter` | filter | Yes | Lower English candidates, short English word priority, `rug`, `mode: all` |
+| `force_gc.lua` | `force_gc` | translator | Yes | Force garbage collection, memory stability, Lua GC |
+| `auxCode_filter.lua` | `auxCode_filter@flypy_full`, etc. | filter | No | Auxiliary code, shape-code filtering, Xiaohe Double Pinyin, Natural Code, Moqi, `aux_code/trigger_word` |
+| `aux_code/*.txt` | `flypy_full`, `ZRM_Aux-code_4.3`, `moqi_aux_code` | Data file | Schema-dependent | Auxiliary code data, `Character=ShapeCode`, Xiaohe shape code, Natural Code shape code |
+| `tag_user_dict.lua` | `tag_user_dict` | filter | No | Candidate source tag, user dictionary, user phrase, `user_table`, `user_phrase` |
+| `log.lua` | `log` | helper | No | Lua debug logging, development debugging, output log file |
 
 ## Date & Time Input (shijian)
 
-This is one of the most frequently used Lua features in oh-my-rime. Through specific leader keys, you can quickly input current date, time, weekday, and more.
+`lua/shijian.lua` is registered as `lua_translator@*shijian`. It is one of the most frequently used Lua translators in oh-my-rime. Through specific leader keys, you can quickly input date, time, weekday, holidays, solar terms, greeting templates, and more.
 
 ### Basic Usage
 
@@ -152,7 +168,7 @@ patch:
 
 ## Number to Chinese Amount (number_translator)
 
-In Chinese input mode, type uppercase `R` followed by a number to convert it to Chinese uppercase amount format.
+`lua/number_translator.lua` is registered as `lua_translator@*number_translator`. It converts numbers to Chinese uppercase amount text, commonly used for RMB amount input. In Chinese input mode, type uppercase `R` followed by a number to convert it to Chinese uppercase amount format.
 
 ### Usage Examples
 
@@ -174,7 +190,7 @@ The script automatically extracts the numeric part after `R` for conversion.
 
 ## Calculator (mint_calculator_translator)
 
-In Chinese input mode, type `=` followed by a mathematical expression to calculate the result directly.
+`lua/mint_calculator_translator.lua` is registered as `lua_translator@*mint_calculator_translator`. It calculates mathematical expressions directly in the candidate list. In Chinese input mode, type `=` followed by an expression to get the result.
 
 ### Usage Examples
 
@@ -197,7 +213,7 @@ recognizer:
 
 ## Lunar Calendar (chineseLunarCalendar_translator)
 
-In addition to the N-mode mentioned above, oh-my-rime also configures a lunar calendar translator. The configuration in the schema:
+`lua/chineseLunarCalendar_translator.lua` is registered as `lua_translator@*chineseLunarCalendar_translator`. It is used for lunar date lookup and Gregorian-to-lunar conversion. In addition to the N-mode mentioned above, oh-my-rime also configures a lunar calendar translator. The configuration in the schema:
 
 ```yaml
 chineseLunarCalendar_translator: lunar
@@ -205,9 +221,34 @@ chineseLunarCalendar_translator: lunar
 
 Use `/nl` or `onl` to directly output today's lunar date.
 
+## Keypad Number Handling (kp_number_processor)
+
+`lua/kp_number_processor.lua` is registered as `lua_processor@*kp_number_processor`. It controls numeric keypad and main keyboard number behavior. The problem it solves is that number keys may need to participate in input codes, commit numbers directly, or select candidates when a candidate menu is visible.
+
+In `rime_mint.schema.yaml`, this processor is placed near the beginning of `engine/processors`:
+
+```yaml
+engine:
+  processors:
+    - lua_processor@*kp_number_processor
+```
+
+Configuration:
+
+```yaml
+kp_number_mode: auto  # auto | compose
+```
+
+| Mode | Description |
+|------|-------------|
+| `auto` | Default mode. Numeric keypad numbers commit directly when idle; while composing, they participate in the input code |
+| `compose` | Numeric keypad numbers always participate in the input code and do not commit directly |
+
+Main keyboard numbers can still select candidates when a candidate menu exists. If the current input matches function patterns in `recognizer/patterns`, such as URL, reverse lookup, RMB amount, calculator, or lunar date conversion, the number continues to be inserted as part of the input code.
+
 ## Pronunciation Error Hints (corrector_filter)
 
-This Lua filter hints at possible pronunciation errors during input. When you type a common spelling mistake, the candidate's comment area will display the correct spelling.
+`lua/corrector_filter.lua` is registered as `lua_filter@*corrector_filter`. This Lua filter hints at possible pronunciation errors during input. When you type a common spelling mistake, the candidate's comment area will display the correct spelling.
 
 This feature requires the following configuration in the schema:
 
@@ -220,11 +261,11 @@ translator:
 
 ## Auto-capitalize English (autocap_filter)
 
-This filter automatically capitalizes the first letter of English words when they appear at the beginning of a sentence or in specific contexts.
+`lua/autocap_filter.lua` is registered as `lua_filter@*autocap_filter`. This filter automatically capitalizes the first letter of English words when they appear at the beginning of a sentence or in specific contexts. Useful search keywords include English auto-capitalization, sentence initial capitalization, and autocap.
 
 ## Reduce English Candidates (reduce_english_filter)
 
-This filter addresses the issue of short English words interfering with pinyin input. For example, when typing `rug`, the default behavior would show English `rug` first; with this enabled, Chinese `如果` will be prioritized.
+`lua/reduce_english_filter.lua` is registered as `lua_filter@*reduce_english_filter`. This filter addresses the issue of short English words interfering with pinyin input. For example, when typing `rug`, the default behavior would show English `rug` first; with this enabled, Chinese `如果` will be prioritized.
 
 ### Configuration Modes
 
@@ -254,17 +295,15 @@ patch:
 
 ## Select Character from Word (select_character)
 
-Oh-my-rime uses `[` and `]` by default for character selection from words:
-- `[`: Select the first character of the word
-- `]`: Select the last character of the word
+`lua/select_character.lua` is registered as `lua_processor@*select_character`. Character selection from a word means typing a word first, letting the target word appear in the candidate list, and then committing the first or last character of that word with predefined keys. Oh-my-rime uses `[` and `]` by default:
+- `[`: Commit the first character of the candidate word
+- `]`: Commit the last character of the candidate word
 
-For example, after typing `mingbai` (明白):
-- Press `[` to commit 「明」
-- Press `]` to commit 「白」
+For example, if you want to input 「钛」, typing `tai` directly may make the character hard to find. Instead, type `tai he jin`; when 「钛合金」 appears in the candidate list, press `[` to commit 「钛」. Pressing `]` would commit 「金」.
 
 ### Changing Selection Keys
 
-To change the character selection keys (e.g., to `-` and `=`):
+To change the character selection keys (e.g., to `-` and `=`), configure them under `key_binder`. After changing the binding, use the new key; for example, `select_first_character: "minus"` means pressing `-` commits the first character:
 
 ```yaml
 patch:
@@ -272,9 +311,54 @@ patch:
   key_binder/select_last_character: "equal"    # Use = to select last char
 ```
 
+## Auxiliary Code Filter (auxCode_filter)
+
+`lua/auxCode_filter.lua` is registered as `lua_filter@*auxCode_filter@namespace`. It is used for double-pinyin auxiliary code, shape-code filtering, and candidate shape-code hints. A common registration is:
+
+```yaml
+filters:
+  - lua_filter@*auxCode_filter@flypy_full
+```
+
+Here `@flypy_full` is the namespace, and it also corresponds to `lua/aux_code/flypy_full.txt`. If the specified file cannot be found, the script falls back to the default `lua/aux_code/ZRM_Aux-code_4.3.txt`.
+
+Auxiliary code data files are stored in `lua/aux_code/`, using the `Character=ShapeCode` format:
+
+```text
+啊=kk
+阿=ek
+爱=py
+安=bn
+```
+
+Built-in auxiliary code data:
+
+| Filename | Common Use | Description |
+|------|------|------|
+| `flypy_full.txt` | Xiaohe Double Pinyin / Xiaohe phonetic-shape | Xiaohe shape code |
+| `ZRM_Aux-code_4.3.txt` | Natural Code | Natural Code shape code, also the default fallback file |
+| `moqi_aux_code.txt` | Other double-pinyin schemas | Moqi shape code |
+
+Common auxiliary code configuration:
+
+```yaml
+aux_code:
+  trigger_word: ";"
+  show_aux_notice: "trigger"  # always | trigger | none
+```
+
+| Configuration | Description |
+|------|-------------|
+| `aux_code/trigger_word` | Key used to activate auxiliary-code filtering, default is `;` |
+| `aux_code/show_aux_notice: always` | Always show shape-code hints for candidates |
+| `aux_code/show_aux_notice: trigger` | Show shape-code hints only after the trigger key is entered |
+| `aux_code/show_aux_notice: none` | Do not show shape-code hints |
+
+For example, after entering a double-pinyin code and seeing multiple homophone candidates, continue with `;` and the shape code; `auxCode_filter` filters candidates by the auxiliary code of the character or word. For the full Xiaohe Double Pinyin auxiliary-code guide, see [Xiaohe Phonetic Shape](../demo/doublePinyinFly.md).
+
 ## Full Pinyin Display with Tones (super_preedit)
 
-This filter converts input codes to full pinyin with tones in real-time. For example, typing `nihao` will display `nǐ hǎo` in the preedit area.
+`lua/super_preedit.lua` is registered as `lua_filter@*super_preedit`. This filter converts input codes to full pinyin with tones in real time. For example, typing `nihao` will display `nǐ hǎo` in the preedit area.
 
 This feature is controlled by the `tone_display` switch in the schema:
 
@@ -290,7 +374,7 @@ switches:
 
 ## Input Length Limit (codeLengthLimit_processor)
 
-Oh-my-rime limits the maximum pinyin string length to 25 characters by default to prevent lag from overly long inputs.
+`lua/codeLengthLimit_processor.lua` is registered as `lua_processor@*codeLengthLimit_processor`. Oh-my-rime limits the maximum pinyin string length to 25 characters by default to prevent lag from overly long inputs.
 
 To modify:
 
@@ -302,3 +386,31 @@ patch:
 ::: warning Note
 Increasing the input length limit may cause lag on some devices. Adjust according to your device's performance.
 :::
+
+## Force Garbage Collection (force_gc)
+
+`lua/force_gc.lua` is registered as `lua_translator@*force_gc`. It calls Lua's `collectgarbage("step")` for incremental garbage collection, which helps keep memory usage stable during long-running input sessions. This module usually does not require a user-facing trigger or extra configuration; keeping it in the schema is enough.
+
+## Candidate Source Tags (tag_user_dict)
+
+`lua/tag_user_dict.lua` is registered as `lua_filter@*tag_user_dict`, but it is not enabled by default in `rime_mint.schema.yaml`. It is mainly used for debugging candidate sources by appending marks to different candidate types, such as user dictionary entries, user phrases, completions, sentences, and default phrases.
+
+Example configuration:
+
+```yaml
+patch:
+  "engine/filters/+":
+    - lua_filter@*tag_user_dict
+  tag_user_dict:
+    user_table: "☁"
+    completion: "☁"
+    sentence: "~"
+    phrase: ""
+    user_phrase: "*"
+```
+
+Useful search keywords: candidate source, user dictionary tag, user phrase tag, `user_table`, `completion`, `sentence`, `phrase`, and `user_phrase`. For a fuller custom-file example, see [Customization Input](./customizationInput.md).
+
+## Debug Logging (log)
+
+`lua/log.lua` is a Lua debugging helper for other scripts to `require("log")` during development or troubleshooting. It is not a processor, translator, or filter, and it is not enabled as an input-method feature by default. A common use is temporarily logging from scripts such as `auxCode_filter.lua` to inspect candidate handling, auxiliary-code matching, or configuration loading.
