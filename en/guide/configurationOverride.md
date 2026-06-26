@@ -4,8 +4,8 @@ title: Configuration Overrides and Customization
 head:
   - - meta
     - name: keywords
-      content: Rime Custom,Configuration Overrides,Rime Customization
-description: Customization is easy to understand. The Mint Input Method is based on the Rime Input Method framework, which is essentially a set of Rime Input Method configurations. Different Rime clients have a large number of personalization configurations. Although the Mint Input Method has already made a lot of settings, there are still many configurations that have not been activated; users can configure them according to their preferences.
+      content: Rime Custom,Configuration Overrides,Rime Customization,custom.yaml,patch,default.custom.yaml,rime_mint.custom.yaml,double_pinyin_flypy.custom.yaml,squirrel.custom.yaml,weasel.custom.yaml,page_size,key_binder,speller/algebra,translator/dictionary,style/candidate_list_layout,style/horizontal,style/color_scheme,codeLengthLimit_processor,schema_list
+description: Guide to Rime and Oh-my-rime configuration overrides, explaining custom.yaml, patch, default.custom.yaml, rime_mint.custom.yaml, squirrel.custom.yaml, and weasel.custom.yaml, with searchable paths for candidate count, key bindings, horizontal candidate layout, skins, fuzzy pinyin, dictionaries, and pinyin length limits.
 ---
 # Configuration Overrides and Customization
 Customization is easy to understand. The Mint Input Method is based on the Rime Input Method framework, which is essentially a set of Rime Input Method configurations. Different Rime clients have a large number of personalization configurations. 
@@ -13,6 +13,39 @@ Customization is easy to understand. The Mint Input Method is based on the Rime 
 Although the Mint Input Method has already made a lot of settings, there are still many configurations that have not been activated; users can configure them according to their preferences.
 
 As for overrides, it means that the Mint Input Method has already configured the Rime Input Method client, but it may not meet your preferences, so you can override it.
+
+## Configuration Override Quick Reference
+
+If you arrived here from search or a knowledge-base result, start with this table. Rime custom files all use `patch:`, but you first need to decide whether you are changing "client appearance" or "input schema behavior".
+
+| What You Want to Change | Recommended File | Common Patch Paths or Keywords |
+|------|------|------|
+| Squirrel appearance, macOS skin, candidate layout | `squirrel.custom.yaml` | `style/candidate_list_layout`, `style/horizontal`, `style/color_scheme`, `style/color_scheme_dark`, `font_face`, `font_point` |
+| Weasel appearance, Windows skin, horizontal candidate list | `weasel.custom.yaml` | `style/candidate_list_layout`, `style/horizontal`, `style/color_scheme`, `style/color_scheme_dark` |
+| Global schema list, default active schemas | `default.custom.yaml` | `schema_list` |
+| Mint full-pinyin schema behavior | `rime_mint.custom.yaml` | `speller/algebra`, `translator/dictionary`, `recognizer/patterns`, `engine/filters`, `engine/translators` |
+| Xiaohe Double Pinyin schema behavior | `double_pinyin_flypy.custom.yaml` | `speller/algebra`, `aux_code/trigger_word`, `translator/preedit_format`, `menu/page_size` |
+| Mint full pinyin + Xiaohe mixed input | `rime_mint_flypy.custom.yaml` | `speller/algebra`, `translator/preedit_format`, `menu/page_size` |
+| Candidate count, paging keys, Emoji shortcut | The corresponding schema `.custom.yaml` | `menu/page_size`, `key_binder/bindings`, `key_binder/bindings/@next` |
+| Fuzzy pinyin, abbreviation, typo correction rules | The corresponding schema `.custom.yaml` | `speller/algebra`, `speller/algebra/+` |
+| Custom dictionary or extended dictionary | The corresponding schema `.custom.yaml` + `.dict.yaml` | `translator/dictionary`, `import_tables` |
+| Maximum pinyin string length and truncation | The corresponding schema `.custom.yaml` | `codeLengthLimit_processor` |
+| Symbol input, half-width punctuation, custom `/` symbols | The corresponding schema `.custom.yaml` | `punctuator/symbols`, `punctuator/half_shape`, `recognizer/patterns/punct` |
+
+### Patch Syntax Quick Reference
+
+A `custom.yaml` file usually has only one top-level `patch:`. If you need to change multiple settings, put all of them under the same `patch:` instead of writing multiple `patch:` sections.
+
+| Goal | Syntax | Description |
+|------|------|-------------|
+| Override one value | `"menu/page_size": 9` | Replace the value at the target path |
+| Override an entire list | `speller/algebra: [...]` | Replace the original list with your list |
+| Append to a list | `"speller/algebra/+": [...]` | Keep the original list and append new rules |
+| Append one list item | `"key_binder/bindings/@next": {...}` | Commonly used to add a key binding |
+| Modify the last list item | `"switches/@last": {...}` | Commonly used when adding or adjusting the last switch |
+| Modify a key containing `/` | `"punctuator/symbols//email": [...]` | Use a double slash when the key name itself contains `/` |
+
+Using quoted path syntax is recommended, for example `"style/candidate_list_layout": linear`. Avoid casually writing a nested map; writing only `style:` with one child may clear other settings under `style`.
 
 ```mermaid
 graph LR
@@ -65,6 +98,22 @@ If you want to override the content and method of input, then it is to set the "
 
 > Why are there both `with custom` and `without custom`?
 >> In fact, **those without custom are configuration customizations, used to implement configurations**; **those with custom are configuration overrides, used to override some configurations without custom; other contents inherit configurations without custom**.
+
+### Choosing the Right File
+
+When a configuration does not take effect, the most common reason is editing the wrong file. Use these rules:
+
+| File | Scope | Best For |
+|------|------|----------|
+| `squirrel.custom.yaml` | Squirrel client on macOS | Candidate window appearance, skin, font, horizontal/vertical layout, inline preedit |
+| `weasel.custom.yaml` | Weasel client on Windows | Candidate window appearance, skin, font, horizontal/vertical layout |
+| `default.custom.yaml` | Rime global defaults | Schema list, default active schemas, global behavior not overridden by a schema |
+| `rime_mint.custom.yaml` | Mint full-pinyin schema | Fuzzy pinyin, dictionaries, candidate count, key bindings, Lua settings |
+| `double_pinyin_flypy.custom.yaml` | Xiaohe Double Pinyin schema | Auxiliary code, double-pinyin display, candidate count, key bindings |
+| `rime_mint_flypy.custom.yaml` | Mint full pinyin and Xiaohe mixed schema | Mixed-input spelling rules, candidate count, key bindings |
+| `*.dict.yaml` | Dictionary data | Custom words, word frequency, imported dictionaries |
+
+Useful search phrases can combine filenames and paths directly, such as `weasel.custom.yaml style/horizontal`, `squirrel.custom.yaml candidate_list_layout`, `rime_mint.custom.yaml speller/algebra`, or `double_pinyin_flypy.custom.yaml aux_code/trigger_word`.
 
 ## Input Method Application Configuration
 First, let's look at the application configuration. This makes it easy for us to modify the appearance of the input method.
@@ -122,7 +171,7 @@ If you want to modify the `custom` file, please note:
 For example: If you want to change the layout of Squirrel to horizontal, you can write `squirrel.custom.yaml` like this:
 ```yaml
 patch:
-  "style/horizontal": false
+  "style/candidate_list_layout": linear
 ```
 Counterexample:
 ```yaml
@@ -181,6 +230,93 @@ patch:
 ```
 
 Don't worry, there are more examples in this chapter for reference.
+
+## Common Configuration Path Index
+
+These are the configuration paths most often searched by Oh-my-rime and Rime users. In actual use, put the examples under the same `patch:` section in the correct custom file.
+
+### Horizontal or Vertical Candidate Layout
+
+For Squirrel or Weasel horizontal candidate layout, horizontal candidate list, or candidate window direction, try:
+
+```yaml
+patch:
+  "style/candidate_list_layout": linear  # linear: horizontal; stacked: vertical; tabled: table
+```
+
+If `candidate_list_layout` does not work in Weasel, try:
+
+```yaml
+patch:
+  "style/horizontal": true
+```
+
+### Candidate Count
+
+For candidate count, number of candidates per page, or `page_size`, modify the corresponding schema `.custom.yaml`:
+
+```yaml
+patch:
+  "menu/page_size": 9
+```
+
+### Key Bindings and Paging Keys
+
+For shortcuts, paging keys, `key_binder`, or Emoji toggle shortcuts, append a binding in the corresponding schema:
+
+```yaml
+patch:
+  "key_binder/bindings/@next":
+    accept: "Control+Shift+E"
+    toggle: emoji_suggestion
+    when: always
+```
+
+### Fuzzy Pinyin and Correction Rules
+
+For fuzzy pinyin, abbreviation, typo correction, or `speller/algebra`, you can override or append rules. Appending is common:
+
+```yaml
+patch:
+  "speller/algebra/+":
+    - derive/^([zcs])h/$1/
+```
+
+If you use a mixed double-pinyin and full-pinyin schema, rule order affects double-pinyin parsing. In that case, you usually need to override the full `speller/algebra` instead of simply appending.
+
+### Custom Dictionary
+
+For custom dictionaries, extended dictionaries, Sogou dictionaries, or `translator/dictionary`, the usual entry point is:
+
+```yaml
+patch:
+  "translator/dictionary": rime_mint.custom
+```
+
+The recommended structure is to use `rime_mint.custom.dict.yaml` as a dictionary entry file. It imports other dictionary files through `import_tables`, while the actual custom words live in files such as `dicts/my_custom_dicts.dict.yaml` or `dicts/custom_simple.dict.yaml`.
+
+### Lua Settings and Input Length
+
+For maximum pinyin string length, long-input truncation, or `codeLengthLimit_processor`, use:
+
+```yaml
+patch:
+  "codeLengthLimit_processor": 100
+```
+
+Other Lua settings follow the same idea, such as the date/time leader key `key_binder/shijian_keys`, select-character keys `key_binder/select_first_character`, or auxiliary-code trigger key `aux_code/trigger_word`.
+
+### Symbols and Half-width Punctuation
+
+For custom symbol input, `/email`, `/phone`, or half-width punctuation mapping, modify:
+
+```yaml
+patch:
+  "punctuator/symbols//email": [📧, ✉, 📨, 📩]
+  "punctuator/half_shape/\\": "/"
+```
+
+The double slash in `punctuator/symbols//email` means the key name really contains `/`; it is not a path separator.
 
 ## Modifying the Configuration of the Mint Input Method
 The Mint Input Method comes with a lot of configurations, but they may not suit your preferences. Therefore, you can override them according to your preferences.
@@ -343,27 +479,26 @@ So, don't assume that Squirrel and Weasel can modify the same configurations. To
 ## Example: Custom Dictionary
 If you want to customize the dictionary, you can do so as follows, taking the "Mint Pinyin - Full Pinyin Input" in the Mint Input Method as an example:
 1. Open or create the `rime_mint.custom.yaml` file;
-2. Create a new file ending with `.dict.yaml` in the `dicts` directory, refer to the content of `rime_mint.chars.dict.yaml`, and fill in your own custom dictionary. **Pay attention to the internal tabs and spaces, it is recommended to use [VSCODE](https://code.visualstudio.com/download) to open it.**
-3. In the project directory, refer to the `rime_mint.dict.yaml` file, create `rime_mint.custom.dict.yaml`, and add references to new files in `dicts`.
-4. Use `patch` to override, change `translator/dictionary` to your custom dictionary;
+2. Create a dictionary entry file in the project root, such as `rime_mint.custom.dict.yaml`; this entry file imports other dictionaries through `import_tables`;
+3. Create the actual word-list file in `dicts`, such as `dicts/my_custom_dicts.dict.yaml`; its content can follow `dicts/custom_simple.dict.yaml` or `dicts/rime_mint.chars.dict.yaml`;
+4. Use `patch` to override `translator/dictionary` and point it to your custom dictionary entry.
 
-Possible content of `rime_mint.custom.yaml`:
+First, switch the dictionary entry in the schema custom file. Possible content of `rime_mint.custom.yaml`:
 ```yaml
 patch:
   # Set the dictionary of "Mint Pinyin - Full Pinyin Input", use the rime_mint.custom.dict.yaml file
   translator/dictionary: rime_mint.custom
 ```
 
-At the same time, you can see that we are locating the `rime_mint.custom.dict.yaml` file here, so we can create this file and then write our dictionary into this file. It is recommended to copy a set of the dictionary that comes with Mint and then modify it:
+Second, create the dictionary entry file `rime_mint.custom.dict.yaml`. This file should not be where you put a large number of custom words. It is better used as an entry that imports the built-in Mint dictionaries and your own files under `dicts/`:
 
 ```yaml
 ---
-name: rime_mint                  # Note that the name is consistent with the file name
+name: rime_mint.custom           # The name must match the filename stem: rime_mint.custom.dict.yaml
 version: "2025.07.06"
 sort: by_weight
 use_preset_vocabulary: false
-# This is the dictionary used by the input method, which is where to supplement the extended dictionary
-# The Mist Pinyin dictionary, automatically updated by Github Robot
+# This is the dictionary entry file. It imports other dictionary files.
 import_tables:
   - dicts/custom_simple          # Custom
   - dicts/rime_mint.chars        # Single character dictionary (Wanxiang Pinyin dictionary basic version)
@@ -379,7 +514,21 @@ import_tables:
 ...
 ```
 
-Here you need to note that the dictionary you see looks like this:
+Third, create the file that actually stores your entries, such as `dicts/my_custom_dicts.dict.yaml`. This file contains your custom words. Its format can follow Mint's built-in `dicts/custom_simple.dict.yaml`:
+
+```yaml
+# Rime dictionary
+# encoding: utf-8
+---
+name: my_custom_dicts
+version: "2025-10-01"
+sort: by_weight
+
+...
+阿瓦隆	a wa long	915
+```
+
+Note that Mint's built-in Wanxiang dictionaries may look like this:
 ```yaml
 # Rime dictionary
 # encoding: utf-8
@@ -403,20 +552,7 @@ sort: by_weight
 呵	a	1
 ```
 
-You will find that there are tone marks, this is because of the special nature of the Wanxiang dictionary that has tone processing. You can set your own without tone marks, for example, reference content for `dicts/my_custom_dicts.dict.yaml`:
-
-```yaml
-# Rime dictionary
-# encoding: utf-8
-#https://github.com/amzxyz/RIME-LMDG
----
-name: my_custom_dicts
-version: "2025-10-01"
-sort: by_weight
-
-...
-阿瓦隆	a wa long	915
-```
+You will find tone marks in those built-in files because Wanxiang dictionaries use tone processing. Your own `dicts/my_custom_dicts.dict.yaml` does not need tone marks; `阿瓦隆	a wa long	915` is enough. **Pay attention to tabs and spaces in dictionary entries; using [VSCODE](https://code.visualstudio.com/download) is recommended.**
 
 > This method is mainly for some users who have always wanted to add Sogou dictionaries. Although I think it's completely unnecessary, the existing dictionary is also calculated by AMZ through word segmentation models, adding Sogou dictionaries will only increase lag; but it also provides a method for those who want to try.
 

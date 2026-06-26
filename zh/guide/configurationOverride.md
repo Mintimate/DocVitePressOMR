@@ -4,8 +4,8 @@ title: 配置覆写和定制
 head:
   - - meta
     - name: keywords
-      content: Rime Custom文件,Rime配置覆写,Rime定制配置
-description: 在Rime内，如何基于已经拥有的配置，定制化内容？覆写部分配置呢？本文以薄荷输入法配置为例
+      content: Rime Custom文件,Rime配置覆写,Rime定制配置,custom.yaml,patch,default.custom.yaml,rime_mint.custom.yaml,double_pinyin_flypy.custom.yaml,squirrel.custom.yaml,weasel.custom.yaml,page_size,key_binder,speller/algebra,translator/dictionary,style/candidate_list_layout,style/horizontal,style/color_scheme,codeLengthLimit_processor,schema_list
+description: Rime 和薄荷输入法配置覆写指南，说明 custom.yaml、patch、default.custom.yaml、rime_mint.custom.yaml、squirrel.custom.yaml、weasel.custom.yaml 的区别，并按常见需求索引候选词个数、快捷键、横向候选栏、皮肤、模糊拼音、词库、拼音串长度等配置路径。
 ---
 # 配置覆写和定制
 定制很好理解，薄荷输入法基于Rime输入法框架，实际就是一套Rime输入法配置；不同的Rime客户端都有大量的个性化配置。
@@ -13,6 +13,39 @@ description: 在Rime内，如何基于已经拥有的配置，定制化内容？
 虽然薄荷输入法已经进行了大量的设置，但是**还有很多配置并没有激活；用户可以根据自己的喜好进行配置**。
 
 至于覆写，就是**薄荷输入法已经对Rime输入法的客户端进行了配置**，但是可能不符合你的喜好，那么**你可以对其进行覆写**:
+
+## 配置覆写速查
+
+如果你是通过搜索或知识库检索来到这里，可以先看这张表。Rime 的 custom 文件都使用 `patch:` 写法，但要先判断自己要改的是“客户端外观”还是“输入方案行为”。
+
+| 想修改的问题 | 推荐修改文件 | 常见 patch 路径或关键词 |
+|------|------|------|
+| 鼠须管外观、macOS 皮肤、候选栏方向 | `squirrel.custom.yaml` | `style/candidate_list_layout`、`style/horizontal`、`style/color_scheme`、`style/color_scheme_dark`、`font_face`、`font_point` |
+| 小狼毫外观、Windows 皮肤、横向候选栏 | `weasel.custom.yaml` | `style/candidate_list_layout`、`style/horizontal`、`style/color_scheme`、`style/color_scheme_dark` |
+| 全局方案列表、默认激活方案 | `default.custom.yaml` | `schema_list` |
+| 薄荷全拼方案行为 | `rime_mint.custom.yaml` | `speller/algebra`、`translator/dictionary`、`recognizer/patterns`、`engine/filters`、`engine/translators` |
+| 小鹤双拼方案行为 | `double_pinyin_flypy.custom.yaml` | `speller/algebra`、`aux_code/trigger_word`、`translator/preedit_format`、`menu/page_size` |
+| 薄荷全拼 + 小鹤混输 | `rime_mint_flypy.custom.yaml` | `speller/algebra`、`translator/preedit_format`、`menu/page_size` |
+| 候选词个数、翻页快捷键、Emoji 快捷键 | 对应方案的 `.custom.yaml` | `menu/page_size`、`key_binder/bindings`、`key_binder/bindings/@next` |
+| 模糊拼音、简拼、自动纠错规则 | 对应方案的 `.custom.yaml` | `speller/algebra`、`speller/algebra/+` |
+| 自定义词库、扩展词库 | 对应方案的 `.custom.yaml` + `.dict.yaml` | `translator/dictionary`、`import_tables` |
+| 拼音串最大长度、过长输入截断 | 对应方案的 `.custom.yaml` | `codeLengthLimit_processor` |
+| 符号输入、半角标点、自定义 `/` 符号 | 对应方案的 `.custom.yaml` | `punctuator/symbols`、`punctuator/half_shape`、`recognizer/patterns/punct` |
+
+### patch 写法速查
+
+`custom.yaml` 里通常只有一个顶层 `patch:`。如果要同时修改多个配置，请把它们都放到同一个 `patch:` 下，不要写多个 `patch:`。
+
+| 目的 | 写法 | 说明 |
+|------|------|------|
+| 覆写一个值 | `"menu/page_size": 9` | 直接替换指定路径的值 |
+| 覆写整个列表 | `speller/algebra: [...]` | 用你的列表替换原列表 |
+| 追加到列表末尾 | `"speller/algebra/+": [...]` | 保留原列表，并把新规则追加到末尾 |
+| 追加一个列表项 | `"key_binder/bindings/@next": {...}` | 常用于新增快捷键 |
+| 修改最后一个列表项 | `"switches/@last": {...}` | 常用于给 switches 追加或调整最后一个开关 |
+| 修改含 `/` 的键名 | `"punctuator/symbols//email": [...]` | 键名本身含 `/` 时需要双斜杠转义 |
+
+推荐使用带引号的路径写法，例如 `"style/candidate_list_layout": linear`。不要轻易写成嵌套 map；如果只写 `style:` 再放一个子项，可能会把 `style` 下面其他配置整体清空。
 
 ```mermaid
 graph LR
@@ -65,6 +98,22 @@ Rime的配置总体分为两种：
 
 > 为什么都有`带custom`和`不带custom`的两种呢？ 
 >> 其实，**不带custom的是配置的定制，用于实现配置**；**带custom的则是配置的覆写，用于覆写不带custom的某些配置；其他内容继承不带custom配置**。
+
+### 文件选择规则
+
+当一个配置没有生效时，最常见原因是文件选错了。可以按下面规则判断：
+
+| 文件 | 作用范围 | 适合修改什么 |
+|------|------|------|
+| `squirrel.custom.yaml` | 鼠须管客户端，macOS | 候选窗口外观、皮肤、字体、横排/竖排、内嵌预编辑 |
+| `weasel.custom.yaml` | 小狼毫客户端，Windows | 候选窗口外观、皮肤、字体、横排/竖排 |
+| `default.custom.yaml` | Rime 全局默认配置 | 方案列表、默认激活方案、未被方案覆盖的全局行为 |
+| `rime_mint.custom.yaml` | 薄荷拼音全拼方案 | 全拼的模糊拼音、词库、候选数、快捷键、Lua 配置 |
+| `double_pinyin_flypy.custom.yaml` | 小鹤双拼方案 | 小鹤双拼的辅码、双拼显示、候选数、快捷键 |
+| `rime_mint_flypy.custom.yaml` | 薄荷全拼和小鹤混输方案 | 混输方案的拼写规则、候选数、快捷键 |
+| `*.dict.yaml` | 词典数据 | 自定义词条、词频、导入其他词库 |
+
+检索关键词可以直接使用文件名和路径组合，例如：`weasel.custom.yaml style/horizontal`、`squirrel.custom.yaml candidate_list_layout`、`rime_mint.custom.yaml speller/algebra`、`double_pinyin_flypy.custom.yaml aux_code/trigger_word`。
 
 ## 输入法的应用配置
 首先，我们看看应用的配置。方便我们把输入法的外观进行修改。
@@ -121,7 +170,7 @@ style:
 举例: 修改鼠须管的布局为横向布局，那么`squirrel.custom.yaml`可以这样写: 
 ```yaml
 patch:
-  "style/horizontal": false
+  "style/candidate_list_layout": linear
 ```
 反例:
 ```yaml
@@ -133,7 +182,7 @@ patch:
 
 ## 输入法方案配置
 
-接下来，我们看看「输入法方案配置」，方案的全局配置是`default.yaml`和`defalut.custom.yaml`；对于局部，以薄荷输入法内全拼为例：
+接下来，我们看看「输入法方案配置」，方案的全局配置是`default.yaml`和`default.custom.yaml`；对于局部，以薄荷输入法内全拼为例：
 - `rime_mint.schema.yaml`就是一个局部配置（全拼）。`rime_mint.schema.yaml`内可以覆写`default.yaml`的配置。
 - 创建`rime_mint.custom.yaml`文件，优先级高于`rime_mint.schema.yaml`。可以覆写`rime_mint.schema.yaml`的配置。
 
@@ -180,6 +229,93 @@ patch:
 ```
 
 没事，接下来本章节还有更多的例子，可以参考。
+
+## 常见配置路径索引
+
+下面这些是薄荷输入法和 Rime 用户最常检索的配置项。实际使用时，请把示例放入对应文件的同一个 `patch:` 下。
+
+### 候选栏横向或竖向
+
+鼠须管或小狼毫候选栏横向显示、水平候选栏、横排候选，可以优先尝试：
+
+```yaml
+patch:
+  "style/candidate_list_layout": linear  # linear 横向；stacked 竖向；tabled 表格
+```
+
+如果小狼毫 `candidate_list_layout` 不生效，可以尝试：
+
+```yaml
+patch:
+  "style/horizontal": true
+```
+
+### 候选词个数
+
+候选个数、候选词数量、每页候选、`page_size` 推荐在对应方案的 `.custom.yaml` 中修改：
+
+```yaml
+patch:
+  "menu/page_size": 9
+```
+
+### 快捷键和翻页键
+
+快捷键、翻页键、`key_binder`、Emoji 开关快捷键可以在对应方案中追加：
+
+```yaml
+patch:
+  "key_binder/bindings/@next":
+    accept: "Control+Shift+E"
+    toggle: emoji_suggestion
+    when: always
+```
+
+### 模糊拼音和纠错规则
+
+模糊拼音、简拼、自动纠错、`speller/algebra` 可以覆写或追加。追加规则常用：
+
+```yaml
+patch:
+  "speller/algebra/+":
+    - derive/^([zcs])h/$1/
+```
+
+如果你使用的是双拼和全拼混合方案，规则顺序会影响双拼解析，通常需要覆写完整 `speller/algebra`，而不是简单追加。
+
+### 自定义词库
+
+自定义词库、扩展词库、搜狗词库、`translator/dictionary` 的入口通常是：
+
+```yaml
+patch:
+  "translator/dictionary": rime_mint.custom
+```
+
+推荐做法是让 `rime_mint.custom.dict.yaml` 作为“词库入口”，在里面通过 `import_tables` 引用其他词库文件；真正的自定义词条放在 `dicts/my_custom_dicts.dict.yaml` 或 `dicts/custom_simple.dict.yaml` 这类文件中。
+
+### Lua 配置和输入长度
+
+拼音串最大长度、输入过长自动截断、`codeLengthLimit_processor` 可以这样改：
+
+```yaml
+patch:
+  "codeLengthLimit_processor": 100
+```
+
+其他 Lua 配置也遵循相同思路，例如日期时间引导键 `key_binder/shijian_keys`、以词定字 `key_binder/select_first_character`、辅码激活键 `aux_code/trigger_word`。
+
+### 符号和半角标点
+
+自定义符号输入、`/email`、`/phone`、半角标点映射，可以修改：
+
+```yaml
+patch:
+  "punctuator/symbols//email": [📧, ✉, 📨, 📩]
+  "punctuator/half_shape/\\": "/"
+```
+
+`punctuator/symbols//email` 里的双斜杠表示键名中真的包含 `/`，不是路径分隔符。
 
 ## 修改薄荷输入法的配置
 薄荷内自带了很多的配置，但是可能不符合你的喜好。那么，你可以根据自己的喜好，进行覆写。
@@ -342,27 +478,26 @@ patch:
 ## 举例: 自定义词库
 如果你想自定义词库，那么可以这样操作，以薄荷输入法内的「薄荷拼音-全拼输入」为例：
 1. 打开或创建`rime_mint.custom.yaml`文件；
-2. 在 `dicts` 目录下新建一个以`.dict.yaml`为结尾的文件，内容参考: `rime_mint.chars.dict.yaml`，内部填充你自己的自定义词典。**注意内部的 Tab 和空格，建议使用 [VSCODE](https://code.visualstudio.com/download) 打开。**
-3. 在项目目录内，参考`rime_mint.dict.yaml` 文件，创建`rime_mint.custom.dict.yaml`，添加对`dicts`内新文件的引用。
-3. 使用`patch`进行覆写，将`translator/dictionary`改为你的自定义词库；
+2. 在项目目录内创建一个词库入口文件，比如 `rime_mint.custom.dict.yaml`，这个入口负责通过 `import_tables` 引用其他词库；
+3. 在 `dicts` 目录下新建真正存放词条的文件，比如 `dicts/my_custom_dicts.dict.yaml`，内容可以参考 `dicts/custom_simple.dict.yaml` 或 `dicts/rime_mint.chars.dict.yaml`；
+4. 使用`patch`进行覆写，将`translator/dictionary`改为你的自定义词库入口。
 
-`rime_mint.custom.yaml`可能的内容:
+第一步，在方案的 custom 文件里切换词库入口。`rime_mint.custom.yaml` 可能的内容：
 ```yaml
 patch:
   # 设置「薄荷拼音-全拼输入」的词典，使用 rime_mint.custom.dict.yaml 文件
   translator/dictionary: rime_mint.custom
 ```
 
-同时，可以看到，我们这里定位到`rime_mint.custom.dict.yaml`文件，那么我们可以创建这个文件，然后在这个文件内写入我们的词库。建议把薄荷自带的词库拷贝一份，然后进行修改:
+第二步，创建入口词库 `rime_mint.custom.dict.yaml`。这个文件不建议直接堆大量词条，而是作为入口引用薄荷自带词库和你自己放在 `dicts/` 目录下的词库文件：
 
 ```yaml
 ---
-name: rime_mint                  # 注意name和文件名一致
+name: rime_mint.custom           # 注意 name 和 rime_mint.custom.dict.yaml 的文件名主体一致
 version: "2025.07.06"
 sort: by_weight
 use_preset_vocabulary: false
-# 此处为 输入法所用到的词库，既补充拓展词库的地方
-# 雾凇拼音词库，由Github Robot自动更新
+# 这里是词库入口，负责引用其他词库文件
 import_tables:
   - dicts/custom_simple          # 自定义
   - dicts/rime_mint.chars        # 单字词库（万象拼音词库基础版本）
@@ -378,7 +513,21 @@ import_tables:
 ...
 ```
 
-这里需要注意，你看到的自有词库是这样的：
+第三步，创建真正放词条的文件，例如 `dicts/my_custom_dicts.dict.yaml`。这个文件才写你的词条，格式可以参考薄荷内置的 `dicts/custom_simple.dict.yaml`：
+
+```yaml
+# Rime dictionary
+# encoding: utf-8
+---
+name: my_custom_dicts
+version: "2025-10-01"
+sort: by_weight
+
+...
+阿瓦隆	a wa long	915
+```
+
+这里需要注意，薄荷自带的万象词库可能是这样的：
 ```yaml
 # Rime dictionary
 # encoding: utf-8
@@ -402,20 +551,7 @@ sort: by_weight
 呵	a	1
 ```
 
-你会发现有音调，这是因为万象词库的特殊性做了音调处理。你自己设置的可以无须音调，比如 `dicts/my_custom_dicts.dict.yaml` 参考内容:
-
-```yaml
-# Rime dictionary
-# encoding: utf-8
-#https://github.com/amzxyz/RIME-LMDG
----
-name: my_custom_dicts
-version: "2025-10-01"
-sort: by_weight
-
-...
-阿瓦隆	a wa long	915
-```
+你会发现有音调，这是因为万象词库的特殊性做了音调处理。你自己写的 `dicts/my_custom_dicts.dict.yaml` 可以无须音调，比如 `阿瓦隆	a wa long	915`。**注意词条格式里的 Tab 和空格，建议使用 [VSCODE](https://code.visualstudio.com/download) 打开编辑。**
 
 > 这个方法，主要是一些用户一直想添加搜狗词库。虽然我认为完全没必要，现有词库也是 AMZ 经过分词模型计算得出，添加搜狗词库徒增卡顿；但是也提供一个方法，给想尝试的人。
 
