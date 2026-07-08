@@ -4,8 +4,8 @@ title: 符号输入与Symbols配置
 head:
   - - meta
     - name: keywords
-      content: Rime符号输入,Rime特殊符号,Rime symbols.yaml,薄荷拼音符号
-description: 薄荷输入法内如何快速输入特殊符号？ 本文详细介绍symbols.yaml配置和符号输入的使用方法。
+      content: Rime符号输入,Rime特殊符号,Rime symbols.yaml,薄荷拼音符号,半角标点,单引号,引号
+description: 薄荷输入法内如何快速输入特殊符号？ 本文详细介绍 symbols.yaml 配置、半角标点映射和符号输入的使用方法。
 ---
 
 # 符号输入与Symbols配置
@@ -123,6 +123,17 @@ punctuator:
 ```
 
 其中 `import_preset: symbols` 会先加载 `symbols.yaml` 中的配置，然后方案文件中的 `half_shape` 会覆盖部分映射。
+
+默认配置中，直接输入单引号 `'` 会按半角标点映射输出中文引号 `「」`。如果你想让单引号直接输出英文单引号，可以在对应方案的 `.custom.yaml` 中覆写：
+
+```yaml
+patch:
+  "punctuator/half_shape/'": "'"
+```
+
+::: tip 提示
+拼音输入过程中的手动分词由 `speller/delimiter` 控制，和这里的 `punctuator/half_shape` 不是同一个配置。比如薄荷全拼可以在 `rime_mint.custom.yaml` 中覆写 ``"speller/delimiter": " `"`` 来调整拼音分隔符。
+:::
 
 ## 自定义符号
 

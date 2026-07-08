@@ -4,8 +4,8 @@ title: 配置覆写和定制
 head:
   - - meta
     - name: keywords
-      content: Rime Custom文件,Rime配置覆写,Rime定制配置,custom.yaml,patch,default.custom.yaml,rime_mint.custom.yaml,double_pinyin_flypy.custom.yaml,squirrel.custom.yaml,weasel.custom.yaml,page_size,key_binder,speller/algebra,translator/dictionary,style/candidate_list_layout,style/horizontal,style/color_scheme,codeLengthLimit_processor,schema_list
-description: Rime 和薄荷输入法配置覆写指南，说明 custom.yaml、patch、default.custom.yaml、rime_mint.custom.yaml、squirrel.custom.yaml、weasel.custom.yaml 的区别，并按常见需求索引候选词个数、快捷键、横向候选栏、皮肤、模糊拼音、词库、拼音串长度等配置路径。
+      content: Rime Custom文件,Rime配置覆写,Rime定制配置,custom.yaml,patch,default.custom.yaml,rime_mint.custom.yaml,double_pinyin_flypy.custom.yaml,squirrel.custom.yaml,weasel.custom.yaml,page_size,key_binder,speller/algebra,speller/delimiter,translator/dictionary,style/candidate_list_layout,style/horizontal,style/color_scheme,codeLengthLimit_processor,schema_list,分词,拼音分隔符
+description: Rime 和薄荷输入法配置覆写指南，说明 custom.yaml、patch、default.custom.yaml、rime_mint.custom.yaml、squirrel.custom.yaml、weasel.custom.yaml 的区别，并按常见需求索引候选词个数、快捷键、横向候选栏、皮肤、模糊拼音、分词、词库、拼音串长度等配置路径。
 ---
 # 配置覆写和定制
 定制很好理解，薄荷输入法基于Rime输入法框架，实际就是一套Rime输入法配置；不同的Rime客户端都有大量的个性化配置。
@@ -28,6 +28,7 @@ description: Rime 和薄荷输入法配置覆写指南，说明 custom.yaml、pa
 | 薄荷全拼 + 小鹤混输 | `rime_mint_flypy.custom.yaml` | `speller/algebra`、`translator/preedit_format`、`menu/page_size` |
 | 候选词个数、翻页快捷键、Emoji 快捷键 | 对应方案的 `.custom.yaml` | `menu/page_size`、`key_binder/bindings`、`key_binder/bindings/@next` |
 | 模糊拼音、简拼、自动纠错规则 | 对应方案的 `.custom.yaml` | `speller/algebra`、`speller/algebra/+` |
+| 拼音手动分词、分隔符 | 对应方案的 `.custom.yaml` | `speller/delimiter` |
 | 自定义词库、扩展词库 | 对应方案的 `.custom.yaml` + `.dict.yaml` | `translator/dictionary`、`import_tables` |
 | 拼音串最大长度、过长输入截断 | 对应方案的 `.custom.yaml` | `codeLengthLimit_processor` |
 | 符号输入、半角标点、自定义 `/` 符号 | 对应方案的 `.custom.yaml` | `punctuator/symbols`、`punctuator/half_shape`、`recognizer/patterns/punct` |
@@ -316,6 +317,24 @@ patch:
 ```
 
 `punctuator/symbols//email` 里的双斜杠表示键名中真的包含 `/`，不是路径分隔符。
+
+### 拼音分隔符和单引号
+
+薄荷全拼的拼音分词由方案里的 `speller/delimiter` 控制。默认配置里的第一个字符是空格，表示拼音之间的默认分隔符；另一个字符用于手动分割拼音，例如输入容易歧义的拼音串时，可以手动插入分隔符帮助 Rime 切分音节。
+
+如果你想调整手动分词键，可以在对应方案的 `.custom.yaml` 中覆写。以薄荷全拼 `rime_mint.custom.yaml` 为例：
+
+```yaml
+patch:
+  "speller/delimiter": " `"
+```
+
+上面这个值的第一位是空格，第二位是反引号。注意，`speller/delimiter` 只负责组词过程中的拼音分割；如果你直接按单引号 `'` 后出现 `「」`，这是半角标点映射控制的，不是分词配置控制的。想把单引号改回直接输出英文单引号，可以覆写：
+
+```yaml
+patch:
+  "punctuator/half_shape/'": "'"
+```
 
 ## 修改薄荷输入法的配置
 薄荷内自带了很多的配置，但是可能不符合你的喜好。那么，你可以根据自己的喜好，进行覆写。

@@ -4,8 +4,8 @@ title: Configuration Overrides and Customization
 head:
   - - meta
     - name: keywords
-      content: Rime Custom,Configuration Overrides,Rime Customization,custom.yaml,patch,default.custom.yaml,rime_mint.custom.yaml,double_pinyin_flypy.custom.yaml,squirrel.custom.yaml,weasel.custom.yaml,page_size,key_binder,speller/algebra,translator/dictionary,style/candidate_list_layout,style/horizontal,style/color_scheme,codeLengthLimit_processor,schema_list
-description: Guide to Rime and Oh-my-rime configuration overrides, explaining custom.yaml, patch, default.custom.yaml, rime_mint.custom.yaml, squirrel.custom.yaml, and weasel.custom.yaml, with searchable paths for candidate count, key bindings, horizontal candidate layout, skins, fuzzy pinyin, dictionaries, and pinyin length limits.
+      content: Rime Custom,Configuration Overrides,Rime Customization,custom.yaml,patch,default.custom.yaml,rime_mint.custom.yaml,double_pinyin_flypy.custom.yaml,squirrel.custom.yaml,weasel.custom.yaml,page_size,key_binder,speller/algebra,speller/delimiter,translator/dictionary,style/candidate_list_layout,style/horizontal,style/color_scheme,codeLengthLimit_processor,schema_list,pinyin delimiter,syllable separator
+description: Guide to Rime and Oh-my-rime configuration overrides, explaining custom.yaml, patch, default.custom.yaml, rime_mint.custom.yaml, squirrel.custom.yaml, and weasel.custom.yaml, with searchable paths for candidate count, key bindings, horizontal candidate layout, skins, fuzzy pinyin, syllable separators, dictionaries, and pinyin length limits.
 ---
 # Configuration Overrides and Customization
 Customization is easy to understand. The Mint Input Method is based on the Rime Input Method framework, which is essentially a set of Rime Input Method configurations. Different Rime clients have a large number of personalization configurations. 
@@ -28,6 +28,7 @@ If you arrived here from search or a knowledge-base result, start with this tabl
 | Mint full pinyin + Xiaohe mixed input | `rime_mint_flypy.custom.yaml` | `speller/algebra`, `translator/preedit_format`, `menu/page_size` |
 | Candidate count, paging keys, Emoji shortcut | The corresponding schema `.custom.yaml` | `menu/page_size`, `key_binder/bindings`, `key_binder/bindings/@next` |
 | Fuzzy pinyin, abbreviation, typo correction rules | The corresponding schema `.custom.yaml` | `speller/algebra`, `speller/algebra/+` |
+| Manual pinyin segmentation and delimiters | The corresponding schema `.custom.yaml` | `speller/delimiter` |
 | Custom dictionary or extended dictionary | The corresponding schema `.custom.yaml` + `.dict.yaml` | `translator/dictionary`, `import_tables` |
 | Maximum pinyin string length and truncation | The corresponding schema `.custom.yaml` | `codeLengthLimit_processor` |
 | Symbol input, half-width punctuation, custom `/` symbols | The corresponding schema `.custom.yaml` | `punctuator/symbols`, `punctuator/half_shape`, `recognizer/patterns/punct` |
@@ -317,6 +318,24 @@ patch:
 ```
 
 The double slash in `punctuator/symbols//email` means the key name really contains `/`; it is not a path separator.
+
+### Pinyin Delimiter and Apostrophe
+
+Mint full-pinyin segmentation is controlled by `speller/delimiter` in the schema. The first character in the default value is a space, which is the normal separator between pinyin syllables. The other character is used for manual segmentation when a pinyin string is ambiguous.
+
+To change the manual segmentation key, override it in the corresponding schema `.custom.yaml`. For Mint full-pinyin, use `rime_mint.custom.yaml`:
+
+```yaml
+patch:
+  "speller/delimiter": " `"
+```
+
+In this example, the first character is a space and the second character is a backtick. Note that `speller/delimiter` only controls pinyin segmentation while composing. If pressing apostrophe `'` directly outputs `「」`, that comes from the half-width punctuation mapping, not from the segmentation setting. To make apostrophe output a literal ASCII apostrophe, override:
+
+```yaml
+patch:
+  "punctuator/half_shape/'": "'"
+```
 
 ## Modifying the Configuration of the Mint Input Method
 The Mint Input Method comes with a lot of configurations, but they may not suit your preferences. Therefore, you can override them according to your preferences.

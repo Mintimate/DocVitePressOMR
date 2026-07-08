@@ -4,8 +4,8 @@ title: Symbols Input & Configuration
 head:
   - - meta
     - name: keywords
-      content: Rime symbols input,Rime special symbols,Rime symbols.yaml,oh-my-rime symbols
-description: How to quickly input special symbols in oh-my-rime? This article details the symbols.yaml configuration and usage of symbol input.
+      content: Rime symbols input,Rime special symbols,Rime symbols.yaml,oh-my-rime symbols,half-width punctuation,apostrophe,quotation marks
+description: How to quickly input special symbols in oh-my-rime? This article details the symbols.yaml configuration, half-width punctuation mappings, and symbol input usage.
 ---
 
 # Symbols Input & Configuration
@@ -123,6 +123,17 @@ punctuator:
 ```
 
 Where `import_preset: symbols` loads the configuration from `symbols.yaml` first, then the `half_shape` in the schema file overrides specific mappings.
+
+By default, pressing apostrophe `'` directly follows the half-width punctuation mapping and outputs Chinese quotation marks `「」`. To make apostrophe output a literal ASCII apostrophe, override it in the corresponding schema `.custom.yaml`:
+
+```yaml
+patch:
+  "punctuator/half_shape/'": "'"
+```
+
+::: tip Note
+Manual pinyin segmentation while composing is controlled by `speller/delimiter`, which is separate from `punctuator/half_shape`. For example, Mint full-pinyin can override ``"speller/delimiter": " `"`` in `rime_mint.custom.yaml` to adjust the pinyin delimiter.
+:::
 
 ## Custom Symbols
 
