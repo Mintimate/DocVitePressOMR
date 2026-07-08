@@ -31,7 +31,26 @@ Thank you to CNB for providing storage and acceleration resources. The following
 
 ## 2026-S03
 Features:
-- Added Unicode code lookup candidates. Use the `Uc` prefix to look up Unicode representations for candidate characters or words; mostly for fun. <Badge type="tip">[f36f528723](https://github.com/Mintimate/oh-my-rime/commit/f36f5287234be90bf4e40329e0e369f2c4afb9c2)</Badge>
+- Added Unicode code lookup candidates. Use the `Uc` prefix to look up Unicode representations for candidate characters or words. <Badge type="tip">[f36f528723](https://github.com/Mintimate/oh-my-rime/commit/f36f5287234be90bf4e40329e0e369f2c4afb9c2)</Badge>
+
+## 2026-S02
+Features:
+- Added the keypad number processor `kp_number_processor`, making numeric keypad behavior more stable while idle, composing, and selecting candidates. <Badge type="tip">[3aa2ba7278](https://github.com/Mintimate/oh-my-rime/commit/3aa2ba7278d4116f2a388bbd263e4d2cbeea8f1b)</Badge>
+
+## 2026-S01
+Features:
+- Updated the Chinese T9 schema and simplified related configuration. <Badge type="tip">[53c30ee0d0](https://github.com/Mintimate/oh-my-rime/commit/53c30ee0d05e54bfe8e9962094820301696ec860)</Badge>
+- Added date/time trigger support for the T9 schema, for example using `675` to trigger the `osj` time candidates. <Badge type="tip">[41d813705c](https://github.com/Mintimate/oh-my-rime/commit/41d813705cbed5647957b122918e0ce728236e9a)</Badge>
+- Added the mathematical symbols `∵` (because) and `∴` (therefore) to OpenCC candidates. <Badge type="tip">[98ed4552dd](https://github.com/Mintimate/oh-my-rime/commit/98ed4552ddbbc9cf1c4d0b8a19eaae21a3477bdd)</Badge>
+
+Performance:
+- Adapted the auxiliary-code filter to the latest auxiliary-code behavior. <Badge type="tip">[e7e9562e54](https://github.com/Mintimate/oh-my-rime/commit/e7e9562e542fdbb147b9a9cf9b773ac9ff370cde)</Badge>
+- Fixed global variable leaks in `nl_shengri` and `nl_shengri2` inside `shijian.lua`, and cleaned up related dead code. <Badge type="tip">[6e096a2caf](https://github.com/Mintimate/oh-my-rime/commit/6e096a2cafe75fce5ffe4b8b53d0eea68c755478)</Badge>
+
+Fix:
+- Completed missing `menu` entries for full pinyin and related schemas. <Badge type="tip">[ffd5881800](https://github.com/Mintimate/oh-my-rime/commit/ffd5881800099225c761d5412a688b75a5714637)</Badge>
+- Fixed a boundary issue in `shijian.lua` when Dragon Heads-raising Day and a solar term fell on the same day. <Badge type="tip">[57c0409a6d](https://github.com/Mintimate/oh-my-rime/commit/57c0409a6d81379b1bc58e5aca03c085d57d099e)</Badge>
+- Fixed `lve` and `nve` mapping in Terra Pinyin. <Badge type="tip">[ce801ec2e1](https://github.com/Mintimate/oh-my-rime/commit/ce801ec2e1fc3bd4be0d0c54be6378b1d3a06c49)</Badge>
 
 ## 2025-S04
 Features:

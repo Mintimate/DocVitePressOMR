@@ -32,6 +32,25 @@ sidebar: false
 Features:
 - 添加 Unicode 编码候选查询功能，使用 `Uc` 前缀查询候选字词的 Unicode 表示。 <Badge type="tip">[f36f528723](https://github.com/Mintimate/oh-my-rime/commit/f36f5287234be90bf4e40329e0e369f2c4afb9c2)</Badge>
 
+## 2026-S02
+Features:
+- 添加小键盘数字处理器 `kp_number_processor`，让小键盘数字在空闲、组字和候选选择场景下有更稳定的行为。 <Badge type="tip">[3aa2ba7278](https://github.com/Mintimate/oh-my-rime/commit/3aa2ba7278d4116f2a388bbd263e4d2cbeea8f1b)</Badge>
+
+## 2026-S01
+Features:
+- 更新中文九键方案，精简并调整九键配置。 <Badge type="tip">[53c30ee0d0](https://github.com/Mintimate/oh-my-rime/commit/53c30ee0d05e54bfe8e9962094820301696ec860)</Badge>
+- 为九键方案补充日期时间功能编码支持，例如可使用 `675` 触发 `osj` 对应的时间候选。 <Badge type="tip">[41d813705c](https://github.com/Mintimate/oh-my-rime/commit/41d813705cbed5647957b122918e0ce728236e9a)</Badge>
+- 添加因为 `∵` 和所以 `∴` 数学符号到 OpenCC 候选。 <Badge type="tip">[98ed4552dd](https://github.com/Mintimate/oh-my-rime/commit/98ed4552ddbbc9cf1c4d0b8a19eaae21a3477bdd)</Badge>
+
+Performance:
+- 适配最新辅码特性，调整 `auxCode_filter.lua` 的处理逻辑。 <Badge type="tip">[e7e9562e54](https://github.com/Mintimate/oh-my-rime/commit/e7e9562e542fdbb147b9a9cf9b773ac9ff370cde)</Badge>
+- 修复 `shijian.lua` 中 `nl_shengri`、`nl_shengri2` 的全局变量泄漏问题，并清理相关死代码。 <Badge type="tip">[6e096a2caf](https://github.com/Mintimate/oh-my-rime/commit/6e096a2cafe75fce5ffe4b8b53d0eea68c755478)</Badge>
+
+Fix:
+- 补全全拼等方案中的 `menu` 项，避免部分方案缺失菜单配置。 <Badge type="tip">[ffd5881800](https://github.com/Mintimate/oh-my-rime/commit/ffd5881800099225c761d5412a688b75a5714637)</Badge>
+- 修复 `shijian.lua` 在“龙抬头”和节气日期重合时的边界问题。 <Badge type="tip">[57c0409a6d](https://github.com/Mintimate/oh-my-rime/commit/57c0409a6d81379b1bc58e5aca03c085d57d099e)</Badge>
+- 修复地球拼音中 `lve`、`nve` 无法映射的问题。 <Badge type="tip">[ce801ec2e1](https://github.com/Mintimate/oh-my-rime/commit/ce801ec2e1fc3bd4be0d0c54be6378b1d3a06c49)</Badge>
+
 ## 2025-S04
 Features:
 - 破坏性变更: 移除 mint_date_time_translator 相关配置，使用 shijian.lua 进行代替. <Badge type="tip">[7ae364ea06](https://github.com/Mintimate/oh-my-rime/commit/2c53f68cf4bb9461bda82e1b2862307ae364ea06)</Badge>
