@@ -29,6 +29,10 @@ Thank you to CNB for providing storage and acceleration resources. The following
 | [Fcitx5-Rime(macOS) Github](https://github.com/fcitx-contrib/fcitx5-macos) | [Fcitx5-Rime.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Fcitx5-Rime.zip) | macOS Fcitx5-Rime Client |  
 | [RIME-LMDG Github](https://github.com/amzxyz/RIME-LMDG) | [wanxiang-lts-zh-hans.gram](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/wanxiang-lts-zh-hans.gram) | Wanxiang (LMDG) Model |  
 
+## 2026-S03
+Features:
+- Added Unicode code lookup candidates. Use the `Uc` prefix to look up Unicode representations for candidate characters or words; mostly for fun. <Badge type="tip">[f36f528723](https://github.com/Mintimate/oh-my-rime/commit/f36f5287234be90bf4e40329e0e369f2c4afb9c2)</Badge>
+
 ## 2025-S04
 Features:
 - Breaking changes: Remove mint_date_time_translator related configurations, use shijian.lua instead. <Badge type="tip">[7ae364ea06](https://github.com/Mintimate/oh-my-rime/commit/2c53f68cf4bb9461bda82e1b2862307ae364ea06)</Badge>

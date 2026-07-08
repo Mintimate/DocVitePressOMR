@@ -28,6 +28,10 @@ sidebar: false
 | [Fcitx5-Rime(macOS) Github](https://github.com/fcitx-contrib/fcitx5-macos) | [Fcitx5-Rime.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/Fcitx5-Rime.zip) | macOS Fcitx5-Rime 客户端 |
 | [RIME-LMDG Github](https://github.com/amzxyz/RIME-LMDG) | [wanxiang-lts-zh-hans.gram](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/wanxiang-lts-zh-hans.gram) | 万象模型 |
 
+## 2026-S03
+Features:
+- 添加 Unicode 编码候选查询功能，使用 `Uc` 前缀查询候选字词的 Unicode 表示。 <Badge type="tip">[f36f528723](https://github.com/Mintimate/oh-my-rime/commit/f36f5287234be90bf4e40329e0e369f2c4afb9c2)</Badge>
+
 ## 2025-S04
 Features:
 - 破坏性变更: 移除 mint_date_time_translator 相关配置，使用 shijian.lua 进行代替. <Badge type="tip">[7ae364ea06](https://github.com/Mintimate/oh-my-rime/commit/2c53f68cf4bb9461bda82e1b2862307ae364ea06)</Badge>
