@@ -161,6 +161,29 @@ style:
   comment_font_face: "PingFang SC"
   comment_font_point: 14
 ```
+
+### Finding a Font Name
+
+For `font_face`, `label_font_face`, and `comment_font_face`, enter the name registered by the operating system. Do not enter a font filename (for example, `PingFang.ttc` or `NotoSansCJK-Regular.otf`) or a full font path. Name matching differs slightly between clients, so use the appropriate method below.
+
+| System | Find the font name | Common font directories |
+| --- | --- | --- |
+| macOS | Open Font Book, select the specific typeface, and look for its **PostScript name** under **Identifiers** in the right panel. For Squirrel, use this name first. For example, when the family is `SmileySans` and the face is `Oblique`, enter `SmileySans-Oblique`, not the localized family label or just `SmileySans`. | `/System/Library/Fonts` (system fonts), `/Library/Fonts` (all users), `~/Library/Fonts` (current user) |
+| Windows | **Settings → Personalization → Fonts** lets you inspect a font and face, but does not always show the name Weasel needs. Use FontFrenzy to inspect the family, or run this in the built-in Windows PowerShell: `Add-Type -AssemblyName PresentationCore; [System.Windows.Media.Fonts]::SystemFontFamilies \| ForEach-Object { $_.FamilyNames.Values } \| Sort-Object -Unique`. It lists the localized font-family names embedded in each font, including Chinese and English names when available. | `C:\Windows\Fonts` (all users), `%LOCALAPPDATA%\Microsoft\Windows\Fonts` (current user) |
+| Linux | Use your desktop environment's font viewer, or run `fc-list : family | sort -u` in a terminal and copy a family name from the output. Use `fc-match "font name"` to confirm the font that will actually be matched. | `/usr/share/fonts`, `/usr/local/share/fonts`, `~/.local/share/fonts`; older systems may also use `~/.fonts` |
+
+Example of finding a PostScript name in Font Book for Squirrel:
+
+![PostScript name in Font Book](/image/guide/fontBookPostScriptName.webp)
+
+:::: tip Fcitx5 macOS users
+
+The macOS PostScript-name instructions above apply only to Squirrel's YAML settings such as `font_face`. Fcitx5 macOS manages candidate-window fonts in its graphical configuration interface and does not read Squirrel font settings; configure the font in the Fcitx5 macOS interface instead.
+
+::::
+
+Font names can contain spaces or non-Latin characters, so always quote them. A Windows font can contain several localized family names, so the command may list both `微软雅黑` and `Microsoft YaHei` for the same family; either one can be used. For example, enter `font_face: "微软雅黑"`. To select a face in Weasel, append an English style after a colon: `font_face: "微软雅黑:light"` or `font_face: "微软雅黑:bold"`. Do not enter the font path `C:\Windows\Fonts\MSYH.TTC` or the full face label `Microsoft YaHei Light`. After changing the setting, redeploy the input method. If it does not take effect, first confirm that the font is installed and that its name exactly matches the command output.
+
 The internal comments are comprehensive, and you can refer to them if you're interested.
 
 You can directly modify this file and then redeploy. You can also modify the `custom` file (if it doesn't exist, you can create it in the same directory without `custom`).

@@ -160,6 +160,29 @@ style:
   comment_font_face: "PingFang SC"
   comment_font_point: 14
 ```
+
+### 查找字体名称
+
+`font_face`、`label_font_face` 和 `comment_font_face` 应填写系统注册的字体名称，而不是字体文件名（如 `PingFang.ttc`、`NotoSansCJK-Regular.otf`）或字体文件的完整路径。不同客户端对名称的匹配方式略有不同，请按下表查找。
+
+| 系统 | 查看字体名称 | 常见字体目录 |
+| --- | --- | --- |
+| macOS | 打开「字体册（Font Book）」，选中具体字样，在右侧「标识符」中查看 **PostScript 名称**；鼠须管应优先填写此名称。比如图中系列名称为“得意黑”、样式为“斜体”时，应填写 `SmileySans-Oblique`，而不是“得意黑”或 `SmileySans`。 | `/System/Library/Fonts`（系统字体）、`/Library/Fonts`（所有用户）、`~/Library/Fonts`（当前用户） |
+| Windows | 「设置 → 个性化 → 字体」只能查看字体和字样，未必显示小狼毫可填写的名称。可使用 FontFrenzy 查看字体族，或在系统自带的 Windows PowerShell 运行：`Add-Type -AssemblyName PresentationCore; [System.Windows.Media.Fonts]::SystemFontFamilies \| ForEach-Object { $_.FamilyNames.Values } \| Sort-Object -Unique`。该命令会列出字体自带的中文、英文等本地化**字体族名称**。 | `C:\Windows\Fonts`（所有用户）、`%LOCALAPPDATA%\Microsoft\Windows\Fonts`（当前用户） |
+| Linux | 在桌面环境的字体查看器中查看；或在终端运行 `fc-list : family | sort -u`，从输出中复制字体族名称。可用 `fc-match "字体名称"` 确认系统实际匹配到的字体。 | `/usr/share/fonts`、`/usr/local/share/fonts`、`~/.local/share/fonts`；旧系统还可能使用 `~/.fonts` |
+
+鼠须管在字体册中查找 PostScript 名称的示例：
+
+![字体册中的 PostScript 名称示例](/image/guide/fontBookPostScriptName.webp)
+
+:::: tip Fcitx5 macOS 用户
+
+上表中 macOS 的 PostScript 名称查找方式仅适用于**鼠须管（Squirrel）**的 `font_face` 等 YAML 配置。Fcitx5 macOS 的候选窗口字体由其图形配置界面管理，不读取鼠须管的字体配置；请在 Fcitx5 macOS 的界面中设置字体。
+
+::::
+
+字体名称可能含空格或中文，建议始终用引号包起来。Windows 字体可以包含多个本地化字体族名称，因此命令可能同时输出“微软雅黑”和 `Microsoft YaHei`，两者指向同一字体族，选择其中一个即可。例如填写 `font_face: "微软雅黑"`；需要指定字样时，小狼毫使用冒号加英文样式，如 `font_face: "微软雅黑:light"`、`font_face: "微软雅黑:bold"`。不要填写字体文件路径 `C:\Windows\Fonts\MSYH.TTC` 或详情页的完整字样名“微软雅黑 Light”。修改后重新部署输入法；若没有生效，先确认该字体已安装，并检查名称是否与命令输出完全一致。
+
 内部都有完善的注释，感兴趣可以按注释进行参考。
 
 你可以直接更改这个文件后，重新部署。也可以修改`custom`文件（如果没有，那么可以自行在不带`custom`的同级目录创建）。
