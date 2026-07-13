@@ -70,7 +70,7 @@ Mainly reflected in:
 - The theme styles of oh-my-rime and rime-ice are different (but this actually doesn't matter);
 - Some Lua scripts are different, oh-my-rime uses some of rime-ice's scripts, but also has its own scripts; at the same time, some of rime-ice's scripts, oh-my-rime does not have; at the same time, some Lua may have the same function, but use different code implementation:
   - Week, date, time: rime-ice and oh-my-rime can both use `week`, `date`, `time` to call up the current time; but the implementation code is different;
-  - rime-ice's Unicode feature focuses on "type a Unicode code point and get the character"; oh-my-rime's `unicode_filter.lua` does the opposite direction: type a character or word code to look up Unicode representations. It uses the `Uc` prefix with the current schema code and outputs formats such as `U+4E2D`, `\u4E2D`, and `&#x4E2D;`;
+  - rime-ice's Unicode feature focuses on "type a Unicode code point and get the character"; oh-my-rime's `unicode_translator.lua` does the opposite direction: type a character or word code to look up Unicode representations. It uses the `Uc` prefix with the current schema code and outputs formats such as `U+4E2D`, `\u4E2D`, and `&#x4E2D;`;
   - oh-my-rime, in order to limit the input of the check-in content, used `codeLengthLimit_processor.lua` to limit the maximum retrieval length, rime-ice does not have;
   - rime-ice has used long word priority and other Lua scripts, oh-my-rime does not have; still considering whether to add;
   - ……

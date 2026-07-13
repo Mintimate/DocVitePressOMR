@@ -4,7 +4,7 @@ title: Lua功能扩展
 head:
   - - meta
     - name: keywords
-      content: Rime Lua脚本,薄荷输入法Lua,oh-my-rime lua目录,shijian.lua,number_translator.lua,mint_calculator_translator.lua,chineseLunarCalendar_translator.lua,unicode_filter.lua,select_character.lua,codeLengthLimit_processor.lua,kp_number_processor.lua,auxCode_filter.lua,corrector_filter.lua,super_preedit.lua,autocap_filter.lua,reduce_english_filter.lua,force_gc.lua,tag_user_dict.lua
+      content: Rime Lua脚本,薄荷输入法Lua,oh-my-rime lua目录,shijian.lua,number_translator.lua,mint_calculator_translator.lua,chineseLunarCalendar_translator.lua,unicode_translator.lua,select_character.lua,codeLengthLimit_processor.lua,kp_number_processor.lua,auxCode_filter.lua,corrector_filter.lua,super_preedit.lua,autocap_filter.lua,reduce_english_filter.lua,force_gc.lua,tag_user_dict.lua
 description: 薄荷输入法内的 Lua 功能扩展详解，按 lua 目录文件名、Rime 注册名、processor、translator、filter、触发编码和配置项说明日期时间、计算器、金额大写、农历、Unicode 编码查询、以词定字、辅码、小键盘数字、候选标记等功能。
 ---
 
@@ -40,7 +40,7 @@ description: 薄荷输入法内的 Lua 功能扩展详解，按 lua 目录文件
 | `super_preedit.lua` | `super_preedit` | filter | 是 | 输入码全拼显示、声调显示、`tone_display`、`声杳`、`声起` |
 | `autocap_filter.lua` | `autocap_filter` | filter | 是 | 英文自动大写、句首大写 |
 | `reduce_english_filter.lua` | `reduce_english_filter` | filter | 是 | 英文候选降频、短英文置顶、`rug`、`mode: all` |
-| `unicode_filter.lua` | `unicode_filter` | filter | 是 | Unicode 编码查询、码位转换、`Uc`、`U+4E2D`、`\u4E2D`、HTML 实体 |
+| `unicode_translator.lua` | `unicode_translator` | translator | 是 | Unicode 编码查询、码位转换、`Uc`、`U+4E2D`、`\u4E2D`、HTML 实体 |
 | `force_gc.lua` | `force_gc` | translator | 是 | 强制垃圾回收、内存稳定、Lua GC |
 | `auxCode_filter.lua` | `auxCode_filter@flypy_full` 等 | filter | 否 | 辅助码、形码筛选、小鹤双拼、自然码、墨奇、`aux_code/trigger_word` |
 | `aux_code/*.txt` | `flypy_full`、`ZRM_Aux-code_4.3`、`moqi_aux_code` | 数据文件 | 按方案 | 辅码数据、`汉字=形码`、小鹤形码、自然码形码 |
@@ -222,9 +222,9 @@ chineseLunarCalendar_translator: lunar
 
 使用 `/nl` 或 `onl` 可以直接输出当天的农历日期。
 
-## Unicode 编码查询（unicode_filter）
+## Unicode 编码查询（unicode_translator）
 
-`lua/unicode_filter.lua` 注册为 `lua_filter@*unicode_filter`，用于把候选文字转换为常见 Unicode 码位表示。默认使用 `Uc` 作为触发前缀，输入方式是 `Uc` 加上当前方案中该字或词的编码。
+`lua/unicode_translator.lua` 注册为 `lua_translator@*unicode_translator`，用于把候选文字转换为常见 Unicode 码位表示。默认使用 `Uc` 作为触发前缀，输入方式是 `Uc` 加上当前方案中该字或词的编码。
 
 这个功能不是“输入 Unicode 码位得到文字”，而是“输入字词编码后查询它的 Unicode 表示”。例如先通过拼音、双拼、五笔等方案编码找到「中」，再输出 `U+4E2D`、`\u4E2D` 等格式。它主要是为了好玩：偶尔好奇「薄荷」两个字分别是什么 Unicode 码位时，可以顺手查一下。
 
@@ -243,31 +243,29 @@ chineseLunarCalendar_translator: lunar
 | HTML 实体 | `&#x4E2D;` |
 | Perl/Ruby 风格转义 | `\x{4E2D}` |
 
-如果候选是多字词，过滤器会按字符依次生成码位。例如输入某个词的 `Uc` 编码后，可能得到 `U+4F60 U+597D`、`\u4F60\u597D`、`&#x4F60;&#x597D;` 等候选。
+如果候选是多字词，转换器会按字符依次生成码位。例如输入某个词的 `Uc` 编码后，可能得到 `U+4F60 U+597D`、`\u4F60\u597D`、`&#x4F60;&#x597D;` 等候选；候选注释会显示原始字词，例如 `[你好]`。
 
-相关配置位于方案文件中：
+自 2026-07-13 起，此功能使用独立的 Lua 转换器，而不是让全局 Lua 过滤器包装普通候选。这样可避免部分 librime 版本中简拼的延迟候选展开受到影响。当前薄荷方案已内置下列配置；如果你曾手动接入旧版 `unicode_filter.lua`，请按下面的方式迁移：
 
 ```yaml
 engine:
   segmentors:
     - affix_segmentor@unicode
   translators:
-    - script_translator@unicode
-  filters:
-    - lua_filter@*unicode_filter
+    - script_translator             # 五笔等表形方案可为 table_translator
+    - lua_translator@*unicode_translator
 
 unicode:
   tag: unicode
-  dictionary: rime_mint
-  enable_user_dict: false
-  enable_sentence: false
   prefix: "Uc"
   tips: 〔Unicode〕
 
 recognizer:
   patterns:
-    unicode: "^Uc[a-z0-9;]*'?$"
+    unicode: "^Uc[a-z]*'?$"
 ```
+
+旧配置中的 `script_translator@unicode`（或 `table_translator@unicode`）和 `lua_filter@*unicode_filter` 均不再需要，也不应保留旧的 `unicode` 词典、`prism` 等配置项。
 
 ::: tip 提示
 Unicode 编码查询依赖当前方案的词典编码，所以全拼、双拼、五笔、九宫格等方案的 `Uc` 后缀不同；记住规则是 `Uc + 当前方案编码` 即可。

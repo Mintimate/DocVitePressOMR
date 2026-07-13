@@ -4,7 +4,7 @@ title: Lua Extensions
 head:
   - - meta
     - name: keywords
-      content: Rime Lua scripts,oh-my-rime Lua,oh-my-rime lua directory,shijian.lua,number_translator.lua,mint_calculator_translator.lua,chineseLunarCalendar_translator.lua,unicode_filter.lua,select_character.lua,codeLengthLimit_processor.lua,kp_number_processor.lua,auxCode_filter.lua,corrector_filter.lua,super_preedit.lua,autocap_filter.lua,reduce_english_filter.lua,force_gc.lua,tag_user_dict.lua
+      content: Rime Lua scripts,oh-my-rime Lua,oh-my-rime lua directory,shijian.lua,number_translator.lua,mint_calculator_translator.lua,chineseLunarCalendar_translator.lua,unicode_translator.lua,select_character.lua,codeLengthLimit_processor.lua,kp_number_processor.lua,auxCode_filter.lua,corrector_filter.lua,super_preedit.lua,autocap_filter.lua,reduce_english_filter.lua,force_gc.lua,tag_user_dict.lua
 description: Detailed guide to oh-my-rime Lua extensions, organized by lua directory filename, Rime registration name, processor, translator, filter, trigger code, and configuration keys for date/time, calculator, Chinese amount conversion, lunar calendar, Unicode code lookup, select character from word, auxiliary code, keypad numbers, and candidate source tags.
 ---
 
@@ -40,7 +40,7 @@ Oh-my-rime includes the following Lua files and auxiliary data. "Enabled by defa
 | `super_preedit.lua` | `super_preedit` | filter | Yes | Full pinyin display, tone display, `tone_display`, `声杳`, `声起` |
 | `autocap_filter.lua` | `autocap_filter` | filter | Yes | Auto-capitalize English, sentence initial capitalization |
 | `reduce_english_filter.lua` | `reduce_english_filter` | filter | Yes | Lower English candidates, short English word priority, `rug`, `mode: all` |
-| `unicode_filter.lua` | `unicode_filter` | filter | Yes | Unicode code lookup, code point conversion, `Uc`, `U+4E2D`, `\u4E2D`, HTML entity |
+| `unicode_translator.lua` | `unicode_translator` | translator | Yes | Unicode code lookup, code point conversion, `Uc`, `U+4E2D`, `\u4E2D`, HTML entity |
 | `force_gc.lua` | `force_gc` | translator | Yes | Force garbage collection, memory stability, Lua GC |
 | `auxCode_filter.lua` | `auxCode_filter@flypy_full`, etc. | filter | No | Auxiliary code, shape-code filtering, Xiaohe Double Pinyin, Natural Code, Moqi, `aux_code/trigger_word` |
 | `aux_code/*.txt` | `flypy_full`, `ZRM_Aux-code_4.3`, `moqi_aux_code` | Data file | Schema-dependent | Auxiliary code data, `Character=ShapeCode`, Xiaohe shape code, Natural Code shape code |
@@ -222,9 +222,9 @@ chineseLunarCalendar_translator: lunar
 
 Use `/nl` or `onl` to directly output today's lunar date.
 
-## Unicode Code Lookup (unicode_filter)
+## Unicode Code Lookup (unicode_translator)
 
-`lua/unicode_filter.lua` is registered as `lua_filter@*unicode_filter`. It converts candidate text into common Unicode code point formats. The default trigger prefix is `Uc`; type `Uc` followed by the code used by the current schema for the target character or word.
+`lua/unicode_translator.lua` is registered as `lua_translator@*unicode_translator`. It converts candidate text into common Unicode code point formats. The default trigger prefix is `Uc`; type `Uc` followed by the code used by the current schema for the target character or word.
 
 This is not "type a Unicode code point and get the character". It is "type a word or character code and look up its Unicode representation". For example, first find `中` through pinyin, double pinyin, Wubi, or another schema code, then output formats such as `U+4E2D` and `\u4E2D`. It is mostly for fun: when you are curious about the Unicode code points for `薄荷`, you can look them up on the spot.
 
@@ -243,31 +243,29 @@ When the candidate text is `中`, the filter can generate these formats:
 | HTML entity | `&#x4E2D;` |
 | Perl/Ruby-style escape | `\x{4E2D}` |
 
-For multi-character candidates, the filter outputs each character's code point in sequence. For example, a word may produce candidates such as `U+4F60 U+597D`, `\u4F60\u597D`, or `&#x4F60;&#x597D;`.
+For multi-character candidates, the translator outputs each character's code point in sequence. For example, a word may produce candidates such as `U+4F60 U+597D`, `\u4F60\u597D`, or `&#x4F60;&#x597D;`. The candidate comment shows the original text, for example `[你好]`.
 
-Related schema configuration:
+Since 2026-07-13, this feature uses an independent Lua translator instead of a global Lua filter that wraps ordinary candidates. This avoids interfering with delayed abbreviation candidate expansion in some librime versions. Current Oh My Rime schemas already include the configuration below; migrate any hand-maintained legacy `unicode_filter.lua` setup as follows:
 
 ```yaml
 engine:
   segmentors:
     - affix_segmentor@unicode
   translators:
-    - script_translator@unicode
-  filters:
-    - lua_filter@*unicode_filter
+    - script_translator             # Use table_translator in table-based schemas such as Wubi
+    - lua_translator@*unicode_translator
 
 unicode:
   tag: unicode
-  dictionary: rime_mint
-  enable_user_dict: false
-  enable_sentence: false
   prefix: "Uc"
   tips: 〔Unicode〕
 
 recognizer:
   patterns:
-    unicode: "^Uc[a-z0-9;]*'?$"
+    unicode: "^Uc[a-z]*'?$"
 ```
+
+Remove the legacy `script_translator@unicode` (or `table_translator@unicode`) and `lua_filter@*unicode_filter` entries. The old `unicode` dictionary, `prism`, and related settings are no longer needed either.
 
 ::: tip Note
 Unicode code lookup depends on the current schema's dictionary code, so the suffix after `Uc` differs between full pinyin, double pinyin, Wubi, T9, and other schemas. The rule is simply `Uc + current schema code`.

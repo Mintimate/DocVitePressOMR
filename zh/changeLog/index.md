@@ -32,6 +32,9 @@ sidebar: false
 Features:
 - 添加 Unicode 编码候选查询功能，使用 `Uc` 前缀查询候选字词的 Unicode 表示。 <Badge type="tip">[f36f528723](https://github.com/Mintimate/oh-my-rime/commit/f36f5287234be90bf4e40329e0e369f2c4afb9c2)</Badge>
 
+Fix:
+- 将 Unicode 反查改为独立的 `lua_translator`，避免部分 librime 版本中全局过滤器影响简拼的延迟候选展开；候选注释会显示原字词。 <Badge type="tip">[5ded1565f6](https://github.com/Mintimate/oh-my-rime/commit/5ded1565f61a8b389ad1e8679fe1f382aad3f9d6)</Badge> <Badge type="tip">[dd0aa4532a](https://github.com/Mintimate/oh-my-rime/commit/dd0aa4532a5c0044111e4b028f101e144bab58d7)</Badge>
+
 ## 2026-S02
 Features:
 - 添加小键盘数字处理器 `kp_number_processor`，让小键盘数字在空闲、组字和候选选择场景下有更稳定的行为。 <Badge type="tip">[3aa2ba7278](https://github.com/Mintimate/oh-my-rime/commit/3aa2ba7278d4116f2a388bbd263e4d2cbeea8f1b)</Badge>

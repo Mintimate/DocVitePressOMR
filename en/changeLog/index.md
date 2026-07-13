@@ -33,6 +33,9 @@ Thank you to CNB for providing storage and acceleration resources. The following
 Features:
 - Added Unicode code lookup candidates. Use the `Uc` prefix to look up Unicode representations for candidate characters or words. <Badge type="tip">[f36f528723](https://github.com/Mintimate/oh-my-rime/commit/f36f5287234be90bf4e40329e0e369f2c4afb9c2)</Badge>
 
+Fix:
+- Reworked Unicode code lookup as an independent `lua_translator`, preventing the global filter from interfering with delayed abbreviation candidate expansion in some librime versions; candidate comments now show the original text. <Badge type="tip">[5ded1565f6](https://github.com/Mintimate/oh-my-rime/commit/5ded1565f61a8b389ad1e8679fe1f382aad3f9d6)</Badge> <Badge type="tip">[dd0aa4532a](https://github.com/Mintimate/oh-my-rime/commit/dd0aa4532a5c0044111e4b028f101e144bab58d7)</Badge>
+
 ## 2026-S02
 Features:
 - Added the keypad number processor `kp_number_processor`, making numeric keypad behavior more stable while idle, composing, and selecting candidates. <Badge type="tip">[3aa2ba7278](https://github.com/Mintimate/oh-my-rime/commit/3aa2ba7278d4116f2a388bbd263e4d2cbeea8f1b)</Badge>
