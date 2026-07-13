@@ -68,10 +68,11 @@ At the same time, Oh-my-rime configuration is inseparable from the abundant tuto
 
 - rime-ice Pinyin: https://github.com/iDvel/rime-ice
 
-Thank you to Afdian supporters:
+Thank you to all supporters:
 
 | Date       | Platform | User                                                                      | Donate💵         | Comment                                                                                             |
 | ---------- | -------- | ------------------------------------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------- |
+| 2026/07/12 | 微信赞赏 | 五蘊熾盛 | 20¥ | 薄荷拼音 |
 | 2026/07/03 | 爱发电 | 蓝啾(QQ: 104****705) | 36¥   | -- |
 | 2026/03/10 | 微信赞赏 | 微信用户: AA～电脑城-弯儿师傅 | 100¥   | 薄荷拼音很好用，电脑手机都用上了 |
 | 2025/12/25 | 微信赞赏 | 微信用户: cyrasafia | 30¥   | -- |

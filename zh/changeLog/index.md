@@ -35,6 +35,13 @@ Features:
 Fix:
 - 将 Unicode 反查改为独立的 `lua_translator`，避免部分 librime 版本中全局过滤器影响简拼的延迟候选展开；候选注释会显示原字词。 <Badge type="tip">[5ded1565f6](https://github.com/Mintimate/oh-my-rime/commit/5ded1565f61a8b389ad1e8679fe1f382aad3f9d6)</Badge> <Badge type="tip">[dd0aa4532a](https://github.com/Mintimate/oh-my-rime/commit/dd0aa4532a5c0044111e4b028f101e144bab58d7)</Badge>
 
+Thanks:
+| 时间       | 平台     | 用户     | 支持💵 | 留言     |
+| ---------- | -------- | -------- | ----- | -------- |
+| 2026/07/12 | 微信赞赏 | 五蘊熾盛 | 20¥   | 薄荷拼音 |
+| 2026/07/03 | 爱发电 | 蓝啾(QQ: 104****705) | 36¥   | -- |
+
+
 ## 2026-S02
 Features:
 - 添加小键盘数字处理器 `kp_number_processor`，让小键盘数字在空闲、组字和候选选择场景下有更稳定的行为。 <Badge type="tip">[3aa2ba7278](https://github.com/Mintimate/oh-my-rime/commit/3aa2ba7278d4116f2a388bbd263e4d2cbeea8f1b)</Badge>
@@ -68,7 +75,6 @@ Fix:
 Thanks:
 | 时间       | 平台     | 用户            | 支持💵 | 留言          |
 | ---------- | -------- | --------------- | ----- | ------------- |
-| 2026/07/03 | 爱发电 | 蓝啾(QQ: 104****705) | 36¥   | -- |
 | 2026/03/10 | 微信赞赏 | 微信用户: AA～电脑城-弯儿师傅 | 100¥   | 薄荷拼音很好用，电脑手机都用上了 |
 | 2025/12/25 | 微信赞赏 | 微信用户: cyrasafia | 30¥   | -- |
 | 2025/12/15 | 微信赞赏 | 微信用户 | 50¥   | 感谢维护，全平台换了薄荷拼音方案 |
