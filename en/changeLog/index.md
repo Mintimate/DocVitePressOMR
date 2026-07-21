@@ -32,9 +32,15 @@ Thank you to CNB for providing storage and acceleration resources. The following
 ## 2026-S03
 Features:
 - Added Unicode code lookup candidates. Use the `Uc` prefix to look up Unicode representations for candidate characters or words. <Badge type="tip">[f36f528723](https://github.com/Mintimate/oh-my-rime/commit/f36f5287234be90bf4e40329e0e369f2c4afb9c2)</Badge>
+- Added Wanxiang polyphonic-compatibility and place-name dictionaries, and updated word frequencies. <Badge type="tip">[cae2a5a5ae](https://github.com/Mintimate/oh-my-rime/commit/cae2a5a5aef931bbb64d83edacac3309f1827444)</Badge>
+- Changed the English-candidate adjustment filter to move matching words to the candidate position specified by `idx`, rather than only demoting them. <Badge type="tip">[2f589dde0f](https://github.com/Mintimate/oh-my-rime/commit/2f589dde0ffbfbdac671a38b16a978b74a3ee63c)</Badge>
+
+Performance:
+- Refactored the double-pinyin auxiliary-code filter: standardized its name as `aux_code_filter` and added per-schema caching and lazy auxiliary-code indexes for more stable, faster filtering. <Badge type="tip">[99bb172709](https://github.com/Mintimate/oh-my-rime/commit/99bb172709d2f51146eca6d3860107f0ebfa145a)</Badge>
 
 Fix:
 - Reworked Unicode code lookup as an independent `lua_translator`, preventing the global filter from interfering with delayed abbreviation candidate expansion in some librime versions; candidate comments now show the original text. <Badge type="tip">[5ded1565f6](https://github.com/Mintimate/oh-my-rime/commit/5ded1565f61a8b389ad1e8679fe1f382aad3f9d6)</Badge> <Badge type="tip">[dd0aa4532a](https://github.com/Mintimate/oh-my-rime/commit/dd0aa4532a5c0044111e4b028f101e144bab58d7)</Badge>
+- Removed the duplicate automatic-capitalization filter loaded by the Wubi 86-Jidian and Wubi 98 schemas. <Badge type="tip">[b13f4d752b](https://github.com/Mintimate/oh-my-rime/commit/b13f4d752bbc340042a9b0e4d997427c8c0e52c3)</Badge>
 
 Thanks:
 | Time       | Platform | User     | Support💵 | Message    |

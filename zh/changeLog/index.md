@@ -31,9 +31,15 @@ sidebar: false
 ## 2026-S03
 Features:
 - 添加 Unicode 编码候选查询功能，使用 `Uc` 前缀查询候选字词的 Unicode 表示。 <Badge type="tip">[f36f528723](https://github.com/Mintimate/oh-my-rime/commit/f36f5287234be90bf4e40329e0e369f2c4afb9c2)</Badge>
+- 引入万象多音兼容词库和地名词库，并更新词频。 <Badge type="tip">[cae2a5a5ae](https://github.com/Mintimate/oh-my-rime/commit/cae2a5a5aef931bbb64d83edacac3309f1827444)</Badge>
+- 英文候选调整器改为将命中英文移动到 `idx` 指定的候选位，而非仅向后降频。 <Badge type="tip">[2f589dde0f](https://github.com/Mintimate/oh-my-rime/commit/2f589dde0ffbfbdac671a38b16a978b74a3ee63c)</Badge>
+
+Performance:
+- 重构双拼辅码过滤器：统一使用 `aux_code_filter` 命名，并按方案缓存、按需建立辅码索引，以提升筛选稳定性和性能。 <Badge type="tip">[99bb172709](https://github.com/Mintimate/oh-my-rime/commit/99bb172709d2f51146eca6d3860107f0ebfa145a)</Badge>
 
 Fix:
 - 将 Unicode 反查改为独立的 `lua_translator`，避免部分 librime 版本中全局过滤器影响简拼的延迟候选展开；候选注释会显示原字词。 <Badge type="tip">[5ded1565f6](https://github.com/Mintimate/oh-my-rime/commit/5ded1565f61a8b389ad1e8679fe1f382aad3f9d6)</Badge> <Badge type="tip">[dd0aa4532a](https://github.com/Mintimate/oh-my-rime/commit/dd0aa4532a5c0044111e4b028f101e144bab58d7)</Badge>
+- 移除 86 五笔-极点和 98 五笔方案中重复加载的英文自动大写过滤器。 <Badge type="tip">[b13f4d752b](https://github.com/Mintimate/oh-my-rime/commit/b13f4d752bbc340042a9b0e4d997427c8c0e52c3)</Badge>
 
 Thanks:
 | 时间       | 平台     | 用户     | 支持💵 | 留言     |
