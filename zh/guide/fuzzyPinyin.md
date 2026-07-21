@@ -50,15 +50,14 @@ nin xing wo jin lai, jin lai jin mu qin。
 ```
 
 ## Rime的模糊拼音设置
-使用Rime进行模糊拼音，就需要更改输入法配置的`speller/algebra`模块，使用正则对输入的内容进行替换：
+使用 Rime 配置模糊拼音，需要修改输入方案的 `speller/algebra`。`derive/A/B/` 的含义是：为词典中的拼音 `A` 派生一个可以输入的编码 `B`，并不是在输入时直接把用户键入的内容替换掉。
+
 ```yaml
 - erase/^xx$/ # 首选保留
 - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
 - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
-- derive/([aei])n$/$1ng/ # en => eng, in => ing
-- derive/([aei])ng$/$1n/ # eng => en, ing => in
-- derive/([iu])an$/$lan/ # ian => iang, uan => uang
-- derive/([iu])ang$/$lan/ # iang => ian, uang => uan
+- derive/([aei])n$/$1ng/ # an, en, in => ang, eng, ing
+- derive/([aei])ng$/$1n/ # ang, eng, ing => an, en, in
 - derive/([aeiou])ng$/$1gn/        # dagn => dang
 - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
 - derive/ong$/on/                  # zhonguo => zhong guo
@@ -68,6 +67,21 @@ nin xing wo jin lai, jin lai jin mu qin。
 - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
 ```
 这样的话，首选项是准确的拼音，其他选项是对模糊拼音的设置。
+
+::: tip 关于 `ian/iang` 和 `uan/uang`
+
+上面的 `([aei])n$` 没有限定从音节开头匹配，因此已经可以在 `ian`、`uan` 的末尾匹配 `an`，从而覆盖 `ian ↔ iang` 和 `uan ↔ uang`，不需要再添加单独的规则。
+
+如果希望单独配置，也必须使用数字 `1` 表示捕获组：
+
+```yaml
+- derive/([iu])an$/$1ang/ # ian => iang, uan => uang
+- derive/([iu])ang$/$1an/ # iang => ian, uang => uan
+```
+
+`$lan` 中是字母 `l`，不是 `$1an`，无法得到预期的拼音。
+
+:::
 
 > 建议保留简拼内容，去除的话，输入就一定需要完整拼音，如： `你好(nihao)`，就无法输入`nh`或者输入`n`出现`你`。
 ```yaml
@@ -158,6 +172,50 @@ nin xing wo jin lai, jin lai jin mu qin。
 使用自动纠错，可以让我们在输入的时候，一些情况下打错拼音也可以输入我们想要的。
 > 注意: 自动纠错参考自『雾凇拼音』，此处特别感谢。
 
+## 双拼方案中的模糊拼音 <Badge type="tip" text="^2026.07.21" />
+
+双拼方案的 `speller/algebra` 仍然从词典中的完整拼音开始处理，然后才通过后续的 `xform` 转换成双拼键码。因此，双拼方案里的模糊音规则写成全拼形式是正常的。
+
+规则顺序非常重要：
+
+1. 如果词典拼音带声调，先去除声调。
+2. 再执行模糊音的 `derive` 规则。
+3. 最后执行小鹤双拼等键位转换规则。
+
+以小鹤双拼为例，应复制原方案完整的 `speller/algebra` 到 `double_pinyin_flypy.custom.yaml`，在去声调规则之后、双拼转换规则之前插入模糊音规则：
+
+```yaml
+patch:
+  "speller/algebra":
+    # 1. 先规范化词典中的带调拼音
+    - xlit/āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜü/aaaaooooeeeeiiiiuuuuvvvvv/
+    - xform/^ng$/eng/
+    - xform/ńg|ňg|ǹg/eng/
+    - xform/ń|ň|ǹ/en/
+    - erase/^xx$/
+
+    # 2. 再派生模糊音
+    - derive/^([zcs])h/$1/
+    - derive/^([zcs])([^h])/$1h$2/
+    - derive/([aei])n$/$1ng/
+    - derive/([aei])ng$/$1n/
+
+    # 3. 此处继续完整保留原方案的小鹤双拼转换规则
+    - derive/^([jqxy])u$/$1v/
+    - derive/^([aoe])([ioun])$/$1$1$2/
+    - xform/^([aoe])(ng)?$/$1$1$2/
+    # ……其余 xform/xlit 规则不可省略
+```
+
+不能使用 `"speller/algebra/+"` 把模糊音规则追加到末尾，因为此时完整拼音已经转换成双拼键码，针对 `zh`、`eng` 等完整拼音的正则将无法匹配。
+
+测试时也要输入双拼键码，而不是模糊全拼：
+
+- 小鹤 `shen = uf`、`sheng = ug`；启用 `en ↔ eng` 后，输入 `uf` 或 `ug` 应能看到两边的候选。
+- 小鹤 `zong = zs`、`zhong = vs`；启用 `z ↔ zh` 后，输入 `zs` 或 `vs` 应能看到两边的候选。
+
+保存后重新部署 Rime，使新的 schema 和 prism 生效。
+
 ## 薄荷的模糊拼音<Badge type="tip" text="^2025.11.19" />
 薄荷输入法内的薄荷拼音默认关闭了除了自动纠错外的模糊拼音。
 
@@ -172,30 +230,28 @@ nin xing wo jin lai, jin lai jin mu qin。
 ```yaml
 patch:
   'speller/algebra/+':
-     - erase/^xx$/ # 首选保留
-     - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
-     - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
-     - derive/([aei])n$/$1ng/ # en => eng, in => ing
-     - derive/([aei])ng$/$1n/ # eng => en, ing => in
-     - derive/([iu])an$/$lan/ # ian => iang, uan => uang
-     - derive/([iu])ang$/$lan/ # iang => ian, uang => uan
-     - derive/([aeiou])ng$/$1gn/        # dagn => dang
-     - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
-     - derive/ong$/on/                  # zhonguo => zhong guo
-     - abbrev/^([a-z]).+$/$1/ #简拼（首字母）
-     - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
+    - erase/^xx$/ # 首选保留
+    - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
+    - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
+    - derive/([aei])n$/$1ng/ # an, en, in => ang, eng, ing
+    - derive/([aei])ng$/$1n/ # ang, eng, ing => an, en, in
+    - derive/([aeiou])ng$/$1gn/        # dagn => dang
+    - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
+    - derive/ong$/on/                  # zhonguo => zhong guo
+    - abbrev/^([a-z]).+$/$1/ #简拼（首字母）
+    - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
 ```
 
 ![使用custom覆盖](/image/guide/fuzzyPinyinMintCustom.webp)
 
->  选择的是`'speller/algebra/+'`，而不是`'speller/algebra'`；前者相比后者，后者是直接覆盖，前者是追加。
+> 这里选择的是 `'speller/algebra/+'`，而不是 `'speller/algebra'`：前者在原数组末尾追加规则，后者直接覆盖整个数组。
 
 
-保存并重新部署rime，这个时候，在编译阶段`rime_mint.custom.yaml`内`speller/algebra`会覆盖`rime_mint.schema.yaml`内的`speller/algebra`部分。
+保存并重新部署 Rime 后，`rime_mint.custom.yaml` 中的规则会在编译阶段追加到 `rime_mint.schema.yaml` 的 `speller/algebra` 数组末尾。
 
 ::: warning 警告
 
-注意⚠️: 样例里面演示 `rime_mint` 方案的模糊拼音，也就是全拼的模糊拼音。如果你使用的是双拼和全拼的混合方案，比如薄荷内地`rime_mint_flypy`。那么需要注意`speller/algebra`内地正则顺序。不能使用`speller/algebra/+`来追加内容，需要使用`speller/algebra`来覆盖内容，确保模糊拼音的优先级，高于双拼的优先级:
+注意⚠️：样例演示的是 `rime_mint` 全拼方案。如果使用双拼或双拼混输方案，例如薄荷输入法的 `rime_mint_flypy`，需要按照上一节说明调整 `speller/algebra` 的规则顺序。不能使用 `speller/algebra/+` 追加模糊音规则，而要使用 `speller/algebra` 覆盖完整规则，确保模糊音派生发生在双拼键位转换之前：
 
 ![使用custom覆盖，模糊拼音优先级高于双拼](/image/guide/fuzzyPinyinMintCustomFlypy.webp)
 
