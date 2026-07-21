@@ -172,17 +172,46 @@ nin xing wo jin lai, jin lai jin mu qin。
 使用自动纠错，可以让我们在输入的时候，一些情况下打错拼音也可以输入我们想要的。
 > 注意: 自动纠错参考自『雾凇拼音』，此处特别感谢。
 
-## 双拼方案中的模糊拼音 <Badge type="tip" text="^2026.07.21" />
+## 薄荷全拼方案的模糊拼音 <Badge type="tip" text="^2025.11.19" />
 
-双拼方案的 `speller/algebra` 仍然从词典中的完整拼音开始处理，然后才通过后续的 `xform` 转换成双拼键码。因此，双拼方案里的模糊音规则写成全拼形式是正常的。
+薄荷输入法的全拼方案 `rime_mint` 默认关闭了模糊音，但保留了自动纠错。需要模糊音时，可以取消 `rime_mint.schema.yaml` 中对应规则的注释：
 
-规则顺序非常重要：
+![模糊拼音部分](/image/guide/fuzzyPinyinMintSchema.webp)
+
+如果不想直接修改方案文件，也可以在 `rime_mint.custom.yaml` 中追加模糊音规则：
+
+```yaml
+patch:
+  'speller/algebra/+':
+    - erase/^xx$/ # 首选保留
+    - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
+    - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
+    - derive/([aei])n$/$1ng/ # an, en, in => ang, eng, ing
+    - derive/([aei])ng$/$1n/ # ang, eng, ing => an, en, in
+    - derive/([aeiou])ng$/$1gn/        # dagn => dang
+    - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
+    - derive/ong$/on/                  # zhonguo => zhong guo
+    - abbrev/^([a-z]).+$/$1/ #简拼（首字母）
+    - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
+```
+
+![使用custom覆盖](/image/guide/fuzzyPinyinMintCustom.webp)
+
+这里使用 `'speller/algebra/+'`：它把规则追加到现有数组末尾；`'speller/algebra'` 则会覆盖整个数组。对于没有双拼键位转换的 `rime_mint` 全拼方案，直接追加即可。
+
+保存并重新部署 Rime 后，custom 中的规则会在编译阶段合并到 `rime_mint.schema.yaml` 的 `speller/algebra` 数组末尾。
+
+## 薄荷双拼方案的模糊拼音 <Badge type="tip" text="^2026.07.22" />
+
+薄荷输入法的 `double_pinyin_flypy` 是小鹤双拼方案，`rime_mint_flypy` 是全拼与小鹤双拼混输方案。它们的 `speller/algebra` 都先处理词典中的完整拼音，再通过后续的 `xform` 转换成小鹤键码。因此，双拼方案中的模糊音规则仍然写成全拼形式。
+
+规则必须按照以下顺序执行：
 
 1. 如果词典拼音带声调，先去除声调。
 2. 再执行模糊音的 `derive` 规则。
-3. 最后执行小鹤双拼等键位转换规则。
+3. 最后执行小鹤双拼的键位转换规则。
 
-以小鹤双拼为例，应复制原方案完整的 `speller/algebra` 到 `double_pinyin_flypy.custom.yaml`，在去声调规则之后、双拼转换规则之前插入模糊音规则：
+以 `double_pinyin_flypy` 为例：先把 `double_pinyin_flypy.schema.yaml` 中完整的 `speller/algebra` 复制到 `double_pinyin_flypy.custom.yaml`，再把模糊音规则插入去声调规则之后、小鹤转换规则之前。配置 `rime_mint_flypy` 时，同样应复制并修改对应方案的完整规则。
 
 ```yaml
 patch:
@@ -207,55 +236,20 @@ patch:
     # ……其余 xform/xlit 规则不可省略
 ```
 
-不能使用 `"speller/algebra/+"` 把模糊音规则追加到末尾，因为此时完整拼音已经转换成双拼键码，针对 `zh`、`eng` 等完整拼音的正则将无法匹配。
+::: warning 双拼方案不能使用追加写法
 
-测试时也要输入双拼键码，而不是模糊全拼：
+不要使用 `"speller/algebra/+"` 把模糊音规则追加到末尾。追加规则执行时，完整拼音已经转换成双拼键码，针对 `zh`、`eng` 等完整拼音的正则将无法匹配。必须使用 `"speller/algebra"` 覆盖完整数组，并确保模糊音派生发生在双拼键位转换之前。
+
+![使用custom覆盖，模糊拼音优先级高于双拼](/image/guide/fuzzyPinyinMintCustomFlypy.webp)
+
+:::
+
+测试时应输入双拼键码，而不是模糊全拼：
 
 - 小鹤 `shen = uf`、`sheng = ug`；启用 `en ↔ eng` 后，输入 `uf` 或 `ug` 应能看到两边的候选。
 - 小鹤 `zong = zs`、`zhong = vs`；启用 `z ↔ zh` 后，输入 `zs` 或 `vs` 应能看到两边的候选。
 
 保存后重新部署 Rime，使新的 schema 和 prism 生效。
-
-## 薄荷的模糊拼音<Badge type="tip" text="^2025.11.19" />
-薄荷输入法内的薄荷拼音默认关闭了除了自动纠错外的模糊拼音。
-
-如果你喜欢模糊拼音，可以参考上文，并对`rime_mint.schema.yaml`文件中的模糊拼音部分的注释进行删除：
-![模糊拼音部分](/image/guide/fuzzyPinyinMintSchema.webp)
-
-删除后，重新部署rime输入法以应用薄荷拼音的新配置。
-
-当然，你也可以在`rime_mint.custom.yaml`内追加内容，达到覆写`rime_mint.schema.yaml`文件的目的。
-
-在`rime_mint.custom.yaml`内追加内容：
-```yaml
-patch:
-  'speller/algebra/+':
-    - erase/^xx$/ # 首选保留
-    - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
-    - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
-    - derive/([aei])n$/$1ng/ # an, en, in => ang, eng, ing
-    - derive/([aei])ng$/$1n/ # ang, eng, ing => an, en, in
-    - derive/([aeiou])ng$/$1gn/        # dagn => dang
-    - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
-    - derive/ong$/on/                  # zhonguo => zhong guo
-    - abbrev/^([a-z]).+$/$1/ #简拼（首字母）
-    - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
-```
-
-![使用custom覆盖](/image/guide/fuzzyPinyinMintCustom.webp)
-
-> 这里选择的是 `'speller/algebra/+'`，而不是 `'speller/algebra'`：前者在原数组末尾追加规则，后者直接覆盖整个数组。
-
-
-保存并重新部署 Rime 后，`rime_mint.custom.yaml` 中的规则会在编译阶段追加到 `rime_mint.schema.yaml` 的 `speller/algebra` 数组末尾。
-
-::: warning 警告
-
-注意⚠️：样例演示的是 `rime_mint` 全拼方案。如果使用双拼或双拼混输方案，例如薄荷输入法的 `rime_mint_flypy`，需要按照上一节说明调整 `speller/algebra` 的规则顺序。不能使用 `speller/algebra/+` 追加模糊音规则，而要使用 `speller/algebra` 覆盖完整规则，确保模糊音派生发生在双拼键位转换之前：
-
-![使用custom覆盖，模糊拼音优先级高于双拼](/image/guide/fuzzyPinyinMintCustomFlypy.webp)
-
-:::
 
 ## u/ü与v映射 <Badge type="tip" text="^2024.10.02" />
 我们学习拼音的过程中，会学习到`un`和`ün`这样的复韵母，以及`u`和`ü`这样的单韵母。

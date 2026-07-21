@@ -168,17 +168,45 @@ Through fuzzy pinyin, you can also enable automatic error correction (to a certa
 Using automatic error correction can allow us to input what we want even when we make some mistakes in typing.
 > Note: The automatic error correction is based on "Wusong Pinyin," and special thanks to them for the reference.
 
-## Fuzzy Pinyin in double-Pinyin schemes <Badge type="tip" text="^2026.07.21" />
+## Fuzzy Pinyin in Mint Full Pinyin <Badge type="tip" text="^2025.11.19" />
 
-A double-Pinyin scheme still starts its `speller/algebra` pipeline with the full Pinyin spellings stored in the dictionary. Later `xform` rules convert those spellings into double-Pinyin key codes. It is therefore normal for fuzzy rules in a double-Pinyin scheme to be written as full-Pinyin regular expressions.
+The Mint Full Pinyin scheme, `rime_mint`, disables fuzzy Pinyin by default while keeping automatic typo correction enabled. To enable fuzzy Pinyin, uncomment the corresponding rules in `rime_mint.schema.yaml`:
 
-The order of the rules is important:
+![Fuzzy Pinyin Section](/image/guide/fuzzyPinyinMintSchema.webp)
+
+Alternatively, append the fuzzy rules in `rime_mint.custom.yaml` so that you do not have to edit the scheme file directly:
+
+```yaml
+patch:
+  'speller/algebra/+':
+    - erase/^xx$/ # Keep the original spelling
+    - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
+    - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
+    - derive/([aei])n$/$1ng/ # an, en, in => ang, eng, ing
+    - derive/([aei])ng$/$1n/ # ang, eng, ing => an, en, in
+    - derive/([aeiou])ng$/$1gn/        # dagn => dang
+    - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
+    - derive/ong$/on/                  # zhonguo => zhong guo
+    - abbrev/^([a-z]).+$/$1/ # Abbreviation (first letter)
+    - abbrev/^([zcs]h).+$/$1/ # Abbreviation (zh, ch, sh)
+```
+![using Custom](/image/guide/fuzzyPinyinMintCustom.webp)
+
+This example uses `'speller/algebra/+'`, which appends rules to the existing array. In contrast, `'speller/algebra'` replaces the entire array. Appending is sufficient for the `rime_mint` full-Pinyin scheme because it has no double-Pinyin key conversion.
+
+After saving and redeploying Rime, the custom rules are merged at the end of the `speller/algebra` array from `rime_mint.schema.yaml`.
+
+## Fuzzy Pinyin in Mint Double Pinyin <Badge type="tip" text="^2026.07.22" />
+
+Mint's `double_pinyin_flypy` is a Xiaohe double-Pinyin scheme, while `rime_mint_flypy` mixes full Pinyin with Xiaohe. Both begin the `speller/algebra` pipeline with full Pinyin spellings from the dictionary and later convert them into Xiaohe key codes with `xform`. It is therefore normal for their fuzzy rules to be written as full-Pinyin regular expressions.
+
+The rules must run in this order:
 
 1. Remove tone marks first if the dictionary contains tone-marked Pinyin.
 2. Apply the fuzzy `derive` rules.
-3. Apply the key-mapping rules for Xiaohe or another double-Pinyin layout.
+3. Apply the Xiaohe key-mapping rules.
 
-For Xiaohe, copy the scheme's complete `speller/algebra` into `double_pinyin_flypy.custom.yaml`, then insert the fuzzy rules after tone normalization and before the double-Pinyin transformations:
+For `double_pinyin_flypy`, copy the complete `speller/algebra` from `double_pinyin_flypy.schema.yaml` into `double_pinyin_flypy.custom.yaml`, then insert the fuzzy rules after tone normalization and before the Xiaohe transformations. Follow the same process with the corresponding files when configuring `rime_mint_flypy`.
 
 ```yaml
 patch:
@@ -203,7 +231,13 @@ patch:
     # ...do not omit the remaining xform/xlit rules
 ```
 
-Do not append these fuzzy rules with `"speller/algebra/+"`. By the time appended rules run, the full spellings have already been converted into double-Pinyin key codes, so patterns matching `zh`, `eng`, and similar spellings can no longer match.
+::: warning Do not append rules in double-Pinyin schemes
+
+Do not use `"speller/algebra/+"` to append fuzzy rules. When appended rules run, the full spellings have already been converted into double-Pinyin key codes, so patterns matching `zh`, `eng`, and similar spellings can no longer match. Replace the complete array with `"speller/algebra"` and keep fuzzy derivation before the double-Pinyin conversion.
+
+![Using custom override, fuzzy pinyin priority higher than double pinyin](/image/guide/fuzzyPinyinMintCustomFlypy.webp)
+
+:::
 
 Test with double-Pinyin key codes rather than fuzzy full-Pinyin spellings:
 
@@ -211,43 +245,6 @@ Test with double-Pinyin key codes rather than fuzzy full-Pinyin spellings:
 - In Xiaohe, `zong = zs` and `zhong = vs`. With `z ↔ zh` enabled, both `zs` and `vs` should offer candidates from both spellings.
 
 Redeploy Rime after saving so that it rebuilds the schema and prism.
-
-## Fuzzy Pinyin in Oh-my-rime <Badge type="tip" text="^2025.11.19" />
-By default, the fuzzy Pinyin feature, except for automatic error correction, is disabled in Mint Pinyin.
-
-If you prefer to use fuzzy Pinyin, you can refer to the previous text and remove the comments in the fuzzy Pinyin section of the `rime_mint.schema.yaml` file:
-![Fuzzy Pinyin Section](/image/guide/fuzzyPinyinMintSchema.webp)
-
-After removing the comments, redeploy the Rime input method to apply the new configuration for Mint Pinyin.Alternatively, you can add content to the `rime_mint.custom.yaml` file to override the settings in the `rime_mint.schema.yaml` file.
-
-To add content in `rime_mint.custom.yaml`:
-```yaml
-patch:
-  'speller/algebra/+':
-    - erase/^xx$/ # Keep the original spelling
-    - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
-    - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
-    - derive/([aei])n$/$1ng/ # an, en, in => ang, eng, ing
-    - derive/([aei])ng$/$1n/ # ang, eng, ing => an, en, in
-    - derive/([aeiou])ng$/$1gn/        # dagn => dang
-    - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
-    - derive/ong$/on/                  # zhonguo => zhong guo
-    - abbrev/^([a-z]).+$/$1/ # Abbreviation (first letter)
-    - abbrev/^([zcs]h).+$/$1/ # Abbreviation (zh, ch, sh)
-```
-![using Custom](/image/guide/fuzzyPinyinMintCustom.webp)
-
-> This example uses `'speller/algebra/+'` rather than `'speller/algebra'`: the former appends rules to the existing array, while the latter replaces the entire array.
-
-After saving and redeploying Rime, the rules from `rime_mint.custom.yaml` are appended to the `speller/algebra` array from `rime_mint.schema.yaml` during compilation.
-
-::: warning Warning
-
-Note ⚠️: This example demonstrates fuzzy Pinyin for the full-Pinyin `rime_mint` scheme. For a double-Pinyin or mixed scheme such as `rime_mint_flypy`, follow the ordering described in the previous section. Do not use `speller/algebra/+` to append the fuzzy rules. Override the complete `speller/algebra` instead, so that fuzzy derivation runs before the double-Pinyin key conversion:
-
-![Using custom override, fuzzy pinyin priority higher than double pinyin](/image/guide/fuzzyPinyinMintCustomFlypy.webp)
-
-:::
 
 ## Mapping of u/ü and v <Badge type="tip" text="^2024.10.02" />
 
