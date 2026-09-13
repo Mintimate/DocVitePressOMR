@@ -4,31 +4,26 @@ title: 在线体验
 head:
   - - meta
     - name: keywords
-      content: 薄荷方案,效果展示,薄荷使用效果,在线rime输入
-description: 基于 Fcitx5.js 实现的在线体验薄荷方案。可以体验基础功能，如日期、时间、农历、计算器等。
+      content: 薄荷输入法,oh-my-rime,Rime在线体验,小鹤双拼,全拼,五笔,拆字反查
+description: 在浏览器中加载薄荷输入法预构建方案包，切换全拼、双拼或五笔，体验中文输入、拆字反查、日期时间和计算器。功能以所加载的方案包为准。
 aside: true
 ---
 
 # 在线体验
-<rime/>
 
-::: warning 警告
+在浏览器中试用薄荷输入法。一个方案包可以包含多种输入方案，加载后可通过“当前方案”切换；网页可用的方案与功能取决于你加载的包。
 
-- 请先下载预构建包(薄荷输入法方案): [oh-my-rime-online.zip](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/oh-my-rime-online.zip)
-- 如果**加载错误的 zip，请刷新页面后重新加载 zip**。
+::: tip 开始使用
 
-友情构建♥️:
-- [雾凇输入法方案-在线体验包](https://cnb.cool/Mintimate/rime/DocVitePressOMR/-/releases/latest/download/rime-ice-online.zip)
+1. 下载[薄荷在线体验包（ZIP）](https://cnb.cool/Mintimate/rime/oh-my-rime/-/releases/download/latest/oh-my-rime-online.zip)，无需解压。
+2. 将 ZIP 拖入下方加载区，或点击选择文件；等待出现“已加载”。
+3. 电脑端先将系统输入法切换为 **ABC / 英文**，再选择包内的输入方案并开始输入，避免系统输入法与网页输入法同时处理按键。
+
+友情构建：也可以加载[雾凇在线体验包](https://cnb.cool/Mintimate/rime/DocVitePressOMR/-/releases/latest/download/rime-ice-online.zip)。页面内的功能示例以薄荷为准，其他方案包的输入编码可能不同。
 
 :::
 
-## 使用方法
-
-等待网页加载完毕后，切换电脑本地的输入法为英文(ABC)，之后即可在上方输入。部分基本操作：
-- `Ctrl + ~` 切换输入方式，如: `小鹤双拼-薄荷定制`。
-- `Uu` 为拆字模式。
-- `date`、`time` 和 `lunar` 为日期、时间、农历。
-- `=` 开始进行计算器。
+<rime/>
 
 ## 特别鸣谢
 感谢

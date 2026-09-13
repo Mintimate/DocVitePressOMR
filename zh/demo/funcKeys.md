@@ -5,12 +5,12 @@ head:
   - - meta
     - name: keywords
       content: 薄荷拼音,功能键,快捷键,Lua效果
-description: 使用薄荷拼音，可以使用的相关快捷键。借助Lua实现的一些功能快捷键。比如： 自动输入当天日期、时间和人民币大小写等。在rime输入法上也可以实现快捷输入。
+description: 薄荷输入法的功能输入编码：orq 输入日期、osj 输入时间、onl 输入农历，R 转换人民币大写，N 查询日期，= 计算表达式。
 aside: true
 ---
 
 # 特殊功能键
-借助lua脚本，薄荷拼音实现了一些特定的功能键：
+借助 Lua 脚本，薄荷输入法支持通过特定编码输入以下内容。在输入法的中文模式下依次输入编码，注意大小写，再从候选区选择结果：
 - 时间/星期/日期/节气等打印
 - 大写人民币打印
 - 农历日期打印/转换
@@ -18,7 +18,7 @@ aside: true
 
 ## 时间/星期/日期/节气 <Badge type="tip" text="^2025.11" />
 
-在 [7ae364ea06](https://github.com/Mintimate/oh-my-rime/commit/2c53f68cf4bb9461bda82e1b2862307ae364ea06) 版本后之前，使用多个 Lua 脚本实现时间(time)、星期(week)、日期(date)的打印。
+在 [7ae364ea06](https://github.com/Mintimate/oh-my-rime/commit/2c53f68cf4bb9461bda82e1b2862307ae364ea06) 版本之前，使用多个 Lua 脚本实现时间(time)、星期(week)、日期(date)的打印。
 
 但是在这个版本之后，AMZ 推送了 [shijian.lua](https://github.com/Mintimate/oh-my-rime/blob/8c8fb9c40a8e4bdff8a325049e96119f6699c965/lua/shijian.lua) 脚本来实现时间等信息的打印。
 
@@ -42,15 +42,13 @@ aside: true
 ![覆写date_format](/image/demo/overrideDateFormat.webp)
 
 ## 大写人民币打印
-这个大写人民币打印就比较有意思了，使用大写字母`R`进行激活，后续输入键盘上的数字键（小键盘上的无效，要字母上方的数字）：
+输入大写字母 `R`，再输入金额数字即可生成人民币大写候选，例如 `R123.45`。数字键的处理方式还受[小键盘数字处理器配置](/zh/guide/luaExtensions.html)影响。
 ![大写人民币](/image/demo/rmbKey.webp)
 
 之后，选择候选项，你可以使用方向键进行选择，使用空格进行选中；也可以使用 `Ctrl` + `数字键`进行选中。
 
 ## 农历日期打印/转换
-如果你想要使用农历日期打印，那么需要知道，「中国的农历」英文叫：`Chinese lunar calendar`。
-
-所以，我设置的农历日期打印的先导词是`lunar`。如果你在输入法内输入改先导词后；可以把当天的日期转为农历日期输出。
+输入 `onl` 可以输出当天的农历日期。旧版说明和下方历史截图使用 `lunar`，当前默认编码请以上方的 `shijian.lua` 用法为准。
 
 如果你想查询某天的日期，对应的农历是几号，那么，可以使用前导字母`N`。后面使用数字键输入查询的日期即可。
 
@@ -61,7 +59,7 @@ aside: true
 
 > 实际上，这个功能我在 2024 年初就已经 PR 到上游代码 [baopaau/rime-lua-collection #3](https://github.com/baopaau/rime-lua-collection/pull/3) 了，但是因为一些原因，一直没有适配到薄荷内。
 
-如果你想调用计算器，那么只需要在输入法内输入`=`后输入计算等式即可：
+如果你想调用计算器，在输入法的中文模式下输入 `=` 后接表达式即可，例如 `=1+2`：
 
 ![简易计算器](/image/demo/luaCalculator.webp)
 

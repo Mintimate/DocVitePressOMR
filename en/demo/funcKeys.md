@@ -5,13 +5,13 @@ head:
   - - meta
     - name: keywords
       content: oh-my-rime, function keys, shortcuts, Lua effects
-description: With oh-my-rime, you can utilize various related shortcuts and function keys. Some of these function shortcuts are implemented using Lua, allowing for features like automatically inputting the current date, time, and Chinese currency in both numerals and words. These shortcuts can also be implemented within the rime input method.
+description: Oh-my-rime input codes for dates (orq), time (osj), lunar dates (onl), Chinese currency (R), date conversion (N), and calculator expressions (=).
 aside: true
 ---
 
 # Special Function Keys
 
-With the help of `Lua` scripts, Oh-my-rime has implemented some specific function keys:
+Oh-my-rime uses Lua scripts to generate the following content from input codes. Type each code in Chinese input mode, preserving its letter case, then choose a result from the candidates:
 - Time/Week/Date/Solar Terms printing
 - Capitalized Chinese currency printing
 - Lunar date printing/conversion
@@ -44,15 +44,13 @@ If you want to set the order of each date in `orq`, you can override the `date_f
 
 ## Capitalized Chinese Currency Printing
 
-This feature of printing capitalized Chinese currency is quite interesting. It is activated by using the uppercase letter "`R`" and then inputting the numeric keys on the keyboard (the keys above the letters, not the ones on the numpad):
+Type uppercase `R` followed by an amount, for example `R123.45`, to generate Chinese currency in words. Number-key behavior also depends on the [numeric keypad processor configuration](/en/guide/luaExtensions.html).
 ![Capitalized Chinese Currency](/image/demo/rmbKey.webp)
 
 Afterward, to select a candidate, you can use the arrow keys for selection and the spacebar to select; you can also use `Ctrl` + `number key` to select.
 
 ## Lunar Date Printing/Conversion
-If you want to print the lunar date, you need to know that the `"Chinese lunar calendar"` in English is: Chinese lunar calendar.
-
-Therefore, I set the leading word for printing the lunar date to `lunar`. If you enter the leading word in the input method, you can output the lunar date of the current day.
+Type `onl` to output today's lunar date. Older instructions and the historical screenshot below use `lunar`; follow the `shijian.lua` instructions above for the current default codes.
 
 If you want to query the lunar date of a certain day, you can use the leading letter `N`. Then enter the query date using the numeric keys.
 
@@ -63,7 +61,7 @@ Users have been eagerly requesting this feature, so starting from version [fca55
 
 > In fact, I had already submitted a pull request for this feature to the upstream code [baopaau/rime-lua-collection #3](https://github.com/baopaau/rime-lua-collection/pull/3) at the beginning of 2024, but for some reasons, it has not been adapted to the Mintimate input method until now.
 
-If you want to use the calculator, simply enter `=` followed by the calculation formula within the input method:
+In Chinese input mode, type `=` followed by an expression, such as `=1+2`, to use the calculator:
 
 ![Simple Calculator](/image/demo/luaCalculator.webp)
 

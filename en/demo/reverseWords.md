@@ -151,16 +151,14 @@ For example: When you type `Uuniuniuniu` on the keyboard, it will be interpreted
 
 ## Wubi Reverse Lookup
 
-In Oh-my-rime's Mint Pinyin mode, use `Uw` to activate the Wubi mode. Subsequent inputs will be interpreted using Wubi.
+In Mint Pinyin's Chinese input mode, type `Uw` to activate Wubi reverse lookup, then enter Wubi codes to find characters.
 
 For example: When you type `Uwq` on the keyboard, it will be interpreted as `q`. In the Wubi dictionary, it automatically retrieves the character `我` (me), which is convenient for combined character lookup.
 
 ![Wubi Reverse Lookup](/image/demo/reverseWubi.webp)
 
-The selected text translates to:
-
 ## Stroke Reverse Lookup
-In Oh-my-rime's Mint Pinyin mode, use `Ui` to activate the stroke mode, and the subsequent input content will be parsed using strokes.
+In Mint Pinyin's Chinese input mode, type `Ui` to activate stroke reverse lookup, then enter stroke codes to find characters.
 
 ::: danger Countdown to Removal
 
@@ -169,4 +167,4 @@ Considering that the stroke input method is used by too few people. We are consi
 :::
 
 ## Pinyin Reverse Lookup
-In Oh-my-rime's Wubi mode, use `Up` to activate the stroke mode, and the subsequent input content will be parsed using Pinyin.
+In Mint Wubi's Chinese input mode, type `Up` to activate Pinyin reverse lookup, then enter Pinyin to find characters.
