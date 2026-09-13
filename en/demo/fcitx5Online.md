@@ -34,4 +34,4 @@ After the webpage is loaded, switch your local input method to English (ABC), th
 - [EdgeOne Page](https://cnb.cool) for providing static hosting and CDN services.  
 - [CNB](https://cnb.cool) for offering pipeline builds and computational support.  
 
-Online Rime input experience, source code: [Github: rimeinn/fcitx5-rime.js](https://github.com/rimeinn/fcitx5-rime.js)  
+Online Rime input experience, source code: [Github: rimeinn/fcitx5-rime.js](https://github.com/rimeinn/fcitx5-rime.js), current version: [0.5.0](https://github.com/rimeinn/fcitx5-rime.js/releases/tag/0.5.0).

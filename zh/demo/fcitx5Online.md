@@ -35,4 +35,4 @@ aside: true
 - [EdgeOne Page](https://cnb.cool) 提供的静态托管和 CDN 服务。
 - [CNB](https://cnb.cool) 提供的流水线构建和算力支持。
 
-在线 Rime 输入体验，代码来源: [Github: rimeinn/fcitx5-rime.js](https://github.com/rimeinn/fcitx5-rime.js)
+在线 Rime 输入体验，代码来源: [Github: rimeinn/fcitx5-rime.js](https://github.com/rimeinn/fcitx5-rime.js)，当前版本: [0.5.0](https://github.com/rimeinn/fcitx5-rime.js/releases/tag/0.5.0)。
