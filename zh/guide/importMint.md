@@ -5,11 +5,13 @@
 
 但是，这一切对于一个新用户来说，可能比较复杂；在探索Rime的配置时候，建议使用他人配置好的模板，比如： 雾凇拼音。当然，也可以用本文的薄荷输入法（薄荷rime输入配置）。
 
-安装的方法有两种：
+安装的方法有三种：
+
 - **手动覆盖安装配置文件**: 在 rime 客户端下载和安装好的情况下，手动下载薄荷配置文件，将配置文件移动到配置目录内，然后重新部署即可。
 - 东风破安装薄荷配置: 适用于大部分的桌面端 rime 客户端，在配置了东风破的情况下，可以直接通过东风破一键导入薄荷配置方案。
+- **[使用桌面工具或 CLI](#⭐cli导入和更新薄荷)**：无需安装 Git，通过 Oh My Rime 工具导入和更新薄荷方案、模型与词库。
 
-本章节，主要介绍手动覆盖安装配置文件的方法。在文末介绍一下东风破的方法。
+本章节先介绍手动覆盖安装配置文件的方法，再介绍东风破和桌面工具 / CLI 的用法。
 
 ## 下载薄荷输入配置
 薄荷输入配置是使用[GPL 3.0](https://github.com/Mintimate/oh-my-rime/blob/main/LICENSE)的开源项目，这意味着你可以看到它的一切源代码，并且自己定制和更改，但是请遵守开源协议，不得用于商用。
@@ -41,7 +43,7 @@
 - Windows小狼毫: `%APPDATA%/Rime`
 - Linux ibus: `$HOME/.config/ibus/rime`
 - Linux Fcitx5: `$HOME/.local/share/fcitx5/rime`
-- Linux Fcitx5(Flatpak): `$HOME/.var/app/org.fcitx.Fcitx5/data/fcitx5`
+- Linux Fcitx5(Flatpak): `$HOME/.var/app/org.fcitx.Fcitx5/data/fcitx5/rime`
 - Android Fcitx(小企鹅): `/storage/emulated/0/Android/data/org.fcitx.fcitx5.android/files/data/rime/`
 
 macOS鼠须管和Windows的小狼毫可以通过软件打开配置文件的地址，比如macOS：
@@ -125,86 +127,148 @@ rime_dir="$HOME/.local/share/fcitx5/rime" bash rime-install Mintimate/oh-my-rime
 参考：
 - [rime-plum](https://github.com/rime/plum)
 
-## ⭐CLI导入和更新薄荷
+## ⭐桌面工具和 CLI 导入与更新薄荷 {#⭐cli导入和更新薄荷}
 
-为了方便不会使用 Git 的用户更新和安装薄荷，我们提供了 CLI 工具，可以一键安装和更新薄荷输入法。
+[Oh My Rime（OMR）](https://github.com/Mintimate/oh-my-rime-cli) 是薄荷配置管理工具，支持 macOS、Windows 和 Linux，无需安装 Git。虽然仓库仍叫 `oh-my-rime-cli`，现在已经同时提供**桌面图形界面**和**独立 CLI**；不熟悉命令行的用户可以直接使用桌面版。
 
-![oh-my-rime-cli](/image/guide/oh-my-rime-cli.webp)
+工具用于管理 Rime 配置，使用前请先[安装对应的 Rime 输入法客户端](./installRime)。从 v4.0.0 起，桌面版采用全新界面，并支持应用自动更新；旧 Go/Wails 版本需要先手动安装一次新版。
 
-下载地址：
+![OMR 桌面端：更新内容、目标目录和任务进度](/image/guide/oh-my-rime-app.webp)
 
-- [oh-my-rime-cli [Windows/Linux/MacOS]](https://cnb.cool/Mintimate/rime/oh-my-rime-cli/-/releases)
+以上为项目提供的界面示例，版本号以发布页为准。桌面版支持亮色、跟随系统和暗色模式。
 
-![oh-my-rime-cli](/image/guide/DownloadCli.webp)
+### 下载与安装
 
-项目源码: [oh-my-rime-cli](https://cnb.cool/Mintimate/rime/oh-my-rime-cli)
+请从项目发布页下载，按操作系统和处理器架构选择文件：
 
-下载后，Linux 和 macOS 用户在 Terminal 内提权执行即可：
-```bash
-# 提权
-chmod +x 「oh-my-rime-cli文件地址」
-# 执行(假设文件在当前目录且文件名为oh-my-rime-cli)
-./oh-my-rime-cli
-```
+- [GitHub Releases](https://github.com/Mintimate/oh-my-rime-cli/releases)
+- [CNB 镜像下载](https://cnb.cool/Mintimate/rime/oh-my-rime-cli/-/releases)
 
-至于 Windows 用户，双击运行即可。
+| 平台 | 桌面安装包 | 独立 CLI |
+| --- | --- | --- |
+| macOS Apple Silicon（M 系列） | `Oh-My-Rime_<版本>_macOS_arm64.dmg` | `cli-macos-arm64` |
+| macOS Intel | `Oh-My-Rime_<版本>_macOS_x64.dmg` | `cli-macos-x64` |
+| Windows x64 | `.msi` 或 `-setup.exe` | `cli-windows-x64.exe` |
+| Linux x64 | `.AppImage`、`.deb` 或 `.rpm` | `cli-linux-x64` |
 
-::: warning 警告
+一般选择正式版；标记为 **Pre-release** 的是测试版。`.app.tar.gz`、`.sig` 和 `latest.json` 用于应用自动更新，macOS 手动安装请选择 `.dmg`。
 
-因为我没有代码签名，所以文件可能会被杀毒软件误报，如果你遇到这种情况，可以尝试手动信任这个文件。
+- **macOS**：打开 DMG，将 `Oh My Rime.app` 拖入“应用程序”，再从“应用程序”启动。
+- **Windows**：运行 `.msi` 或 `-setup.exe`，按安装向导完成安装后启动。
+- **Linux**：根据发行版安装 `.deb` / `.rpm`，或者为 `.AppImage` 添加执行权限后运行。
 
-并且，认准 [oh-my-rime-cli 的项目地址](https://cnb.cool/Mintimate/rime/oh-my-rime-cli)，不要下载其他来源的文件。
+::: info 首次打开
+macOS 安装包目前使用 ad-hoc 签名，尚未通过 Apple 公证。如提示无法验证开发者，确认下载来源后，可在尝试打开应用后前往 **系统设置 → 隐私与安全性 → 仍要打开**，按系统提示确认。详见 [Apple 官方说明](https://support.apple.com/zh-cn/102445)。
+
+Windows 安装包目前未配置代码签名。请认准上述项目发布页并核对下载来源。
 :::
 
-原理图:
+### 使用桌面版更新配置
+
+1. 打开“方案更新”页，在右侧“目标目录”中选择正在使用的输入法目录；也可以点击文件夹按钮选择目录，或填写“自定义路径”。
+2. 确认目录后，点击所需的更新卡片即可开始任务。第一次安装薄荷时选择“薄荷方案”。自定义资源则先填写下载直链，再点击输入框旁的“更新”。
+3. 在“任务进度”中查看状态；遇到问题可打开“运行日志”，查看或复制本次会话日志。
+4. 提示更新完成后，在鼠须管、小狼毫、Fcitx5 或 iBus 中**重新部署 Rime**，使配置生效。
+
+| 更新内容 | 作用 |
+| --- | --- |
+| 薄荷方案 | 下载薄荷方案包并更新配置，保留已有的 `*.custom.yaml` 文件。 |
+| 万象模型 | 更新目标目录中的 `wanxiang-lts-zh-hans.gram`。使用模型还需按[语言模型配置](./languageModel)启用。 |
+| 万象词库 | 下载薄荷方案包，只更新其中的 `dicts/` 词库目录。 |
+| 自定义资源 | 接受 `.zip` 或 `.gram` 下载直链；ZIP 按方案方式更新，GRAM 写入 `wanxiang-lts-zh-hans.gram`。ZIP 内的文件应直接按 Rime 配置目录组织，避免额外套一层文件夹。 |
+
+工具会按平台提供目录预设：macOS 包含鼠须管和小企鹅 Fcitx5，Linux 包含 iBus、Fcitx5 和 Fcitx5 Flatpak。Windows 优先读取小狼毫注册表中的 `RimeUserDir`，读取失败时使用 `%APPDATA%\Rime`。如果安装过多个输入法，请确认选择的是当前使用的配置目录。
+
+::: tip 自定义配置与备份
+建议将个人修改写入 [`*.custom.yaml` 覆写文件](./configurationOverride)，直接修改方案自带文件的内容可能在更新时被覆盖。
+
+桌面版和 CLI 都会先将资源下载到临时目录，再备份已有的目标目录并写入更新；写入失败时尝试恢复备份。备份位于目标目录同级的 `<目录名>.backups` 中，例如 `Rime.backups`，更新成功后保留最近 3 份。首次导入且目标目录尚不存在时，不会创建旧配置备份。
+:::
+
+### 使用独立 CLI
+
+如果更习惯终端，可以下载表格中的独立 CLI。以下以 macOS Apple Silicon 为例，在终端进入下载文件所在目录后执行：
+
+```bash
+# 添加执行权限
+chmod +x ./cli-macos-arm64
+# 启动交互菜单
+./cli-macos-arm64
+```
+
+macOS Intel 用户将文件名替换为 `cli-macos-x64`，Linux x64 用户替换为 `cli-linux-x64`。`chmod +x` 是添加执行权限，不需要使用 `sudo` 提权。
+
+Windows 用户可以双击 `cli-windows-x64.exe`，或在文件所在目录打开 PowerShell 后运行：
+
+```powershell
+.\cli-windows-x64.exe
+```
+
+按提示输入操作编号并回车：
+
+| 输入 | 操作 |
+| --- | --- |
+| `1` | 更新薄荷方案 |
+| `2` | 更新万象模型 |
+| `3` | 更新万象词库 |
+| `4` | 输入自定义 `.zip` / `.gram` 下载直链 |
+| `q` | 退出 |
+
+选择操作后，macOS 和 Linux 会列出目录预设，输入编号选择，直接回车默认选择第 1 项；Windows 使用检测到的小狼毫目录。当前独立 CLI 不提供手动输入目标路径的交互入口，如需自定义目录，请使用桌面版。更新完成后仍需重新部署 Rime。
+
+### 配置更新流程
+
+桌面版和 CLI 共用更新流程；自定义 ZIP 按方案更新，自定义 GRAM 按模型更新。更新配置后，需要在输入法中重新部署：
 
 ```mermaid
 flowchart TD
-    A[🌟 启动程序 <br/> macOS/Linux使用终端<br/>Windows双击即可] --> B[🖥️ 检测操作系统]
-    B --支持的操作系统--> C[📋 显示主菜单]
-    B --不支持/检测失败--> I
-    
-    C --> D{"✨用户选择"}
-    D -->|① 更新方案| E[💼 下载薄荷方案包]
-    D -->|② 更新模型| F[🧠 下载万象模型]
-    D -->|③ 更新词库| G[📚 下载薄荷方案包<br/>提取词库]
-    D -->|④ 自定义| H[🔗 粘贴配置链接]
-    D -->|⏹️ 退出| I[👋 结束程序]
-    
-    E --> J[📂 选择输入法目录<br/>「Linux 和 macOS 需要」]
-    F --> J
-    G --> J
+    A{"选择启动方式"} -->|桌面版| B["确认目标目录<br/>点击更新内容"]
+    A -->|独立 CLI| C["选择操作编号<br/>按提示选择目录"]
+    B --> D["下载资源到临时目录"]
+    C --> D
+    D --> E["目标目录已存在时<br/>创建更新前备份"]
+    E --> F{"更新内容"}
+    F -->|薄荷方案 / 自定义 ZIP| G["更新方案文件<br/>保留已有 *.custom.yaml"]
+    F -->|万象模型 / 自定义 GRAM| H["替换模型文件"]
+    F -->|万象词库| I["只更新 dicts 目录"]
+    G --> J{"写入成功？"}
     H --> J
-    
-    J --> K{🛠️ 更新类型}
-    K -->|方案更新| L[📤 解压&替换方案包]
-    K -->|模型替换| M[💾 替换模型文件]
-    K -->|词库更新| N[🔄 更新词库]
-    K -->|自定义| O{🔍 文件类型}
-    
-    O -->|📦 ZIP文件| L
-    O -->|🧾 模型文件| M
-    
-    L --> P[✅ 更新成功！]
-    M --> P
-    N --> P
-    
-    P --> C
+    I --> J
+    J -->|是| K["保留最近 3 份备份"]
+    K --> L["在输入法中重新部署 Rime"]
+    J -->|否| M["有备份时尝试恢复<br/>无备份时清理不完整目录"]
+    M --> N["查看错误信息<br/>解决问题后重试"]
 
     style A fill:#7E57C2,stroke:#5E35B1,color:white,stroke-width:2px,stroke-dasharray:5
-    style I fill:#EF5350,stroke:#D32F2F,color:white,stroke-width:2px
+    style B fill:#42A5F5,stroke:#1976D2,color:white
     style C fill:#42A5F5,stroke:#1976D2,color:white
-    style D fill:#FFCA28,stroke:#FFA000,color:black,stroke-width:2px
-    style E fill:#26A69A,stroke:#00897B
-    style F fill:#5C6BC0,stroke:#3949AB
-    style G fill:#29B6F6,stroke:#039BE5
-    style H fill:#FF7043,stroke:#F4511E
-    style J fill:#AB47BC,stroke:#8E24AA,color:white
-    style K fill:#FFEE58,stroke:#FDD835,color:black
-    style L fill:#66BB6A,stroke:#43A047,color:white
-    style M fill:#5C6BC0,stroke:#3949AB,color:white
-    style N fill:#29B6F6,stroke:#039BE5,color:white
-    style O fill:#FFA726,stroke:#FB8C00,color:black
-    style P fill:#66BB6A,stroke:#43A047,color:white,stroke-width:2px
+    style D fill:#26A69A,stroke:#00897B,color:white
+    style E fill:#AB47BC,stroke:#8E24AA,color:white
+    style F fill:#FFCA28,stroke:#FFA000,color:black,stroke-width:2px
+    style G fill:#66BB6A,stroke:#43A047,color:white
+    style H fill:#5C6BC0,stroke:#3949AB,color:white
+    style I fill:#29B6F6,stroke:#039BE5,color:white
+    style J fill:#FFEE58,stroke:#FDD835,color:black,stroke-width:2px
+    style K fill:#66BB6A,stroke:#43A047,color:white
+    style L fill:#66BB6A,stroke:#43A047,color:white,stroke-width:2px
+    style M fill:#FFA726,stroke:#FB8C00,color:black
+    style N fill:#EF5350,stroke:#D32F2F,color:white,stroke-width:2px
     linkStyle default stroke:#90A4AE,stroke-width:2px
 ```
+
+### 更新工具本身
+
+桌面版启动时会自动检查应用新版本，也可以点击左下角的 **检查应用更新**。发现新版后查看更新说明，再点击 **下载并安装**，应用会验证更新包签名、安装并重启。
+
+![OMR 应用更新窗口：当前版本、测试版选项和检查结果](/image/guide/oh-my-rime-app-update.webp)
+
+截图展示的是当前渠道没有可用更新的状态。
+
+- 正式版默认仅接收正式版；测试版首次运行默认接收测试版，可通过 **接收测试版** 切换，设置会保留。
+- 更新 Rime 配置时不能同时安装应用更新。macOS 请从“应用程序”启动，不要在只读 DMG 中执行更新。
+- 应用内更新目前从 GitHub 检查和下载；遇到网络问题可稍后重试，或从 CNB 镜像手动下载安装包。
+- 旧 Go/Wails 版本需要先手动安装新版；独立 CLI 也需要从发布页手动下载更新。
+
+**应用更新**升级的是 OMR 工具；**方案更新**更新的是 Rime 配置、模型或词库，完成后需要重新部署输入法。
+
+更多说明和源码见 [oh-my-rime-cli 项目](https://github.com/Mintimate/oh-my-rime-cli)（[CNB 镜像](https://cnb.cool/Mintimate/rime/oh-my-rime-cli)）。
