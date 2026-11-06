@@ -43,7 +43,8 @@ description: Rime 和薄荷输入法配置覆写指南，说明 custom.yaml、pa
 | 覆写整个列表 | `speller/algebra: [...]` | 用你的列表替换原列表 |
 | 追加到列表末尾 | `"speller/algebra/+": [...]` | 保留原列表，并把新规则追加到末尾 |
 | 追加一个列表项 | `"key_binder/bindings/@next": {...}` | 常用于新增快捷键 |
-| 修改最后一个列表项 | `"switches/@last": {...}` | 常用于给 switches 追加或调整最后一个开关 |
+| 修改指定列表项的字段 | `"switches/@1/reset": 0` | 修改第二项的默认状态，索引从 0 开始；先确认对应的开关名称 |
+| 修改最后一个列表项 | `"switches/@last": {...}` | 替换最后一项，不是追加，也不会按开关名称查找 |
 | 修改含 `/` 的键名 | `"punctuator/symbols//email": [...]` | 键名本身含 `/` 时需要双斜杠转义 |
 
 推荐使用带引号的路径写法，例如 `"style/candidate_list_layout": linear`。不要轻易写成嵌套 map；如果只写 `style:` 再放一个子项，可能会把 `style` 下面其他配置整体清空。
@@ -341,6 +342,17 @@ patch:
 
 `punctuator/symbols//email` 里的双斜杠表示键名中真的包含 `/`，不是路径分隔符。
 
+如果希望单独按 `/`、`_` 时输出自身，可以保留其他标点配置，只合并这两项：
+
+```yaml
+patch:
+  "punctuator/half_shape/+":
+    "/": "/"
+    "_": "_"
+```
+
+如果已有 `punctuator/half_shape:` 块，直接修改块内对应的值即可。`commit` 是合法的标点模式，但使用 `import_preset: symbols` 时，把预设中的列表或字符串改成 `{ commit: … }` 映射可能导致配置合并失败。原理、部署检查和 `/` 立即上屏对符号编码的影响，见[让 `/` 输出自身](symbolsInput.html#literal-slash)。
+
 ### 拼音分隔符和单引号
 
 薄荷全拼的拼音分词由方案里的 `speller/delimiter` 控制。默认配置里的第一个字符是空格，表示拼音之间的默认分隔符；另一个字符用于手动分割拼音，例如输入容易歧义的拼音串时，可以手动插入分隔符帮助 Rime 切分音节。
@@ -542,11 +554,13 @@ use_preset_vocabulary: false
 # 这里是词库入口，负责引用其他词库文件
 import_tables:
   - dicts/custom_simple          # 自定义
-  - dicts/rime_mint.chars        # 单字词库（万象拼音词库基础版本）
-  - dicts/rime_mint.base         # 基础词库（万象拼音词库基础版本）
-  - dicts/rime_mint.correlation  # 关联词库（万象拼音词库基础版本）
-  - dicts/rime_mint.compatible   # 兼容词库（万象拼音词库基础版本）
-  - dicts/rime_mint.ext          # 联想词库（万象拼音词库基础版本）
+  - dicts/rime_mint.chars        # 单字（万象拼音词库）
+  - dicts/rime_mint.base         # 基础词（万象拼音词库）
+  - dicts/rime_mint.correlation  # 错音错字兼容（万象拼音词库）
+  - dicts/rime_mint.compatible   # 多音兼容（万象拼音词库）
+  - dicts/rime_mint.places       # 地名（万象拼音词库）
+  - dicts/rime_mint.artists      # 艺人姓名（万象拼音词库）
+  - dicts/rime_mint.famous       # 名人姓名（万象拼音词库）
   - dicts/other_kaomoji          # 颜文字表情（按`VV`呼出)
   - dicts/rime_ice.others        # 雾凇拼音 others词库（用于自动纠错）
   - dicts/my_custom_dicts        # 在 dicts 下，参考 rime_mint.chars.dict.yaml 文件新建的 my_custom_dicts.dict.yaml
@@ -554,6 +568,8 @@ import_tables:
   # - dicts/other_emoji            # Emoji(仅仅作为补充，实际使用一般是OpenCC生效)
 ...
 ```
+
+2026-10-15，万象上游重组词库并取消独立的 `lianxiang` 联想词库。基础词由 `rime_mint.base` 提供；`rime_mint.ext.dict.yaml` 仅保留为空词库以兼容旧配置，不再同步或默认加载。已有自定义 `import_tables` 中的 `dicts/rime_mint.ext` 可以移除。
 
 第三步，创建真正放词条的文件，例如 `dicts/my_custom_dicts.dict.yaml`。这个文件才写你的词条，格式可以参考薄荷内置的 `dicts/custom_simple.dict.yaml`：
 

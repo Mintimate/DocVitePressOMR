@@ -122,7 +122,7 @@ punctuator:
     "]": ["】", "]"]
 ```
 
-其中 `import_preset: symbols` 会先加载 `symbols.yaml` 中的配置，然后方案文件中的 `half_shape` 会覆盖部分映射。
+`import_preset: symbols` 会导入 `symbols.yaml` 的标点配置，再合并方案中的定义。字符串和列表可以替换原值；映射（例如 `{ commit: … }`）默认会递归合并，因此修改值的类型时需要留意冲突。
 
 默认配置中，直接输入单引号 `'` 会按半角标点映射输出中文引号 `「」`。如果你想让单引号直接输出英文单引号，可以在对应方案的 `.custom.yaml` 中覆写：
 
@@ -134,6 +134,31 @@ patch:
 ::: tip 提示
 拼音输入过程中的手动分词由 `speller/delimiter` 控制，和这里的 `punctuator/half_shape` 不是同一个配置。比如薄荷全拼可以在 `rime_mint.custom.yaml` 中覆写 ``"speller/delimiter": " `"`` 来调整拼音分隔符。
 :::
+
+### 让 `/` 输出自身 {#literal-slash}
+
+如果希望在中文半角模式下，单独按 `/` 直接输出 `/`，不再出现 `/`、`÷` 等候选，可以在对应方案的 `.custom.yaml` 中添加：
+
+```yaml
+patch:
+  "punctuator/half_shape/+":
+    "/": "/"
+    "_": "_"
+```
+
+这里的 `/+` 合并这两项修改，保留其他半角标点设置；不需要修改下划线时，可以省略 `_` 那一行。如果已有完整的 `punctuator/half_shape:` 块，直接把其中对应的两行改成上面的字符串写法即可，不要再重复定义同一个键。
+
+让 `/` 立即上屏后，就不能继续用它输入 `/fh`、`/sx` 等符号编码。需要保留这些功能时，应保留默认的候选列表设置。
+
+::: warning commit 合法，但导入预设时可能发生类型冲突
+`"/": { commit: "/" }` 是合法的 Rime 标点定义。不过，当前 `symbols.yaml` 中 `/` 是列表，`_` 是字符串；在使用 `import_preset: symbols` 时，将这些值改成 `{ commit: … }` 映射，可能在递归合并阶段报 `incompatible node type: commit`、`failed to merge tree: symbols:punctuator`，使新方案配置构建失败。
+
+这不是 YAML 缩进错误，也不代表 Rime 不支持 `commit`。标点组件还没有读到这份新配置。上面的字符串写法可以满足单独按键输出自身的需求，并避免这个合并冲突。
+
+字符串定义会确认当前标点候选，`commit` 定义会提交当前组合内容，两者不能在所有输入场景下视为等价。相关实现见 [Rime 配置合并](https://github.com/rime/librime/blob/1.17.0/src/rime/config/config_compiler.cc#L166)和[标点处理](https://github.com/rime/librime/blob/1.17.0/src/rime/gear/punctuator.cc#L202)。
+:::
+
+重新部署后，可以检查 `build/<方案名>.schema.yaml` 中 `punctuator/half_shape` 的实际值。如果仍是旧配置，先检查部署日志；仅看到部署结束，不能证明补丁已成功应用。
 
 ## 自定义符号
 

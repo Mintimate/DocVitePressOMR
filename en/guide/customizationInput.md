@@ -275,10 +275,8 @@ In a custom file, there can only be one `patch` entry. For example, if I have ov
 # encoding: utf-8
 
 patch:
-  "switches/@last":
-      name: emoji_suggestion
-      reset: 1
-      states: [ "😣️","😁️"]
+  # Emoji is the second switch in the current DoubleFly schema; indexes start at 0
+  "switches/@1/reset": 1
   "engine/translators/+":
     - table_translator@wubi86_jidian
   wubi86_jidian:
@@ -303,6 +301,8 @@ patch:
   # Code escape
   translator/preedit_format: []
 ```
+
+`@1` refers to the Emoji switch in the current DoubleFly schema. For another schema or a reordered `switches` list, use the actual index of `name: emoji_suggestion`. `@last` means the last item; it does not locate Emoji by name.
 
 ![only one patch in custom](/image/guide/onlyOnePatchInCustom.webp)
 

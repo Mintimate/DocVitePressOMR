@@ -281,10 +281,8 @@ patch:
 # encoding: utf-8
 
 patch:
-  "switches/@last":
-      name: emoji_suggestion
-      reset: 1
-      states: [ "😣️","😁️"]
+  # 当前小鹤双拼的第二项是 Emoji 开关，索引从 0 开始
+  "switches/@1/reset": 1
   "engine/translators/+":
     - table_translator@wubi86_jidian
   wubi86_jidian:
@@ -309,6 +307,8 @@ patch:
   # 编码转义
   translator/preedit_format: []
 ```
+
+`@1` 对应当前小鹤双拼的 Emoji 开关；使用其他方案或修改过 `switches` 顺序时，请按 `name: emoji_suggestion` 的实际位置调整索引。`@last` 只表示最后一项，不能用来按名称定位 Emoji。
 
 ![只能有一个patch](/image/guide/onlyOnePatchInCustom.webp)
 

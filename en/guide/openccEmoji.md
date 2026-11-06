@@ -18,34 +18,71 @@ At present, both of the above methods are good methods. Initially, Mint used bot
 ## Emoji in Mint Input Method
 Now, let's take a look at the Emoji in the Mint input method. In fact, the Emoji in the Mint input method has been revised many times. For example, previously it introduced Emoji from iOS 16, but the result was too many Emojis. When you enter the word "flower", the first 15 candidates were all Emojis, which greatly affected the input.
 
-Currently, the Pinyin category in Mint uses a small Emoji dictionary + OpenCC method to seek a balance.
-
-In the future, we may consider removing the dictionary part.
-
-If you don't want to see Emoji, you need to do two steps to close:
-1. Close the Emoji OpenCC filter;
-2. ~~Remove the small Emoji dictionary.~~ After 2024-S02 <Badge>[80dcec1878](https://github.com/Mintimate/oh-my-rime/commit/80dcec187865ef1ad20a2c31268cc95c435be385)</Badge>, the Emoji dictionary has been removed by default, no need to remove it again.
+Mint currently provides Emoji candidates through OpenCC. The small Emoji dictionary was removed from the default configuration after 2024-S02. To disable Emoji by default, adjust the switch below.
 
 
 ### Close Emoji's OpenCC
 
-Take Mint's full spelling (`rime_mint`) as an example. The definition of Emoji is in `rime_mint_schema.yaml`'s `engine/filters/simplifier@emoji_suggestion`. But in fact, the switch of Emoji is defined in `switches`:
+For Mint full-pinyin (`rime_mint`), `simplifier@emoji_suggestion` in the `engine/filters` list of `rime_mint.schema.yaml` loads the Emoji filter. The current schema's `switches` list starts with:
 ```yaml
 switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, 英文 ]
   - name: emoji_suggestion
     reset: 1
     states: [ "😣️","😁️"]
+  # Remaining switches omitted
 ```
 
-So, we can create a new `rime_mint.custom.yaml` file, and then add in it:
+For a compact patch that changes only one field, use its list index. Emoji is currently the second item and indexes start at `0`, so change its `reset` value at `@1` in `rime_mint.custom.yaml`:
 ```yaml
-  "switches/@last":
-      name: emoji_suggestion
-      reset: 0
-      states: [ "😣️","😁️"]
+patch:
+  # The second switch in the current schema is emoji_suggestion
+  "switches/@1/reset": 0
 ```
 
-In this way. Redeploy, you can close the Emoji filter in `rime_mint_schema.yaml`. And other Emoji OpenCC configurations are retained:
+If the file already has a `patch:` block, add the setting to that block instead of creating another one. For other schemas or a reordered switch list, first find the actual index of `name: emoji_suggestion`.
+
+::: tip @last and /+ are both valid syntax
+`@last` changes the last item and is appropriate when the target switch is actually last. The last switch in the current Mint full-pinyin schema is `ascii_punct`. Replacing it with an Emoji switch can also disable Emoji by default, but removes the punctuation switch and creates a duplicate Emoji switch.
+
+`switches/+` appends switches to the list; it does not update existing items by `name`. Appending a duplicate Emoji switch also overrode its initial state in our librime 1.17.0 test, but the compiled configuration still contained two switches with the same name. Use `/+` to add a new switch; to modify an existing one, check its position or replace the complete list.
+:::
+
+<details>
+<summary>Avoid numeric indexes: replace the complete switches list</summary>
+
+The following is the complete switch list for the current Mint full-pinyin schema. Each `name` makes its purpose visible; only Emoji's `reset` value changes to `0`. Choose either this approach or the index patch above:
+
+```yaml
+patch:
+  switches:
+    - name: ascii_mode
+      reset: 0
+      states: [ 中文, 英文 ]
+    - name: emoji_suggestion
+      reset: 0
+      states: [ "😣️", "😁️" ]
+    - name: full_shape
+      reset: 0
+      states: [ 半角, 全角 ]
+    - name: tone_display
+      reset: 0
+      states: [ 声杳, 声起 ]
+    - name: transcription
+      reset: 0
+      states: [ 简体, 繁体 ]
+    - name: ascii_punct
+      reset: 0
+      states: [ "。，", "．，" ]
+```
+
+This replaces the entire list. For another schema or existing custom switches, copy your own complete `switches` list before editing it. Any switches added upstream will also need to be added to your custom list manually.
+
+</details>
+
+Save and redeploy. Emoji will be off when the schema initializes, and you can still enable it through the schema menu or shortcut. `reset: 0` neither removes the filter nor prevents later toggling. Leave the following OpenCC settings unchanged:
 ```yaml
 # Emoji module
 emoji_suggestion:
@@ -54,7 +91,7 @@ emoji_suggestion:
   tips: all
   inherit_comment: false
 ```
-It's just that by default, the Emoji filter is turned off. You can still temporarily turn it on for use.
+If the change does not take effect, check `build/rime_mint.schema.yaml` in the user data directory. It should contain exactly one `name: emoji_suggestion`, with `reset: 0`. If the old value remains, check the deployment log, custom file name, and active schema.
 
 ### Removing the Small Emoji Dictionary <Badge type="tip" text="^2024.06" />
 

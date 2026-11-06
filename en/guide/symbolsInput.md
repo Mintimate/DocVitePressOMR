@@ -122,7 +122,7 @@ punctuator:
     "]": ["】", "]"]
 ```
 
-Where `import_preset: symbols` loads the configuration from `symbols.yaml` first, then the `half_shape` in the schema file overrides specific mappings.
+`import_preset: symbols` imports punctuation settings from `symbols.yaml` and merges the schema's definitions into them. Strings and lists can replace existing values; maps such as `{ commit: … }` are merged recursively by default, so changing a value's type can cause a conflict.
 
 By default, pressing apostrophe `'` directly follows the half-width punctuation mapping and outputs Chinese quotation marks `「」`. To make apostrophe output a literal ASCII apostrophe, override it in the corresponding schema `.custom.yaml`:
 
@@ -134,6 +134,31 @@ patch:
 ::: tip Note
 Manual pinyin segmentation while composing is controlled by `speller/delimiter`, which is separate from `punctuator/half_shape`. For example, Mint full-pinyin can override ``"speller/delimiter": " `"`` in `rime_mint.custom.yaml` to adjust the pinyin delimiter.
 :::
+
+### Output a Literal `/` {#literal-slash}
+
+To make a standalone `/` keypress output `/` immediately in Chinese half-width mode, without offering `/`, `÷`, or other candidates, add the following to the corresponding schema's `.custom.yaml`:
+
+```yaml
+patch:
+  "punctuator/half_shape/+":
+    "/": "/"
+    "_": "_"
+```
+
+The `/+` suffix merges these two changes while preserving other half-width punctuation settings. Omit the `_` line if you do not need to change the underscore. If you already have a complete `punctuator/half_shape:` block, change the corresponding entries to these string values instead of defining the same key again.
+
+Once `/` commits immediately, it can no longer start symbol codes such as `/fh` or `/sx`. Keep the default candidate list if you need those features.
+
+::: warning commit is valid, but preset merging can encounter a type conflict
+`"/": { commit: "/" }` is a valid Rime punctuation definition. However, `/` is a list and `_` is a string in the current `symbols.yaml`. When using `import_preset: symbols`, changing these values to `{ commit: … }` maps can produce `incompatible node type: commit` and `failed to merge tree: symbols:punctuator` during recursive merging, preventing the new schema configuration from being built.
+
+This is not a YAML indentation error or a lack of support for `commit`. The punctuation component has not received the new configuration yet. The string values above meet the standalone-key requirement without this merge conflict.
+
+A string definition confirms the current punctuation candidate, while a `commit` definition commits the current composition. They are not equivalent in every input context. See the implementations of [Rime configuration merging](https://github.com/rime/librime/blob/1.17.0/src/rime/config/config_compiler.cc#L166) and [punctuation handling](https://github.com/rime/librime/blob/1.17.0/src/rime/gear/punctuator.cc#L202).
+:::
+
+After redeploying, inspect the actual `punctuator/half_shape` values in `build/<schema-name>.schema.yaml`. If the old configuration remains, check the deployment log. Deployment finishing alone does not prove the patch was applied successfully.
 
 ## Custom Symbols
 

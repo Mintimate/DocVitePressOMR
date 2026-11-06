@@ -43,7 +43,8 @@ A `custom.yaml` file usually has only one top-level `patch:`. If you need to cha
 | Override an entire list | `speller/algebra: [...]` | Replace the original list with your list |
 | Append to a list | `"speller/algebra/+": [...]` | Keep the original list and append new rules |
 | Append one list item | `"key_binder/bindings/@next": {...}` | Commonly used to add a key binding |
-| Modify the last list item | `"switches/@last": {...}` | Commonly used when adding or adjusting the last switch |
+| Modify a field in a list item | `"switches/@1/reset": 0` | Change the second item's default state; indexes start at 0, so check the switch name first |
+| Modify the last list item | `"switches/@last": {...}` | Replace the last item; this neither appends an item nor looks up a switch by name |
 | Modify a key containing `/` | `"punctuator/symbols//email": [...]` | Use a double slash when the key name itself contains `/` |
 
 Using quoted path syntax is recommended, for example `"style/candidate_list_layout": linear`. Avoid casually writing a nested map; writing only `style:` with one child may clear other settings under `style`.
@@ -342,6 +343,17 @@ patch:
 
 The double slash in `punctuator/symbols//email` means the key name really contains `/`; it is not a path separator.
 
+To make standalone `/` and `_` keypresses output themselves while preserving other punctuation settings, merge just these two entries:
+
+```yaml
+patch:
+  "punctuator/half_shape/+":
+    "/": "/"
+    "_": "_"
+```
+
+If you already have a `punctuator/half_shape:` block, change its corresponding values directly. `commit` is a valid punctuation mode, but with `import_preset: symbols`, changing a preset list or string to a `{ commit: … }` map can cause configuration merging to fail. See [Output a Literal `/`](symbolsInput.html#literal-slash) for the explanation, deployment checks, and the effect of immediately committing `/` on symbol codes.
+
 ### Pinyin Delimiter and Apostrophe
 
 Mint full-pinyin segmentation is controlled by `speller/delimiter` in the schema. The first character in the default value is a space, which is the normal separator between pinyin syllables. The other character is used for manual segmentation when a pinyin string is ambiguous.
@@ -543,11 +555,13 @@ use_preset_vocabulary: false
 # This is the dictionary entry file. It imports other dictionary files.
 import_tables:
   - dicts/custom_simple          # Custom
-  - dicts/rime_mint.chars        # Single character dictionary (Wanxiang Pinyin dictionary basic version)
-  - dicts/rime_mint.base         # Basic dictionary (Wanxiang Pinyin dictionary basic version)
-  - dicts/rime_mint.correlation  # Correlation dictionary (Wanxiang Pinyin dictionary basic version)
-  - dicts/rime_mint.compatible   # Compatible dictionary (Wanxiang Pinyin dictionary basic version)
-  - dicts/rime_mint.ext          # Association dictionary (Wanxiang Pinyin dictionary basic version)
+  - dicts/rime_mint.chars        # Single characters (Wanxiang Pinyin dictionary)
+  - dicts/rime_mint.base         # Basic vocabulary (Wanxiang Pinyin dictionary)
+  - dicts/rime_mint.correlation  # Mispronunciation and typo compatibility (Wanxiang Pinyin dictionary)
+  - dicts/rime_mint.compatible   # Multiple-pronunciation compatibility (Wanxiang Pinyin dictionary)
+  - dicts/rime_mint.places       # Place names (Wanxiang Pinyin dictionary)
+  - dicts/rime_mint.artists      # Artist names (Wanxiang Pinyin dictionary)
+  - dicts/rime_mint.famous       # Famous people’s names (Wanxiang Pinyin dictionary)
   - dicts/other_kaomoji          # Facial expressions (call out by pressing `VV`)
   - dicts/rime_ice.others        # Mist Pinyin others dictionary (for automatic error correction)
   - dicts/my_custom_dicts        # In dicts, refer to rime_mint.chars.dict.yaml file to create new my_custom_dicts.dict.yaml
@@ -555,6 +569,8 @@ import_tables:
   # - dicts/other_emoji            # Emoji (just as a supplement, usually effective by OpenCC)
 ...
 ```
+
+On 2026-10-15, Wanxiang reorganized its dictionaries and removed the standalone `lianxiang` association dictionary. `rime_mint.base` provides basic vocabulary. `rime_mint.ext.dict.yaml` is now an empty placeholder for older configurations; it is no longer synchronized or loaded by default. You can remove `dicts/rime_mint.ext` from existing custom `import_tables` lists.
 
 Third, create the file that actually stores your entries, such as `dicts/my_custom_dicts.dict.yaml`. This file contains your custom words. Its format can follow Mint's built-in `dicts/custom_simple.dict.yaml`:
 

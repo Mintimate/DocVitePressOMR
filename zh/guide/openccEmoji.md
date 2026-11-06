@@ -17,33 +17,70 @@ description: 薄荷输入法自带的OpenCC，帮助使用者在使用的过程�
 ## 薄荷输入法内Emoji
 现在，我们来看看薄荷输入法内的Emoji；实际上薄荷输入法的Emoji也改版多次，比如：之前有引入 iOS16 的Emoji，结果Emoji过多，输入`花`等文字，可能候选项的前15个，都是Emoji，过于影响输入了；
 
-目前薄荷内，拼音类别使用的是 小型Emoji字典 + OpenCC 的方式，谋求一个平衡。
-
-后续或许会考虑把字典部分也移除。
-
-如果你不希望出现Emoji，需要做两步操作关闭：
-1. 关闭Emoji的OpenCC过滤器；
-2. ~~移除小型Emoji词典。~~ 2024-S02 <Badge>[80dcec1878](https://github.com/Mintimate/oh-my-rime/commit/80dcec187865ef1ad20a2c31268cc95c435be385)</Badge> 后，默认已经移除了Emoji词典，无须再次移除。
+当前薄荷通过 OpenCC 提供 Emoji 候选。2024-S02 后，默认已经移除了小型 Emoji 词典；如果不希望默认出现 Emoji，调整下面的开关即可。
 
 ### 关闭Emoji的OpenCC
 
-以薄荷全拼（`rime_mint`)为例。Emoji的定义在`rime_mint_schema.yaml`的`engine/filters/simplifier@emoji_suggestion`。 但是，实际上，Emoji的开关在`switches`内有定义：
+以薄荷全拼（`rime_mint`）为例，`rime_mint.schema.yaml` 的 `engine/filters` 中通过 `simplifier@emoji_suggestion` 加载 Emoji 过滤器。当前方案的 `switches` 列表开头如下：
 ```yaml
 switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, 英文 ]
   - name: emoji_suggestion
     reset: 1
     states: [ "😣️","😁️"]
+  # 其余开关省略
 ```
 
-所以，我们可以新建一个`rime_mint.custom.yaml`文件，然后在里面添加：
+如果只修改一个字段，可以用精简补丁。当前 Emoji 是第二项，列表索引从 `0` 开始，因此在 `rime_mint.custom.yaml` 中修改 `@1` 的 `reset`：
 ```yaml
-  "switches/@last":
-      name: emoji_suggestion
-      reset: 0
-      states: [ "😣️","😁️"]
+patch:
+  # 当前方案的第二项是 emoji_suggestion
+  "switches/@1/reset": 0
 ```
 
-这样。重新部署，即可个`rime_mint_schema.yaml`内的Emoji过滤器关闭。并且其他Emoji OpenCC的配置保留：
+已有 `patch:` 时，把这一行加入现有块中，不要重复添加 `patch:`。其他方案或调整过开关顺序的配置，需要先找到 `name: emoji_suggestion` 的实际索引。
+
+::: tip @last 和 /+ 都是合法语法
+`@last` 修改最后一项，适用于目标开关确实位于末尾的情况。当前薄荷全拼的最后一项是 `ascii_punct`；用整个 Emoji 开关覆盖它，虽然也可能让 Emoji 默认关闭，但会丢失标点开关并产生重复的 Emoji 开关。
+
+`switches/+` 向列表末尾追加开关，不会根据 `name` 更新已有项。追加同名 Emoji 开关在本次 librime 1.17.0 实测中也能覆盖初始化状态，但编译结果仍有两个同名开关。因此，追加新开关可以用 `/+`，修改已有开关则需要确认其位置或完整覆写列表。
+:::
+
+<details>
+<summary>不想使用数字索引：完整覆写 switches 列表</summary>
+
+下面是当前薄荷全拼的完整开关列表，直接通过 `name` 就能看出每项用途，只将 Emoji 的 `reset` 改为 `0`。与上面的索引补丁二选一即可：
+
+```yaml
+patch:
+  switches:
+    - name: ascii_mode
+      reset: 0
+      states: [ 中文, 英文 ]
+    - name: emoji_suggestion
+      reset: 0
+      states: [ "😣️", "😁️" ]
+    - name: full_shape
+      reset: 0
+      states: [ 半角, 全角 ]
+    - name: tone_display
+      reset: 0
+      states: [ 声杳, 声起 ]
+    - name: transcription
+      reset: 0
+      states: [ 简体, 繁体 ]
+    - name: ascii_punct
+      reset: 0
+      states: [ "。，", "．，" ]
+```
+
+这会替换整个列表。使用其他方案或已有自定义开关时，应复制自己方案的完整 `switches` 再修改；上游新增开关后，也需要手动同步到这份列表。
+
+</details>
+
+保存并重新部署后，方案初始化时会关闭 Emoji；仍可通过方案菜单或快捷键临时开启。`reset: 0` 不会移除过滤器，也不会禁止之后切换开关。以下 OpenCC 配置无需修改：
 ```yaml
 # Emoji模块
 emoji_suggestion:
@@ -52,7 +89,7 @@ emoji_suggestion:
   tips: all
   inherit_comment: false
 ```
-只是默认情况，Emoji过滤被关闭。你依旧可以临时打开使用。
+如果修改后没有生效，检查用户目录下 `build/rime_mint.schema.yaml`：应只有一个 `name: emoji_suggestion`，且其 `reset` 为 `0`。若仍是旧值，再检查部署日志、补丁文件名和当前使用的方案。
 
 ### 移除小型Emoji词典 <Badge type="tip" text="^2024.06" />
 
