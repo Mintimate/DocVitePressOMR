@@ -1,203 +1,40 @@
 ---
 layout: doc
-title: AI MCP 服务
+title: AI MCP 服务（已下线）
 head:
   - - meta
     - name: keywords
-      content: 薄荷拼音,MCP,AI,知识库,Cursor,Windsurf,VS Code,Claude,Cherry Studio
+      content: 薄荷拼音,MCP,AI,知识库,服务下线
   - - meta
     - property: "og:description"
-      content: "薄荷输入法提供 MCP (Model Context Protocol) 服务，让 AI 助手直接查询薄荷输入法知识库。"
-description: 薄荷输入法提供 MCP 服务，让 AI 编辑器和助手可以直接查询薄荷输入法的知识库，获取配置教程、使用方法等信息。
+      content: "薄荷输入法对外 MCP 服务已下线。由于资源被滥用，长期日请求量达 120 万次，无法承担持续开支。"
+description: 薄荷输入法对外 MCP 服务已下线。由于资源被滥用，长期日请求量达 120 万次，无法承担持续开支。
 aside: true
 ---
 
-# AI MCP 服务 <Badge type="tip" text="New" />
+# AI MCP 服务 <Badge type="danger" text="已下线" />
 
-薄荷输入法提供了基于 [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) 的知识库查询服务。通过 MCP，你可以让 **AI 编辑器**（如 Cursor、Windsurf、VS Code 等）直接访问薄荷输入法的文档知识库，在与 AI 对话时获取准确的配置教程和使用指南。
+::: warning 服务下线公告
+薄荷输入法此前提供的对外 MCP 知识库查询服务已下线。
 
-> 简单来说：配置 MCP 后，你可以直接在 AI 编辑器中问关于薄荷输入法的问题，AI 会自动查询我们的知识库来回答你。
-
-## 什么是 MCP？
-
-MCP（Model Context Protocol，模型上下文协议）是由 Anthropic 提出的一项开放协议，用于标准化 AI 模型与外部数据源和工具之间的交互方式。你可以把它理解为 AI 助手的"插件系统"——通过 MCP，AI 可以调用外部工具来获取实时的、准确的信息，而不是仅仅依赖训练数据。
-
-```mermaid
-flowchart LR
-    A[👤 用户提问] --> B[🤖 AI 助手]
-    B -->|调用 MCP 工具| C[🔍 薄荷知识库]
-    C -->|返回相关文档| B
-    B --> D[💬 准确的回答]
-
-    classDef user fill:#ffe6e6,stroke:#ff4d4f,stroke-width:2px;
-    classDef ai fill:#e6f7ff,stroke:#1890ff,stroke-width:2px;
-    classDef kb fill:#f6ffed,stroke:#52c41a,stroke-width:2px;
-    
-    class A,D user;
-    class B ai;
-    class C kb;
-```
-
-## 服务信息
-
-| 项目 | 说明 |
-|------|------|
-| **服务地址** | `https://www.mintimate.cc/mcp` |
-| **传输协议** | Streamable HTTP |
-| **协议版本** | `2025-03-26` |
-| **可用工具** | `query_oh-my-rime` — 语义搜索薄荷输入法知识库 |
-|  | `get_download_links` — 获取客户端和配置包下载链接 |
-|  | `get_schema_list` — 获取支持的输入方案列表 |
-|  | `get_author_info` — 获取作者信息 |
-
-## 在 AI 编辑器中配置
-
-### Cursor
-
-在项目根目录创建 `.cursor/mcp.json` 文件，或者在 Cursor 的全局设置中添加：
-
-```json
-{
-  "mcpServers": {
-    "oh-my-rime-knowledge": {
-      "url": "https://www.mintimate.cc/mcp",
-      "transport": "streamable-http"
-    }
-  }
-}
-```
-
-### Windsurf
-
-在 Windsurf 的 MCP 配置文件中添加：
-
-```json
-{
-  "mcpServers": {
-    "oh-my-rime-knowledge": {
-      "serverUrl": "https://www.mintimate.cc/mcp",
-      "transport": "streamable-http"
-    }
-  }
-}
-```
-
-### VS Code（GitHub Copilot）
-
-在项目根目录创建 `.vscode/mcp.json` 文件：
-
-```json
-{
-  "servers": {
-    "oh-my-rime-knowledge": {
-      "type": "http",
-      "url": "https://www.mintimate.cc/mcp"
-    }
-  }
-}
-```
-
-### Claude Desktop
-
-在 Claude Desktop 的配置文件中添加（配置文件路径：macOS 为 `~/Library/Application Support/Claude/claude_desktop_config.json`，Windows 为 `%APPDATA%\Claude\claude_desktop_config.json`）：
-
-```json
-{
-  "mcpServers": {
-    "oh-my-rime-knowledge": {
-      "url": "https://www.mintimate.cc/mcp",
-      "transport": "streamable-http"
-    }
-  }
-}
-```
-
-### Cherry Studio
-
-在 Cherry Studio 的设置中，进入 **MCP 服务器** 配置页面，添加一个新的 Streamable HTTP 类型的服务器：
-
-```json
-{
-  "mcpServers": {
-    "oh-my-rime-knowledge": {
-      "isActive": true,
-      "name": "Oh My Rime Knowledge",
-      "type": "streamable-http",
-      "description": "薄荷输入法知识库查询",
-      "baseUrl": "https://www.mintimate.cc/mcp"
-    }
-  }
-}
-```
-
-::: warning 注意
-Cherry Studio 的配置格式与其他客户端不同，请注意使用 `baseUrl` 而非 `url`，使用 `type` 而非 `transport`，并且 `name` 和 `type` 字段为必填项。
+由于资源被滥用，服务长期日请求量达 **120 万次**，产生的持续开支已无法承担，因此决定下线该服务。
 :::
 
-::: tip 提示
-不同的 AI 编辑器/客户端配置格式可能略有差异，请参考对应工具的官方文档。以上配置仅供参考，核心是将 MCP 服务地址 `https://www.mintimate.cc/mcp` 配置到对应的 MCP 设置中。
-:::
+## 对现有用户的影响
 
-## 使用方法
+原服务地址 `https://www.mintimate.cc/mcp` 现仅保留静态下线说明页，不再提供 MCP 握手、工具列表和工具调用功能。
 
-配置完成后，你可以在 AI 对话中直接提问关于薄荷输入法的问题，AI 会自动选择合适的工具来回答。例如：
+如果你曾在 Cursor、Windsurf、VS Code、Claude Desktop、Cherry Studio 等客户端中配置此服务，请删除或禁用指向该地址的 MCP 配置（通常名为 `oh-my-rime-knowledge`），避免客户端继续连接和重试。原有接入示例已移除。
 
-- *"如何在 macOS 上安装薄荷输入法？"* → 调用 `query_oh-my-rime`
-- *"薄荷输入法怎么配置模糊拼音？"* → 调用 `query_oh-my-rime`
-- *"有哪些输入方案可以用？"* → 调用 `get_schema_list`
-- *"给我下载链接"* → 调用 `get_download_links`
-- *"薄荷输入法的作者是谁？"* → 调用 `get_author_info`
+## 继续查阅文档
 
-### 工具参数
+你仍可以通过本站阅读薄荷输入法的配置教程和使用指南：
 
-#### `query_oh-my-rime` — 知识库语义搜索
+- [配置教程](/zh/guide/)
+- [安装 Rime](/zh/guide/installRime)
+- [导入薄荷输入法](/zh/guide/importMint)
+- [常见问题](/zh/guide/faQ)
 
-| 参数 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `query` | string | ✅ | 自然语言查询，支持中英文。例如：`如何配置薄荷输入法` |
-| `keyword` | string | ❌ | 关键词过滤，多个关键词用英文分号分隔。例如：`macOS;安装;Rime` |
-| `top_k` | number | ❌ | 返回结果的最大数量（默认 5，范围 1-10） |
+感谢每一位使用过这项服务、支持薄荷输入法的朋友。如果它曾帮你解决一个配置问题，或让你少走一点弯路，这次尝试就有了意义。
 
-#### `get_download_links` — 获取下载链接
-
-| 参数 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `resource` | string | ❌ | 指定资源名称，可选值: `all`、`oh-my-rime`、`squirrel`、`weasel`、`fcitx5-rime`、`wanxiang-model`、`oh-my-rime-cli`。默认 `all` |
-
-#### `get_schema_list` — 获取输入方案列表
-
-无需参数，返回所有支持的输入方案及其激活状态。
-
-#### `get_author_info` — 获取作者信息
-
-无需参数，返回作者 Mintimate 的个人简介、博客、社交媒体链接及开源项目信息。
-
-::: info 说明
-MCP 工具的调用通常由 AI 助手自动完成，你只需要用自然语言提问即可，无需手动传递这些参数。
-:::
-
-## 技术实现
-
-本 MCP 服务基于 [EdgeOne Pages Cloud Functions](https://edgeone.ai/) 部署，使用了 CNB 知识库的向量语义检索能力。文档仓库的 Markdown 内容会自动向量化并建立索引，从而支持高精度的语义搜索。
-
-整体架构如下：
-
-```mermaid
-flowchart TD
-    A[AI 客户端] -->|MCP 协议<br/>Streamable HTTP| B[EdgeOne Cloud Function<br/>www.mintimate.cc/mcp]
-    B -->|语义检索 API| C[CNB 知识库<br/>向量索引]
-    C -->|返回匹配文档片段| B
-    B -->|MCP 响应| A
-    
-    D[文档仓库 Markdown] -->|自动向量化| C
-
-    classDef client fill:#e6f7ff,stroke:#1890ff,stroke-width:2px;
-    classDef server fill:#fff7e6,stroke:#ffa940,stroke-width:2px;
-    classDef kb fill:#f6ffed,stroke:#52c41a,stroke-width:2px;
-    classDef doc fill:#f9f0ff,stroke:#722ed1,stroke-width:2px;
-    
-    class A client;
-    class B server;
-    class C kb;
-    class D doc;
-```
+很遗憾，MCP 服务只能陪大家走到这里了。谢谢这一路的相伴，我们在薄荷输入法的文档里再见。愿你今后的每一次输入，都顺手、顺心。

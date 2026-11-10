@@ -3,5 +3,35 @@
     "buildCommand": "npm run build",
     "installCommand": "npm install",
     "outputDirectory": ".vitepress/dist",
-    "nodeVersion": "22.11.0"
+    "nodeVersion": "22.11.0",
+    "rewrites": [
+        {
+            "source": "/mcp",
+            "destination": "/mcp/index.html"
+        },
+        {
+            "source": "/mcp/*",
+            "destination": "/mcp/index.html"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/mcp",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=86400"
+                }
+            ]
+        },
+        {
+            "source": "/mcp/*",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=86400"
+                }
+            ]
+        }
+    ]
 }

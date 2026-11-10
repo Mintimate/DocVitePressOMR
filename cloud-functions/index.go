@@ -1,4 +1,4 @@
-// Oh My Rime Agent + MCP 后端 — EdgeOne Pages Go Cloud Function (Framework 模式)
+// Oh My Rime Agent 后端 — EdgeOne Pages Go Cloud Function (Framework 模式)
 //
 // 路由总览：
 //
@@ -10,13 +10,12 @@
 //	GET  /api/v1/mcp/tools     — Tool Use 工具列表（前端 AI 组件）
 //	POST /api/v1/mcp/tools/call — Tool Use 工具调用（前端 AI 组件）
 //	POST /api/v1/mcp/llm/chat  — Tool Use LLM 聊天（需验证码）
-//	ANY  /mcp                  — 标准 MCP Streamable HTTP 端点（外部 AI 客户端）
 //
 // 包结构：
 //
 //	internal/config/     — Config 结构、loadConfig、CORS 中间件、AI 客户端
 //	internal/knowledge/  — CNB 知识库 HTTP 客户端、结果格式化
-//	internal/handler/    — 各路由 handler（agent.go / rag.go / tooluse.go / mcp.go）
+//	internal/handler/    — 各路由 handler（agent.go / rag.go / tooluse.go）
 //	internal/captcha/    — 多提供商验证码服务（Cloudflare Turnstile 等）
 //	internal/middleware/  — 验证码中间件（session token 机制）
 package main
@@ -56,7 +55,7 @@ func main() {
 func registerRoutes(r *gin.Engine, cfg config.Config, aiClient *openai.Client, captchaMW *middleware.CaptchaMiddleware) {
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"service": "Oh My Rime Agent + MCP 后端",
+			"service": "Oh My Rime Agent 后端",
 			"status":  "running",
 			"endpoints": map[string]string{
 				"health":      "/api/v1/health",
@@ -64,7 +63,6 @@ func registerRoutes(r *gin.Engine, cfg config.Config, aiClient *openai.Client, c
 				"stream":      "/api/v1/chat/stream",
 				"agentStream": "/api/v1/agent/chat/stream",
 				"tools":       "/api/v1/mcp/tools",
-				"mcp":         "/mcp",
 			},
 		})
 	})
@@ -90,7 +88,4 @@ func registerRoutes(r *gin.Engine, cfg config.Config, aiClient *openai.Client, c
 			mcpGroup.POST("/llm/chat", captchaMW.VerifyCaptcha(), handler.LLMChat(cfg, aiClient))
 		}
 	}
-
-	// 标准 MCP Streamable HTTP — 供 Cursor / Claude Desktop 等外部 AI 客户端接入
-	r.Any("/mcp", handler.MCPStreamable(cfg))
 }
