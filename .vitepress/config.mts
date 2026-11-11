@@ -4,9 +4,24 @@ import { withMermaid } from "vitepress-plugin-mermaid";
 import { en } from "./config/en.mts";
 import { search } from "./config/search.mts";
 import { zh } from "./config/zh.mts";
+import { loadEnv } from "vite";
+import type { HeadConfig } from "vitepress";
+import { resolveUmamiConfig } from "./config/umami.mjs";
 
 // https://vitepress.dev/reference/site-config
-export default withMermaid({
+export default ({ mode }) => {
+  const umamiConfig = resolveUmamiConfig(loadEnv(mode, process.cwd(), 'UMAMI_'));
+  const umamiHead: HeadConfig[] = umamiConfig ? [
+    ['script', {
+      type: 'text/javascript',
+      src: `${umamiConfig.baseUrl}/script.js`,
+      'data-website-id': umamiConfig.websiteId,
+      'data-exclude-hash': String(umamiConfig.excludeHash),
+      async: '',
+    }],
+  ] : [];
+
+  return withMermaid({
     mermaid:{
         theme:'forest'
     },
@@ -43,14 +58,7 @@ export default withMermaid({
         }
         ],
         // Umami
-        [
-            'script', {
-            type: 'text/javascript',
-            src: 'https://umami-console.mintimate.cn/script.js',
-            'data-website-id': 'a8627773-87e5-403f-8579-b3baf4d4e368',
-            async: ''
-        }
-        ],
+        ...umamiHead,
         // 万维AD检测
         [
             'script', {
@@ -65,6 +73,8 @@ export default withMermaid({
         en: en,
     },
     themeConfig: {
+        // 这里只包含 resolveUmamiConfig 明确挑选的公开字段。
+        umami: umamiConfig,
         logo: '/favicon.svg',
         docFooter: {prev: '上一篇', next: '下一篇'},
         footer: {
@@ -93,4 +103,5 @@ export default withMermaid({
     sitemap: {
         hostname: 'https://www.mintimate.cc'
     }
-})
+  })
+}

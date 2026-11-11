@@ -38,6 +38,18 @@ const aiChatConfig = {
       </div>
     </template>
 
+    <template #home-features-after>
+      <div class="home-statistics"><UmamiStats /></div>
+    </template>
+
+    <template #doc-before>
+      <UmamiStats scope="page" />
+    </template>
+
+    <template #doc-after>
+      <UmamiStats scope="site" />
+    </template>
+
     <template #aside-ads-before>
       <div class="supportMeCard" style="margin: 10px 0; padding: 0">
         <Googleads :dataAdSlot="'1079004688'"/>
@@ -63,6 +75,16 @@ const aiChatConfig = {
 </template>
 
 <style scoped>
+
+.home-statistics {
+  max-width: 1200px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+}
+
+.home-statistics :deep(.umami-stats) {
+  justify-content: center;
+}
 
 .VPFeatures {
   position: relative;

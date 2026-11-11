@@ -6,11 +6,13 @@ import donate from './components/donate.vue'
 import rime from './components/rime.vue'
 import customHomeFeaturesBefore from './customHomeFeaturesBefore.vue'
 import {watch} from "vue";
+import UmamiPlugin from './plugins/umami/index.js'
 export default {
     ...DefaultTheme,
     Layout: customHomeFeaturesBefore,
     enhanceApp({ app, router, siteData }) {
         DefaultTheme.enhanceApp({ app, router, siteData })
+        app.use(UmamiPlugin, siteData.value.themeConfig.umami)
         app.component('wwads', wwads)
         app.component('donate', donate)
         app.component('rime', rime)
