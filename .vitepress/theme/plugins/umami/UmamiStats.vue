@@ -16,7 +16,7 @@ const { lang, frontmatter, page } = useData()
 const route = useRoute()
 const siteStats = ref(null)
 const currentStats = ref(null)
-const loading = ref(false)
+const loading = ref(true)
 const failed = ref(false)
 const enabled = computed(() => client && frontmatter.value.umami !== false && !page.value.isNotFound)
 const showSite = computed(() => props.scope !== 'page')
@@ -26,14 +26,32 @@ const text = computed(() => lang.value.startsWith('en') ? {
   siteVisitors: 'Site visitors', siteViews: 'Site views',
   pageVisitors: 'Page visitors', pageViews: 'Page views',
   retry: 'Retry statistics', unavailable: 'Statistics unavailable',
-  pageHint: 'Exact page path in Umami; historical fragment URLs are counted separately.',
+  loading: 'Loading statistics',
+  pageHint: 'Exact page path; historical fragment URLs are counted separately.',
 } : {
   period: `近 ${client?.days ?? 30} 天`,
   siteVisitors: '全站访客', siteViews: '全站浏览',
   pageVisitors: '本页访客', pageViews: '本页浏览',
   retry: '重试统计', unavailable: '统计暂不可用',
-  pageHint: '按 Umami 页面路径统计，历史锚点地址单独计数。',
+  loading: '正在加载统计',
+  pageHint: '按页面路径统计，历史锚点地址单独计数。',
 })
+const groups = computed(() => [
+  {
+    key: 'page', visible: showPage.value, hint: text.value.pageHint,
+    metrics: [
+      { key: 'visitors', label: text.value.pageVisitors, value: currentStats.value?.visitors },
+      { key: 'views', label: text.value.pageViews, value: currentStats.value?.pageviews },
+    ],
+  },
+  {
+    key: 'site', visible: showSite.value,
+    metrics: [
+      { key: 'visitors', label: text.value.siteVisitors, value: siteStats.value?.visitors },
+      { key: 'views', label: text.value.siteViews, value: siteStats.value?.pageviews },
+    ],
+  },
+].filter(group => group.visible))
 const formatter = computed(() => new Intl.NumberFormat(lang.value || 'zh-CN'))
 const format = value => value == null ? '—' : formatter.value.format(value)
 let generation = 0
@@ -44,7 +62,10 @@ async function refresh() {
   siteStats.value = null
   currentStats.value = null
   failed.value = false
-  if (!enabled.value) return
+  if (!enabled.value) {
+    loading.value = false
+    return
+  }
 
   loading.value = true
   const jobs = []
@@ -82,18 +103,20 @@ onUnmounted(() => {
 <template>
   <div v-if="enabled" class="umami-stats" :class="`umami-stats--${scope}`" :aria-busy="loading">
     <span class="umami-period">{{ text.period }}</span>
-    <span v-if="showPage" class="umami-group" :title="text.pageHint">
-      <span>{{ text.pageVisitors }} <strong>{{ format(currentStats?.visitors) }}</strong></span>
-      <span>{{ text.pageViews }} <strong>{{ format(currentStats?.pageviews) }}</strong></span>
-    </span>
-    <span v-if="showSite" class="umami-group">
-      <span>{{ text.siteVisitors }} <strong>{{ format(siteStats?.visitors) }}</strong></span>
-      <span>{{ text.siteViews }} <strong>{{ format(siteStats?.pageviews) }}</strong></span>
+    <span v-for="group in groups" :key="group.key" class="umami-group" :title="group.hint">
+      <span v-for="metric in group.metrics" :key="metric.key">
+        {{ metric.label }}
+        <strong>
+          <span v-if="loading && metric.value == null" class="umami-loading" role="img" :aria-label="text.loading">
+            <span v-for="dot in 3" :key="dot" class="umami-loading-dot" aria-hidden="true" />
+          </span>
+          <template v-else>{{ format(metric.value) }}</template>
+        </strong>
+      </span>
     </span>
     <button v-if="failed && !loading" type="button" :title="text.unavailable" @click="refresh">
       {{ text.retry }}
     </button>
-    <span class="umami-credit">Umami</span>
   </div>
 </template>
 
@@ -115,7 +138,7 @@ onUnmounted(() => {
   border-top: 1px solid var(--vp-c-divider);
 }
 
-.umami-period, .umami-credit {
+.umami-period {
   color: var(--vp-c-text-3);
 }
 
@@ -127,11 +150,40 @@ onUnmounted(() => {
 
 strong {
   display: inline-block;
-  min-width: 1ch;
+  min-width: 3ch;
   margin-left: 4px;
   color: var(--vp-c-text-1);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
+}
+
+.umami-loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 1em;
+  vertical-align: middle;
+}
+
+.umami-loading-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: stats-bounce 1s ease-in-out infinite;
+}
+
+.umami-loading-dot:nth-child(2) { animation-delay: 0.12s; }
+.umami-loading-dot:nth-child(3) { animation-delay: 0.24s; }
+
+@keyframes stats-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+  30% { transform: translateY(-3px); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .umami-loading-dot { animation: none; opacity: 0.65; }
 }
 
 button {
