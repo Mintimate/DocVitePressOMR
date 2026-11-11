@@ -23,7 +23,7 @@ yarn build
 
 站点通过 `.vitepress/theme/plugins/umami/` 中的 Vue 插件展示 Umami v2 数据：文档顶部展示本页访客数与浏览量，底部展示全站统计，首页同时展示两者。中英文、暗色模式和 VitePress 页面切换均可使用。
 
-配置集中维护在 [CNB 密钥仓库的 DocVitePressOMR.yaml](https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml)，现有构建流水线通过 `imports` 注入环境变量：
+配置集中维护在 [CNB 密钥仓库的 DocVitePressOMR.yaml](https://cnb.cool/Mintimate/secret/-/blob/main/DocVitePressOMR.yaml)，构建流水线通过 `imports` 注入环境变量：
 
 | 变量 | 用途 |
 | --- | --- |
@@ -33,6 +33,8 @@ yarn build
 | `UMAMI_STATS_DAYS` | 统计天数，默认 30 |
 | `UMAMI_CACHE_TTL_MS` | 浏览器缓存毫秒数，默认 300000 |
 | `UMAMI_EXCLUDE_HASH` | 采集时忽略锚点，默认 `true` |
+
+EdgeOne CLI 会拉取控制台配置到 `.env`，构建子进程也不会继承 CNB 的全部环境变量。因此流水线先运行 `.cnb/scripts/prepare-umami-env.mjs`，仅将以上六项公开配置写入被 Git 忽略的 `.env.production.local`，供 VitePress 构建读取。前三项缺失或配置无效时直接终止部署，避免发布没有统计栏的页面。无需在 EdgeOne 控制台重复配置这些变量。
 
 `.vitepress/config/umami.mjs` 只负责校验和挑选上述字段，具体站点值不写入源码。VitePress 在构建时将这几个公开字段写入 `themeConfig.umami`，其他环境变量不会由这条配置通道传给浏览器。共享 ID 会被浏览器使用，放在密钥仓库中是为了集中管理，不改变其公开分享属性。
 

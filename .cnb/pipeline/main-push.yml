@@ -36,9 +36,13 @@ main:
       stages:
         - name: 部署流程
           image: docker.cnb.cool/flyinbug/dev-ops/nodejs:latest
-          script: 
-            - npm install -g edgeone
-            - edgeone pages deploy -n oh-my-rime -t $EO_SECRET
+          jobs:
+            - name: 准备 Umami 配置
+              script: node .cnb/scripts/prepare-umami-env.mjs
+            - name: 构建并部署
+              script:
+                - npm install -g edgeone
+                - PAGES_SOURCE=skills edgeone pages deploy -n oh-my-rime -t "$EO_SECRET" --json
 
     # 定时清理（每7天）
   "crontab: 0 0 */7 * *":
